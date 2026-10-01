@@ -25,7 +25,6 @@
 
     <!-- ============ LANGUAGE / GEO ============ -->
     <meta name="language" content="English" />
-    <meta name="geo.region" content="IR" />
     <meta name="rating" content="general" />
     <meta name="revisit-after" content="7 days" />
 
@@ -165,15 +164,7 @@
           "alternateName": "Arad Hosseini Moghaddam Portfolio",
           "inLanguage": "en",
           "publisher": { "@id": "https://aradmanamnaoon.github.io/#person" },
-          "author": { "@id": "https://aradmanamnaoon.github.io/#person" },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://aradmanamnaoon.github.io/?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
+          "author": { "@id": "https://aradmanamnaoon.github.io/#person" }
         },
         {
           "@type": "ProfilePage",
@@ -224,7 +215,7 @@
     }
     </script>
 
-    <!-- ============ FAQ STRUCTURED DATA (rich results) ============ -->
+    <!-- ============ FAQ STRUCTURED DATA ============ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -257,16 +248,64 @@
       ]
     }
     </script>
+
+    <!-- ============ INLINE FALLBACK STYLES (guaranteed to work) ============ -->
+    <style>
+      /* Footer nav — inline fallback so spacing never breaks */
+      .footer-nav ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer-nav a {
+        text-decoration: none;
+        color: inherit;
+      }
+      .footer-nav a:hover {
+        color: #7db4f0;
+      }
+      /* Skip link */
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: auto;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      .skip-link:focus {
+        position: fixed;
+        left: 1rem;
+        top: 1rem;
+        width: auto;
+        height: auto;
+        padding: 0.5rem 1rem;
+        background: #7db4f0;
+        color: #f7f5f0;
+        border-radius: 0.25rem;
+        z-index: 9999;
+      }
+      /* Screen-reader-only utility */
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
   </head>
 
   <body class="relative bg-surface font-sans text-ink antialiased">
     <!-- ============ SKIP LINK (accessibility + SEO) ============ -->
-    <a
-      href="#main"
-      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded focus:bg-accent focus:px-4 focus:py-2 focus:text-surface"
-    >
-      Skip to main content
-    </a>
+    <a href="#main" class="skip-link">Skip to main content</a>
 
     <main id="main" class="mx-auto max-w-[1100px] px-6 py-16 sm:py-24">
 
@@ -281,7 +320,6 @@
           <span>Data Science and AI</span>
         </nav>
 
-        <!-- H1 contains name + role as a single semantic sentence -->
         <h1 class="font-serif text-[clamp(3rem,10vw,7.5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
           <span class="sr-only">
             Seyyed Arad Hosseini Moghaddam — Data Scientist and AI Engineer
@@ -594,132 +632,4 @@
             </p>
           </article>
 
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
-            <div aria-hidden="true" class="text-3xl">🩺</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">Medical AI</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Applying deep learning to medical imaging, diagnosis, and clinical decision support.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
-            <div aria-hidden="true" class="text-3xl">📊</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">Applied Analytics</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Turning raw, messy data into clear insights, models, and measurable decisions.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
-            <div aria-hidden="true" class="text-3xl">✨</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">Generative AI</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Building with LLMs, diffusion models, and modern generative architectures.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
-            <div aria-hidden="true" class="text-3xl">🎛️</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">Fine-tuning LLMs</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Parameter-efficient tuning with LoRA and QLoRA on domain-specific datasets.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
-            <div aria-hidden="true" class="text-3xl">📚</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">RAG Systems</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Retrieval-augmented generation with vector databases and semantic search.
-            </p>
-          </article>
-
-          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40 sm:col-span-2 lg:col-span-3">
-            <div aria-hidden="true" class="text-3xl">🕸️</div>
-            <h3 class="mt-6 font-serif text-lg font-semibold">Agentic AI Engineering</h3>
-            <p class="mt-2 text-sm text-ink/60">
-              Stateful, tool-using agents with LangGraph, LangSmith, MCP, and human-in-the-loop workflows.
-            </p>
-          </article>
-
-        </div>
-      </section>
-
-      <!-- ============ CONTACT ============ -->
-      <section id="contact" class="reveal mt-28 sm:mt-36" aria-labelledby="contact-heading">
-        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / / Contact</p>
-
-        <h2
-          id="contact-heading"
-          class="font-serif text-[clamp(2.5rem,7vw,5rem)] font-bold leading-[1.02] tracking-tight"
-        >
-          Let's build<br />
-          <span class="italic text-accent">something intelligent.</span>
-        </h2>
-
-        <div class="mt-14 grid gap-10 sm:grid-cols-2">
-          <div>
-            <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
-            <a
-              href="mailto:spikick.cod@gmail.com"
-              class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl"
-              aria-label="Send an email to Seyyed Arad Hosseini Moghaddam"
-            >
-              spikick.cod@gmail.com
-            </a>
-          </div>
-          <div>
-            <p class="text-xs uppercase tracking-[0.2em] text-ink/50">LinkedIn</p>
-            <a
-              href="https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam"
-              target="_blank"
-              rel="noopener noreferrer me"
-              class="mt-3 inline-block font-serif text-2xl font-semibold underline-offset-4 hover:underline sm:text-3xl"
-            >
-              Message me on LinkedIn
-            </a>
-          </div>
-        </div>
-
-        <div class="mt-14 flex flex-wrap gap-3">
-          <a
-            href="https://github.com/aradmanamnaoon"
-            target="_blank"
-            rel="noopener noreferrer me"
-            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgba(125,180,240,0.6)]"
-          >
-            GitHub
-            <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-          </a>
-          <a
-            href="https://huggingface.co/aradmanamnaoon"
-            target="_blank"
-            rel="noopener noreferrer me"
-            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
-          >
-            Hugging Face
-            <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- ============ FOOTER ============ -->
-      <footer class="mt-28 border-t border-ink/10 pt-8 sm:mt-36">
-        <div class="flex flex-wrap items-center justify-between gap-4 text-xs uppercase tracking-[0.2em] text-ink/40">
-          <span>© <time datetime="2026">2026</time> Seyyed Arad Hosseini Moghaddam</span>
-          <nav aria-label="Footer">
-            <ul class="flex flex-wrap gap-4">
-              <li><a href="#about" class="hover:text-accent">About</a></li>
-              <li><a href="#skills" class="hover:text-accent">Skills</a></li>
-              <li><a href="#projects" class="hover:text-accent">Projects</a></li>
-              <li><a href="#contact" class="hover:text-accent">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
-      </footer>
-
-    </main>
-
-    <script src="./animations.js" defer></script>
-  </body>
-</html>
+          <article class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border
