@@ -116,7 +116,6 @@
           "image": "https://aradmanamnaoon.github.io/og-image.jpg",
           "jobTitle": "Data Scientist and AI Engineer",
           "description": "Data scientist and AI engineer building machine learning systems, agentic AI, and production-ready applications with Python, PyTorch, and LangGraph.",
-          "email": "mailto:spikick.cod@gmail.com",
           "nationality": { "@type": "Country", "name": "Iran" },
           "knowsLanguage": ["en", "fa"],
           "sameAs": [
@@ -996,7 +995,7 @@
                 </div>
 
                 <div class="code-window" aria-label="Messy2JSON example">
-                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="117b707f745170727c743f727e7c">[email&#160;protected]</a></div>
+                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bad0dbd4dffadbd9d7df94d9d5d7">[email&#160;protected]</a></div>
                   <div style="margin-top:.6rem"><span style="opacity:.55">OUTPUT</span> {"name": "Jane Doe", "role": "VP Engineering", "company": "Acme", ...}</div>
                 </div>
 
@@ -1277,8 +1276,15 @@
         <div class="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
             <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
-            <a href="/cdn-cgi/l/email-protection#e497948d8f8d878fca878b80a48389858d88ca878b89" class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl" aria-label="Send an email to Seyyed Arad Hosseini Moghaddam">
-              <span class="__cf_email__" data-cfemail="2e5d5e4745474d45004d414a6e49434f4742004d4143">[email&#160;protected]</span>
+            <a
+              id="contact-email"
+              href="#contact"
+              data-email-user="spikick.cod"
+              data-email-domain="gmail.com"
+              class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl"
+              aria-label="Send an email to Seyyed Arad Hosseini Moghaddam"
+            >
+              <span class="email-user">spikick.cod</span><span aria-hidden="true">&#64;</span><span class="email-domain">gmail.com</span>
             </a>
           </div>
           <div>
@@ -1337,6 +1343,21 @@
 
     <!-- Portfolio note: project metrics are sourced from the linked public repositories/model cards. -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./animations.js" defer></script>
+
+    <script>
+      (() => {
+        const emailLink = document.getElementById("contact-email");
+        if (!emailLink) return;
+
+        const user = emailLink.dataset.emailUser;
+        const domain = emailLink.dataset.emailDomain;
+        const address = `${user}@${domain}`;
+
+        emailLink.href = `mailto:${address}`;
+        emailLink.setAttribute("aria-label", `Send an email to ${address}`);
+      })();
+    </script>
+
 
     <script>
       document.querySelectorAll('#faq details').forEach((item) => {
