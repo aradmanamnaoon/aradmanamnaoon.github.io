@@ -210,6 +210,53 @@
             { "@type": "ListItem", "position": 5, "name": "MLOps" },
             { "@type": "ListItem", "position": 6, "name": "Software and Web Development" }
           ]
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://aradmanamnaoon.github.io/#featured-work",
+          "name": "Selected AI and Machine Learning Projects",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Persian GPT - 110M Transformer From Scratch",
+                "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
+                "description": "A 110.4M parameter GPT-style Persian language model trained from scratch with a custom BPE tokenizer and Persian Wikipedia corpus."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "SoftwareSourceCode",
+                "name": "3D Cardiac MRI Segmentation",
+                "codeRepository": "https://github.com/aradmanamnaoon/medical-image-segmentation",
+                "programmingLanguage": "Python",
+                "description": "A PyTorch and MONAI 3D U-Net pipeline for cardiac MRI segmentation."
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "CreativeWork",
+                "name": "Messy2JSON - Qwen2.5-0.5B",
+                "url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b",
+                "description": "A QLoRA fine-tuned language model for converting messy English text into structured JSON."
+              }
+            }
+          ]
+        },
+        {
+          "@type": "Dataset",
+          "@id": "https://aradmanamnaoon.github.io/#persian-wikipedia-dataset",
+          "name": "Cleaned Persian Wikipedia for Persian NLP",
+          "url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP",
+          "description": "A cleaned Persian Wikipedia dataset with 855,724 rows used for Persian language model training.",
+          "creator": { "@id": "https://aradmanamnaoon.github.io/#person" },
+          "inLanguage": "fa"
         }
       ]
     }
@@ -300,6 +347,206 @@
         white-space: nowrap;
         border: 0;
       }
+
+      /* ===== Portfolio evidence system ===== */
+      .section-kicker {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.25em;
+        color: rgb(20 24 31 / 0.4);
+      }
+      .featured-project {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgb(20 24 31 / 0.1);
+        border-radius: 1.5rem;
+        padding: clamp(1.5rem, 4vw, 3rem);
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 45%);
+        transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      }
+      .featured-project:hover {
+        transform: translateY(-3px);
+        border-color: rgb(125 180 240 / 0.55);
+        box-shadow: 0 24px 60px -42px rgb(20 24 31 / 0.45);
+      }
+      .project-number {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.5rem, 7vw, 5rem);
+        font-style: italic;
+        line-height: 0.9;
+        color: rgb(125 180 240 / 0.6);
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.75rem;
+      }
+      .metric {
+        border-top: 1px solid rgb(20 24 31 / 0.12);
+        padding-top: 0.85rem;
+      }
+      .metric-value {
+        display: block;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.25rem, 3vw, 1.8rem);
+        font-weight: 700;
+        line-height: 1;
+      }
+      .metric-label {
+        display: block;
+        margin-top: 0.4rem;
+        font-size: 0.7rem;
+        line-height: 1.35;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: rgb(20 24 31 / 0.5);
+      }
+      .project-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.25rem;
+      }
+      .project-tag {
+        border: 1px solid rgb(20 24 31 / 0.12);
+        border-radius: 999px;
+        padding: 0.4rem 0.7rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: rgb(20 24 31 / 0.65);
+      }
+      .project-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+      .project-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-height: 42px;
+        border-radius: 999px;
+        border: 1px solid rgb(20 24 31 / 0.16);
+        padding: 0.65rem 1rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+      }
+      .project-link:hover {
+        transform: translateY(-1px);
+        border-color: rgb(125 180 240 / 0.7);
+        background: rgb(125 180 240 / 0.08);
+      }
+      .project-link.primary {
+        border-color: transparent;
+        background: #7db4f0;
+        color: #f7f5f0;
+      }
+      .pipeline {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 1.5rem;
+        border: 1px solid rgb(20 24 31 / 0.08);
+        border-radius: 1rem;
+        padding: 1rem;
+        background: rgb(247 245 240 / 0.7);
+      }
+      .pipeline-step {
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+        line-height: 1.3;
+      }
+      .pipeline-arrow {
+        color: rgb(20 24 31 / 0.3);
+      }
+      .proof-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+      .proof-card {
+        border: 1px solid rgb(20 24 31 / 0.1);
+        border-radius: 1rem;
+        padding: 1.25rem;
+      }
+      .proof-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        border-radius: 999px;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .proof-status.proven {
+        background: rgb(125 180 240 / 0.16);
+        color: rgb(20 24 31 / 0.75);
+      }
+      .proof-status.building {
+        border: 1px dashed rgb(20 24 31 / 0.2);
+        color: rgb(20 24 31 / 0.55);
+      }
+      .open-source-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+      .open-source-card {
+        border: 1px solid rgb(20 24 31 / 0.1);
+        border-radius: 1.25rem;
+        padding: 1.5rem;
+        transition: border-color 180ms ease, transform 180ms ease;
+      }
+      .open-source-card:hover {
+        transform: translateY(-2px);
+        border-color: rgb(125 180 240 / 0.55);
+      }
+      .building-card {
+        border: 1px solid rgb(125 180 240 / 0.4);
+        border-radius: 1.5rem;
+        padding: clamp(1.5rem, 4vw, 2.5rem);
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.12), transparent 60%);
+      }
+      .code-window {
+        margin-top: 1.25rem;
+        overflow-x: auto;
+        border-radius: 1rem;
+        background: #14181f;
+        padding: 1rem;
+        color: #f7f5f0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.75rem;
+        line-height: 1.7;
+      }
+      .evidence-note {
+        border-left: 3px solid #7db4f0;
+        padding-left: 1rem;
+        color: rgb(20 24 31 / 0.65);
+      }
+      @media (max-width: 720px) {
+        .metric-grid, .proof-grid, .open-source-grid {
+          grid-template-columns: 1fr;
+        }
+        .pipeline {
+          grid-template-columns: 1fr;
+        }
+        .pipeline-arrow {
+          transform: rotate(90deg);
+          text-align: center;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .featured-project, .project-link, .open-source-card {
+          transition: none;
+        }
+      }
     </style>
   </head>
 
@@ -346,10 +593,17 @@
         <!-- ============ CTA buttons in hero ============ -->
         <div class="mt-10 flex flex-wrap gap-3">
           <a
+            href="#projects"
+            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgba(125,180,240,0.6)]"
+          >
+            View selected work
+            <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">↓</span>
+          </a>
+          <a
             href="https://github.com/aradmanamnaoon"
             target="_blank"
             rel="noopener noreferrer me"
-            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgba(125,180,240,0.6)]"
+            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
           >
             View GitHub
             <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
@@ -540,6 +794,59 @@
         </div>
       </section>
 
+      <!-- ============ PROOF OF WORK ============ -->
+      <section id="proof" class="reveal mt-28 sm:mt-36" aria-labelledby="proof-heading">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / Proof of work</p>
+        <h2
+          id="proof-heading"
+          class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight"
+        >
+          Skills are claims. <span class="italic text-accent">Projects are evidence.</span>
+        </h2>
+        <p class="mt-8 max-w-[66ch] text-lg leading-relaxed text-ink/70">
+          I want this portfolio to make a clear distinction between capabilities I can already demonstrate
+          publicly and areas where I'm actively building stronger production-grade evidence.
+        </p>
+
+        <div class="proof-grid mt-12">
+          <article class="proof-card">
+            <span class="proof-status proven">● Public evidence</span>
+            <h3 class="mt-5 font-serif text-xl font-semibold">Transformer training &amp; NLP</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/60">
+              A 110.4M-parameter Persian GPT trained from scratch, including corpus preparation, a custom BPE tokenizer, training, baselines, and evaluation.
+            </p>
+            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="#persian-gpt">See Persian GPT →</a>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-status proven">● Public evidence</span>
+            <h3 class="mt-5 font-serif text-xl font-semibold">Deep learning &amp; medical imaging</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/60">
+              End-to-end 3D cardiac MRI segmentation with PyTorch, MONAI, 3D U-Net, mixed precision, sliding-window inference, and Dice evaluation.
+            </p>
+            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="#cardiac-mri">See medical AI project →</a>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-status proven">● Public evidence</span>
+            <h3 class="mt-5 font-serif text-xl font-semibold">LLM fine-tuning &amp; PEFT</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/60">
+              QLoRA fine-tuning of Qwen2.5-0.5B for structured text extraction with 4-bit NF4 quantization and LoRA adapters.
+            </p>
+            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="#messy2json">See Messy2JSON →</a>
+          </article>
+
+          <article class="proof-card">
+            <span class="proof-status building">○ Building stronger proof</span>
+            <h3 class="mt-5 font-serif text-xl font-semibold">Agentic AI, MCP &amp; production MLOps</h3>
+            <p class="mt-2 text-sm leading-relaxed text-ink/60">
+              These are active focus areas. My next flagship project is designed to demonstrate orchestration, tool use, observability, testing, deployment, and production engineering together.
+            </p>
+            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="#building">See what I'm building →</a>
+          </article>
+        </div>
+      </section>
+
       <!-- ============ PROJECTS ============ -->
       <section id="projects" class="reveal mt-28 sm:mt-36" aria-labelledby="projects-heading">
         <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / Projects</p>
@@ -555,7 +862,113 @@
           that's where I ship and iterate. Dive in and explore.
         </p>
 
-        <div class="mt-14 grid gap-6 sm:grid-cols-2">
+        <!-- Featured work: concrete projects before profile links -->
+        <div class="mt-14 space-y-6">
+          <article id="persian-gpt" class="featured-project">
+            <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
+              <div class="project-number" aria-hidden="true">01</div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">NLP · Transformers · From-scratch training</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">Persian GPT — 110M Transformer From Scratch</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
+                  A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation. No pretrained weights, pretrained tokenizer, or distillation.
+                </p>
+
+                <div class="metric-grid mt-8">
+                  <div class="metric"><span class="metric-value">110.4M</span><span class="metric-label">Parameters</span></div>
+                  <div class="metric"><span class="metric-value">244M</span><span class="metric-label">Training tokens</span></div>
+                  <div class="metric"><span class="metric-value">14.52</span><span class="metric-label">Test perplexity</span></div>
+                </div>
+
+                <div class="pipeline" aria-label="Persian GPT project pipeline">
+                  <div class="pipeline-step">855K+<br />documents</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">32K BPE<br />tokenizer</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">12-layer<br />GPT</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">Evaluation<br />+ baselines</div>
+                </div>
+
+                <div class="project-tags">
+                  <span class="project-tag">PyTorch</span><span class="project-tag">Transformers</span><span class="project-tag">Causal LM</span><span class="project-tag">BPE</span><span class="project-tag">A100</span><span class="project-tag">Persian NLP</span>
+                </div>
+                <div class="project-actions">
+                  <a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">View model ↗</a>
+                  <a class="project-link" href="https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP" target="_blank" rel="noopener noreferrer">Training dataset ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="cardiac-mri" class="featured-project">
+            <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
+              <div class="project-number" aria-hidden="true">02</div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Medical AI · 3D computer vision · Segmentation</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">3D Cardiac MRI Segmentation</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
+                  A complete voxel-level segmentation pipeline for cardiac MRI volumes using PyTorch, MONAI, and a 3D U-Net. The repository covers NIfTI loading, preprocessing, training, mixed precision, sliding-window inference, Dice evaluation, and result visualization.
+                </p>
+
+                <div class="metric-grid mt-8">
+                  <div class="metric"><span class="metric-value">0.8821</span><span class="metric-label">Best validation Dice</span></div>
+                  <div class="metric"><span class="metric-value">3D U-Net</span><span class="metric-label">Architecture</span></div>
+                  <div class="metric"><span class="metric-value">100</span><span class="metric-label">Training epochs</span></div>
+                </div>
+
+                <div class="pipeline" aria-label="Cardiac MRI segmentation pipeline">
+                  <div class="pipeline-step">NIfTI<br />volumes</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">MONAI<br />preprocess</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">3D U-Net<br />training</div><div class="pipeline-arrow">→</div>
+                  <div class="pipeline-step">Dice +<br />visualization</div>
+                </div>
+
+                <div class="project-tags">
+                  <span class="project-tag">PyTorch</span><span class="project-tag">MONAI</span><span class="project-tag">3D U-Net</span><span class="project-tag">Medical Imaging</span><span class="project-tag">AMP</span><span class="project-tag">DiceCELoss</span>
+                </div>
+                <div class="project-actions">
+                  <a class="project-link primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View source ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article id="messy2json" class="featured-project">
+            <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
+              <div class="project-number" aria-hidden="true">03</div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">LLM fine-tuning · QLoRA · Structured extraction</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">Messy2JSON — Lightweight Structured Extraction</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
+                  Qwen2.5-0.5B fine-tuned with QLoRA to turn messy English text into structured JSON. The project explores parameter-efficient adaptation, 4-bit NF4 quantization, JSON-focused data filtering, and lightweight local inference.
+                </p>
+
+                <div class="metric-grid mt-8">
+                  <div class="metric"><span class="metric-value">99.82%</span><span class="metric-label">Mean token accuracy</span></div>
+                  <div class="metric"><span class="metric-value">0.0045</span><span class="metric-label">Validation loss</span></div>
+                  <div class="metric"><span class="metric-value">~0.85%</span><span class="metric-label">Trainable parameters</span></div>
+                </div>
+
+                <div class="code-window" aria-label="Messy2JSON example">
+                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6208030c072203010f074c010d0f">[email&#160;protected]</a></div>
+                  <div style="margin-top:.6rem"><span style="opacity:.55">OUTPUT</span> {"name": "Jane Doe", "role": "VP Engineering", "company": "Acme", ...}</div>
+                </div>
+
+                <div class="project-tags">
+                  <span class="project-tag">Qwen2.5</span><span class="project-tag">QLoRA</span><span class="project-tag">PEFT</span><span class="project-tag">4-bit NF4</span><span class="project-tag">Transformers</span><span class="project-tag">Structured Output</span>
+                </div>
+                <div class="project-actions">
+                  <a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b" target="_blank" rel="noopener noreferrer">View model ↗</a>
+                  <a class="project-link" href="https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora" target="_blank" rel="noopener noreferrer">LoRA adapter ↗</a>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="mt-16">
+          <p class="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Profiles &amp; full archive</p>
+        </div>
+
+        <div class="mt-6 grid gap-6 sm:grid-cols-2">
 
           <a
             href="https://github.com/aradmanamnaoon"
@@ -608,8 +1021,71 @@
         </div>
 
         <p class="mt-10 text-center text-sm italic text-ink/50">
-          New projects are on the way — I'm actively building and shipping.
+          I keep the full archive on GitHub and Hugging Face. Featured work above is intentionally selective; new projects move here when they have results worth showing.
         </p>
+      </section>
+
+      <!-- ============ OPEN SOURCE ============ -->
+      <section id="open-source" class="reveal mt-28 sm:mt-36" aria-labelledby="open-source-heading">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / Open source</p>
+        <h2 id="open-source-heading" class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          Models, data, and reproducible work
+        </h2>
+        <p class="mt-8 max-w-[65ch] text-lg leading-relaxed text-ink/70">
+          Beyond finished applications, I publish artifacts that other people can inspect, load, reproduce, and build on.
+        </p>
+
+        <div class="open-source-grid mt-12">
+          <a class="open-source-card" href="https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP" target="_blank" rel="noopener noreferrer">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-ink/45">Dataset · Persian NLP</p>
+            <h3 class="mt-3 font-serif text-2xl font-semibold">Cleaned Persian Wikipedia</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">855,724 cleaned rows and 1.91 GB of text data prepared for modern Persian NLP pipelines and used to train Persian GPT.</p>
+            <div class="project-tags"><span class="project-tag">855K+ rows</span><span class="project-tag">1.91 GB</span><span class="project-tag">JSON / Parquet</span></div>
+            <p class="mt-5 text-sm font-semibold text-accent">View dataset ↗</p>
+          </a>
+
+          <a class="open-source-card" href="https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora" target="_blank" rel="noopener noreferrer">
+            <p class="text-xs font-semibold uppercase tracking-[0.18em] text-ink/45">Adapter · PEFT</p>
+            <h3 class="mt-3 font-serif text-2xl font-semibold">Messy2JSON LoRA Adapter</h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">The parameter-efficient adapter is published separately from the merged model so the fine-tuning artifact can be inspected and reused directly with PEFT.</p>
+            <div class="project-tags"><span class="project-tag">LoRA r=16</span><span class="project-tag">alpha=32</span><span class="project-tag">PEFT</span></div>
+            <p class="mt-5 text-sm font-semibold text-accent">View adapter ↗</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- ============ CURRENTLY BUILDING ============ -->
+      <section id="building" class="reveal mt-28 sm:mt-36" aria-labelledby="building-heading">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / Currently building</p>
+        <h2 id="building-heading" class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          Turning agentic AI knowledge into <span class="italic text-accent">public evidence.</span>
+        </h2>
+
+        <div class="building-card mt-12">
+          <div class="grid gap-8 sm:grid-cols-2">
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Next flagship project</p>
+              <h3 class="mt-3 font-serif text-2xl font-semibold sm:text-3xl">MCP + LangGraph Project Assistant</h3>
+              <p class="mt-4 leading-relaxed text-ink/70">
+                A production-oriented assistant that connects an agent to files, databases, and external services through MCP, with durable state, tool permissions, observability, evaluation, and deployment.
+              </p>
+              <p class="evidence-note mt-6 text-sm leading-relaxed">
+                This section is intentionally labeled as work in progress. Once the repository, tests, traces, architecture, and deployed demo are public, it should graduate into Selected Work.
+              </p>
+            </div>
+            <div>
+              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Evidence I plan to ship</p>
+              <ul class="mt-4 space-y-3 text-sm leading-relaxed text-ink/70">
+                <li>✓ LangGraph stateful orchestration and tool routing</li>
+                <li>✓ MCP client plus multiple purpose-built MCP servers</li>
+                <li>✓ Authentication, authorization, and tool permission boundaries</li>
+                <li>✓ LangSmith traces, evaluations, latency and cost measurements</li>
+                <li>✓ FastAPI service, Docker image, CI/CD, tests, and deployment</li>
+                <li>✓ Architecture diagram, threat model, and engineering write-up</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </section>
 
       <!-- ============ CURRENTLY EXPLORING ============ -->
@@ -698,12 +1174,8 @@
         <div class="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
             <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
-            <a
-              href="mailto:spikick.cod@gmail.com"
-              class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl"
-              aria-label="Send an email to Seyyed Arad Hosseini Moghaddam"
-            >
-              spikick.cod@gmail.com
+            <a href="/cdn-cgi/l/email-protection#0a797a63616369612469656e4a6d676b636624696567" class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl" aria-label="Send an email to Seyyed Arad Hosseini Moghaddam">
+              <span class="__cf_email__" data-cfemail="681b180103010b03460b070c280f05090104460b0705">[email&#160;protected]</span>
             </a>
           </div>
           <div>
@@ -751,6 +1223,9 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
+            <li><a href="#proof">Proof of work</a></li>
+            <li><a href="#open-source">Open source</a></li>
+            <li><a href="#building">Currently building</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -758,6 +1233,7 @@
 
     </main>
 
-    <script src="./animations.js" defer></script>
+    <!-- Portfolio note: project metrics are sourced from the linked public repositories/model cards. -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="./animations.js" defer></script>
   </body>
 </html>
