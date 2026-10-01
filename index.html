@@ -4,70 +4,428 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Seyyed Arad Hosseini Moghaddam &mdash; Data Scientist &amp; AI Engineer</title>
+    <title>Seyyed Arad Hosseini Moghaddam — Data Scientist and AI Engineer</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta
       name="description"
-      content="Seyyed Arad Hosseini Moghaddam is a Data Scientist and AI/ML Engineer building intelligent systems that turn messy data into clear decisions."
+      content="Seyyed Arad Hosseini Moghaddam is a Data Scientist and AI/ML Engineer building intelligent systems — from production ML to stateful, observable agentic AI with LangGraph, LangSmith, and Deep Agents."
     />
 
-    <!-- Fonts: Playfair Display (headings) + Inter (body) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Seyyed Arad Hosseini Moghaddam — Data Scientist and AI Engineer" />
+    <meta
+      property="og:description"
+      content="Data Scientist and AI/ML Engineer building intelligent systems — from production ML to stateful, observable agentic AI."
+    />
+    <meta property="og:url" content="https://aradmanamnaoon.github.io/" />
+    <meta name="twitter:card" content="summary" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Compiled Tailwind CSS -->
     <link href="./dist/output.css" rel="stylesheet" />
   </head>
 
-  <body class="bg-surface font-sans text-ink antialiased">
-    <main class="mx-auto max-w-[680px] px-6 py-16 sm:py-24">
-      <!-- ============ Hero ============ -->
-      <!-- TODO: Replace "Alex Rivera" with your name -->
-      <header>
-        <h1 class="text-balance font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-5xl md:text-6xl">
-          Seyyed Arad Hosseini Moghaddam
+  <body class="relative bg-surface font-sans text-ink antialiased">
+    <main class="mx-auto max-w-[1100px] px-6 py-16 sm:py-24">
+
+      <!-- ============ HERO ============ -->
+      <header class="relative">
+        <div class="mb-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs uppercase tracking-[0.2em] text-ink/50">
+          <span>Portfolio</span>
+          <span class="hidden sm:inline">—</span>
+          <span>Data Science and AI</span>
+        </div>
+
+        <h1 class="font-serif text-[clamp(3rem,10vw,7.5rem)] font-bold leading-[0.95] tracking-[-0.03em]">
+          <span class="block overflow-hidden">
+            <span class="hero-line block">Data</span>
+          </span>
+          <span class="block overflow-hidden">
+            <span class="hero-line block">Scientist</span>
+          </span>
+          <span class="block overflow-hidden">
+            <span class="hero-line block italic text-accent">and AI Engineer</span>
+          </span>
         </h1>
-        <!-- TODO: Replace with your own one-sentence tagline -->
-        <p class="mt-5 max-w-[60ch] text-balance text-lg leading-relaxed text-ink/80 sm:text-xl">
-          Data Scientist &amp; AI/ML Engineer building intelligent systems that turn messy data into clear decisions.
+
+        <p class="mt-10 max-w-[62ch] text-lg leading-relaxed text-ink/70 sm:text-xl">
+          I'm <strong class="text-ink">Seyyed Arad Hosseini Moghaddam</strong>. I turn messy, real-world data
+          into products people rely on — from production ML pipelines to stateful, observable agentic AI
+          built with LangGraph, LangSmith, and Deep Agents.
         </p>
+
+        <div class="mt-20 overflow-hidden border-y border-ink/10 py-5">
+          <div class="marquee flex gap-12 whitespace-nowrap text-sm uppercase tracking-[0.25em] text-ink/40">
+            <span>Python</span><span>•</span>
+            <span>PyTorch</span><span>•</span>
+            <span>LangGraph</span><span>•</span>
+            <span>LangSmith</span><span>•</span>
+            <span>RAG</span><span>•</span>
+            <span>Agentic AI</span><span>•</span>
+            <span>MLOps</span><span>•</span>
+            <span>FastAPI</span><span>•</span>
+            <span>Docker</span><span>•</span>
+            <span>Transformers</span><span>•</span>
+            <span>Python</span><span>•</span>
+            <span>PyTorch</span><span>•</span>
+            <span>LangGraph</span><span>•</span>
+            <span>LangSmith</span><span>•</span>
+            <span>RAG</span><span>•</span>
+            <span>Agentic AI</span><span>•</span>
+            <span>MLOps</span><span>•</span>
+            <span>FastAPI</span><span>•</span>
+            <span>Docker</span><span>•</span>
+            <span>Transformers</span><span>•</span>
+          </div>
+        </div>
       </header>
 
-      <!-- ============ About ============ -->
-      <section aria-labelledby="about-heading" class="mt-14 border-t border-ink/10 pt-10 sm:mt-16">
-        <h2 id="about-heading" class="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">About</h2>
-        <!-- TODO: Replace with a short paragraph about yourself (2-3 sentences) -->
-        <p class="mt-4 max-w-[65ch] leading-relaxed text-ink">
-          I'm a data scientist and machine learning engineer who turns messy, real-world data into products people
-          rely on. My work spans the full ML lifecycle &mdash; from exploratory analysis and prototyping to training,
-          evaluating, and shipping models to production. I care most about the intersection of solid engineering,
-          thoughtful statistics, and clear communication.
+      <!-- ============ ABOUT ============ -->
+      <section class="reveal mt-28 sm:mt-36">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ About</p>
+        <h2 class="font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          From exploratory notebooks to<br class="hidden sm:block" />
+          <span class="italic text-accent">deployed, observable</span> AI systems.
+        </h2>
+        <div class="mt-10 grid gap-8 sm:grid-cols-2">
+          <p class="leading-relaxed text-ink/80">
+            I'm a data scientist and machine learning engineer who turns messy, real-world data into
+            products people rely on. My work spans the full ML lifecycle — from exploratory analysis
+            and prototyping to training, evaluating, and shipping models to production.
+          </p>
+          <p class="leading-relaxed text-ink/80">
+            More recently, I've focused on <strong class="text-ink">agentic AI engineering</strong>:
+            building stateful, tool-using LLM systems with LangGraph, instrumenting them with
+            LangSmith, and taking them from notebook to deployed, observable product. I care most
+            about the intersection of solid engineering, thoughtful statistics, and clear communication.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ SKILLS ============ -->
+      <section class="reveal mt-28 sm:mt-36">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / Capabilities</p>
+        <h2 class="max-w-[20ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          A full-stack approach to modern AI
+        </h2>
+
+        <div class="mt-14 grid gap-10 sm:grid-cols-2">
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              Data Science and Machine Learning
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">Python</li>
+              <li class="skill-pill">SQL</li>
+              <li class="skill-pill">pandas</li>
+              <li class="skill-pill">NumPy</li>
+              <li class="skill-pill">scikit-learn</li>
+              <li class="skill-pill">Statistics</li>
+              <li class="skill-pill">Data Analytics</li>
+              <li class="skill-pill">Feature Engineering</li>
+              <li class="skill-pill">Data Visualization</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              Deep Learning and Medical AI
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">PyTorch</li>
+              <li class="skill-pill">TensorFlow</li>
+              <li class="skill-pill">Computer Vision</li>
+              <li class="skill-pill">Medical Imaging</li>
+              <li class="skill-pill">CNNs</li>
+              <li class="skill-pill">Segmentation</li>
+              <li class="skill-pill">Model Evaluation</li>
+              <li class="skill-pill">NLP</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              Generative AI and Fine-tuning
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">LLMs</li>
+              <li class="skill-pill">Transformers</li>
+              <li class="skill-pill">Hugging Face</li>
+              <li class="skill-pill">Fine-tuning</li>
+              <li class="skill-pill">LoRA</li>
+              <li class="skill-pill">QLoRA</li>
+              <li class="skill-pill">PEFT</li>
+              <li class="skill-pill">Prompt Engineering</li>
+              <li class="skill-pill">Embeddings</li>
+              <li class="skill-pill">RAG</li>
+              <li class="skill-pill">Vector Databases</li>
+              <li class="skill-pill">Semantic Search</li>
+              <li class="skill-pill">LangChain</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              Agentic AI and LLM Orchestration
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">Agentic AI</li>
+              <li class="skill-pill">AI Agents</li>
+              <li class="skill-pill">LangGraph</li>
+              <li class="skill-pill">LangSmith</li>
+              <li class="skill-pill">Deep Agents</li>
+              <li class="skill-pill">ReAct Agents</li>
+              <li class="skill-pill">Tool Calling</li>
+              <li class="skill-pill">Multi-Agent Systems</li>
+              <li class="skill-pill">Subgraphs</li>
+              <li class="skill-pill">Stateful Agents</li>
+              <li class="skill-pill">Conversational Memory</li>
+              <li class="skill-pill">Human-in-the-Loop</li>
+              <li class="skill-pill">LLM Observability</li>
+              <li class="skill-pill">LLM Cost Optimization</li>
+              <li class="skill-pill">MCP</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              MLOps
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">Git</li>
+              <li class="skill-pill">FastAPI</li>
+              <li class="skill-pill">MLflow</li>
+              <li class="skill-pill">Docker</li>
+              <li class="skill-pill">GitHub Actions</li>
+              <li class="skill-pill">CI/CD</li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">
+              Software and Web Development
+            </h3>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              <li class="skill-pill">HTML</li>
+              <li class="skill-pill">CSS</li>
+              <li class="skill-pill">JavaScript</li>
+              <li class="skill-pill">Tailwind CSS</li>
+              <li class="skill-pill">Django</li>
+              <li class="skill-pill">PyQt6</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============ PROJECTS ============ -->
+      <section class="reveal mt-28 sm:mt-36">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / Projects</p>
+        <h2 class="max-w-[20ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          Where to find my work
+        </h2>
+
+        <p class="mt-8 max-w-[60ch] text-lg leading-relaxed text-ink/70">
+          I build in public. My code, experiments, models, and datasets live on GitHub and Hugging Face —
+          that's where I ship and iterate. Dive in and explore.
+        </p>
+
+        <div class="mt-14 grid gap-6 sm:grid-cols-2">
+
+          <a
+            href="https://github.com/aradmanamnaoon"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card group relative overflow-hidden rounded-2xl border border-ink/10 bg-gradient-to-br from-accent/5 via-surface to-surface p-8 transition-all hover:-translate-y-1 hover:border-accent/40"
+          >
+            <div class="flex items-start justify-between">
+              <svg class="h-8 w-8 text-ink/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.36-3.88-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.26 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5z" />
+              </svg>
+              <span class="text-xl opacity-0 transition-opacity group-hover:opacity-100">↗</span>
+            </div>
+            <h3 class="mt-10 font-serif text-2xl font-semibold sm:text-3xl">
+              GitHub
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Source code, experiments, ML pipelines, and agentic AI projects.
+            </p>
+            <p class="mt-6 text-sm font-medium text-accent">
+              github.com/aradmanamnaoon
+            </p>
+          </a>
+
+          <a
+            href="https://huggingface.co/aradmanamnaoon"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card group relative overflow-hidden rounded-2xl border border-ink/10 bg-gradient-to-br from-accent/5 via-surface to-surface p-8 transition-all hover:-translate-y-1 hover:border-accent/40"
+          >
+            <div class="flex items-start justify-between">
+              <svg class="h-8 w-8 text-ink/70" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-3.5 8.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zm7 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM12 17.5c-2.5 0-4.7-1.5-5.6-3.6a.6.6 0 0 1 .55-.85h10.1a.6.6 0 0 1 .55.85c-.9 2.1-3.1 3.6-5.6 3.6z" />
+              </svg>
+              <span class="text-xl opacity-0 transition-opacity group-hover:opacity-100">↗</span>
+            </div>
+            <h3 class="mt-10 font-serif text-2xl font-semibold sm:text-3xl">
+              Hugging Face
+            </h3>
+            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+              Models, datasets, demos, and fine-tuned transformers.
+            </p>
+            <p class="mt-6 text-sm font-medium text-accent">
+              huggingface.co/aradmanamnaoon
+            </p>
+          </a>
+
+        </div>
+
+        <p class="mt-10 text-center text-sm italic text-ink/50">
+          New projects are on the way — I'm actively building and shipping.
         </p>
       </section>
 
-      <!-- ============ Links ============ -->
-      <section aria-labelledby="links-heading" class="mt-14 border-t border-ink/10 pt-10 sm:mt-16">
-        <h2 id="links-heading" class="font-serif text-2xl font-semibold tracking-tight sm:text-3xl">Links</h2>
-        <nav aria-label="Profiles" class="mt-5 flex flex-wrap gap-3">
-          <!-- TODO: Replace with your LinkedIn profile URL -->
-          <a
-            href="https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam"
-            class="inline-flex min-h-[44px] items-center rounded-full border border-ink/15 bg-transparent px-5 py-2 text-sm font-medium text-accent transition-colors hover:border-accent/40 hover:bg-accent/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            LinkedIn
-          </a>
-          <!-- TODO: Replace with your GitHub profile URL -->
+      <!-- ============ CURRENTLY EXPLORING ============ -->
+      <section class="reveal mt-28 sm:mt-36">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / Currently exploring</p>
+        <h2 class="max-w-[20ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
+          What I'm actively working on
+        </h2>
+
+        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">🧠</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Deep Learning</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Building and training neural networks for vision, language, and multimodal tasks.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">🩺</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Medical AI</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Applying deep learning to medical imaging, diagnosis, and clinical decision support.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">📊</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Applied Analytics</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Turning raw, messy data into clear insights, models, and measurable decisions.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">✨</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Generative AI</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Building with LLMs, diffusion models, and modern generative architectures.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">🎛️</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Fine-tuning LLMs</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Parameter-efficient tuning with LoRA and QLoRA on domain-specific datasets.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40">
+            <div class="text-3xl">📚</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">RAG Systems</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Retrieval-augmented generation with vector databases and semantic search.
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-ink/10 p-8 transition-colors hover:border-accent/40 sm:col-span-2 lg:col-span-3">
+            <div class="text-3xl">🕸️</div>
+            <h3 class="mt-6 font-serif text-lg font-semibold">Agentic AI Engineering</h3>
+            <p class="mt-2 text-sm text-ink/60">
+              Stateful, tool-using agents with LangGraph, LangSmith, MCP, and human-in-the-loop workflows.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact" class="reveal mt-28 sm:mt-36">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / / Contact</p>
+
+        <h2 class="font-serif text-[clamp(2.5rem,7vw,5rem)] font-bold leading-[1.02] tracking-tight">
+          Let's build<br />
+          <span class="italic text-accent">something intelligent.</span>
+        </h2>
+
+        <div class="mt-14 grid gap-10 sm:grid-cols-2">
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
+            <a
+              href="mailto:spikick.cod@gmail.com"
+              class="mt-3 inline-block font-serif text-2xl font-semibold underline-offset-4 hover:underline sm:text-3xl"
+            >
+              spikick.cod@gmail.com
+            </a>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-[0.2em] text-ink/50">LinkedIn</p>
+            <a
+              href="https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-3 inline-block font-serif text-2xl font-semibold underline-offset-4 hover:underline sm:text-3xl"
+            >
+              Message me on LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-14 flex flex-wrap gap-3">
           <a
             href="https://github.com/aradmanamnaoon"
-            class="inline-flex min-h-[44px] items-center rounded-full border border-ink/15 bg-transparent px-5 py-2 text-sm font-medium text-accent transition-colors hover:border-accent/40 hover:bg-accent/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface transition-all hover:-translate-y-0.5 hover:shadow-[0_12px_30px_-10px_rgba(125,180,240,0.6)]"
           >
             GitHub
+            <span class="transition-transform group-hover:translate-x-1">→</span>
           </a>
-        </nav>
+          <a
+            href="https://huggingface.co/aradmanamnaoon"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
+          >
+            Hugging Face
+            <span class="transition-transform group-hover:translate-x-1">→</span>
+          </a>
+        </div>
       </section>
+
+      <!-- ============ FOOTER ============ -->
+      <footer class="mt-28 border-t border-ink/10 pt-8 sm:mt-36">
+        <div class="text-xs uppercase tracking-[0.2em] text-ink/40">
+          <span>© Seyyed Arad Hosseini Moghaddam</span>
+        </div>
+      </footer>
+
     </main>
+
+    <script src="./animations.js" defer></script>
   </body>
 </html>
