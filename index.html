@@ -8,7 +8,7 @@
     <title>Seyyed Arad Hosseini Moghaddam — Data Scientist &amp; AI Engineer</title>
     <meta
       name="description"
-      content="Seyyed Arad Hosseini Moghaddam is a data scientist and AI engineer building production ML systems, agentic AI, and RAG pipelines with Python, PyTorch, and LangGraph."
+      content="Seyyed Arad Hosseini Moghaddam is a data scientist and AI engineer specializing in deep learning, medical computer vision, NLP, LLM fine-tuning, RAG, and agentic AI."
     />
     <meta name="author" content="Seyyed Arad Hosseini Moghaddam" />
     <meta name="theme-color" content="#f7f5f0" />
@@ -264,36 +264,76 @@
 
     <!-- ============ FAQ STRUCTURED DATA ============ -->
     <script type="application/ld+json">
-    {
+{
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Who is Seyyed Arad Hosseini Moghaddam?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Seyyed Arad Hosseini Moghaddam is a data scientist and AI engineer who builds machine learning systems, agentic AI, and production-ready applications using Python, PyTorch, and LangGraph."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "What technologies does Arad Hosseini Moghaddam work with?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "He works with Python, PyTorch, TensorFlow, LangGraph, LangSmith, LangChain, Hugging Face Transformers, FastAPI, Docker, MLflow, and vector databases for RAG systems."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Where can I find Arad Hosseini Moghaddam's projects?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "His open-source code and experiments are on GitHub at github.com/aradmanamnaoon, and his models and datasets are on Hugging Face at huggingface.co/aradmanamnaoon."
-          }
-        }
+            {
+                  "@type": "Question",
+                  "name": "What kind of AI systems have you built?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "I've built multiple agentic AI and retrieval-augmented generation (RAG) systems, as well as deep learning and traditional machine-learning workflows. My agentic work includes LLM orchestration, tool-using workflows, retrieval pipelines, vector search, stateful interactions, and evaluation and observability patterns."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Do you train deep learning models from scratch?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. I've built and trained many deep learning models from scratch across computer vision, NLP, medical imaging, and other applied domains. One public example is Persian GPT, a 110.4M-parameter decoder-only transformer trained from scratch on Persian text."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What is your strongest area in computer vision?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Computer vision, especially medical imaging, is one of my strongest specializations. My work includes image segmentation, 3D medical-image pipelines, CNN-based modeling, preprocessing, inference, visualization, and task-specific evaluation."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Do you fine-tune LLMs and other pretrained models?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Yes. I've fine-tuned many models for specialized tasks using full fine-tuning and parameter-efficient approaches such as LoRA, QLoRA, and PEFT. Public fine-tuned models and adapters are available on my Hugging Face profile."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "What experience do you have with NLP and language models?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "My NLP work includes training language models from scratch, tokenizer and dataset preparation, transformer fine-tuning, structured information extraction, embeddings, semantic search, RAG, and LLM-based agent systems."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Where can I see your source code?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "My public code, experiments, and engineering projects are available on GitHub at github.com/aradmanamnaoon."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Where can I find your models, fine-tuned checkpoints, and datasets?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "I publish models, fine-tuned checkpoints, PEFT adapters, and datasets on Hugging Face at huggingface.co/aradmanamnaoon."
+                  }
+            },
+            {
+                  "@type": "Question",
+                  "name": "Which projects best represent your current skill set?",
+                  "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "Persian GPT demonstrates transformer training and NLP from scratch; 3D Cardiac MRI Segmentation demonstrates deep learning and medical computer vision; and Messy2JSON demonstrates LLM fine-tuning with QLoRA and structured extraction. My GitHub contains additional work, including agentic and RAG systems."
+                  }
+            }
       ]
-    }
+}
     </script>
 
     <!-- ============ INLINE FALLBACK STYLES (guaranteed to work) ============ -->
@@ -489,11 +529,7 @@
         background: rgb(125 180 240 / 0.16);
         color: rgb(20 24 31 / 0.75);
       }
-      .proof-status.building {
-        border: 1px dashed rgb(20 24 31 / 0.2);
-        color: rgb(20 24 31 / 0.55);
-      }
-      .open-source-grid {
+.open-source-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
@@ -508,13 +544,7 @@
         transform: translateY(-2px);
         border-color: rgb(125 180 240 / 0.55);
       }
-      .building-card {
-        border: 1px solid rgb(125 180 240 / 0.4);
-        border-radius: 1.5rem;
-        padding: clamp(1.5rem, 4vw, 2.5rem);
-        background: linear-gradient(135deg, rgb(125 180 240 / 0.12), transparent 60%);
-      }
-      .code-window {
+.code-window {
         margin-top: 1.25rem;
         overflow-x: auto;
         border-radius: 1rem;
@@ -530,6 +560,66 @@
         padding-left: 1rem;
         color: rgb(20 24 31 / 0.65);
       }
+
+      /* Visible FAQ */
+      .faq-shell {
+        border: 1px solid rgb(20 24 31 / 0.1);
+        border-radius: 1.5rem;
+        overflow: hidden;
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 42%);
+      }
+      .faq-item + .faq-item {
+        border-top: 1px solid rgb(20 24 31 / 0.1);
+      }
+      .faq-item summary {
+        position: relative;
+        cursor: pointer;
+        list-style: none;
+        padding: 1.4rem 4rem 1.4rem 1.5rem;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(1.05rem, 2vw, 1.3rem);
+        font-weight: 600;
+        line-height: 1.4;
+        transition: background 180ms ease;
+      }
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-item summary:hover {
+        background: rgb(125 180 240 / 0.06);
+      }
+      .faq-item summary::after {
+        content: "+";
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #7db4f0;
+        font-family: Inter, sans-serif;
+        font-size: 1.6rem;
+        font-weight: 400;
+        transition: transform 180ms ease;
+      }
+      .faq-item[open] summary::after {
+        transform: translateY(-50%) rotate(45deg);
+      }
+      .faq-item summary:focus-visible {
+        outline: 2px solid #7db4f0;
+        outline-offset: -4px;
+      }
+      .faq-answer {
+        max-width: 76ch;
+        padding: 0 4rem 1.5rem 1.5rem;
+        color: rgb(20 24 31 / 0.7);
+        line-height: 1.75;
+      }
+      .faq-answer a {
+        color: #4f86c6;
+        font-weight: 700;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
       @media (max-width: 720px) {
         .metric-grid, .proof-grid, .open-source-grid {
           grid-template-columns: 1fr;
@@ -584,10 +674,10 @@
 
         <p class="mt-10 max-w-[62ch] text-lg leading-relaxed text-ink/70 sm:text-xl">
           I'm <strong class="text-ink">Seyyed Arad Hosseini Moghaddam</strong> — a data scientist and
-          AI engineer who turns messy, real-world data into products people rely on. My work spans
-          production ML pipelines, deep learning for medical imaging, retrieval-augmented generation,
-          and stateful, observable <strong class="text-ink">agentic AI</strong> built with
-          LangGraph, LangSmith, and Deep Agents.
+          AI engineer working across deep learning, computer vision, medical imaging, NLP, LLMs,
+          retrieval-augmented generation, and <strong class="text-ink">agentic AI</strong>. I've built
+          multiple agentic and RAG systems, trained deep learning models from scratch across several
+          domains, and fine-tuned transformer models for specialized tasks.
         </p>
 
         <!-- ============ CTA buttons in hero ============ -->
@@ -661,15 +751,16 @@
         </h2>
         <div class="mt-10 grid gap-8 sm:grid-cols-2">
           <p class="leading-relaxed text-ink/80">
-            I'm a data scientist and machine learning engineer who turns messy, real-world data into
-            products people rely on. My work spans the full ML lifecycle — from exploratory analysis
-            and prototyping to training, evaluating, and shipping models to production.
+            I'm a data scientist and machine learning engineer working across the full ML lifecycle —
+            from data preparation and experimentation to model design, training, evaluation, deployment,
+            and iteration. I've built deep learning models from scratch for computer vision, NLP,
+            medical imaging, and other applied problems.
           </p>
           <p class="leading-relaxed text-ink/80">
-            More recently, I've focused on <strong class="text-ink">agentic AI engineering</strong>:
-            building stateful, tool-using LLM systems with LangGraph, instrumenting them with
-            LangSmith, and taking them from notebook to deployed, observable product. I care most
-            about the intersection of solid engineering, thoughtful statistics, and clear communication.
+            My strongest specialization is <strong class="text-ink">computer vision, especially medical imaging</strong>.
+            My generative-AI work includes multiple agentic and RAG systems, LLM orchestration,
+            retrieval pipelines, and extensive model fine-tuning with methods such as LoRA and QLoRA.
+            I publish code on GitHub and release models, adapters, and datasets on Hugging Face.
           </p>
         </div>
       </section>
@@ -804,8 +895,9 @@
           Skills are claims. <span class="italic text-accent">Projects are evidence.</span>
         </h2>
         <p class="mt-8 max-w-[66ch] text-lg leading-relaxed text-ink/70">
-          I want this portfolio to make a clear distinction between capabilities I can already demonstrate
-          publicly and areas where I'm actively building stronger production-grade evidence.
+          I use this portfolio to connect technical claims to concrete work: repositories, trained models,
+          evaluations, datasets, fine-tuned checkpoints, and systems I've built across deep learning,
+          computer vision, NLP, RAG, and agentic AI.
         </p>
 
         <div class="proof-grid mt-12">
@@ -837,12 +929,13 @@
           </article>
 
           <article class="proof-card">
-            <span class="proof-status building">○ Building stronger proof</span>
-            <h3 class="mt-5 font-serif text-xl font-semibold">Agentic AI, MCP &amp; production MLOps</h3>
+            <span class="proof-status proven">● Hands-on experience</span>
+            <h3 class="mt-5 font-serif text-xl font-semibold">Agentic AI &amp; RAG systems</h3>
             <p class="mt-2 text-sm leading-relaxed text-ink/60">
-              These are active focus areas. My next flagship project is designed to demonstrate orchestration, tool use, observability, testing, deployment, and production engineering together.
+              Multiple agentic and retrieval-augmented systems using LLM orchestration, tool calling,
+              retrieval, vector search, stateful workflows, and evaluation/observability patterns.
             </p>
-            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="#building">See what I'm building →</a>
+            <a class="mt-4 inline-block text-sm font-semibold text-accent" href="https://github.com/aradmanamnaoon" target="_blank" rel="noopener noreferrer me">Explore my GitHub ↗</a>
           </article>
         </div>
       </section>
@@ -948,7 +1041,7 @@
                 </div>
 
                 <div class="code-window" aria-label="Messy2JSON example">
-                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6208030c072203010f074c010d0f">[email&#160;protected]</a></div>
+                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="84eee5eae1c4e5e7e9e1aae7ebe9">[email&#160;protected]</a></div>
                   <div style="margin-top:.6rem"><span style="opacity:.55">OUTPUT</span> {"name": "Jane Doe", "role": "VP Engineering", "company": "Acme", ...}</div>
                 </div>
 
@@ -1053,41 +1146,6 @@
           </a>
         </div>
       </section>
-
-      <!-- ============ CURRENTLY BUILDING ============ -->
-      <section id="building" class="reveal mt-28 sm:mt-36" aria-labelledby="building-heading">
-        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / Currently building</p>
-        <h2 id="building-heading" class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight">
-          Turning agentic AI knowledge into <span class="italic text-accent">public evidence.</span>
-        </h2>
-
-        <div class="building-card mt-12">
-          <div class="grid gap-8 sm:grid-cols-2">
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Next flagship project</p>
-              <h3 class="mt-3 font-serif text-2xl font-semibold sm:text-3xl">MCP + LangGraph Project Assistant</h3>
-              <p class="mt-4 leading-relaxed text-ink/70">
-                A production-oriented assistant that connects an agent to files, databases, and external services through MCP, with durable state, tool permissions, observability, evaluation, and deployment.
-              </p>
-              <p class="evidence-note mt-6 text-sm leading-relaxed">
-                This section is intentionally labeled as work in progress. Once the repository, tests, traces, architecture, and deployed demo are public, it should graduate into Selected Work.
-              </p>
-            </div>
-            <div>
-              <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/50">Evidence I plan to ship</p>
-              <ul class="mt-4 space-y-3 text-sm leading-relaxed text-ink/70">
-                <li>✓ LangGraph stateful orchestration and tool routing</li>
-                <li>✓ MCP client plus multiple purpose-built MCP servers</li>
-                <li>✓ Authentication, authorization, and tool permission boundaries</li>
-                <li>✓ LangSmith traces, evaluations, latency and cost measurements</li>
-                <li>✓ FastAPI service, Docker image, CI/CD, tests, and deployment</li>
-                <li>✓ Architecture diagram, threat model, and engineering write-up</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <!-- ============ CURRENTLY EXPLORING ============ -->
       <section id="exploring" class="reveal mt-28 sm:mt-36" aria-labelledby="exploring-heading">
         <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / Currently exploring</p>
@@ -1159,6 +1217,105 @@
         </div>
       </section>
 
+
+      <!-- ============ FAQ ============ -->
+      <section id="faq" class="reveal mt-28 sm:mt-36" aria-labelledby="faq-heading">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / FAQ</p>
+        <h2
+          id="faq-heading"
+          class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight"
+        >
+          What I build, where I specialize, and <span class="italic text-accent">where to inspect the work.</span>
+        </h2>
+        <p class="mt-8 max-w-[68ch] text-lg leading-relaxed text-ink/70">
+          A concise overview of my experience across agentic AI, RAG, deep learning, computer vision,
+          medical imaging, NLP, and model fine-tuning.
+        </p>
+
+        <div class="faq-shell mt-12">
+          <details class="faq-item" open>
+            <summary>What kind of AI systems have you built?</summary>
+            <div class="faq-answer">
+              I've built multiple <strong class="text-ink">agentic AI and retrieval-augmented generation (RAG) systems</strong>,
+              as well as deep learning and traditional machine-learning workflows. My agentic work includes
+              LLM orchestration, tool-using workflows, retrieval pipelines, vector search, stateful interactions,
+              and evaluation and observability patterns.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Do you train deep learning models from scratch?</summary>
+            <div class="faq-answer">
+              Yes. I've built and trained many deep learning models from scratch across
+              <strong class="text-ink">computer vision, NLP, medical imaging, and other applied domains</strong>.
+              One public example is Persian GPT, a 110.4M-parameter decoder-only transformer trained from
+              scratch on Persian text, including corpus preparation, tokenizer training, model training, and evaluation.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>What is your strongest area in computer vision?</summary>
+            <div class="faq-answer">
+              <strong class="text-ink">Computer vision — especially medical imaging — is one of my strongest specializations.</strong>
+              My work includes image segmentation, 3D medical-image pipelines, CNN-based modeling, preprocessing,
+              inference, visualization, and task-specific evaluation. The 3D Cardiac MRI Segmentation project
+              featured above is one public example.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Do you fine-tune LLMs and other pretrained models?</summary>
+            <div class="faq-answer">
+              Yes. I've fine-tuned many models for specialized tasks using full fine-tuning and
+              parameter-efficient approaches such as <strong class="text-ink">LoRA, QLoRA, and PEFT</strong>.
+              You can inspect my public fine-tuned models and adapters on
+              <a href="https://huggingface.co/aradmanamnaoon" target="_blank" rel="noopener noreferrer me">Hugging Face</a>.
+              Messy2JSON is one public example of my QLoRA work.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>What experience do you have with NLP and language models?</summary>
+            <div class="faq-answer">
+              My NLP work includes training language models from scratch, tokenizer and dataset preparation,
+              transformer fine-tuning, structured information extraction, embeddings, semantic search, RAG,
+              and LLM-based agent systems. Persian GPT and Messy2JSON represent two different parts of that work.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Where can I see your source code?</summary>
+            <div class="faq-answer">
+              My public code, experiments, and engineering projects are available on
+              <a href="https://github.com/aradmanamnaoon" target="_blank" rel="noopener noreferrer me">GitHub</a>.
+              The Selected Work section highlights a few representative projects, while GitHub is the broader
+              place to inspect my code.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Where can I find your models, fine-tuned checkpoints, and datasets?</summary>
+            <div class="faq-answer">
+              I publish models, fine-tuned checkpoints, PEFT adapters, and datasets on
+              <a href="https://huggingface.co/aradmanamnaoon" target="_blank" rel="noopener noreferrer me">Hugging Face</a>.
+              That includes Persian NLP work, fine-tuned transformer models, adapters, and datasets used in
+              model-development pipelines.
+            </div>
+          </details>
+
+          <details class="faq-item">
+            <summary>Which projects best represent your current skill set?</summary>
+            <div class="faq-answer">
+              The featured projects intentionally demonstrate different strengths:
+              <strong class="text-ink">Persian GPT</strong> shows transformer training and NLP from scratch;
+              <strong class="text-ink">3D Cardiac MRI Segmentation</strong> shows deep learning and medical computer vision;
+              and <strong class="text-ink">Messy2JSON</strong> shows LLM fine-tuning with QLoRA and structured extraction.
+              My GitHub contains additional work, including agentic and RAG systems.
+            </div>
+          </details>
+        </div>
+      </section>
+
       <!-- ============ CONTACT ============ -->
       <section id="contact" class="reveal mt-28 sm:mt-36" aria-labelledby="contact-heading">
         <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / / Contact</p>
@@ -1174,8 +1331,8 @@
         <div class="mt-14 grid gap-10 sm:grid-cols-2">
           <div>
             <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
-            <a href="/cdn-cgi/l/email-protection#0a797a63616369612469656e4a6d676b636624696567" class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl" aria-label="Send an email to Seyyed Arad Hosseini Moghaddam">
-              <span class="__cf_email__" data-cfemail="681b180103010b03460b070c280f05090104460b0705">[email&#160;protected]</span>
+            <a href="/cdn-cgi/l/email-protection#f487849d9f9d979fda979b90b49399959d98da979b99" class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl" aria-label="Send an email to Seyyed Arad Hosseini Moghaddam">
+              <span class="__cf_email__" data-cfemail="4a393a23212329216429252e0a2d272b232664292527">[email&#160;protected]</span>
             </a>
           </div>
           <div>
@@ -1225,7 +1382,7 @@
             <li><a href="#projects">Projects</a></li>
             <li><a href="#proof">Proof of work</a></li>
             <li><a href="#open-source">Open source</a></li>
-            <li><a href="#building">Currently building</a></li>
+            <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
