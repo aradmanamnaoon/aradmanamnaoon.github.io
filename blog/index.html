@@ -119,6 +119,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 28px;
 
       min-height: 88px;
 
@@ -138,6 +139,8 @@
       text-transform: uppercase;
 
       text-decoration: none;
+      white-space: nowrap;
+      flex: 0 0 auto;
     }
 
     .blog-brand-mark {
@@ -157,7 +160,10 @@
     .blog-nav-links {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
       gap: 28px;
+      min-width: 0;
     }
 
     .blog-nav-links a {
@@ -249,50 +255,6 @@
 
       font-size: clamp(1rem, 1.5vw, 1.15rem);
       line-height: 1.8;
-    }
-
-    /* =========================================================
-       TOPICS
-       ========================================================= */
-
-    .blog-topics {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-
-      padding: 26px 0;
-
-      border-top: 1px solid rgba(237, 237, 237, 0.08);
-      border-bottom: 1px solid rgba(237, 237, 237, 0.08);
-    }
-
-    .blog-topic {
-      display: inline-flex;
-      align-items: center;
-
-      min-height: 34px;
-
-      padding: 0 14px;
-
-      border: 1px solid rgba(237, 237, 237, 0.1);
-      border-radius: 999px;
-
-      color: rgba(237, 237, 237, 0.5);
-
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-
-      transition:
-        color 180ms ease,
-        border-color 180ms ease,
-        background-color 180ms ease;
-    }
-
-    .blog-topic:hover {
-      color: var(--blog-ink);
-      border-color: rgba(125, 180, 240, 0.35);
-      background: rgba(125, 180, 240, 0.04);
     }
 
     /* =========================================================
@@ -648,21 +610,11 @@
     .blog-footer-inner {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
 
       gap: 30px;
 
       min-height: 110px;
-    }
-
-    .blog-footer p {
-      margin: 0;
-
-      color: rgba(237, 237, 237, 0.36);
-
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
     }
 
     .blog-footer-links {
@@ -710,6 +662,7 @@
 
       .blog-nav {
         min-height: 72px;
+        gap: 18px;
       }
 
       .blog-nav-links {
@@ -736,22 +689,6 @@
 
       .blog-intro {
         margin-top: 32px;
-      }
-
-      /* Topics */
-
-      .blog-topics {
-        gap: 8px;
-
-        padding: 22px 0;
-      }
-
-      .blog-topic {
-        min-height: 32px;
-
-        padding: 0 12px;
-
-        font-size: 0.62rem;
       }
 
       /* Archive */
@@ -994,47 +931,6 @@
 
 
     <!-- =====================================================
-         TOPICS
-         ===================================================== -->
-
-    <section aria-label="Blog topics">
-
-      <div class="blog-shell">
-
-        <div class="blog-topics">
-
-          <span class="blog-topic">
-            Artificial Intelligence
-          </span>
-
-          <span class="blog-topic">
-            Computer Vision
-          </span>
-
-          <span class="blog-topic">
-            Deep Learning
-          </span>
-
-          <span class="blog-topic">
-            RAG
-          </span>
-
-          <span class="blog-topic">
-            Agentic AI
-          </span>
-
-          <span class="blog-topic">
-            MLOps
-          </span>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =====================================================
          ARTICLE ARCHIVE
          ===================================================== -->
 
@@ -1225,11 +1121,6 @@
     <div class="blog-shell">
 
       <div class="blog-footer-inner">
-
-        <p>
-          AI · Machine Learning · Engineering
-        </p>
-
 
         <div class="blog-footer-links">
 
