@@ -33,7 +33,7 @@
   />
 
 
-  <script type="application/ld+json">
+  <script type="application/ld+json" data-blog-schema>
   {
     "@context": "https://schema.org",
     "@type": "Blog",
@@ -1138,6 +1138,98 @@
     </div>
 
   </footer>
+
+
+
+  <!-- =======================================================
+       AUTOMATIC ARTICLE ARCHIVE
+       ======================================================= -->
+  <script>
+    (() => {
+      const list = document.querySelector(".blog-post-list");
+      if (!list) return;
+
+      const make = (tag, className, text) => {
+        const el = document.createElement(tag);
+        if (className) el.className = className;
+        if (text !== undefined) el.textContent = text;
+        return el;
+      };
+
+      fetch("./articles.json", { cache: "no-cache" })
+        .then((response) => {
+          if (!response.ok) throw new Error("Could not load article index.");
+          return response.json();
+        })
+        .then((articles) => {
+          const ordered = [...articles].sort(
+            (a, b) => new Date(b.date) - new Date(a.date)
+          );
+
+          if (!ordered.length) return;
+
+          const fragment = document.createDocumentFragment();
+
+          ordered.forEach((article) => {
+            const post = make("a", "blog-post");
+            post.href = article.url;
+            post.setAttribute("aria-label", `Read ${article.title}`);
+
+            const meta = make("div", "blog-post-meta");
+            meta.append(
+              document.createTextNode(article.dateDisplay),
+              document.createElement("br"),
+              document.createTextNode(article.readTime)
+            );
+
+            const body = document.createElement("div");
+            body.appendChild(make("h3", "blog-post-title", article.title));
+            body.appendChild(
+              make("p", "blog-post-description", article.description)
+            );
+
+            const tags = make("div", "blog-post-tags");
+            tags.setAttribute("aria-label", "Article topics");
+            (article.tags || []).forEach((tag) => {
+              tags.appendChild(make("span", "blog-post-tag", tag));
+            });
+            body.appendChild(tags);
+
+            const arrow = make("span", "blog-post-arrow", "→");
+            arrow.setAttribute("aria-hidden", "true");
+
+            post.append(meta, body, arrow);
+            fragment.appendChild(post);
+          });
+
+          list.replaceChildren(fragment);
+
+          /* Keep the Blog JSON-LD synchronized for crawlers that render JS. */
+          const structuredData = document.querySelector(
+            'script[type="application/ld+json"][data-blog-schema]'
+          );
+          if (structuredData) {
+            try {
+              const schema = JSON.parse(structuredData.textContent);
+              schema.blogPost = ordered.map((article) => ({
+                "@type": "BlogPosting",
+                "@id": `https://aradmanamnaoon.github.io${article.url}#article`,
+                "url": `https://aradmanamnaoon.github.io${article.url}`,
+                "headline": article.title,
+                "datePublished": article.date,
+                "author": {
+                  "@id": "https://aradmanamnaoon.github.io/#person"
+                }
+              }));
+              structuredData.textContent = JSON.stringify(schema);
+            } catch (_) {}
+          }
+        })
+        .catch(() => {
+          /* Keep the server-rendered fallback article if JSON cannot load. */
+        });
+    })();
+  </script>
 
 
   <!-- =======================================================

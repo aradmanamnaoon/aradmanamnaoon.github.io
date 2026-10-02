@@ -1,0 +1,15 @@
+[
+  {
+    "title": "A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run",
+    "url": "/blog/hugging-face-nllb-gradient-accumulation-bug/",
+    "date": "2026-10-02",
+    "dateDisplay": "October 2, 2026",
+    "readTime": "8 min read",
+    "description": "How I traced an almost perfectly linear loss-scaling problem while fine-tuning NLLB-200 for English↔Persian translation—and fixed it with one Trainer setting.",
+    "tags": [
+      "Hugging Face",
+      "NLLB-200",
+      "Machine Learning"
+    ]
+  }
+]

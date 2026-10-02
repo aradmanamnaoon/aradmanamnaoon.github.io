@@ -1745,5 +1745,73 @@
       });
     </script>
 
+
+    <!-- ============ AUTOMATIC LATEST WRITING ============ -->
+    <script>
+      (() => {
+        const list = document.querySelector(".writing-post-list");
+        if (!list) return;
+
+        const make = (tag, className, text) => {
+          const el = document.createElement(tag);
+          if (className) el.className = className;
+          if (text !== undefined) el.textContent = text;
+          return el;
+        };
+
+        fetch("./blog/articles.json", { cache: "no-cache" })
+          .then((response) => {
+            if (!response.ok) throw new Error("Could not load article index.");
+            return response.json();
+          })
+          .then((articles) => {
+            const latest = [...articles]
+              .sort((a, b) => new Date(b.date) - new Date(a.date))
+              .slice(0, 3);
+
+            if (!latest.length) return;
+
+            const fragment = document.createDocumentFragment();
+
+            latest.forEach((article) => {
+              const card = make("a", "writing-post-card");
+              card.href = article.url;
+              card.setAttribute("aria-label", `Read ${article.title}`);
+
+              const body = document.createElement("div");
+              body.appendChild(
+                make(
+                  "div",
+                  "writing-post-meta",
+                  `${article.dateDisplay} · ${article.readTime}`
+                )
+              );
+              body.appendChild(make("h3", "writing-post-title", article.title));
+              body.appendChild(
+                make("p", "writing-post-description", article.description)
+              );
+
+              const tags = make("div", "writing-post-tags");
+              tags.setAttribute("aria-label", "Article topics");
+              (article.tags || []).forEach((tag) => {
+                tags.appendChild(make("span", "writing-post-tag", tag));
+              });
+              body.appendChild(tags);
+
+              const arrow = make("span", "writing-post-arrow", "→");
+              arrow.setAttribute("aria-hidden", "true");
+
+              card.append(body, arrow);
+              fragment.appendChild(card);
+            });
+
+            list.replaceChildren(fragment);
+          })
+          .catch(() => {
+            /* Keep the server-rendered fallback card if JSON cannot load. */
+          });
+      })();
+    </script>
+
   </body>
 </html>
