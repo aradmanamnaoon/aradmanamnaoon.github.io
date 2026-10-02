@@ -452,7 +452,7 @@
         padding-left: 1rem;
         color: rgb(20 24 31 / 0.65);
       }
-        /* ============ PRIMARY NAVIGATION ============ */
+/* ============ PRIMARY NAVIGATION ============ */
 .site-nav-wrap {
   position: relative;
   z-index: 20;
@@ -477,11 +477,7 @@
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 0.72rem;
-  transition:
-    color 180ms ease,
-    background-color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
+  transition: color 180ms ease;
 }
 
 .site-nav-brand {
@@ -502,28 +498,9 @@
   color: rgb(237 237 237 / 0.78);
 }
 
-.site-nav-links .site-nav-blog {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 38px;
-  padding: 0.55rem 0.95rem;
-  border: 1px solid rgb(237 237 237 / 0.2);
-  border-radius: 999px;
-  color: #ededed;
-  font-weight: 700;
-}
-
 .site-nav-brand:hover,
 .site-nav-links a:hover {
   color: var(--color-accent, #7db4f0);
-}
-
-.site-nav-links .site-nav-blog:hover {
-  border-color: #7db4f0;
-  background: rgb(125 180 240 / 0.12);
-  color: #7db4f0;
-  transform: translateY(-1px);
 }
 
 .site-nav-brand:focus-visible,
@@ -532,11 +509,6 @@
   outline: 2px solid var(--color-accent, #7db4f0);
   outline-offset: 4px;
   border-radius: 4px;
-}
-
-.site-nav-links .site-nav-blog:focus-visible {
-  border-color: #7db4f0;
-  background: rgb(125 180 240 / 0.12);
 }
 
 @media (max-width: 700px) {
@@ -822,7 +794,7 @@
           <a href="#skills">Skills</a>
           <a href="./projects/">Projects</a>
           <a href="#writing">Writing</a>
-          <a class="site-nav-blog" href="./blog/">Blog</a>
+          <a href="./blog/">Blog</a>
           <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </div>

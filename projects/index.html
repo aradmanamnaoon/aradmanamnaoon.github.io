@@ -162,15 +162,6 @@
       color: var(--ink);
     }
 
-    .nav-links .nav-blog {
-      display: inline-flex;
-      min-height: 38px;
-      align-items: center;
-      padding: 0.5rem 0.9rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-    }
-
     .hero {
       padding: 105px 0 90px;
     }
@@ -268,12 +259,101 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
-        .section-title {
+
+    .section-title {
       margin: 0;
       font-family: var(--serif);
       font-size: clamp(2rem, 5vw, 4rem);
       letter-spacing: -0.04em;
       line-height: 1;
+    }
+
+    .project-tools {
+      display: grid;
+      grid-template-columns: minmax(220px, 1fr) minmax(220px, 1fr) auto;
+      align-items: end;
+      gap: 16px;
+      margin: 0 0 24px;
+    }
+
+    .project-tools[hidden] {
+      display: none;
+    }
+
+    .project-filter-control {
+      display: grid;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .project-filter-control input,
+    .project-filter-control select {
+      width: 100%;
+      min-height: 46px;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface-raised);
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.9rem;
+      letter-spacing: normal;
+      text-transform: none;
+    }
+
+    .project-filter-control input::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    .project-filter-control input:focus-visible,
+    .project-filter-control select:focus-visible,
+    .filter-clear:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    .filter-clear {
+      min-height: 46px;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 0.76rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color 180ms ease, color 180ms ease;
+    }
+
+    .filter-clear:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .project-count {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .projects-empty {
+      margin: 24px 0 0;
+      padding: 24px;
+      border: 1px solid var(--soft-line);
+      border-radius: 16px;
+      color: var(--muted);
+    }
+
+    .project[hidden],
+    .projects-empty[hidden] {
+      display: none !important;
     }
 
     .projects {
@@ -448,6 +528,14 @@
         gap: 14px;
       }
 
+      .project-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .project-count {
+        grid-column: auto;
+      }
+
       .project {
         grid-template-columns: 1fr;
         gap: 12px;
@@ -515,7 +603,7 @@
       <div class="nav-links">
         <a class="nav-secondary" href="../#about">About</a>
         <a href="./" aria-current="page">Projects</a>
-        <a class="nav-blog" href="../blog/">Blog</a>
+        <a href="../blog/">Blog</a>
         <a href="../#contact">Contact</a>
       </div>
     </nav>
@@ -537,7 +625,7 @@
       </p>
 
       <div class="hero-links">
-                <a class="pill-link primary" href="#selected-projects">Explore projects ↓</a>
+        <a class="pill-link primary" href="#selected-projects">Explore projects ↓</a>
         <a
           class="pill-link"
           href="https://github.com/aradmanamnaoon"
@@ -563,7 +651,33 @@
         <h2 class="section-title" id="projects-title">Built, tested, published.</h2>
       </div>
 
-      <div class="projects">
+      <div class="project-tools" id="project-filters" hidden>
+        <label class="project-filter-control" for="project-search">
+          Search projects
+          <input
+            id="project-search"
+            type="search"
+            placeholder="Search titles, descriptions, or tools"
+            autocomplete="off"
+            aria-controls="project-list"
+          />
+        </label>
+
+        <label class="project-filter-control" for="skill-filter">
+          Filter by skill
+          <select id="skill-filter" aria-controls="project-list">
+            <option value="">All skills</option>
+          </select>
+        </label>
+
+        <button class="filter-clear" id="clear-project-filters" type="button">
+          Clear filters
+        </button>
+
+        <p class="project-count" id="project-count" role="status" aria-live="polite"></p>
+      </div>
+
+      <div class="projects" id="project-list">
         <article class="project" id="research-assistant">
           <div class="num" aria-hidden="true">01</div>
           <div>
@@ -639,8 +753,7 @@
             </div>
           </div>
         </article>
-
-        <article class="project" id="cardiac-mri">
+                <article class="project" id="cardiac-mri">
           <div class="num" aria-hidden="true">03</div>
           <div>
             <p class="type">Medical AI · 3D computer vision · Segmentation</p>
@@ -795,10 +908,13 @@
           </div>
         </article>
       </div>
+
+      <p class="projects-empty" id="projects-empty" hidden>
+        No projects match your search and selected skill.
+      </p>
     </section>
   </main>
-
-  <footer class="shell footer">
+    <footer class="shell footer">
     <span>© 2026 Seyyed Arad Hosseini Moghaddam</span>
     <nav class="footer-links" aria-label="Footer navigation">
       <a href="../">Portfolio</a>
@@ -806,6 +922,100 @@
       <a href="../#contact">Contact</a>
     </nav>
   </footer>
+
   <script src="../animations.js" defer></script>
+  <script>
+    (() => {
+      const filterPanel = document.getElementById("project-filters");
+      const searchInput = document.getElementById("project-search");
+      const skillSelect = document.getElementById("skill-filter");
+      const clearButton = document.getElementById("clear-project-filters");
+      const countMessage = document.getElementById("project-count");
+      const emptyMessage = document.getElementById("projects-empty");
+      const projectCards = Array.from(
+        document.querySelectorAll("#project-list .project")
+      );
+
+      if (
+        !filterPanel ||
+        !searchInput ||
+        !skillSelect ||
+        !clearButton ||
+        !countMessage ||
+        !emptyMessage ||
+        projectCards.length === 0
+      ) {
+        return;
+      }
+
+      const normalize = (value) =>
+        value.normalize("NFKC").trim().toLocaleLowerCase();
+
+      const projects = projectCards.map((card) => {
+        const skills = Array.from(card.querySelectorAll(".tag"))
+          .map((tag) => tag.textContent.trim())
+          .filter(Boolean);
+
+        return {
+          card,
+          skills,
+          searchableText: normalize(card.textContent),
+        };
+      });
+
+      const allSkills = [
+        ...new Set(projects.flatMap((project) => project.skills)),
+      ].sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+
+      for (const skill of allSkills) {
+        const option = document.createElement("option");
+        option.value = skill;
+        option.textContent = skill;
+        skillSelect.appendChild(option);
+      }
+
+      function applyFilters() {
+        const query = normalize(searchInput.value);
+        const selectedSkill = normalize(skillSelect.value);
+        let visibleCount = 0;
+
+        for (const project of projects) {
+          const matchesSearch =
+            query === "" || project.searchableText.includes(query);
+
+          const matchesSkill =
+            selectedSkill === "" ||
+            project.skills.some((skill) => normalize(skill) === selectedSkill);
+
+          const isVisible = matchesSearch && matchesSkill;
+          project.card.hidden = !isVisible;
+
+          if (isVisible) {
+            visibleCount += 1;
+          }
+        }
+
+        countMessage.textContent =
+          visibleCount === projects.length
+            ? `Showing all ${projects.length} projects`
+            : `Showing ${visibleCount} of ${projects.length} projects`;
+
+        emptyMessage.hidden = visibleCount !== 0;
+      }
+
+      searchInput.addEventListener("input", applyFilters);
+      skillSelect.addEventListener("change", applyFilters);
+
+      clearButton.addEventListener("click", () => {
+        searchInput.value = "";
+        skillSelect.value = "";
+        applyFilters();
+        searchInput.focus();
+      });
+
+      applyFilters();
+      filterPanel.hidden = false;
+    })();
+  </script>
 </body>
 </html>
