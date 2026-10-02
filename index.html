@@ -567,7 +567,7 @@
         justify-content: space-between;
         gap: 1.25rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid rgb(20 24 31 / 0.10);
+        border-bottom: 1px solid rgba(237, 237, 237, 0.08);
       }
 
       .site-nav-brand,
@@ -580,7 +580,7 @@
       }
 
       .site-nav-brand {
-        color: #14181f;
+        color: var(--color-ink, #ededed);
         font-weight: 700;
         white-space: nowrap;
       }
@@ -594,27 +594,7 @@
       }
 
       .site-nav-links a {
-        color: rgb(20 24 31 / 0.58);
-      }
-
-      .site-nav-links .site-nav-blog {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 38px;
-        padding: 0.55rem 0.95rem;
-        border: 1px solid rgb(20 24 31 / 0.18);
-        border-radius: 999px;
-        color: #14181f;
-        font-weight: 700;
-      }
-
-      .site-nav-links .site-nav-blog:hover,
-      .site-nav-links .site-nav-blog:focus-visible {
-        border-color: #7db4f0;
-        background: rgb(125 180 240 / 0.12);
-        color: #14181f;
-        transform: translateY(-1px);
+        color: rgba(237, 237, 237, 0.5);
       }
 
       .site-nav-brand:hover,
@@ -631,9 +611,8 @@
         display: grid;
         grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr);
         margin-top: 3rem;
-        border-top: 1px solid rgb(20 24 31 / 0.12);
-        border-bottom: 1px solid rgb(20 24 31 / 0.12);
-        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 48%);
+        border-top: 1px solid rgba(237, 237, 237, 0.1);
+        border-bottom: 1px solid rgba(237, 237, 237, 0.1);
       }
 
       .writing-empty-copy {
@@ -662,7 +641,7 @@
       .writing-empty-text {
         max-width: 62ch;
         margin: 1.4rem 0 0;
-        color: rgb(20 24 31 / 0.68);
+        color: rgba(237, 237, 237, 0.58);
         line-height: 1.8;
       }
 
@@ -679,9 +658,9 @@
         gap: 0.6rem;
         min-height: 42px;
         padding: 0 1rem;
-        border: 1px solid rgb(20 24 31 / 0.18);
+        border: 1px solid rgba(237, 237, 237, 0.14);
         border-radius: 999px;
-        color: #14181f;
+        color: var(--color-ink, #ededed);
         font-size: 0.7rem;
         letter-spacing: 0.12em;
         text-decoration: none;
@@ -699,7 +678,7 @@
       .writing-empty-visual {
         position: relative;
         min-height: 310px;
-        border-left: 1px solid rgb(20 24 31 / 0.08);
+        border-left: 1px solid rgba(237, 237, 237, 0.08);
       }
 
       .writing-empty-visual::before,
@@ -721,7 +700,7 @@
       .writing-empty-visual::after {
         width: 82px;
         height: 82px;
-        border: 1px solid rgb(20 24 31 / 0.16);
+        border: 1px solid rgba(237, 237, 237, 0.12);
       }
 
       .writing-dot {
@@ -765,7 +744,7 @@
 
         .writing-empty-visual {
           min-height: 230px;
-          border-top: 1px solid rgb(20 24 31 / 0.08);
+          border-top: 1px solid rgba(237, 237, 237, 0.08);
           border-left: 0;
         }
       }
@@ -894,7 +873,7 @@
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
           <a href="#writing">Writing</a>
-          <a class="site-nav-blog" href="./blog/">Blog</a>
+          <a href="./blog/">Blog</a>
           <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </div>
@@ -1620,6 +1599,7 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
+            <li><a href="#writing">Writing</a></li>
             <li><a href="./blog/">Blog</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
