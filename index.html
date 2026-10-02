@@ -1544,19 +1544,67 @@
         </h2>
 
         <div class="mt-14 grid gap-10 sm:grid-cols-2">
-          <div>
-            <p class="text-xs uppercase tracking-[0.2em] text-ink/50">Email</p>
-            <a
-              id="contact-email"
-              href="#contact"
-              data-email-user="spikick.cod"
-              data-email-domain="gmail.com"
-              class="mt-3 inline-block break-all font-serif text-xl font-semibold underline-offset-4 hover:underline sm:text-2xl"
-              aria-label="Send an email to Seyyed Arad Hosseini Moghaddam"
-            >
-              <span class="email-user">spikick.cod</span><span aria-hidden="true">&#64;</span><span class="email-domain">gmail.com</span>
-            </a>
-          </div>
+          <form
+  action="https://formspree.io/f/mbglvorp"
+  method="POST"
+  class="grid gap-4"
+>
+  <label class="grid gap-2 text-xs uppercase tracking-[0.2em] text-ink/50">
+    Your name
+    <input
+      type="text"
+      name="name"
+      required
+      maxlength="80"
+      autocomplete="name"
+      class="mt-1 min-h-12 w-full rounded-xl border border-ink/20 bg-transparent px-4 py-3 text-base normal-case tracking-normal text-ink placeholder:text-ink/40 focus:border-accent focus:outline-none"
+      placeholder="Your name"
+    />
+  </label>
+
+  <label class="grid gap-2 text-xs uppercase tracking-[0.2em] text-ink/50">
+    Your email
+    <input
+      type="email"
+      name="email"
+      required
+      maxlength="254"
+      autocomplete="email"
+      class="mt-1 min-h-12 w-full rounded-xl border border-ink/20 bg-transparent px-4 py-3 text-base normal-case tracking-normal text-ink placeholder:text-ink/40 focus:border-accent focus:outline-none"
+      placeholder="you@example.com"
+    />
+  </label>
+
+  <label class="grid gap-2 text-xs uppercase tracking-[0.2em] text-ink/50">
+    Message
+    <textarea
+      name="message"
+      required
+      maxlength="5000"
+      rows="5"
+      class="mt-1 w-full resize-y rounded-xl border border-ink/20 bg-transparent px-4 py-3 text-base normal-case tracking-normal text-ink placeholder:text-ink/40 focus:border-accent focus:outline-none"
+      placeholder="Write your message"
+    ></textarea>
+  </label>
+
+  <div class="sr-only" aria-hidden="true">
+    <label for="contact-website">Leave this field empty</label>
+    <input
+      id="contact-website"
+      type="text"
+      name="_gotcha"
+      tabindex="-1"
+      autocomplete="off"
+    />
+  </div>
+
+  <button
+    type="submit"
+    class="inline-flex min-h-[48px] items-center justify-center rounded-full bg-accent px-6 py-3 text-sm font-semibold text-surface transition-all hover:-translate-y-0.5"
+  >
+    Send message
+  </button>
+</form>
           <div>
             <p class="text-xs uppercase tracking-[0.2em] text-ink/50">LinkedIn</p>
             <a
@@ -1616,7 +1664,6 @@
 
     <script>
       (() => {
-        const emailLink = document.getElementById("contact-email");
         if (!emailLink) return;
 
         const user = emailLink.dataset.emailUser;
