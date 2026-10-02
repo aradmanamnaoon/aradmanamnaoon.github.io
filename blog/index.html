@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Blog | Aradman Amnaoon</title>
+
+  <meta
+    name="description"
+    content="Technical writing by Aradman Amnaoon about artificial intelligence, machine learning, computer vision, deep learning, RAG, agentic AI, and MLOps."
+  />
+
+  <meta name="robots" content="index, follow" />
+
+  <meta name="author" content="Aradman Amnaoon" />
+
+  <meta name="theme-color" content="#14181f" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Blog | Aradman Amnaoon" />
+  <meta
+    property="og:description"
+    content="Technical notes, experiments, project breakdowns, and deep-dives into AI, machine learning, computer vision, RAG, agentic systems, and MLOps."
+  />
+
+  <!-- Main portfolio stylesheet -->
+  <link href="../dist/output.css" rel="stylesheet" />
+
+  <style>
+    /* =========================================================
+       BLOG PAGE
+       ========================================================= */
+
+    :root {
+      --blog-surface: var(--color-surface, #14181f);
+      --blog-ink: var(--color-ink, #ededed);
+      --blog-accent: var(--color-accent, #7db4f0);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--blog-surface);
+      color: var(--blog-ink);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    ::selection {
+      background: var(--blog-accent);
+      color: #14181f;
+    }
+
+    /* =========================================================
+       ACCESSIBILITY
+       ========================================================= */
+
+    .blog-skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 9999;
+
+      padding: 10px 14px;
+
+      background: var(--blog-ink);
+      color: var(--blog-surface);
+
+      font-size: 0.75rem;
+      font-weight: 600;
+
+      text-decoration: none;
+
+      transform: translateY(-150%);
+      transition: transform 180ms ease;
+    }
+
+    .blog-skip-link:focus {
+      transform: translateY(0);
+    }
+
+    /* =========================================================
+       PAGE SHELL
+       ========================================================= */
+
+    .blog-shell {
+      width: min(1180px, calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    .blog-nav-wrapper {
+      position: relative;
+      z-index: 20;
+    }
+
+    .blog-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      min-height: 88px;
+
+      border-bottom: 1px solid rgba(237, 237, 237, 0.08);
+    }
+
+    .blog-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+
+      color: var(--blog-ink);
+
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+
+      text-decoration: none;
+    }
+
+    .blog-brand-mark {
+      width: 9px;
+      height: 9px;
+
+      flex: 0 0 auto;
+
+      border-radius: 999px;
+
+      background: var(--blog-accent);
+
+      box-shadow:
+        0 0 22px rgba(125, 180, 240, 0.55);
+    }
+
+    .blog-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .blog-nav-links a {
+      position: relative;
+
+      color: rgba(237, 237, 237, 0.58);
+
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+
+      text-decoration: none;
+
+      transition:
+        color 180ms ease,
+        opacity 180ms ease;
+    }
+
+    .blog-nav-links a:hover,
+    .blog-nav-links a:focus-visible,
+    .blog-nav-links a[aria-current="page"] {
+      color: var(--blog-ink);
+    }
+
+    .blog-nav-links a[aria-current="page"]::after {
+      content: "";
+
+      position: absolute;
+
+      right: 0;
+      bottom: -9px;
+      left: 0;
+
+      height: 1px;
+
+      background: var(--blog-accent);
+    }
+
+    /* =========================================================
+       HERO
+       ========================================================= */
+
+    .blog-hero {
+      padding: 118px 0 90px;
+    }
+
+    .blog-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+
+      margin: 0 0 24px;
+
+      color: rgba(237, 237, 237, 0.45);
+
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .blog-eyebrow::before {
+      content: "";
+
+      width: 32px;
+      height: 1px;
+
+      flex: 0 0 auto;
+
+      background: var(--blog-accent);
+    }
+
+    .blog-title {
+      max-width: 900px;
+
+      margin: 0;
+
+      font-size: clamp(3.6rem, 9vw, 8.5rem);
+      font-weight: 500;
+      line-height: 0.88;
+      letter-spacing: -0.065em;
+    }
+
+    .blog-intro {
+      max-width: 680px;
+
+      margin: 44px 0 0;
+
+      color: rgba(237, 237, 237, 0.58);
+
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       TOPICS
+       ========================================================= */
+
+    .blog-topics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+
+      padding: 26px 0;
+
+      border-top: 1px solid rgba(237, 237, 237, 0.08);
+      border-bottom: 1px solid rgba(237, 237, 237, 0.08);
+    }
+
+    .blog-topic {
+      display: inline-flex;
+      align-items: center;
+
+      min-height: 34px;
+
+      padding: 0 14px;
+
+      border: 1px solid rgba(237, 237, 237, 0.1);
+      border-radius: 999px;
+
+      color: rgba(237, 237, 237, 0.5);
+
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+
+      transition:
+        color 180ms ease,
+        border-color 180ms ease,
+        background-color 180ms ease;
+    }
+
+    .blog-topic:hover {
+      color: var(--blog-ink);
+      border-color: rgba(125, 180, 240, 0.35);
+      background: rgba(125, 180, 240, 0.04);
+    }
+
+    /* =========================================================
+       ARCHIVE
+       ========================================================= */
+
+    .blog-archive {
+      padding: 96px 0 140px;
+    }
+
+    .blog-section-head {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+
+      align-items: start;
+
+      margin-bottom: 60px;
+    }
+
+    .blog-section-number {
+      color: rgba(237, 237, 237, 0.34);
+
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .blog-section-title {
+      margin: 0;
+
+      font-size: clamp(2rem, 5vw, 4.2rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.045em;
+    }
+
+    /* =========================================================
+       EMPTY BLOG STATE
+       ========================================================= */
+
+    .blog-empty {
+      position: relative;
+
+      overflow: hidden;
+
+      display: grid;
+      grid-template-columns:
+        minmax(0, 1.4fr)
+        minmax(240px, 0.6fr);
+
+      min-height: 390px;
+
+      border-top: 1px solid rgba(237, 237, 237, 0.12);
+      border-bottom: 1px solid rgba(237, 237, 237, 0.12);
+    }
+
+    .blog-empty-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding: 70px 60px 70px 0;
+    }
+
+    .blog-empty-label {
+      margin-bottom: 22px;
+
+      color: var(--blog-accent);
+
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .blog-empty-title {
+      max-width: 650px;
+
+      margin: 0;
+
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.045em;
+    }
+
+    .blog-empty-text {
+      max-width: 560px;
+
+      margin: 28px 0 0;
+
+      color: rgba(237, 237, 237, 0.52);
+
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       EMPTY STATE VISUAL
+       ========================================================= */
+
+    .blog-empty-visual {
+      position: relative;
+
+      min-height: 390px;
+
+      border-left: 1px solid rgba(237, 237, 237, 0.08);
+    }
+
+    .blog-empty-visual::before,
+    .blog-empty-visual::after {
+      content: "";
+
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      border-radius: 999px;
+
+      transform: translate(-50%, -50%);
+    }
+
+    .blog-empty-visual::before {
+      width: 190px;
+      height: 190px;
+
+      border: 1px solid rgba(125, 180, 240, 0.2);
+    }
+
+    .blog-empty-visual::after {
+      width: 92px;
+      height: 92px;
+
+      border: 1px solid rgba(237, 237, 237, 0.12);
+    }
+
+    .blog-center-dot {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: rgba(237, 237, 237, 0.75);
+
+      transform: translate(-50%, -50%);
+    }
+
+    .blog-orbit-dot {
+      position: absolute;
+
+      top: calc(50% - 5px);
+      left: calc(50% + 90px);
+
+      width: 10px;
+      height: 10px;
+
+      border-radius: 50%;
+
+      background: var(--blog-accent);
+
+      box-shadow:
+        0 0 28px rgba(125, 180, 240, 0.7);
+
+      transform-origin: -90px 5px;
+
+      animation: blog-orbit 9s linear infinite;
+    }
+
+    @keyframes blog-orbit {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================================================
+       REAL ARTICLE LIST
+       READY FOR FUTURE POSTS
+       ========================================================= */
+
+    .blog-post-list {
+      display: grid;
+    }
+
+    .blog-post {
+      display: grid;
+      grid-template-columns:
+        160px
+        minmax(0, 1fr)
+        auto;
+
+      gap: 34px;
+
+      align-items: center;
+
+      padding: 34px 0;
+
+      border-top: 1px solid rgba(237, 237, 237, 0.09);
+
+      color: inherit;
+
+      text-decoration: none;
+
+      transition:
+        border-color 180ms ease,
+        background-color 180ms ease;
+    }
+
+    .blog-post:last-child {
+      border-bottom:
+        1px solid rgba(237, 237, 237, 0.09);
+    }
+
+    .blog-post:hover {
+      border-color: rgba(125, 180, 240, 0.2);
+    }
+
+    .blog-post-meta {
+      color: rgba(237, 237, 237, 0.38);
+
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .blog-post-title {
+      margin: 0;
+
+      font-size: clamp(1.35rem, 2.5vw, 2.2rem);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+
+      transition: color 180ms ease;
+    }
+
+    .blog-post:hover .blog-post-title {
+      color: var(--blog-accent);
+    }
+
+    .blog-post-description {
+      max-width: 700px;
+
+      margin: 12px 0 0;
+
+      color: rgba(237, 237, 237, 0.48);
+
+      line-height: 1.7;
+    }
+
+    .blog-post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+
+      margin-top: 18px;
+    }
+
+    .blog-post-tag {
+      color: rgba(237, 237, 237, 0.36);
+
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .blog-post-tag + .blog-post-tag::before {
+      content: "·";
+
+      margin-right: 8px;
+
+      color: rgba(237, 237, 237, 0.2);
+    }
+
+    .blog-post-arrow {
+      color: rgba(237, 237, 237, 0.36);
+
+      font-size: 1.3rem;
+
+      transition:
+        color 180ms ease,
+        transform 180ms ease;
+    }
+
+    .blog-post:hover .blog-post-arrow {
+      color: var(--blog-accent);
+      transform: translateX(5px);
+    }
+
+    /* =========================================================
+       BLOG PHILOSOPHY / INTRO
+       ========================================================= */
+
+    .blog-about {
+      padding: 0 0 120px;
+    }
+
+    .blog-about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 40px;
+
+      padding-top: 50px;
+
+      border-top: 1px solid rgba(237, 237, 237, 0.08);
+    }
+
+    .blog-about-label {
+      color: rgba(237, 237, 237, 0.34);
+
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .blog-about-content {
+      max-width: 700px;
+    }
+
+    .blog-about-content h2 {
+      margin: 0;
+
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    .blog-about-content p {
+      margin: 28px 0 0;
+
+      color: rgba(237, 237, 237, 0.5);
+
+      line-height: 1.8;
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .blog-footer {
+      border-top: 1px solid rgba(237, 237, 237, 0.08);
+    }
+
+    .blog-footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 30px;
+
+      min-height: 110px;
+    }
+
+    .blog-footer p {
+      margin: 0;
+
+      color: rgba(237, 237, 237, 0.36);
+
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .blog-footer-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .blog-footer-link {
+      color: rgba(237, 237, 237, 0.55);
+
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+
+      text-decoration: none;
+
+      transition: color 180ms ease;
+    }
+
+    .blog-footer-link:hover,
+    .blog-footer-link:focus-visible {
+      color: var(--blog-accent);
+    }
+
+    /* =========================================================
+       FOCUS
+       ========================================================= */
+
+    a:focus-visible {
+      outline: 2px solid var(--blog-accent);
+      outline-offset: 5px;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 760px) {
+      .blog-shell {
+        width: min(100% - 32px, 1180px);
+      }
+
+      /* Navigation */
+
+      .blog-nav {
+        min-height: 72px;
+      }
+
+      .blog-nav-links {
+        gap: 16px;
+      }
+
+      .blog-nav-links a {
+        font-size: 0.64rem;
+      }
+
+      .blog-nav-secondary {
+        display: none;
+      }
+
+      /* Hero */
+
+      .blog-hero {
+        padding: 84px 0 70px;
+      }
+
+      .blog-title {
+        font-size: clamp(3.4rem, 20vw, 6rem);
+      }
+
+      .blog-intro {
+        margin-top: 32px;
+      }
+
+      /* Topics */
+
+      .blog-topics {
+        gap: 8px;
+
+        padding: 22px 0;
+      }
+
+      .blog-topic {
+        min-height: 32px;
+
+        padding: 0 12px;
+
+        font-size: 0.62rem;
+      }
+
+      /* Archive */
+
+      .blog-archive {
+        padding: 72px 0 100px;
+      }
+
+      .blog-section-head {
+        grid-template-columns: 1fr;
+
+        gap: 16px;
+
+        margin-bottom: 42px;
+      }
+
+      /* Empty state */
+
+      .blog-empty {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-empty-copy {
+        padding: 54px 0;
+      }
+
+      .blog-empty-visual {
+        min-height: 280px;
+
+        border-top: 1px solid rgba(237, 237, 237, 0.08);
+        border-left: 0;
+      }
+
+      /* Article list */
+
+      .blog-post {
+        grid-template-columns: 1fr auto;
+
+        gap: 18px;
+      }
+
+      .blog-post-meta {
+        grid-column: 1 / -1;
+      }
+
+      .blog-post-description {
+        padding-right: 12px;
+      }
+
+      /* About */
+
+      .blog-about {
+        padding-bottom: 90px;
+      }
+
+      .blog-about-grid {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+      }
+
+      /* Footer */
+
+      .blog-footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+
+        padding: 32px 0;
+      }
+
+      .blog-footer-links {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 460px) {
+      .blog-brand {
+        font-size: 0.67rem;
+        letter-spacing: 0.1em;
+      }
+
+      .blog-nav-links {
+        gap: 12px;
+      }
+
+      .blog-nav-links a {
+        letter-spacing: 0.08em;
+      }
+
+      .blog-title {
+        font-size: clamp(3.2rem, 22vw, 5rem);
+      }
+
+      .blog-empty-title {
+        font-size: 2rem;
+      }
+
+      .blog-footer-links {
+        gap: 16px;
+      }
+    }
+
+    /* =========================================================
+       REDUCED MOTION
+       ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+      }
+
+      .blog-orbit-dot {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- =======================================================
+       SKIP LINK
+       ======================================================= -->
+
+  <a
+    class="blog-skip-link"
+    href="#main-content"
+  >
+    Skip to content
+  </a>
+
+
+  <!-- =======================================================
+       NAVIGATION
+       ======================================================= -->
+
+  <header class="blog-nav-wrapper">
+
+    <div class="blog-shell">
+
+      <nav
+        class="blog-nav"
+        aria-label="Primary navigation"
+      >
+
+        <!-- Brand -->
+
+        <a
+          class="blog-brand"
+          href="../"
+          aria-label="Aradman Amnaoon — Portfolio home"
+        >
+
+          <span
+            class="blog-brand-mark"
+            aria-hidden="true"
+          ></span>
+
+          <span>
+            Aradman Amnaoon
+          </span>
+
+        </a>
+
+
+        <!-- Navigation -->
+
+        <div class="blog-nav-links">
+
+          <a
+            class="blog-nav-secondary"
+            href="../#about"
+          >
+            About
+          </a>
+
+          <a
+            class="blog-nav-secondary"
+            href="../#projects"
+          >
+            Projects
+          </a>
+
+          <a
+            href="./"
+            aria-current="page"
+          >
+            Blog
+          </a>
+
+          <a href="../#contact">
+            Contact
+          </a>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+  <!-- =======================================================
+       MAIN
+       ======================================================= -->
+
+  <main id="main-content">
+
+
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
+    <section class="blog-hero">
+
+      <div class="blog-shell">
+
+        <p class="blog-eyebrow">
+          Notes, experiments and technical deep-dives
+        </p>
+
+        <h1 class="blog-title">
+          Writing.
+        </h1>
+
+        <p class="blog-intro">
+          Practical notes and technical deep-dives from my work in
+          artificial intelligence, machine learning, computer vision,
+          deep learning, RAG, agentic systems and MLOps.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOPICS
+         ===================================================== -->
+
+    <section aria-label="Blog topics">
+
+      <div class="blog-shell">
+
+        <div class="blog-topics">
+
+          <span class="blog-topic">
+            Artificial Intelligence
+          </span>
+
+          <span class="blog-topic">
+            Computer Vision
+          </span>
+
+          <span class="blog-topic">
+            Deep Learning
+          </span>
+
+          <span class="blog-topic">
+            RAG
+          </span>
+
+          <span class="blog-topic">
+            Agentic AI
+          </span>
+
+          <span class="blog-topic">
+            MLOps
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ARTICLE ARCHIVE
+         ===================================================== -->
+
+    <section
+      class="blog-archive"
+      aria-labelledby="writing-heading"
+    >
+
+      <div class="blog-shell">
+
+
+        <!-- Section heading -->
+
+        <div class="blog-section-head">
+
+          <div class="blog-section-number">
+            01 / Archive
+          </div>
+
+          <h2
+            class="blog-section-title"
+            id="writing-heading"
+          >
+            Latest writing
+          </h2>
+
+        </div>
+
+
+        <!-- =================================================
+             EMPTY STATE
+
+             Keep this until the first real article is created.
+             We will replace this with real article cards later.
+             ================================================= -->
+
+        <div class="blog-empty">
+
+          <div class="blog-empty-copy">
+
+            <span class="blog-empty-label">
+              Writing in progress
+            </span>
+
+            <h3 class="blog-empty-title">
+              The first article is on its way.
+            </h3>
+
+            <p class="blog-empty-text">
+              This space will contain practical engineering notes,
+              project breakdowns, experiments, lessons learned and
+              technical tutorials based on real AI and machine
+              learning work.
+            </p>
+
+          </div>
+
+
+          <!-- Decorative visual -->
+
+          <div
+            class="blog-empty-visual"
+            aria-hidden="true"
+          >
+
+            <span class="blog-center-dot"></span>
+
+            <span class="blog-orbit-dot"></span>
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             FUTURE REAL POSTS
+
+             DO NOT uncomment yet.
+
+             When we write the first article, this is the
+             structure we will use.
+
+        <div class="blog-post-list">
+
+          <a
+            class="blog-post"
+            href="./example-post/"
+          >
+
+            <div class="blog-post-meta">
+              October 2026
+              <br />
+              8 min read
+            </div>
+
+            <div>
+
+              <h3 class="blog-post-title">
+                Example article title
+              </h3>
+
+              <p class="blog-post-description">
+                A short description explaining what the article
+                covers and why it is useful.
+              </p>
+
+              <div class="blog-post-tags">
+
+                <span class="blog-post-tag">
+                  AI
+                </span>
+
+                <span class="blog-post-tag">
+                  Python
+                </span>
+
+              </div>
+
+            </div>
+
+            <span
+              class="blog-post-arrow"
+              aria-hidden="true"
+            >
+              →
+            </span>
+
+          </a>
+
+        </div>
+
+             ================================================= -->
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ABOUT THE BLOG
+         ===================================================== -->
+
+    <section
+      class="blog-about"
+      aria-labelledby="about-blog-heading"
+    >
+
+      <div class="blog-shell">
+
+        <div class="blog-about-grid">
+
+          <div class="blog-about-label">
+            02 / About
+          </div>
+
+          <div class="blog-about-content">
+
+            <h2 id="about-blog-heading">
+              Engineering notes from real work.
+            </h2>
+
+            <p>
+              I use this space to document the decisions,
+              experiments, failures, techniques and lessons behind
+              the systems I build. The goal is practical technical
+              writing grounded in real projects rather than
+              generic AI commentary.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =======================================================
+       FOOTER
+       ======================================================= -->
+
+  <footer class="blog-footer">
+
+    <div class="blog-shell">
+
+      <div class="blog-footer-inner">
+
+        <p>
+          AI · Machine Learning · Engineering
+        </p>
+
+
+        <div class="blog-footer-links">
+
+          <a
+            class="blog-footer-link"
+            href="../"
+          >
+            ← Portfolio
+          </a>
+
+          <a
+            class="blog-footer-link"
+            href="../#projects"
+          >
+            Projects
+          </a>
+
+          <a
+            class="blog-footer-link"
+            href="../#contact"
+          >
+            Contact
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- =======================================================
+       EXISTING PORTFOLIO ANIMATION SYSTEM
+       ======================================================= -->
+
+  <script
+    src="../animations.js"
+    defer
+  ></script>
+
+</body>
+</html>
