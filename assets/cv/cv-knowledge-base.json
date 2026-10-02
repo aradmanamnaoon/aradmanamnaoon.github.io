@@ -1,5 +1,5 @@
 {
-  "knowledgeVersion": "2026-10-02.2",
+  "knowledgeVersion": "2026-10-02.3",
 
   "profile": {
     "name": "Seyyed Arad Hosseini Moghaddam",
@@ -14,7 +14,7 @@
 
     "professional_identity": "Arad is an AI and machine learning practitioner focused on building deep learning systems, computer vision applications, medical AI solutions, natural language processing systems, large language models, retrieval augmented generation systems, and generative AI applications.",
 
-    "about": "Arad works on artificial intelligence and machine learning projects with a focus on practical implementation, experimentation, reproducibility, and publishing technical work through GitHub and Hugging Face.",
+    "about": "Arad works on artificial intelligence and machine learning projects with a focus on practical implementation, experimentation, reproducibility, and publishing technical work through GitHub and Hugging Face. He also develops cross-platform mobile applications with Flutter for Android and iOS.",
 
     "main_specializations": [
       "Deep Learning",
@@ -38,9 +38,9 @@
 
   "professional_summary": {
 
-    "short": "Data Scientist and AI Engineer specializing in deep learning, computer vision, medical imaging, NLP, and generative AI.",
+    "short": "Data Scientist and AI Engineer specializing in deep learning, computer vision, medical imaging, NLP, and generative AI, with Flutter cross-platform mobile app development for Android and iOS.",
 
-    "long": "Arad develops artificial intelligence systems across multiple domains including medical image analysis, language modeling, retrieval augmented generation, and model fine-tuning. His work includes training models from scratch, adapting existing foundation models, creating datasets, building RAG systems, and publishing reproducible AI projects.",
+    "long": "Arad develops artificial intelligence systems across multiple domains including medical image analysis, language modeling, retrieval augmented generation, and model fine-tuning. His work includes training models from scratch, adapting existing foundation models, creating datasets, building RAG systems, publishing reproducible AI projects, and developing cross-platform mobile applications with Flutter for Android and iOS.",
 
     "engineering_approach": [
       "Problem definition",
@@ -209,6 +209,21 @@
         "Knowledge bases",
         "Semantic similarity",
         "Local AI assistants"
+      ]
+    },
+
+
+    "mobile_app_development": {
+
+      "description": "Cross-platform mobile application development with Flutter for Android and iOS.",
+
+      "frameworks": [
+        "Flutter"
+      ],
+
+      "target_platforms": [
+        "Android",
+        "iOS"
       ]
     },
 
@@ -861,6 +876,28 @@
     },
 
 
+    "mobile_development": {
+
+      "description": "Cross-platform mobile app development using Flutter for Android and iOS.",
+
+      "skills": [
+        "Flutter",
+        "Cross-platform mobile app development",
+        "Android app development",
+        "iOS app development"
+      ],
+
+      "frameworks": [
+        "Flutter"
+      ],
+
+      "target_platforms": [
+        "Android",
+        "iOS"
+      ]
+    },
+
+
     "deep_learning": {
 
       "description": "Building and experimenting with deep learning architectures.",
@@ -1138,6 +1175,22 @@
     ],
 
 
+    "mobile_development_frameworks": [
+
+      {
+
+        "name": "Flutter",
+
+        "usage": [
+          "Cross-platform mobile application development",
+          "Android app development",
+          "iOS app development"
+        ]
+      }
+
+    ],
+
+
     "agent_tools": [
 
       {
@@ -1383,11 +1436,28 @@
 
 
     {
+      "id": "flutter-mobile-development",
+
+      "question": "Does Arad develop Android and iOS apps with Flutter?",
+
+      "answer": "Yes. Arad develops cross-platform mobile applications with Flutter for Android and iOS.",
+
+      "related_tags": [
+        "skills",
+        "Flutter",
+        "mobile development",
+        "Android",
+        "iOS"
+      ]
+    },
+
+
+    {
       "id": "technologies",
 
       "question": "What technologies does Arad use?",
 
-      "answer": "Arad uses Python, PyTorch, TensorFlow, Transformers, Hugging Face, MONAI, PEFT, LoRA, QLoRA, embeddings, RAG systems, LangGraph, LangSmith, and MCP.",
+      "answer": "Arad uses Python, PyTorch, TensorFlow, Transformers, Hugging Face, MONAI, PEFT, LoRA, QLoRA, embeddings, RAG systems, LangGraph, LangSmith, and MCP. He also uses Flutter for cross-platform mobile app development targeting Android and iOS.",
 
       "related_tags": [
         "skills",

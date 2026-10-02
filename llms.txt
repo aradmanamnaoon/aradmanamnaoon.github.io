@@ -1,11 +1,14 @@
 # ARADMANAMNAOON
 
-> Portfolio and technical writing by Seyyed Arad Hosseini Moghaddam, an AI engineer and data scientist working on agentic AI, RAG, deep learning, medical computer vision, NLP, Persian language models, and LLM fine-tuning.
+> Portfolio and technical writing by Seyyed Arad Hosseini Moghaddam, an AI engineer and data scientist working on agentic AI, RAG, deep learning, medical computer vision, NLP, Persian language models, LLM fine-tuning, and Flutter cross-platform mobile development for Android and iOS.
 
 ## Primary pages
 - [Portfolio](https://aradmanamnaoon.github.io/): Profile, skills, selected work, writing, and contact.
 - [Projects](https://aradmanamnaoon.github.io/projects/): Evidence-first archive of selected AI and machine-learning projects.
 - [Technical blog](https://aradmanamnaoon.github.io/blog/): First-hand experiments, debugging stories, project breakdowns, and engineering lessons.
+
+## Skills
+- Flutter for cross-platform mobile app development targeting Android and iOS.
 
 ## Featured technical writing
 - [A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run](https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/)
