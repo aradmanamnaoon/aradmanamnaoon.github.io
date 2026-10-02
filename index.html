@@ -552,6 +552,224 @@
 
 
 
+      /* ============ PRIMARY NAVIGATION ============ */
+      .site-nav-wrap {
+        position: relative;
+        z-index: 20;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem 0;
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.25rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgb(20 24 31 / 0.10);
+      }
+
+      .site-nav-brand,
+      .site-nav-links a {
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        font-size: 0.72rem;
+        transition: color 180ms ease;
+      }
+
+      .site-nav-brand {
+        color: #14181f;
+        font-weight: 700;
+        white-space: nowrap;
+      }
+
+      .site-nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 0.8rem 1.4rem;
+      }
+
+      .site-nav-links a {
+        color: rgb(20 24 31 / 0.58);
+      }
+
+      .site-nav-links .site-nav-blog {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0.55rem 0.95rem;
+        border: 1px solid rgb(20 24 31 / 0.18);
+        border-radius: 999px;
+        color: #14181f;
+        font-weight: 700;
+      }
+
+      .site-nav-links .site-nav-blog:hover,
+      .site-nav-links .site-nav-blog:focus-visible {
+        border-color: #7db4f0;
+        background: rgb(125 180 240 / 0.12);
+        color: #14181f;
+        transform: translateY(-1px);
+      }
+
+      .site-nav-brand:hover,
+      .site-nav-links a:hover,
+      .site-nav-brand:focus-visible,
+      .site-nav-links a:focus-visible {
+        color: var(--color-accent, #7db4f0);
+      }
+
+      /* ============ LATEST WRITING ============ */
+      .writing-empty {
+        position: relative;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr);
+        margin-top: 3rem;
+        border-top: 1px solid rgb(20 24 31 / 0.12);
+        border-bottom: 1px solid rgb(20 24 31 / 0.12);
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 48%);
+      }
+
+      .writing-empty-copy {
+        padding: 3.5rem 3.5rem 3.5rem 0;
+      }
+
+      .writing-empty-label {
+        display: block;
+        margin-bottom: 1rem;
+        color: var(--color-accent, #7db4f0);
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .writing-empty-title {
+        margin: 0;
+        max-width: 18ch;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -0.035em;
+      }
+
+      .writing-empty-text {
+        max-width: 62ch;
+        margin: 1.4rem 0 0;
+        color: rgb(20 24 31 / 0.68);
+        line-height: 1.8;
+      }
+
+      .writing-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1.8rem;
+      }
+
+      .writing-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        min-height: 42px;
+        padding: 0 1rem;
+        border: 1px solid rgb(20 24 31 / 0.18);
+        border-radius: 999px;
+        color: #14181f;
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: border-color 180ms ease, color 180ms ease, transform 180ms ease;
+      }
+
+      .writing-link:hover,
+      .writing-link:focus-visible {
+        border-color: rgba(125, 180, 240, 0.55);
+        color: var(--color-accent, #7db4f0);
+        transform: translateY(-1px);
+      }
+
+      .writing-empty-visual {
+        position: relative;
+        min-height: 310px;
+        border-left: 1px solid rgb(20 24 31 / 0.08);
+      }
+
+      .writing-empty-visual::before,
+      .writing-empty-visual::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 999px;
+        transform: translate(-50%, -50%);
+      }
+
+      .writing-empty-visual::before {
+        width: 170px;
+        height: 170px;
+        border: 1px solid rgba(125, 180, 240, 0.22);
+      }
+
+      .writing-empty-visual::after {
+        width: 82px;
+        height: 82px;
+        border: 1px solid rgb(20 24 31 / 0.16);
+      }
+
+      .writing-dot {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-accent, #7db4f0);
+        box-shadow: 0 0 24px rgba(125, 180, 240, 0.65);
+        transform: translate(-50%, -50%);
+      }
+
+      @media (max-width: 700px) {
+        .site-nav-wrap {
+          padding-top: 1.25rem;
+        }
+
+        .site-nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .site-nav-links {
+          justify-content: flex-start;
+          gap: 0.7rem 1rem;
+        }
+
+        .site-nav-links a {
+          font-size: 0.65rem;
+        }
+
+        .writing-empty {
+          grid-template-columns: 1fr;
+        }
+
+        .writing-empty-copy {
+          padding: 2.75rem 0;
+        }
+
+        .writing-empty-visual {
+          min-height: 230px;
+          border-top: 1px solid rgb(20 24 31 / 0.08);
+          border-left: 0;
+        }
+      }
+
       /* ============ FAQ ============ */
       .faq-list {
         margin-top: 3rem;
@@ -664,6 +882,23 @@
   <body class="relative bg-surface font-sans text-ink antialiased">
     <!-- ============ SKIP LINK (accessibility + SEO) ============ -->
     <a href="#main" class="skip-link">Skip to main content</a>
+
+
+    <!-- ============ PRIMARY NAVIGATION ============ -->
+    <div class="site-nav-wrap">
+      <nav class="site-nav" aria-label="Primary navigation">
+        <a class="site-nav-brand" href="./" aria-label="Portfolio home">Aradman Amnaoon</a>
+
+        <div class="site-nav-links">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a class="site-nav-blog" href="./blog/">Blog</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
 
     <main id="main" class="mx-auto max-w-[1100px] px-6 py-16 sm:py-24">
 
@@ -1177,6 +1412,50 @@
         </div>
       </section>
 
+      <!-- ============ LATEST WRITING ============ -->
+      <section id="writing" class="reveal mt-28 sm:mt-36" aria-labelledby="writing-heading">
+        <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / / Writing</p>
+
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <h2
+            id="writing-heading"
+            class="max-w-[22ch] font-serif text-[clamp(2rem,5vw,3.75rem)] font-bold leading-[1.05] tracking-tight"
+          >
+            Latest <span class="italic text-accent">writing.</span>
+          </h2>
+
+          <a class="writing-link" href="./blog/" aria-label="Open the full blog archive">
+            Visit the blog <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <p class="mt-8 max-w-[65ch] text-lg leading-relaxed text-ink/70">
+          Technical notes, project breakdowns, experiments, and lessons from building AI and machine-learning systems.
+        </p>
+
+        <!-- No placeholder articles: this becomes the latest three real posts after we write them. -->
+        <div class="writing-empty">
+          <div class="writing-empty-copy">
+            <span class="writing-empty-label">Writing in progress</span>
+            <h3 class="writing-empty-title">The first article is on its way.</h3>
+            <p class="writing-empty-text">
+              I’m preparing practical engineering notes based on real projects, including AI systems,
+              deep learning, computer vision, RAG, agentic workflows, and MLOps.
+            </p>
+
+            <div class="writing-actions">
+              <a class="writing-link" href="./blog/">
+                Open blog archive <span aria-hidden="true">→</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="writing-empty-visual" aria-hidden="true">
+            <span class="writing-dot"></span>
+          </div>
+        </div>
+      </section>
+
       <!-- ============ FAQ ============ -->
       <section id="faq" class="reveal mt-28 sm:mt-36" aria-labelledby="faq-heading">
         <p class="mb-6 text-xs uppercase tracking-[0.25em] text-ink/40">/ / / / / / FAQ</p>
@@ -1340,7 +1619,8 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-<li><a href="#faq">FAQ</a></li>
+            <li><a href="./blog/">Blog</a></li>
+            <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
