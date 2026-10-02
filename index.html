@@ -859,10 +859,13 @@
       /* ===== Live public proof bar ===== */
       .public-proof {
         margin-top: 2.25rem;
-        border: 1px solid rgb(20 24 31 / 0.10);
-        border-radius: 1.5rem;
         overflow: hidden;
-        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 62%);
+        border: 1px solid rgb(247 245 240 / 0.12);
+        border-radius: 1.5rem;
+        background:
+          radial-gradient(circle at 68% 20%, rgb(125 180 240 / 0.10), transparent 34%),
+          linear-gradient(135deg, rgb(247 245 240 / 0.035), rgb(247 245 240 / 0.012));
+        box-shadow: inset 0 1px 0 rgb(247 245 240 / 0.025);
       }
 
       .public-proof-head {
@@ -870,31 +873,33 @@
         align-items: center;
         justify-content: space-between;
         gap: 1rem;
-        padding: 0.9rem 1.15rem;
-        border-bottom: 1px solid rgb(20 24 31 / 0.08);
+        padding: 1rem 1.25rem;
+        border-bottom: 1px solid rgb(247 245 240 / 0.10);
       }
 
       .public-proof-kicker {
         margin: 0;
-        font-size: 0.68rem;
+        color: rgb(247 245 240 / 0.86);
+        font-size: 0.7rem;
         font-weight: 700;
-        letter-spacing: 0.16em;
+        letter-spacing: 0.18em;
         text-transform: uppercase;
-        color: rgb(20 24 31 / 0.50);
       }
 
       .public-proof-live {
         display: inline-flex;
         align-items: center;
-        gap: 0.45rem;
-        font-size: 0.68rem;
-        color: rgb(20 24 31 / 0.48);
+        gap: 0.55rem;
+        color: rgb(247 245 240 / 0.60);
+        font-size: 0.7rem;
+        white-space: nowrap;
       }
 
       .public-proof-live::before {
         content: "";
-        width: 0.45rem;
-        height: 0.45rem;
+        width: 0.48rem;
+        height: 0.48rem;
+        flex: 0 0 auto;
         border-radius: 999px;
         background: #7db4f0;
         box-shadow: 0 0 0 4px rgb(125 180 240 / 0.14);
@@ -906,12 +911,15 @@
       }
 
       .public-proof-item {
+        position: relative;
         min-width: 0;
-        padding: 1.35rem 1.15rem 1.45rem;
-        color: inherit;
+        padding: 1.35rem 1.25rem 1.5rem;
+        color: #f7f5f0;
         text-decoration: none;
-        border-right: 1px solid rgb(20 24 31 / 0.08);
-        transition: background-color 180ms ease;
+        border-right: 1px solid rgb(247 245 240 / 0.09);
+        transition:
+          background-color 180ms ease,
+          transform 180ms ease;
       }
 
       .public-proof-item:last-child {
@@ -923,26 +931,68 @@
         background: rgb(125 180 240 / 0.08);
       }
 
+      .public-proof-item:focus-visible {
+        outline: 2px solid #7db4f0;
+        outline-offset: -2px;
+      }
+
+      .public-proof-item-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1.15rem;
+      }
+
+      .public-proof-source {
+        color: rgb(247 245 240 / 0.54);
+        font-size: 0.64rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .public-proof-arrow {
+        color: #7db4f0;
+        font-size: 0.9rem;
+        line-height: 1;
+        transition: transform 180ms ease;
+      }
+
+      .public-proof-item:hover .public-proof-arrow {
+        transform: translate(2px, -2px);
+      }
+
       .public-proof-value {
         display: block;
+        color: #f7f5f0;
         font-family: "Playfair Display", serif;
-        font-size: clamp(1.65rem, 4vw, 2.35rem);
+        font-size: clamp(2rem, 4vw, 2.7rem);
         font-weight: 700;
-        line-height: 1;
+        line-height: 0.95;
         letter-spacing: -0.035em;
       }
 
       .public-proof-label {
         display: block;
-        margin-top: 0.55rem;
-        font-size: 0.72rem;
+        margin-top: 0.65rem;
+        color: rgb(247 245 240 / 0.68);
+        font-size: 0.76rem;
+        font-weight: 500;
         line-height: 1.45;
-        color: rgb(20 24 31 / 0.55);
       }
 
       @media (max-width: 720px) {
+        .public-proof-head {
+          padding: 0.9rem 1rem;
+        }
+
         .public-proof-grid {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .public-proof-item {
+          padding: 1.2rem 1rem 1.35rem;
         }
 
         .public-proof-item:nth-child(2) {
@@ -950,7 +1000,29 @@
         }
 
         .public-proof-item:nth-child(-n + 2) {
-          border-bottom: 1px solid rgb(20 24 31 / 0.08);
+          border-bottom: 1px solid rgb(247 245 240 / 0.09);
+        }
+      }
+
+      @media (max-width: 420px) {
+        .public-proof-head {
+          align-items: flex-start;
+          flex-direction: column;
+          gap: 0.55rem;
+        }
+
+        .public-proof-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .public-proof-item,
+        .public-proof-item:nth-child(2) {
+          border-right: 0;
+          border-bottom: 1px solid rgb(247 245 240 / 0.09);
+        }
+
+        .public-proof-item:last-child {
+          border-bottom: 0;
         }
       }
 
@@ -1067,7 +1139,7 @@
 
 
       <!-- ============ LIVE PUBLIC PROOF ============ -->
-      <aside class="public-proof" aria-label="Public GitHub and Hugging Face activity">
+      <aside class="public-proof" aria-label="Verified public GitHub and Hugging Face activity">
         <div class="public-proof-head">
           <p class="public-proof-kicker">Public work</p>
           <span class="public-proof-live">Live public metrics</span>
@@ -1079,9 +1151,14 @@
             href="https://github.com/aradmanamnaoon?tab=repositories"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View public GitHub repositories"
           >
-            <strong class="public-proof-value" data-proof="github-repos">2</strong>
-            <span class="public-proof-label">public GitHub repositories</span>
+            <span class="public-proof-item-top">
+              <span class="public-proof-source">GitHub</span>
+              <span class="public-proof-arrow" aria-hidden="true">↗</span>
+            </span>
+            <strong class="public-proof-value" data-proof="github-repos">4</strong>
+            <span class="public-proof-label">Public repositories</span>
           </a>
 
           <a
@@ -1089,9 +1166,14 @@
             href="https://huggingface.co/aradmanamnaoon/models"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View public Hugging Face models"
           >
+            <span class="public-proof-item-top">
+              <span class="public-proof-source">Hugging Face</span>
+              <span class="public-proof-arrow" aria-hidden="true">↗</span>
+            </span>
             <strong class="public-proof-value" data-proof="hf-models">5</strong>
-            <span class="public-proof-label">public Hugging Face models</span>
+            <span class="public-proof-label">Public models</span>
           </a>
 
           <a
@@ -1099,9 +1181,14 @@
             href="https://huggingface.co/aradmanamnaoon"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View Hugging Face profile and model activity"
           >
-            <strong class="public-proof-value" data-proof="hf-downloads">400+</strong>
-            <span class="public-proof-label">model downloads · last 30 days</span>
+            <span class="public-proof-item-top">
+              <span class="public-proof-source">Hugging Face</span>
+              <span class="public-proof-arrow" aria-hidden="true">↗</span>
+            </span>
+            <strong class="public-proof-value" data-proof="hf-downloads">442</strong>
+            <span class="public-proof-label">Model downloads · last 30 days</span>
           </a>
 
           <a
@@ -1109,9 +1196,14 @@
             href="https://huggingface.co/aradmanamnaoon/datasets"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="View public Hugging Face datasets"
           >
+            <span class="public-proof-item-top">
+              <span class="public-proof-source">Hugging Face</span>
+              <span class="public-proof-arrow" aria-hidden="true">↗</span>
+            </span>
             <strong class="public-proof-value" data-proof="hf-datasets">1</strong>
-            <span class="public-proof-label">public Hugging Face dataset</span>
+            <span class="public-proof-label">Public dataset</span>
           </a>
         </div>
       </aside>
