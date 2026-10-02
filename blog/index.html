@@ -15,7 +15,9 @@
     content="Technical writing by Aradman Amnaoon about artificial intelligence, machine learning, computer vision, deep learning, RAG, agentic AI, and MLOps."
   />
 
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+  <link rel="canonical" href="https://aradmanamnaoon.github.io/blog/" />
 
   <meta name="author" content="Aradman Amnaoon" />
 
@@ -23,11 +25,47 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://aradmanamnaoon.github.io/blog/" />
   <meta property="og:title" content="Blog | Aradman Amnaoon" />
   <meta
     property="og:description"
     content="Technical notes, experiments, project breakdowns, and deep-dives into AI, machine learning, computer vision, RAG, agentic systems, and MLOps."
   />
+
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": "https://aradmanamnaoon.github.io/blog/#blog",
+    "url": "https://aradmanamnaoon.github.io/blog/",
+    "name": "Aradman Amnaoon — Writing",
+    "description": "Technical notes, experiments, debugging stories and project breakdowns from real AI and machine-learning work.",
+    "inLanguage": "en",
+    "author": {
+      "@type": "Person",
+      "@id": "https://aradmanamnaoon.github.io/#person",
+      "name": "Seyyed Arad Hosseini Moghaddam",
+      "url": "https://aradmanamnaoon.github.io/",
+      "sameAs": [
+        "https://github.com/aradmanamnaoon",
+        "https://huggingface.co/aradmanamnaoon"
+      ]
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "@id": "https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/#article",
+        "url": "https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/",
+        "headline": "A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run",
+        "datePublished": "2026-10-02",
+        "author": {
+          "@id": "https://aradmanamnaoon.github.io/#person"
+        }
+      }
+    ]
+  }
+  </script>
 
   <!-- Main portfolio stylesheet -->
   <link href="../dist/output.css" rel="stylesheet" />
@@ -971,68 +1009,17 @@
         </div>
 
 
-        <!-- =================================================
-             EMPTY STATE
-
-             Keep this until the first real article is created.
-             We will replace this with real article cards later.
-             ================================================= -->
-
-        <div class="blog-empty">
-
-          <div class="blog-empty-copy">
-
-            <span class="blog-empty-label">
-              Writing in progress
-            </span>
-
-            <h3 class="blog-empty-title">
-              The first article is on its way.
-            </h3>
-
-            <p class="blog-empty-text">
-              This space will contain practical engineering notes,
-              project breakdowns, experiments, lessons learned and
-              technical tutorials based on real AI and machine
-              learning work.
-            </p>
-
-          </div>
-
-
-          <!-- Decorative visual -->
-
-          <div
-            class="blog-empty-visual"
-            aria-hidden="true"
-          >
-
-            <span class="blog-center-dot"></span>
-
-            <span class="blog-orbit-dot"></span>
-
-          </div>
-
-        </div>
-
-
-        <!-- =================================================
-             FUTURE REAL POSTS
-
-             DO NOT uncomment yet.
-
-             When we write the first article, this is the
-             structure we will use.
-
+        <!-- Published articles -->
         <div class="blog-post-list">
 
           <a
             class="blog-post"
-            href="./example-post/"
+            href="./hugging-face-nllb-gradient-accumulation-bug/"
+            aria-label="Read A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run"
           >
 
             <div class="blog-post-meta">
-              October 2026
+              October 2, 2026
               <br />
               8 min read
             </div>
@@ -1040,40 +1027,28 @@
             <div>
 
               <h3 class="blog-post-title">
-                Example article title
+                A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run
               </h3>
 
               <p class="blog-post-description">
-                A short description explaining what the article
-                covers and why it is useful.
+                I was fine-tuning NLLB-200 for English↔Persian translation when training loss
+                reached nearly 10× validation loss. A controlled gradient-accumulation sweep
+                exposed the real problem inside the training loop.
               </p>
 
-              <div class="blog-post-tags">
-
-                <span class="blog-post-tag">
-                  AI
-                </span>
-
-                <span class="blog-post-tag">
-                  Python
-                </span>
-
+              <div class="blog-post-tags" aria-label="Article topics">
+                <span class="blog-post-tag">Hugging Face</span>
+                <span class="blog-post-tag">NLLB-200</span>
+                <span class="blog-post-tag">Machine Learning</span>
               </div>
 
             </div>
 
-            <span
-              class="blog-post-arrow"
-              aria-hidden="true"
-            >
-              →
-            </span>
+            <span class="blog-post-arrow" aria-hidden="true">→</span>
 
           </a>
 
         </div>
-
-             ================================================= -->
 
       </div>
 

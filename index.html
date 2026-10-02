@@ -182,7 +182,7 @@
             "height": 630
           },
           "datePublished": "2024-01-01",
-          "dateModified": "2026-10-01",
+          "dateModified": "2026-10-02",
           "breadcrumb": { "@id": "https://aradmanamnaoon.github.io/#breadcrumb" }
         },
         {
@@ -567,7 +567,7 @@
         justify-content: space-between;
         gap: 1.25rem;
         padding-bottom: 1rem;
-        border-bottom: 1px solid rgba(237, 237, 237, 0.08);
+        border-bottom: 1px solid rgb(20 24 31 / 0.10);
       }
 
       .site-nav-brand,
@@ -580,7 +580,7 @@
       }
 
       .site-nav-brand {
-        color: var(--color-ink, #ededed);
+        color: #14181f;
         font-weight: 700;
         white-space: nowrap;
       }
@@ -594,7 +594,27 @@
       }
 
       .site-nav-links a {
-        color: rgba(237, 237, 237, 0.5);
+        color: rgb(20 24 31 / 0.58);
+      }
+
+      .site-nav-links .site-nav-blog {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 38px;
+        padding: 0.55rem 0.95rem;
+        border: 1px solid rgb(20 24 31 / 0.18);
+        border-radius: 999px;
+        color: #14181f;
+        font-weight: 700;
+      }
+
+      .site-nav-links .site-nav-blog:hover,
+      .site-nav-links .site-nav-blog:focus-visible {
+        border-color: #7db4f0;
+        background: rgb(125 180 240 / 0.12);
+        color: #14181f;
+        transform: translateY(-1px);
       }
 
       .site-nav-brand:hover,
@@ -611,8 +631,9 @@
         display: grid;
         grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr);
         margin-top: 3rem;
-        border-top: 1px solid rgba(237, 237, 237, 0.1);
-        border-bottom: 1px solid rgba(237, 237, 237, 0.1);
+        border-top: 1px solid rgb(20 24 31 / 0.12);
+        border-bottom: 1px solid rgb(20 24 31 / 0.12);
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 48%);
       }
 
       .writing-empty-copy {
@@ -641,7 +662,7 @@
       .writing-empty-text {
         max-width: 62ch;
         margin: 1.4rem 0 0;
-        color: rgba(237, 237, 237, 0.58);
+        color: rgb(20 24 31 / 0.68);
         line-height: 1.8;
       }
 
@@ -658,9 +679,9 @@
         gap: 0.6rem;
         min-height: 42px;
         padding: 0 1rem;
-        border: 1px solid rgba(237, 237, 237, 0.14);
+        border: 1px solid rgb(20 24 31 / 0.18);
         border-radius: 999px;
-        color: var(--color-ink, #ededed);
+        color: #14181f;
         font-size: 0.7rem;
         letter-spacing: 0.12em;
         text-decoration: none;
@@ -678,7 +699,7 @@
       .writing-empty-visual {
         position: relative;
         min-height: 310px;
-        border-left: 1px solid rgba(237, 237, 237, 0.08);
+        border-left: 1px solid rgb(20 24 31 / 0.08);
       }
 
       .writing-empty-visual::before,
@@ -700,7 +721,7 @@
       .writing-empty-visual::after {
         width: 82px;
         height: 82px;
-        border: 1px solid rgba(237, 237, 237, 0.12);
+        border: 1px solid rgb(20 24 31 / 0.16);
       }
 
       .writing-dot {
@@ -744,7 +765,7 @@
 
         .writing-empty-visual {
           min-height: 230px;
-          border-top: 1px solid rgba(237, 237, 237, 0.08);
+          border-top: 1px solid rgb(20 24 31 / 0.08);
           border-left: 0;
         }
       }
@@ -855,6 +876,83 @@
           transition: none;
         }
       }
+
+      /* ===== Published writing ===== */
+      .writing-post-list {
+        display: grid;
+        gap: 1rem;
+        margin-top: 2.25rem;
+      }
+      .writing-post-card {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 1.5rem;
+        align-items: center;
+        border: 1px solid rgb(20 24 31 / 0.12);
+        border-radius: 1.5rem;
+        padding: clamp(1.4rem, 4vw, 2.25rem);
+        color: inherit;
+        text-decoration: none;
+        background: linear-gradient(135deg, rgb(125 180 240 / 0.08), transparent 55%);
+        transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+      }
+      .writing-post-card:hover {
+        transform: translateY(-3px);
+        border-color: rgb(125 180 240 / 0.55);
+        box-shadow: 0 24px 60px -42px rgb(20 24 31 / 0.45);
+      }
+      .writing-post-meta {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: rgb(20 24 31 / 0.45);
+      }
+      .writing-post-title {
+        margin: 0.8rem 0 0;
+        max-width: 28ch;
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.5rem, 3vw, 2.2rem);
+        font-weight: 700;
+        line-height: 1.12;
+        letter-spacing: -0.025em;
+      }
+      .writing-post-description {
+        max-width: 66ch;
+        margin: 0.85rem 0 0;
+        color: rgb(20 24 31 / 0.65);
+        line-height: 1.7;
+      }
+      .writing-post-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .writing-post-tag {
+        border: 1px solid rgb(20 24 31 / 0.12);
+        border-radius: 999px;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.68rem;
+        font-weight: 600;
+        color: rgb(20 24 31 / 0.6);
+      }
+      .writing-post-arrow {
+        color: #7db4f0;
+        font-size: 1.6rem;
+        transition: transform 180ms ease;
+      }
+      .writing-post-card:hover .writing-post-arrow {
+        transform: translateX(5px);
+      }
+      @media (max-width: 640px) {
+        .writing-post-card {
+          grid-template-columns: 1fr;
+        }
+        .writing-post-arrow {
+          display: none;
+        }
+      }
+
     </style>
   </head>
 
@@ -873,7 +971,7 @@
           <a href="#skills">Skills</a>
           <a href="#projects">Projects</a>
           <a href="#writing">Writing</a>
-          <a href="./blog/">Blog</a>
+          <a class="site-nav-blog" href="./blog/">Blog</a>
           <a href="#faq">FAQ</a>
           <a href="#contact">Contact</a>
         </div>
@@ -1413,26 +1511,36 @@
           Technical notes, project breakdowns, experiments, and lessons from building AI and machine-learning systems.
         </p>
 
-        <!-- No placeholder articles: this becomes the latest three real posts after we write them. -->
-        <div class="writing-empty">
-          <div class="writing-empty-copy">
-            <span class="writing-empty-label">Writing in progress</span>
-            <h3 class="writing-empty-title">The first article is on its way.</h3>
-            <p class="writing-empty-text">
-              I’m preparing practical engineering notes based on real projects, including AI systems,
-              deep learning, computer vision, RAG, agentic workflows, and MLOps.
-            </p>
+        <!-- Latest published articles. Keep the newest three here. -->
+        <div class="writing-post-list">
 
-            <div class="writing-actions">
-              <a class="writing-link" href="./blog/">
-                Open blog archive <span aria-hidden="true">→</span>
-              </a>
+          <a
+            class="writing-post-card"
+            href="./blog/hugging-face-nllb-gradient-accumulation-bug/"
+            aria-label="Read A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run"
+          >
+            <div>
+              <div class="writing-post-meta">October 2, 2026 · 8 min read</div>
+
+              <h3 class="writing-post-title">
+                A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run
+              </h3>
+
+              <p class="writing-post-description">
+                How I traced an almost perfectly linear loss-scaling problem while fine-tuning
+                NLLB-200 for English↔Persian translation—and fixed it with one Trainer setting.
+              </p>
+
+              <div class="writing-post-tags" aria-label="Article topics">
+                <span class="writing-post-tag">Hugging Face</span>
+                <span class="writing-post-tag">NLLB-200</span>
+                <span class="writing-post-tag">Machine Learning</span>
+              </div>
             </div>
-          </div>
 
-          <div class="writing-empty-visual" aria-hidden="true">
-            <span class="writing-dot"></span>
-          </div>
+            <span class="writing-post-arrow" aria-hidden="true">→</span>
+          </a>
+
         </div>
       </section>
 
@@ -1599,7 +1707,6 @@
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#writing">Writing</a></li>
             <li><a href="./blog/">Blog</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#contact">Contact</a></li>
