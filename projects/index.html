@@ -47,6 +47,7 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="../dist/output.css" />
 
   <style>
     :root {
@@ -267,8 +268,7 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
-
-    .section-title {
+        .section-title {
       margin: 0;
       font-family: var(--serif);
       font-size: clamp(2rem, 5vw, 4rem);
@@ -505,7 +505,7 @@
   </script>
 </head>
 
-<body>
+<body class="relative bg-surface font-sans text-ink antialiased">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="nav-wrap shell">
@@ -537,7 +537,7 @@
       </p>
 
       <div class="hero-links">
-        <a class="pill-link primary" href="#selected-projects">Explore projects ↓</a>
+                <a class="pill-link primary" href="#selected-projects">Explore projects ↓</a>
         <a
           class="pill-link"
           href="https://github.com/aradmanamnaoon"
@@ -806,5 +806,6 @@
       <a href="../#contact">Contact</a>
     </nav>
   </footer>
+  <script src="../animations.js" defer></script>
 </body>
 </html>
