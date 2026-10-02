@@ -1,0 +1,734 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    CV RAG Generation Test
+  </title>
+
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    body {
+      margin: 0;
+
+      background:
+        #0b0f19;
+
+      color:
+        #f8fafc;
+
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+
+    main {
+      width:
+        min(
+          900px,
+          calc(100% - 40px)
+        );
+
+      margin:
+        50px auto;
+    }
+
+
+    h1 {
+      margin-bottom:
+        8px;
+    }
+
+
+    .description {
+      color:
+        #94a3b8;
+
+      line-height:
+        1.6;
+    }
+
+
+    #status {
+      margin:
+        25px 0;
+
+      padding:
+        14px 16px;
+
+      border:
+        1px solid #1e293b;
+
+      border-radius:
+        12px;
+
+      background:
+        #111827;
+    }
+
+
+    #progress-container {
+      height:
+        8px;
+
+      overflow:
+        hidden;
+
+      margin-bottom:
+        25px;
+
+      border-radius:
+        999px;
+
+      background:
+        #1e293b;
+    }
+
+
+    #progress {
+      width:
+        0%;
+
+      height:
+        100%;
+
+      background:
+        #38bdf8;
+
+      transition:
+        width 150ms ease;
+    }
+
+
+    .question-row {
+      display:
+        flex;
+
+      gap:
+        10px;
+
+      margin-bottom:
+        20px;
+    }
+
+
+    input {
+      flex:
+        1;
+
+      min-width:
+        0;
+
+      padding:
+        14px 16px;
+
+      border:
+        1px solid #334155;
+
+      border-radius:
+        10px;
+
+      outline:
+        none;
+
+      background:
+        #111827;
+
+      color:
+        #f8fafc;
+
+      font:
+        inherit;
+    }
+
+
+    input:focus {
+      border-color:
+        #38bdf8;
+    }
+
+
+    button {
+      padding:
+        14px 20px;
+
+      border:
+        0;
+
+      border-radius:
+        10px;
+
+      cursor:
+        pointer;
+
+      background:
+        #38bdf8;
+
+      color:
+        #020617;
+
+      font:
+        inherit;
+
+      font-weight:
+        700;
+    }
+
+
+    button:disabled {
+      cursor:
+        wait;
+
+      opacity:
+        0.5;
+    }
+
+
+    #answer {
+      min-height:
+        150px;
+
+      padding:
+        20px;
+
+      border:
+        1px solid #1e293b;
+
+      border-radius:
+        14px;
+
+      background:
+        #111827;
+
+      color:
+        #e2e8f0;
+
+      line-height:
+        1.7;
+
+      white-space:
+        pre-wrap;
+    }
+
+
+    h2 {
+      margin-top:
+        30px;
+    }
+
+
+    #sources {
+      padding:
+        20px;
+
+      border:
+        1px solid #1e293b;
+
+      border-radius:
+        14px;
+
+      background:
+        #111827;
+
+      color:
+        #94a3b8;
+
+      white-space:
+        pre-wrap;
+
+      overflow-wrap:
+        anywhere;
+    }
+
+
+    @media (
+      max-width: 650px
+    ) {
+
+      main {
+        width:
+          calc(100% - 24px);
+
+        margin:
+          25px auto;
+      }
+
+
+      .question-row {
+        flex-direction:
+          column;
+      }
+
+
+      button {
+        width:
+          100%;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <main>
+
+    <h1>
+      CV RAG Generation Test
+    </h1>
+
+
+    <p class="description">
+      Retrieval + local WebLLM generation.
+      No external LLM API is used.
+    </p>
+
+
+    <div
+      id="status"
+      aria-live="polite"
+    >
+      Click Initialize.
+    </div>
+
+
+    <div
+      id="progress-container"
+      aria-hidden="true"
+    >
+      <div id="progress"></div>
+    </div>
+
+
+    <button
+      id="initialize"
+      type="button"
+    >
+      Initialize Local AI
+    </button>
+
+
+    <hr
+      style="
+        border: 0;
+        border-top: 1px solid #1e293b;
+        margin: 30px 0;
+      "
+    >
+
+
+    <div class="question-row">
+
+      <input
+        id="question"
+        type="text"
+        autocomplete="off"
+        value="What experience does Arad have with medical imaging?"
+        aria-label="Question about Arad"
+      >
+
+
+      <button
+        id="ask"
+        type="button"
+        disabled
+      >
+        Ask
+      </button>
+
+    </div>
+
+
+    <h2>
+      Answer
+    </h2>
+
+
+    <div
+      id="answer"
+      aria-live="polite"
+    >
+      No answer yet.
+    </div>
+
+
+    <h2>
+      Sources passed to the LLM
+    </h2>
+
+
+    <pre id="sources">None yet.</pre>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      initializeCvChat,
+      answerCvQuestion
+    } from "./assets/js/cv-chat-engine.js";
+
+
+    const initializeButton =
+      document.querySelector(
+        "#initialize"
+      );
+
+
+    const askButton =
+      document.querySelector(
+        "#ask"
+      );
+
+
+    const questionInput =
+      document.querySelector(
+        "#question"
+      );
+
+
+    const status =
+      document.querySelector(
+        "#status"
+      );
+
+
+    const progressBar =
+      document.querySelector(
+        "#progress"
+      );
+
+
+    const answer =
+      document.querySelector(
+        "#answer"
+      );
+
+
+    const sources =
+      document.querySelector(
+        "#sources"
+      );
+
+
+    /* =====================================================
+       PROGRESS
+       ===================================================== */
+
+    function handleProgress(
+      event
+    ) {
+
+      console.log(
+        "CV Chat progress:",
+        event
+      );
+
+
+      if (
+        event?.message
+      ) {
+        status.textContent =
+          event.message;
+      }
+
+
+      if (
+        typeof event?.progress ===
+        "number"
+      ) {
+
+        const percentage =
+          Math.max(
+            0,
+            Math.min(
+              100,
+              event.progress * 100
+            )
+          );
+
+
+        progressBar.style.width =
+          `${percentage}%`;
+
+      }
+
+
+      if (
+        event?.stage ===
+        "ready"
+      ) {
+        progressBar.style.width =
+          "100%";
+      }
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE
+       ===================================================== */
+
+    async function initialize() {
+
+      initializeButton.disabled =
+        true;
+
+
+      askButton.disabled =
+        true;
+
+
+      answer.textContent =
+        "Initializing local AI…";
+
+
+      try {
+
+        const info =
+          await initializeCvChat({
+            onProgress:
+              handleProgress
+          });
+
+
+        status.textContent =
+          `Ready — ${info.model}`;
+
+
+        answer.textContent =
+          "Local CV assistant is ready. Ask a question.";
+
+
+        askButton.disabled =
+          false;
+
+
+        console.log(
+          "CV assistant initialized:",
+          info
+        );
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        status.textContent =
+          "Initialization failed.";
+
+
+        answer.textContent =
+          error?.message ||
+          String(error);
+
+
+        initializeButton.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       ASK QUESTION
+       ===================================================== */
+
+    async function askQuestion() {
+
+      const question =
+        questionInput
+          .value
+          .trim();
+
+
+      if (
+        !question
+      ) {
+        questionInput
+          .focus();
+
+        return;
+      }
+
+
+      askButton.disabled =
+        true;
+
+
+      questionInput.disabled =
+        true;
+
+
+      answer.textContent =
+        "";
+
+
+      sources.textContent =
+        "Retrieving evidence…";
+
+
+      try {
+
+        const result =
+          await answerCvQuestion(
+            question,
+            {
+              onProgress:
+                handleProgress,
+
+
+              onToken:
+                (
+                  fullAnswer
+                ) => {
+
+                  /*
+                   * textContent is intentional.
+                   *
+                   * Never insert model output
+                   * with innerHTML.
+                   */
+                  answer.textContent =
+                    fullAnswer;
+
+                }
+            }
+          );
+
+
+        sources.textContent =
+          JSON.stringify(
+            result.sources.map(
+              (
+                source,
+                index
+              ) => ({
+                number:
+                  index + 1,
+
+                id:
+                  source.id,
+
+                title:
+                  source.title,
+
+                score:
+                  source.score,
+
+                source:
+                  source.source,
+
+                url:
+                  source.url
+              })
+            ),
+            null,
+            2
+          );
+
+
+        console.log(
+          "Complete answer:",
+          result
+        );
+
+      } catch (error) {
+
+        console.error(
+          error
+        );
+
+
+        answer.textContent =
+          `Error: ${
+            error?.message ||
+            String(error)
+          }`;
+
+      } finally {
+
+        askButton.disabled =
+          false;
+
+
+        questionInput.disabled =
+          false;
+
+
+        questionInput
+          .focus();
+
+      }
+
+    }
+
+
+    /* =====================================================
+       EVENTS
+       ===================================================== */
+
+    initializeButton
+      .addEventListener(
+        "click",
+        initialize
+      );
+
+
+    askButton
+      .addEventListener(
+        "click",
+        askQuestion
+      );
+
+
+    questionInput
+      .addEventListener(
+        "keydown",
+        (
+          event
+        ) => {
+
+          if (
+            event.key ===
+            "Enter" &&
+            !askButton.disabled
+          ) {
+            askQuestion();
+          }
+
+        }
+      );
+
+  </script>
+
+</body>
+
+</html>

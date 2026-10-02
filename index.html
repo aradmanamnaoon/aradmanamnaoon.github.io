@@ -1097,12 +1097,25 @@
             <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
           </a>
           <a
-            href="#contact"
-            class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
-          >
-            Get in touch
-            <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">→</span>
-          </a>
+  href="#contact"
+  class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
+>
+  Get in touch
+  <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+    →
+  </span>
+</a>
+
+
+<button
+  id="cv-chat-open"
+  class="group inline-flex min-h-[48px] items-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm font-semibold transition-all hover:-translate-y-0.5 hover:border-accent/60 hover:bg-accent/5"
+>
+  Chat with my AI CV
+  <span aria-hidden="true" class="transition-transform group-hover:translate-x-1">
+    →
+  </span>
+</button>
         </div>
 
         <!-- ============ TECH MARQUEE ============ -->
@@ -1931,6 +1944,116 @@
         Promise.allSettled([github, hfModels, hfDatasets]);
       })();
     </script>
+<!-- =========================
+     AI CV CHAT WINDOW
+========================= -->
+<script
+type="module"
+src="./assets/js/cv-chat-ui.js"
+></script>
 
+<button
+id="cv-chat-floating"
+class="cv-chat-button"
+>
+🤖 Ask AI about Arad
+</button>
+
+
+
+
+<section
+id="cv-chat-window"
+class="cv-chat-window"
+aria-hidden="true"
+>
+
+
+<header
+class="cv-chat-header"
+>
+
+<div>
+
+<p>
+CV Assistant
+</p>
+
+</div>
+
+
+<button
+id="cv-chat-close"
+aria-label="Close chat"
+>
+×
+</button>
+
+
+</header>
+
+
+
+
+
+<div
+id="cv-chat-status"
+>
+Ready
+</div>
+
+
+
+
+
+<div
+id="cv-chat-messages"
+class="cv-chat-messages"
+>
+
+
+<div
+class="cv-chat-message ai"
+>
+
+Hello 👋
+
+Ask me about Arad's projects, skills, AI research, or experience.
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<form
+id="cv-chat-form"
+>
+
+
+<input
+id="cv-chat-input"
+type="text"
+placeholder="Ask about Arad..."
+autocomplete="off"
+/>
+
+
+<button
+type="submit"
+>
+Send
+</button>
+
+
+</form>
+
+
+
+</section>
 </body>
 </html>

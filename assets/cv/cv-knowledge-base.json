@@ -1,0 +1,1455 @@
+{
+  "knowledgeVersion": "2026-10-02.2",
+
+  "profile": {
+    "name": "Seyyed Arad Hosseini Moghaddam",
+
+    "titles": [
+      "Data Scientist",
+      "AI Engineer",
+      "Machine Learning Engineer"
+    ],
+
+    "location": "Iran",
+
+    "professional_identity": "Arad is an AI and machine learning practitioner focused on building deep learning systems, computer vision applications, medical AI solutions, natural language processing systems, large language models, retrieval augmented generation systems, and generative AI applications.",
+
+    "about": "Arad works on artificial intelligence and machine learning projects with a focus on practical implementation, experimentation, reproducibility, and publishing technical work through GitHub and Hugging Face.",
+
+    "main_specializations": [
+      "Deep Learning",
+      "Computer Vision",
+      "Medical Imaging",
+      "Natural Language Processing",
+      "Large Language Models",
+      "Generative AI",
+      "RAG Systems",
+      "LLM Fine-tuning",
+      "Agentic AI"
+    ],
+
+    "public_profiles": {
+      "github": "https://github.com/aradmanamnaoon",
+      "huggingface": "https://huggingface.co/aradmanamnaoon",
+      "linkedin": "https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam/"
+    }
+  },
+
+
+  "professional_summary": {
+
+    "short": "Data Scientist and AI Engineer specializing in deep learning, computer vision, medical imaging, NLP, and generative AI.",
+
+    "long": "Arad develops artificial intelligence systems across multiple domains including medical image analysis, language modeling, retrieval augmented generation, and model fine-tuning. His work includes training models from scratch, adapting existing foundation models, creating datasets, building RAG systems, and publishing reproducible AI projects.",
+
+    "engineering_approach": [
+      "Problem definition",
+      "Dataset preparation",
+      "Data processing",
+      "Model architecture selection",
+      "Training experimentation",
+      "Evaluation",
+      "Optimization",
+      "Deployment",
+      "Documentation"
+    ],
+
+    "research_interests": [
+      "Medical AI",
+      "Computer Vision",
+      "Multimodal AI",
+      "LLM applications",
+      "Efficient fine-tuning",
+      "AI agents",
+      "Knowledge retrieval systems"
+    ]
+  },
+
+
+  "technical_profile": {
+
+    "machine_learning": {
+
+      "description": "Experience building and evaluating machine learning systems using modern deep learning frameworks.",
+
+      "concepts": [
+        "Supervised learning",
+        "Deep neural networks",
+        "Model training",
+        "Model evaluation",
+        "Experiment tracking",
+        "Optimization",
+        "Data preprocessing"
+      ]
+    },
+
+
+    "deep_learning": {
+
+      "description": "Experience developing deep learning models for vision and language tasks.",
+
+      "architectures": [
+        "CNN",
+        "U-Net",
+        "3D U-Net",
+        "Transformer",
+        "GPT-style decoder-only models"
+      ],
+
+      "techniques": [
+        "Mixed precision training",
+        "Transfer learning",
+        "Fine-tuning",
+        "Custom training pipelines",
+        "Evaluation workflows"
+      ]
+    },
+
+
+    "computer_vision": {
+
+      "description": "Computer vision is one of Arad's main technical areas, including image analysis and segmentation.",
+
+      "areas": [
+        "Image segmentation",
+        "Medical image analysis",
+        "Feature extraction",
+        "Deep learning based vision systems"
+      ],
+
+      "technologies": [
+        "PyTorch",
+        "MONAI",
+        "OpenCV",
+        "CNN architectures"
+      ]
+    },
+
+
+    "medical_ai": {
+
+      "description": "Arad works on medical AI projects involving medical image segmentation and clinical text processing research.",
+
+      "areas": [
+        "Medical imaging",
+        "MRI segmentation",
+        "Medical NLP",
+        "Healthcare related AI research"
+      ],
+
+      "technologies": [
+        "MONAI",
+        "3D U-Net",
+        "NIfTI",
+        "PyTorch",
+        "QLoRA",
+        "Clinical NLP"
+      ],
+
+      "important_boundary": "Projects are research and engineering projects. They are not claimed as clinically validated or deployed medical systems."
+    },
+
+
+    "natural_language_processing": {
+
+      "description": "Experience building NLP pipelines and language models.",
+
+      "areas": [
+        "Text processing",
+        "Language modeling",
+        "Tokenization",
+        "Translation",
+        "Information extraction"
+      ],
+
+      "technologies": [
+        "Transformers",
+        "Tokenizers",
+        "Hugging Face ecosystem"
+      ]
+    },
+
+
+    "large_language_models": {
+
+      "description": "Experience developing, training, and adapting large language models.",
+
+      "areas": [
+        "Training language models",
+        "Fine-tuning foundation models",
+        "Prompt engineering",
+        "LLM applications"
+      ],
+
+      "technologies": [
+        "Transformers",
+        "Hugging Face",
+        "PEFT",
+        "LoRA",
+        "QLoRA"
+      ]
+    },
+
+
+    "rag_and_knowledge_systems": {
+
+      "description": "Experience building retrieval augmented generation systems that combine embeddings, vector search, and language models.",
+
+      "components": [
+        "Document processing",
+        "Embeddings",
+        "Semantic search",
+        "Vector databases",
+        "Context retrieval",
+        "LLM response generation"
+      ],
+
+      "concepts": [
+        "Retrieval Augmented Generation",
+        "Knowledge bases",
+        "Semantic similarity",
+        "Local AI assistants"
+      ]
+    },
+
+
+    "agentic_ai": {
+
+      "description": "Exploring AI systems that use tools, memory, and structured workflows.",
+
+      "areas": [
+        "AI agents",
+        "Tool calling",
+        "Stateful workflows",
+        "Human in the loop systems"
+      ],
+
+      "technologies": [
+        "LangGraph",
+        "LangSmith",
+        "MCP"
+      ]
+    }
+  },
+    "projects": [
+
+    {
+      "id": "cardiac-mri-segmentation",
+
+      "title": "3D Cardiac MRI Segmentation with Deep Learning",
+
+      "category": [
+        "Medical Imaging",
+        "Computer Vision",
+        "Deep Learning",
+        "Medical AI"
+      ],
+
+      "summary": "An end-to-end deep learning pipeline for automatic voxel-level cardiac MRI segmentation.",
+
+      "description": "Arad developed a 3D medical image segmentation pipeline using PyTorch, MONAI, and a 3D U-Net architecture for segmenting cardiac structures from MRI volumes.",
+
+      "problem": "Medical image segmentation requires models that understand complex three-dimensional anatomical structures from volumetric imaging data.",
+
+      "solution": "Implemented a complete deep learning workflow including preprocessing, model training, validation, inference, and visualization.",
+
+      "dataset": {
+        "name": "Medical Segmentation Decathlon Task02 Heart",
+
+        "type": "3D MRI volumes",
+
+        "format": [
+          "NIfTI",
+          ".nii.gz"
+        ],
+
+        "description": "The dataset contains volumetric cardiac MRI scans with segmentation labels."
+      },
+
+      "architecture": {
+
+        "model": "3D U-Net",
+
+        "details": [
+          "Encoder-decoder architecture",
+          "Skip connections",
+          "3D convolution layers",
+          "Multi-scale feature extraction"
+        ]
+      },
+
+      "training": {
+
+        "frameworks": [
+          "PyTorch",
+          "MONAI"
+        ],
+
+        "optimizer": "AdamW",
+
+        "loss": "DiceCELoss",
+
+        "training_strategy": [
+          "Mixed precision training",
+          "AMP/FP16 optimization",
+          "Medical image preprocessing"
+        ]
+      },
+
+      "inference": {
+
+        "method": [
+          "Sliding-window inference",
+          "Large-volume prediction"
+        ]
+      },
+
+      "results": {
+
+        "metric": "Validation Dice Score",
+
+        "value": "0.8821",
+
+        "interpretation": "The model achieved strong segmentation performance on the validation dataset."
+      },
+
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "MONAI",
+        "3D U-Net",
+        "NIfTI",
+        "Medical AI"
+      ],
+
+      "skills_demonstrated": [
+        "Medical image processing",
+        "Deep learning",
+        "3D computer vision",
+        "Model evaluation",
+        "Scientific experimentation"
+      ],
+
+      "common_questions": [
+        "What medical imaging experience does Arad have?",
+        "Has Arad worked with MRI segmentation?",
+        "What projects has Arad built using MONAI?",
+        "What computer vision projects has Arad completed?"
+      ],
+
+      "limitations": [
+        "Research project",
+        "Not clinically validated",
+        "Not deployed for clinical decision making"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+
+
+
+    {
+      "id": "persian-gpt",
+
+      "title": "Persian GPT Language Model",
+
+      "category": [
+        "Natural Language Processing",
+        "Large Language Models",
+        "Generative AI"
+      ],
+
+      "summary": "A Persian GPT-style language model trained from scratch.",
+
+      "description": "Arad built a Persian language model pipeline including dataset preparation, tokenizer development, and GPT-style transformer training.",
+
+      "problem": "Persian language resources and open-source language models are more limited compared with English resources.",
+
+      "solution": "Created a complete Persian NLP pipeline from raw text collection to model training and publishing.",
+
+      "dataset": {
+
+        "name": "Persian Wikipedia Dataset",
+
+        "details": [
+          "Processed Persian Wikipedia content",
+          "Approximately 855K documents",
+          "Approximately 244M tokens"
+        ]
+      },
+
+      "tokenization": {
+
+        "method": "BPE Tokenizer",
+
+        "vocabulary_size": "32K",
+
+        "description": "A custom tokenizer was trained for Persian language modeling."
+      },
+
+      "architecture": {
+
+        "type": "GPT-style decoder-only Transformer",
+
+        "details": [
+          "Autoregressive language modeling",
+          "Transformer decoder blocks",
+          "Next-token prediction"
+        ]
+      },
+
+      "training": {
+
+        "frameworks": [
+          "PyTorch",
+          "Transformers",
+          "Tokenizers"
+        ],
+
+        "workflow": [
+          "Dataset cleaning",
+          "Tokenization",
+          "Model training",
+          "Evaluation",
+          "Publishing"
+        ]
+      },
+
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "Transformers",
+        "Hugging Face",
+        "Tokenizers"
+      ],
+
+      "skills_demonstrated": [
+        "LLM development",
+        "NLP engineering",
+        "Transformer architecture",
+        "Dataset creation"
+      ],
+
+      "common_questions": [
+        "Has Arad trained an LLM from scratch?",
+        "What NLP projects has Arad built?",
+        "Does Arad have experience with Transformers?"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+
+
+
+    {
+      "id": "messy2json",
+
+      "title": "Messy2JSON Structured Extraction Model",
+
+      "category": [
+        "LLM Fine-tuning",
+        "Generative AI",
+        "Information Extraction"
+      ],
+
+      "summary": "A fine-tuned language model that converts unstructured text into structured JSON output.",
+
+      "description": "Arad fine-tuned Qwen2.5-0.5B-Instruct using QLoRA to perform lightweight structured information extraction.",
+
+      "problem": "Large language models can understand text but may produce inconsistent structures when extracting information.",
+
+      "solution": "Adapted a small language model using parameter-efficient fine-tuning to generate structured JSON outputs.",
+
+      "base_model": {
+
+        "name": "Qwen2.5-0.5B-Instruct"
+      },
+
+      "fine_tuning": {
+
+        "method": [
+          "QLoRA",
+          "LoRA",
+          "PEFT"
+        ],
+
+        "quantization": "4-bit NF4",
+
+        "configuration": {
+
+          "lora_rank": 16,
+
+          "lora_alpha": 32,
+
+          "dropout": 0.05
+        }
+      },
+
+      "dataset": {
+
+        "source": "stindardlogic/data-extraction-sft-100k",
+
+        "training_samples": 9000,
+
+        "validation_samples": 1000
+      },
+
+      "training_details": {
+
+        "epochs": 2,
+
+        "learning_rate": "2e-4",
+
+        "maximum_sequence_length": 1024,
+
+        "hardware": "T4 GPU",
+
+        "training_time": "Approximately 40 minutes"
+      },
+
+      "results": {
+
+        "validation_loss": "0.0045",
+
+        "mean_token_accuracy": "99.82%"
+      },
+
+      "technologies": [
+        "Qwen",
+        "QLoRA",
+        "LoRA",
+        "PEFT",
+        "Transformers",
+        "Hugging Face"
+      ],
+
+      "skills_demonstrated": [
+        "Efficient fine-tuning",
+        "LLM engineering",
+        "Dataset preparation",
+        "Model evaluation"
+      ],
+
+      "common_questions": [
+        "What QLoRA projects has Arad done?",
+        "What LLMs has Arad fine-tuned?",
+        "Does Arad have PEFT experience?"
+      ],
+
+      "limitations": [
+        "English-only extraction scope",
+        "Schema variability",
+        "No guaranteed schema enforcement"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+        {
+      "id": "jibay2-medical",
+
+      "title": "Jibay2 Medical Clinical Note Summarization",
+
+      "category": [
+        "Medical NLP",
+        "LLM Fine-tuning",
+        "Generative AI",
+        "Healthcare AI"
+      ],
+
+      "summary": "A research project focused on adapting a language model for medical text processing and structured clinical summaries.",
+
+      "description": "Arad developed a QLoRA fine-tuning workflow for adapting JibayAi/Jibay_2 to transform fragmented clinical shorthand into structured patient summaries.",
+
+      "problem": "Clinical text can contain incomplete phrases, abbreviations, and fragmented information that require language understanding to organize.",
+
+      "solution": "Applied parameter-efficient fine-tuning techniques to adapt a language model for medical text transformation tasks.",
+
+      "base_model": {
+
+        "name": "JibayAi/Jibay_2",
+
+        "type": "Large Language Model"
+      },
+
+      "fine_tuning": {
+
+        "method": [
+          "QLoRA",
+          "PEFT"
+        ],
+
+        "libraries": [
+          "Unsloth",
+          "TRL",
+          "Transformers"
+        ]
+      },
+
+      "task": {
+
+        "input": "Fragmented clinical shorthand",
+
+        "output": "Structured patient summaries"
+      },
+
+      "technologies": [
+        "QLoRA",
+        "PEFT",
+        "Transformers",
+        "Unsloth",
+        "TRL",
+        "Clinical NLP"
+      ],
+
+      "skills_demonstrated": [
+        "LLM fine-tuning",
+        "Medical NLP",
+        "Instruction tuning",
+        "Generative AI"
+      ],
+
+      "common_questions": [
+        "Has Arad worked on medical AI?",
+        "What medical NLP projects has Arad built?",
+        "What QLoRA projects has Arad completed?"
+      ],
+
+      "limitations": [
+        "Research project",
+        "Requires human review",
+        "Not clinically validated",
+        "Not intended for direct medical decision making"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+
+
+
+    {
+      "id": "english-persian-translation-model",
+
+      "title": "English to Persian Psychology Translation Model",
+
+      "category": [
+        "Natural Language Processing",
+        "Machine Translation",
+        "Fine-tuning"
+      ],
+
+      "summary": "A translation model focused on English to Persian translation in the psychology domain.",
+
+      "description": "Arad developed a specialized translation model using fine-tuning techniques for English-Persian psychology-related text.",
+
+      "problem": "General translation models may struggle with domain-specific terminology and specialized language.",
+
+      "solution": "Fine-tuned a multilingual translation model for better domain adaptation.",
+
+      "domain": [
+        "Psychology",
+        "Educational content",
+        "Specialized translation"
+      ],
+
+      "technologies": [
+        "Transformers",
+        "NLP",
+        "Fine-tuning",
+        "Hugging Face"
+      ],
+
+      "skills_demonstrated": [
+        "Machine translation",
+        "Dataset preparation",
+        "NLP fine-tuning"
+      ],
+
+      "common_questions": [
+        "What NLP models has Arad trained?",
+        "Does Arad have translation model experience?"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+
+
+
+    {
+      "id": "ai-research-assistant",
+
+      "title": "AI Research Assistant Platform",
+
+      "category": [
+        "RAG",
+        "Agentic AI",
+        "Generative AI",
+        "LLM Applications"
+      ],
+
+      "summary": "An AI assistant platform designed for research workflows using retrieval augmented generation.",
+
+      "description": "Arad built an AI research assistant system combining language models, retrieval mechanisms, and knowledge management techniques.",
+
+      "problem": "Researchers need systems that can search, retrieve, and reason over large amounts of information.",
+
+      "solution": "Created an AI assistant architecture using retrieval and language model components.",
+
+      "architecture": {
+
+        "components": [
+          "Document processing",
+          "Embedding generation",
+          "Semantic retrieval",
+          "LLM generation",
+          "Knowledge management"
+        ]
+      },
+
+      "technologies": [
+        "RAG",
+        "Embeddings",
+        "Vector Search",
+        "LLMs",
+        "Python"
+      ],
+
+      "skills_demonstrated": [
+        "AI application engineering",
+        "Retrieval systems",
+        "LLM integration",
+        "Knowledge systems"
+      ],
+
+      "common_questions": [
+        "What RAG projects has Arad built?",
+        "Does Arad have experience building AI assistants?",
+        "What generative AI applications has Arad developed?"
+      ],
+
+      "source": "Portfolio knowledge"
+    }
+
+  ],
+
+
+
+  "models": [
+
+    {
+      "id": "persian-lm-from-scratch",
+
+      "name": "Persian Language Model",
+
+      "type": "GPT-style decoder-only Transformer",
+
+      "purpose": "Persian language generation and modeling",
+
+      "training_method": [
+        "Training from scratch",
+        "Custom tokenizer",
+        "Transformer training"
+      ],
+
+      "frameworks": [
+        "PyTorch",
+        "Transformers"
+      ],
+
+      "published_on": "Hugging Face",
+
+      "owner": "aradmanamnaoon"
+    },
+
+
+    {
+      "id": "messy2json-qwen-0.5b",
+
+      "name": "Messy2JSON Qwen 0.5B",
+
+      "type": "Fine-tuned language model",
+
+      "base_model": "Qwen2.5-0.5B-Instruct",
+
+      "method": [
+        "QLoRA",
+        "LoRA",
+        "PEFT"
+      ],
+
+      "task": "Convert unstructured text into structured JSON",
+
+      "published_on": "Hugging Face",
+
+      "owner": "aradmanamnaoon"
+    },
+
+
+    {
+      "id": "jibay2-medical-v2",
+
+      "name": "Jibay2 Medical",
+
+      "type": "Medical NLP fine-tuned model",
+
+      "method": [
+        "QLoRA",
+        "PEFT"
+      ],
+
+      "task": "Clinical text summarization research",
+
+      "published_on": "Hugging Face",
+
+      "owner": "aradmanamnaoon"
+    }
+  ],
+
+
+
+  "datasets": [
+
+    {
+      "id": "persian-wikipedia-cleaned",
+
+      "name": "Persian Wikipedia Cleaned Dataset",
+
+      "purpose": "Training Persian language models",
+
+      "details": [
+        "Processed Persian Wikipedia documents",
+        "Used for language model training"
+      ],
+
+      "published_on": "Hugging Face",
+
+      "owner": "aradmanamnaoon"
+    },
+
+
+    {
+      "id": "psychology-translation-dataset",
+
+      "name": "English-Persian Psychology Translation Dataset",
+
+      "purpose": "Domain-specific machine translation",
+
+      "domain": "Psychology",
+
+      "owner": "aradmanamnaoon"
+    }
+  ],
+    "skills": {
+
+    "programming": {
+
+      "description": "Programming skills used for artificial intelligence, data science, and machine learning development.",
+
+      "skills": [
+        "Python",
+        "Object-oriented programming",
+        "Data processing",
+        "Scientific computing",
+        "Automation scripts"
+      ],
+
+      "related_projects": [
+        "cardiac-mri-segmentation",
+        "persian-gpt",
+        "messy2json",
+        "ai-research-assistant"
+      ]
+    },
+
+
+    "deep_learning": {
+
+      "description": "Building and experimenting with deep learning architectures.",
+
+      "skills": [
+        "Neural networks",
+        "CNNs",
+        "Transformers",
+        "Training pipelines",
+        "Model evaluation",
+        "Optimization"
+      ],
+
+      "frameworks": [
+        "PyTorch",
+        "TensorFlow"
+      ],
+
+      "related_projects": [
+        "cardiac-mri-segmentation",
+        "persian-gpt"
+      ]
+    },
+
+
+    "computer_vision": {
+
+      "description": "Computer vision development with focus on image analysis and segmentation.",
+
+      "skills": [
+        "Image processing",
+        "Image segmentation",
+        "Feature learning",
+        "Deep learning vision models"
+      ],
+
+      "technologies": [
+        "PyTorch",
+        "MONAI",
+        "CNNs",
+        "3D U-Net"
+      ],
+
+      "related_projects": [
+        "cardiac-mri-segmentation"
+      ]
+    },
+
+
+    "medical_imaging": {
+
+      "description": "Experience working with medical imaging data and AI-based analysis.",
+
+      "skills": [
+        "MRI segmentation",
+        "3D medical image analysis",
+        "Volumetric data processing",
+        "Medical AI experimentation"
+      ],
+
+      "technologies": [
+        "MONAI",
+        "NIfTI",
+        "3D U-Net",
+        "PyTorch"
+      ],
+
+      "related_projects": [
+        "cardiac-mri-segmentation"
+      ]
+    },
+
+
+    "natural_language_processing": {
+
+      "description": "Developing NLP systems including language models, translation systems, and text processing pipelines.",
+
+      "skills": [
+        "Text processing",
+        "Tokenization",
+        "Language modeling",
+        "Machine translation",
+        "Information extraction"
+      ],
+
+      "technologies": [
+        "Transformers",
+        "Hugging Face",
+        "Tokenizers"
+      ],
+
+      "related_projects": [
+        "persian-gpt",
+        "english-persian-translation-model",
+        "messy2json"
+      ]
+    },
+
+
+    "llm_engineering": {
+
+      "description": "Building and adapting large language models for practical applications.",
+
+      "skills": [
+        "LLM fine-tuning",
+        "Instruction tuning",
+        "Prompt engineering",
+        "Language model evaluation"
+      ],
+
+      "technologies": [
+        "Transformers",
+        "Hugging Face",
+        "PEFT",
+        "LoRA",
+        "QLoRA"
+      ],
+
+      "related_projects": [
+        "messy2json",
+        "jibay2-medical"
+      ]
+    },
+
+
+    "rag": {
+
+      "description": "Building retrieval augmented generation systems that connect knowledge sources with language models.",
+
+      "skills": [
+        "Document retrieval",
+        "Embedding generation",
+        "Semantic search",
+        "Knowledge bases",
+        "Context retrieval"
+      ],
+
+      "technologies": [
+        "Embeddings",
+        "Vector databases",
+        "RAG pipelines"
+      ],
+
+      "related_projects": [
+        "ai-research-assistant"
+      ]
+    },
+
+
+    "agentic_ai": {
+
+      "description": "Exploring AI systems with reasoning workflows, tools, and state management.",
+
+      "skills": [
+        "AI agents",
+        "Tool integration",
+        "Workflow orchestration",
+        "Human-in-the-loop systems"
+      ],
+
+      "technologies": [
+        "LangGraph",
+        "LangSmith",
+        "MCP"
+      ]
+    },
+
+
+    "fine_tuning": {
+
+      "description": "Parameter-efficient adaptation of foundation models.",
+
+      "methods": [
+        "LoRA",
+        "QLoRA",
+        "PEFT",
+        "4-bit quantization"
+      ],
+
+      "related_projects": [
+        "messy2json",
+        "jibay2-medical"
+      ]
+    }
+
+  },
+
+
+
+  "tools_and_frameworks": {
+
+    "machine_learning_frameworks": [
+
+      {
+        "name": "PyTorch",
+
+        "usage": [
+          "Deep learning model development",
+          "Training pipelines",
+          "Experimentation"
+        ]
+      },
+
+
+      {
+        "name": "TensorFlow",
+
+        "usage": [
+          "Machine learning experimentation",
+          "Deep learning workflows"
+        ]
+      }
+
+    ],
+
+
+    "computer_vision_tools": [
+
+      {
+        "name": "MONAI",
+
+        "usage": [
+          "Medical imaging workflows",
+          "3D segmentation",
+          "Healthcare AI research"
+        ]
+      },
+
+
+      {
+        "name": "OpenCV",
+
+        "usage": [
+          "Image processing",
+          "Computer vision tasks"
+        ]
+      }
+
+    ],
+
+
+    "llm_tools": [
+
+      {
+        "name": "Hugging Face",
+
+        "usage": [
+          "Model hosting",
+          "Dataset publishing",
+          "Transformers ecosystem"
+        ]
+      },
+
+
+      {
+        "name": "PEFT",
+
+        "usage": [
+          "Efficient fine-tuning",
+          "LoRA and QLoRA workflows"
+        ]
+      },
+
+
+      {
+        "name": "Transformers",
+
+        "usage": [
+          "Language models",
+          "NLP pipelines",
+          "Model fine-tuning"
+        ]
+      }
+
+    ],
+
+
+    "agent_tools": [
+
+      {
+        "name": "LangGraph",
+
+        "usage": [
+          "Stateful AI workflows",
+          "Agent architectures"
+        ]
+      },
+
+
+      {
+        "name": "LangSmith",
+
+        "usage": [
+          "LLM application monitoring",
+          "Evaluation workflows"
+        ]
+      },
+
+
+      {
+        "name": "MCP",
+
+        "usage": [
+          "Model Context Protocol",
+          "Tool-connected AI systems"
+        ]
+      }
+
+    ]
+
+  },
+
+
+
+  "public_releases": {
+
+    "github": {
+
+      "username": "aradmanamnaoon",
+
+      "focus": [
+        "AI projects",
+        "Machine learning experiments",
+        "Research implementations"
+      ],
+
+      "url": "https://github.com/aradmanamnaoon"
+    },
+
+
+    "huggingface": {
+
+      "username": "aradmanamnaoon",
+
+      "focus": [
+        "Models",
+        "Adapters",
+        "Datasets"
+      ],
+
+      "url": "https://huggingface.co/aradmanamnaoon",
+
+      "released_items": [
+
+        "Persian language model",
+
+        "Persian Wikipedia cleaned dataset",
+
+        "Messy2JSON Qwen model",
+
+        "Messy2JSON LoRA adapter",
+
+        "Jibay2 Medical model",
+
+        "English-Persian psychology translation model"
+
+      ]
+    }
+
+  },
+
+
+
+  "certifications": [
+
+    {
+      "name": "AI Capstone Project with Deep Learning",
+
+      "issuer": "Coursera",
+
+      "category": "Artificial Intelligence"
+    },
+
+
+    {
+      "name": "Machine Learning with Python (V2)",
+
+      "issuer": "Coursera",
+
+      "category": "Machine Learning"
+    },
+
+
+    {
+      "name": "Python Project for Data Science",
+
+      "issuer": "Coursera",
+
+      "category": "Python and Data Science"
+    }
+
+  ],
+    "faq": [
+
+    {
+      "id": "about-arad",
+
+      "question": "Who is Arad?",
+
+      "answer": "Seyyed Arad Hosseini Moghaddam is a Data Scientist, AI Engineer, and Machine Learning Engineer focused on deep learning, computer vision, medical imaging, NLP, large language models, RAG systems, and generative AI.",
+
+      "related_tags": [
+        "profile",
+        "identity",
+        "AI"
+      ]
+    },
+
+
+    {
+      "id": "medical-imaging-experience",
+
+      "question": "What experience does Arad have with medical imaging?",
+
+      "answer": "Arad has experience building medical imaging AI systems, including a 3D Cardiac MRI Segmentation project using PyTorch, MONAI, and a 3D U-Net architecture. The project involved volumetric MRI data, NIfTI files, medical image preprocessing, segmentation training, and sliding-window inference.",
+
+      "related_projects": [
+        "cardiac-mri-segmentation"
+      ],
+
+      "related_tags": [
+        "medical imaging",
+        "computer vision",
+        "MONAI"
+      ]
+    },
+
+
+    {
+      "id": "qlora-experience",
+
+      "question": "What experience does Arad have with QLoRA?",
+
+      "answer": "Arad has used QLoRA for efficient language model fine-tuning. Examples include the Messy2JSON project, where Qwen2.5-0.5B-Instruct was fine-tuned using QLoRA, LoRA, PEFT, and 4-bit NF4 quantization, and the Jibay2 Medical project for medical NLP research.",
+
+      "related_projects": [
+        "messy2json",
+        "jibay2-medical"
+      ],
+
+      "related_tags": [
+        "QLoRA",
+        "LoRA",
+        "PEFT",
+        "fine-tuning"
+      ]
+    },
+
+
+    {
+      "id": "llm-experience",
+
+      "question": "What LLM experience does Arad have?",
+
+      "answer": "Arad has experience training language models from scratch, fine-tuning existing models, creating datasets, building NLP pipelines, and developing LLM applications using Transformers, Hugging Face, LoRA, QLoRA, PEFT, and RAG techniques.",
+
+      "related_tags": [
+        "LLM",
+        "NLP",
+        "Generative AI"
+      ]
+    },
+
+
+    {
+      "id": "rag-experience",
+
+      "question": "What experience does Arad have with RAG?",
+
+      "answer": "Arad has experience building retrieval augmented generation systems using document processing, embeddings, semantic search, vector retrieval, and language model generation.",
+
+      "related_tags": [
+        "RAG",
+        "embeddings",
+        "semantic search"
+      ]
+    },
+
+
+    {
+      "id": "computer-vision-experience",
+
+      "question": "What computer vision experience does Arad have?",
+
+      "answer": "Arad works on computer vision problems including medical image segmentation, deep learning based image analysis, and 3D segmentation using technologies such as PyTorch, MONAI, CNN architectures, and 3D U-Net.",
+
+      "related_projects": [
+        "cardiac-mri-segmentation"
+      ]
+    },
+
+
+    {
+      "id": "models",
+
+      "question": "What models has Arad created?",
+
+      "answer": "Arad has created and published AI models including a Persian language model trained from scratch, Messy2JSON Qwen fine-tuned model, Messy2JSON LoRA adapter, Jibay2 Medical fine-tuned model, and English-Persian psychology translation models.",
+
+      "related_tags": [
+        "models",
+        "Hugging Face",
+        "AI"
+      ]
+    },
+
+
+    {
+      "id": "datasets",
+
+      "question": "What datasets has Arad created?",
+
+      "answer": "Arad has created and published datasets including a cleaned Persian Wikipedia dataset for language model training and domain-focused translation datasets.",
+
+      "related_tags": [
+        "datasets",
+        "NLP"
+      ]
+    },
+
+
+    {
+      "id": "technologies",
+
+      "question": "What technologies does Arad use?",
+
+      "answer": "Arad uses Python, PyTorch, TensorFlow, Transformers, Hugging Face, MONAI, PEFT, LoRA, QLoRA, embeddings, RAG systems, LangGraph, LangSmith, and MCP.",
+
+      "related_tags": [
+        "skills",
+        "tools"
+      ]
+    },
+
+
+    {
+      "id": "projects",
+
+      "question": "What AI projects has Arad built?",
+
+      "answer": "Arad has built projects across medical AI, NLP, LLMs, structured extraction, translation, and retrieval systems. Major projects include 3D Cardiac MRI Segmentation, Persian GPT, Messy2JSON, Jibay2 Medical, and AI Research Assistant.",
+
+      "related_tags": [
+        "projects",
+        "portfolio"
+      ]
+    }
+
+  ],
+
+
+
+  "boundaries": {
+
+    "unknown_information": [
+
+      "Phone number",
+
+      "Date of birth",
+
+      "Age",
+
+      "Salary information",
+
+      "University degree",
+
+      "GPA",
+
+      "Employment history beyond publicly available Personal Projects context",
+
+      "Years of professional employment"
+    ],
+
+
+    "rules": [
+
+      "Do not invent personal information.",
+
+      "Do not claim unsupported employment experience.",
+
+      "Do not claim clinical validation for medical AI projects.",
+
+      "Do not claim medical deployment unless explicitly documented.",
+
+      "Do not present research projects as production healthcare systems.",
+
+      "When information is unavailable, explain that it is not available in Arad's provided CV and portfolio context."
+    ]
+
+  }
+
+}

@@ -1,0 +1,266 @@
+{
+  "knowledgeVersion": "2026-10-02.2",
+
+  "profile": {
+    "name": "Seyyed Arad Hosseini Moghaddam",
+    "title": [
+      "Data Scientist",
+      "AI Engineer",
+      "Machine Learning Engineer"
+    ],
+    "location": "Iran",
+
+    "about": "Arad works on artificial intelligence and machine learning projects, focusing on deep learning, computer vision, medical imaging, NLP, large language models, and generative AI.",
+
+    "professionalFocus": [
+      "Deep Learning",
+      "Computer Vision",
+      "Medical Imaging",
+      "Natural Language Processing",
+      "Large Language Models",
+      "Generative AI",
+      "RAG Systems",
+      "Model Fine-tuning"
+    ]
+  },
+
+
+  "experience": [
+    {
+      "type": "Personal Projects",
+      "title": "AI and Machine Learning Projects",
+      "description": "Arad's public LinkedIn experience section lists Personal Projects as his professional activity context.",
+      "source": "LinkedIn public profile"
+    }
+  ],
+
+
+  "projects": [
+
+    {
+      "id": "cardiac-mri",
+      "title": "3D Cardiac MRI Segmentation with Deep Learning",
+
+      "category": [
+        "Medical Imaging",
+        "Computer Vision",
+        "Deep Learning"
+      ],
+
+      "description": "Built a deep learning pipeline for automatic cardiac MRI segmentation using PyTorch and MONAI.",
+
+      "details": [
+        "Implemented a 3D U-Net architecture.",
+        "Worked with volumetric MRI data.",
+        "Used NIfTI medical imaging format.",
+        "Applied MONAI preprocessing workflows.",
+        "Used DiceCELoss optimization.",
+        "Implemented sliding-window inference for large 3D volumes.",
+        "Achieved a validation Dice score of 0.8821."
+      ],
+
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "MONAI",
+        "3D U-Net",
+        "NIfTI",
+        "Medical AI"
+      ],
+
+      "source": "LinkedIn public profile"
+    },
+
+
+    {
+      "id": "persian-gpt",
+
+      "title": "Persian GPT",
+
+      "category": [
+        "NLP",
+        "LLM",
+        "Generative AI"
+      ],
+
+      "description": "Built a 110M parameter Persian language model trained from scratch.",
+
+      "details": [
+        "Created a Persian NLP training pipeline.",
+        "Cleaned and processed Persian Wikipedia data.",
+        "Used 855K documents and 244M tokens.",
+        "Trained a custom 32K BPE tokenizer.",
+        "Implemented a GPT-style decoder-only transformer.",
+        "Used PyTorch training workflows.",
+        "Published the model and dataset on Hugging Face."
+      ],
+
+      "technologies": [
+        "Python",
+        "PyTorch",
+        "Transformers",
+        "Tokenizers",
+        "Hugging Face"
+      ],
+
+      "source": "LinkedIn public profile"
+    },
+
+
+    {
+      "id": "jibay2-medical",
+
+      "title": "Jibay2 Medical",
+
+      "category": [
+        "Medical NLP",
+        "LLM Fine-tuning",
+        "Generative AI"
+      ],
+
+      "description": "Research project focused on adapting language models for medical text processing.",
+
+      "technologies": [
+        "QLoRA",
+        "PEFT",
+        "Transformers",
+        "Clinical NLP"
+      ],
+
+      "source": "Portfolio knowledge"
+    },
+
+
+    {
+      "id": "messy2json",
+
+      "title": "Messy2JSON",
+
+      "category": [
+        "LLM Fine-tuning",
+        "Structured Extraction"
+      ],
+
+      "description": "Fine-tuned a small language model to convert unstructured text into structured JSON outputs.",
+
+      "technologies": [
+        "QLoRA",
+        "Qwen",
+        "LoRA",
+        "4-bit Quantization"
+      ],
+
+      "source": "Portfolio knowledge"
+    }
+
+  ],
+
+
+
+  "skills": {
+
+
+    "machineLearning": [
+      "Machine Learning",
+      "Deep Learning",
+      "Model Evaluation",
+      "Experimentation"
+    ],
+
+
+    "computerVision": [
+      "Computer Vision",
+      "Medical Imaging",
+      "Image Segmentation",
+      "CNNs",
+      "3D Segmentation"
+    ],
+
+
+    "medicalAI": [
+      "MONAI",
+      "3D U-Net",
+      "NIfTI",
+      "Medical Image Analysis",
+      "MRI Segmentation"
+    ],
+
+
+    "nlp": [
+      "Natural Language Processing",
+      "Large Language Models",
+      "Transformers",
+      "Tokenization"
+    ],
+
+
+    "generativeAI": [
+      "LLMs",
+      "LoRA",
+      "QLoRA",
+      "PEFT",
+      "RAG",
+      "Embeddings",
+      "Vector Databases"
+    ],
+
+
+    "programming": [
+      "Python",
+      "PyTorch",
+      "TensorFlow"
+    ]
+
+  },
+
+
+
+  "certifications": [
+
+    {
+      "name": "AI Capstone Project with Deep Learning",
+      "issuer": "Coursera"
+    },
+
+
+    {
+      "name": "Machine Learning with Python (V2)",
+      "issuer": "Coursera"
+    },
+
+
+    {
+      "name": "Python Project for Data Science",
+      "issuer": "Coursera"
+    }
+
+  ],
+
+
+
+  "links": {
+
+    "linkedin": "https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam/",
+
+    "github": "https://github.com/aradmanamnaoon",
+
+    "huggingface": "https://huggingface.co/aradmanamnaoon"
+
+  },
+
+
+  "boundaries": {
+
+    "unknown": [
+      "Phone number",
+      "Date of birth",
+      "Age",
+      "Salary",
+      "University degree",
+      "Employment history beyond listed Personal Projects"
+    ],
+
+    "rule": "Do not infer missing personal information."
+  }
+
+}

@@ -1,0 +1,437 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>
+    CV RAG Retrieval Test
+  </title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #0b0f19;
+      color: #f8fafc;
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    }
+
+    main {
+      width: min(
+        900px,
+        calc(100% - 40px)
+      );
+
+      margin: 60px auto;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .description {
+      color: #94a3b8;
+      margin-bottom: 30px;
+    }
+
+    #status {
+      padding: 14px 16px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.05
+        );
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.1
+        );
+
+      border-radius: 12px;
+
+      margin-bottom: 20px;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input {
+      flex: 1;
+
+      min-width: 0;
+
+      padding: 13px 15px;
+
+      border-radius: 10px;
+
+      border:
+        1px solid #334155;
+
+      background: #111827;
+
+      color: #f8fafc;
+
+      font: inherit;
+
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #38bdf8;
+    }
+
+    button {
+      border: 0;
+
+      border-radius: 10px;
+
+      padding: 13px 20px;
+
+      font: inherit;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      background: #38bdf8;
+      color: #020617;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: wait;
+    }
+
+    pre {
+      min-height: 300px;
+
+      padding: 20px;
+
+      border-radius: 14px;
+
+      background: #111827;
+
+      border:
+        1px solid #1e293b;
+
+      white-space: pre-wrap;
+
+      overflow-wrap: anywhere;
+
+      overflow-x: auto;
+
+      color: #cbd5e1;
+
+      line-height: 1.6;
+    }
+
+    @media (
+      max-width: 650px
+    ) {
+      main {
+        width:
+          min(
+            100% - 24px,
+            900px
+          );
+
+        margin:
+          30px auto;
+      }
+
+      .search-box {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main>
+
+    <h1>
+      CV RAG Retrieval Test
+    </h1>
+
+    <p class="description">
+      Local semantic search test for
+      Arad's portfolio knowledge base.
+    </p>
+
+
+    <p
+      id="status"
+      aria-live="polite"
+    >
+      Not initialized.
+    </p>
+
+
+    <div class="search-box">
+
+      <input
+        id="question"
+        type="text"
+        autocomplete="off"
+        value="What experience does Arad have with medical imaging?"
+        aria-label="Question"
+      >
+
+      <button
+        id="search"
+        type="button"
+      >
+        Search
+      </button>
+
+    </div>
+
+
+    <pre id="output">Results will appear here.</pre>
+
+  </main>
+
+
+  <script type="module">
+
+    import {
+      initializeCvRag,
+      retrieveCvContext
+    } from "./assets/js/cv-rag.js";
+
+
+    const status =
+      document.querySelector(
+        "#status"
+      );
+
+    const output =
+      document.querySelector(
+        "#output"
+      );
+
+    const question =
+      document.querySelector(
+        "#question"
+      );
+
+    const search =
+      document.querySelector(
+        "#search"
+      );
+
+
+    /* ==========================================
+       PROGRESS DISPLAY
+       ========================================== */
+
+    const onProgress = (
+      event
+    ) => {
+
+      status.textContent =
+        event.message ??
+        event.stage ??
+        "Working…";
+
+      console.log(
+        "RAG progress:",
+        event
+      );
+
+    };
+
+
+    /* ==========================================
+       INITIALIZE
+       ========================================== */
+
+    async function initialize() {
+
+      search.disabled = true;
+
+      try {
+
+        const info =
+          await initializeCvRag({
+            onProgress
+          });
+
+
+        status.textContent =
+          `Ready: ${info.chunkCount} chunks, ${info.dimension} dimensions.`;
+
+
+        console.log(
+          "RAG initialized:",
+          info
+        );
+
+      } catch (error) {
+
+        status.textContent =
+          `Initialization failed: ${error.message}`;
+
+
+        output.textContent =
+          error.stack ??
+          error.message;
+
+
+        console.error(
+          error
+        );
+
+      } finally {
+
+        search.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /* ==========================================
+       SEARCH
+       ========================================== */
+
+    async function runSearch() {
+
+      const value =
+        question.value.trim();
+
+
+      if (!value) {
+
+        output.textContent =
+          "Enter a question first.";
+
+        question.focus();
+
+        return;
+
+      }
+
+
+      search.disabled =
+        true;
+
+
+      output.textContent =
+        "Searching…";
+
+
+      try {
+
+        const result =
+          await retrieveCvContext(
+            value,
+            {
+              topK: 5,
+              onProgress
+            }
+          );
+
+
+        output.textContent =
+          JSON.stringify(
+            result,
+            null,
+            2
+          );
+
+
+        status.textContent =
+          result.hasRelevantContext
+            ? `Found relevant context. Best score: ${result.bestScore.toFixed(4)}`
+            : "No sufficiently relevant CV context found.";
+
+
+      } catch (error) {
+
+        output.textContent =
+          `Error: ${error.message}`;
+
+
+        console.error(
+          error
+        );
+
+      } finally {
+
+        search.disabled =
+          false;
+
+      }
+
+    }
+
+
+    /* ==========================================
+       EVENTS
+       ========================================== */
+
+    search.addEventListener(
+      "click",
+      runSearch
+    );
+
+
+    question.addEventListener(
+      "keydown",
+      (event) => {
+
+        if (
+          event.key ===
+          "Enter"
+        ) {
+
+          runSearch();
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       START
+       ========================================== */
+
+    initialize();
+
+  </script>
+
+</body>
+</html>
