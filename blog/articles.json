@@ -11,5 +11,19 @@
       "NLLB-200",
       "Machine Learning"
     ]
+  },
+  {
+    "title": "How to Design an Evaluatable Multi-Agent RAG System with LangGraph",
+    "url": "/blog/evaluatable-multi-agent-rag-langgraph/",
+    "date": "2026-10-03",
+    "dateDisplay": "October 3, 2026",
+    "readTime": "12 min read",
+    "description": "A practical architecture for a research assistant that combines retrieval, parallel research tools, citation-grounded synthesis, bounded reflection, and offline evaluation with LangGraph.",
+    "tags": [
+      "LangGraph",
+      "RAG",
+      "Agentic AI",
+      "Evaluation"
+    ]
   }
 ]
