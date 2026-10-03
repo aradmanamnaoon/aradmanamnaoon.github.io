@@ -1,21 +1,30 @@
 # ARADMANAMNAOON
 
-> Portfolio and technical writing by Seyyed Arad Hosseini Moghaddam, an AI engineer and data scientist working on agentic AI, RAG, deep learning, medical computer vision, NLP, Persian language models, LLM fine-tuning, and Flutter cross-platform mobile development for Android and iOS.
+> Portfolio and technical writing by Seyyed Arad Hosseini Moghaddam, a data scientist and AI engineer working across data science, deep learning, computer vision and medical imaging, NLP and language models, LLM fine-tuning, retrieval-augmented generation, agentic AI, MLOps, and software and cross-platform mobile development.
 
 ## Primary pages
 - [Portfolio](https://aradmanamnaoon.github.io/): Profile, skills, selected work, writing, and contact.
-- [Projects](https://aradmanamnaoon.github.io/projects/): Evidence-first archive of selected AI and machine-learning projects.
+- [Projects](https://aradmanamnaoon.github.io/projects/): Selected projects across AI, machine learning, language technologies, and software development.
 - [Technical blog](https://aradmanamnaoon.github.io/blog/): First-hand experiments, debugging stories, project breakdowns, and engineering lessons.
 
-## Skills
-- Flutter for cross-platform mobile app development targeting Android and iOS.
+## Areas of work
+- Data science and applied analytics.
+- Deep learning and model training from scratch.
+- Computer vision and medical imaging.
+- Natural language processing and language models.
+- LLM fine-tuning, including LoRA and QLoRA.
+- Retrieval-augmented generation and agentic AI.
+- MLOps and AI application engineering.
+- Software development and Flutter apps for Android and iOS.
 
 ## Featured technical writing
-- [A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run](https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/)
+- [How to Design an Evaluatable Multi-Agent RAG System with LangGraph](https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/): Workflow design, evidence handling, bounded reflection, and evaluation for multi-agent RAG systems.
+- [A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run](https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/): Debugging loss scaling while fine-tuning NLLB-200 for English↔Persian translation.
 
 ## Public technical profiles
 - [GitHub](https://github.com/aradmanamnaoon)
 - [Hugging Face](https://huggingface.co/aradmanamnaoon)
+- [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam)
 
 ## Identity
 Seyyed Arad Hosseini Moghaddam publishes under the visible site brand ARADMANAMNAOON.
