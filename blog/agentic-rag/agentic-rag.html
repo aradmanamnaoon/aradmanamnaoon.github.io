@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What Is Agentic RAG? Iterative Retrieval, Explained</title>
+  <meta name="description" content="Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Seyyed Arad Hosseini Moghaddam">
+  <link rel="canonical" href="https://aradmanamnaoon.github.io/blog/agentic-rag/agentic-rag.html">
+
+  <meta property="og:title" content="What Is Agentic RAG? Iterative Retrieval, Explained">
+  <meta property="og:description" content="Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://aradmanamnaoon.github.io/blog/agentic-rag/agentic-rag.html">
+  <meta property="og:image" content="https://aradmanamnaoon.github.io/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="What Is Agentic RAG? Iterative Retrieval, Explained">
+  <meta name="twitter:description" content="Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.">
+  <meta name="twitter:image" content="https://aradmanamnaoon.github.io/og-image.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Seyyed Arad Hosseini Moghaddam",
+    "url": "https://aradmanamnaoon.github.io/",
+    "sameAs": [
+      "https://github.com/aradmanamnaoon",
+      "https://huggingface.co/aradmanamnaoon"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aradmanamnaoon.github.io/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "What Is Agentic RAG?", "item": "https://aradmanamnaoon.github.io/blog/agentic-rag/agentic-rag.html" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines",
+    "description": "Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.",
+    "image": ["https://aradmanamnaoon.github.io/og-image.jpg"],
+    "author": {
+      "@type": "Person",
+      "name": "Seyyed Arad Hosseini Moghaddam",
+      "url": "https://aradmanamnaoon.github.io/",
+      "jobTitle": "AI Engineer & Data Scientist",
+      "sameAs": [
+        "https://github.com/aradmanamnaoon",
+        "https://huggingface.co/aradmanamnaoon"
+      ]
+    },
+    "datePublished": "2026-10-04",
+    "dateModified": "2026-10-04",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Seyyed Arad Hosseini Moghaddam",
+      "url": "https://aradmanamnaoon.github.io/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://aradmanamnaoon.github.io/blog/agentic-rag/agentic-rag.html"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is agentic RAG in simple terms?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Agentic RAG is a retrieval architecture where the model plans the question, searches, grades its own evidence, and searches again until the context is sufficient. A one-shot RAG pipeline retrieves once and generates; the agentic loop runs that retrieve-and-check cycle in a bounded loop and cites what it used." }
+      },
+      {
+        "@type": "Question",
+        "name": "How is agentic RAG different from traditional RAG pipelines?",
+        "acceptedAnswer": { "@type": "Answer", "text": "A traditional pipeline makes exactly one retrieval call and trusts whatever comes back. The agentic version makes 2-6 retrieval calls, routes each one to a different tool when needed, and validates the evidence before answering. On Google's FRAMES benchmark that difference measured 92.7% accuracy for agentic loops versus 78.9% for the best traditional pipeline." }
+      },
+      {
+        "@type": "Question",
+        "name": "When should you not use agentic RAG?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Skip it when your questions are lookups over one corpus and your users need sub-3-second answers. FAQ-style queries, ID lookups, and stable single-document questions rarely need a second retrieval pass, so the loop just adds latency and token spend for no accuracy gain." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does agentic RAG need a knowledge graph like GraphRAG?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. GraphRAG is one retrieval tool an agent can call, not a requirement. Build a tiny eval set of questions where plain vector search feels shaky; only add graph extraction and traversal if it measurably improves those answers, because entity extraction and graph maintenance carry real ongoing cost." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is agentic RAG worth the extra latency and token cost?",
+        "acceptedAnswer": { "@type": "Answer", "text": "For multi-hop and cross-source questions, yes: published benchmarks show double-digit accuracy gains, and Uber measured 60% fewer incorrect answers in production. For easy lookups, no. Route first: send easy queries to a one-shot path and spend the agentic budget only where it pays." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "Agentic RAG",
+    "description": "A retrieval-augmented generation architecture in which an AI agent plans queries, iteratively retrieves from multiple tools, validates evidence sufficiency, and answers with citations, all inside a bounded control loop.",
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "Production AI Engineering Glossary"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Ship your first agentic RAG loop",
+    "description": "Three steps to take a one-shot RAG pipeline to a bounded agentic loop with a sufficiency check and an evaluation set.",
+    "totalTime": "PT2H",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Write the sufficiency check first",
+        "text": "Before wiring any loop, define what counts as enough evidence for an answer. A small model grades each retrieved chunk against the question and returns sufficient, partial, or insufficient. This one function turns silent failures into loud ones."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Bound the loop with a retrieval budget",
+        "text": "Cap the agent at 2-6 retrieval calls per question with a hard token ceiling and stop conditions. Unbounded re-query loops are how agentic RAG systems end up with 10x token bills and 15-second p95 latency."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Evaluate on multi-hop questions, not lookups",
+        "text": "Build a 50-100 question eval set with multi-hop questions that need two or three documents to answer. Track faithfulness, answer relevancy, and context precision, and rerun it on every retrieval index or embedding model change."
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #14181f;
+      --panel: #1a2029;
+      --ink: #ededed;
+      --muted: #c0c7d1;
+      --accent: #7db4f0;
+      --line: rgb(237 237 237 / 14%);
+      --soft-line: rgb(237 237 237 / 9%);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--page);
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 1px 1px, rgb(237 237 237 / 4%) 1px, transparent 0) 0 0 / 22px 22px,
+        var(--page);
+      color: var(--ink);
+      font-family: Inter, sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: #a8cff8;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 5;
+      padding: 0.6rem 0.9rem;
+      transform: translateY(-180%);
+      border-radius: 0.5rem;
+      background: var(--accent);
+      color: #14181f;
+      font-weight: 700;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header,
+    .article-shell,
+    .site-footer {
+      width: min(100% - 2.5rem, 850px);
+      margin-inline: auto;
+    }
+
+    .site-header {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .brand {
+      color: var(--ink);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .breadcrumb {
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .article-shell {
+      padding-block: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--ink);
+      font-family: "Playfair Display", Georgia, serif;
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 19ch;
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 4.75rem);
+      letter-spacing: -0.035em;
+    }
+
+    h2 {
+      margin: 3rem 0 1rem;
+      font-size: clamp(1.7rem, 4vw, 2.25rem);
+      letter-spacing: -0.02em;
+      scroll-margin-top: 1rem;
+    }
+
+    h3 {
+      margin: 1.75rem 0 0.6rem;
+      font-size: 1.35rem;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .lede {
+      max-width: 68ch;
+      margin: 1.4rem 0 1rem;
+      color: var(--ink);
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      line-height: 1.65;
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin: 1.25rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .byline strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .article-toc,
+    .callout {
+      margin-block: 2rem;
+      padding: 1.25rem 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .article-toc h2,
+    .callout h2 {
+      margin: 0 0 0.75rem;
+      font-family: Inter, sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .callout p,
+    .callout li {
+      font-size: 1rem;
+      margin-block: 0.35rem;
+    }
+
+    .callout ul {
+      margin: 0.5rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .callout strong {
+      color: var(--ink);
+    }
+
+    .article-toc ol {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .article-toc li {
+      margin-block: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .article-toc a {
+      color: var(--muted);
+    }
+
+    .article-toc a:hover {
+      color: var(--accent);
+    }
+
+    .snippet-answer {
+      padding: 1.1rem 1.3rem;
+      border-left: 3px solid var(--accent);
+      background: rgb(26 32 41 / 80%);
+      border-radius: 0 0.75rem 0.75rem 0;
+      color: var(--ink);
+    }
+
+    .snippet-answer strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-block: 1.5rem;
+    }
+
+    .ba-card {
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .ba-before {
+      border-color: rgb(237 237 237 / 10%);
+    }
+
+    .ba-after {
+      border-color: rgb(125 180 240 / 40%);
+    }
+
+    .ba-label {
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .ba-after .ba-label {
+      color: var(--accent);
+    }
+
+    .ba-before .ba-label {
+      color: var(--muted);
+    }
+
+    .ba-card p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .compare {
+      width: 100%;
+      margin-block: 1.5rem;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .compare th,
+    .compare td {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--soft-line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare th {
+      color: var(--ink);
+      background: rgb(26 32 41 / 90%);
+      font-size: 0.88rem;
+    }
+
+    .compare td {
+      color: var(--muted);
+    }
+
+    .compare td:first-child {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .table-note {
+      margin-top: -0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    figure.fig {
+      margin: 1.75rem 0;
+    }
+
+    figure.fig svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: #10141a;
+    }
+
+    figure.fig figcaption {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .step-box {
+      margin-block: 1rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .step-box strong {
+      color: var(--ink);
+      font-size: 1.02rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      margin-right: 0.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #14181f;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .step-box p {
+      margin: 0.5rem 0 0;
+      font-size: 0.98rem;
+    }
+
+    .faq-item {
+      margin-block: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .faq-q {
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .faq-a {
+      margin: 0;
+    }
+
+    .methodology {
+      margin-block: 2.5rem;
+      padding: 1.25rem 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .methodology h2 {
+      margin: 0 0 0.75rem;
+      font-family: Inter, sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .methodology p {
+      margin-block: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .methodology strong {
+      color: var(--ink);
+    }
+
+    .related {
+      margin-block: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    .related a {
+      display: block;
+      padding: 0.9rem 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      background: rgb(26 32 41 / 80%);
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .related a:hover {
+      border-color: rgb(125 180 240 / 40%);
+      color: var(--accent);
+    }
+
+    .source-list {
+      margin: 0.75rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .source-list li {
+      margin-block: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .site-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.5rem 2.5rem;
+      border-top: 1px solid var(--soft-line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .site-footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .site-footer a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .site-header,
+      .article-shell,
+      .site-footer {
+        width: min(100% - 2rem, 850px);
+      }
+
+      .site-header {
+        min-height: 68px;
+      }
+
+      .article-shell {
+        padding-block: 3rem;
+      }
+
+      p,
+      li {
+        font-size: 1rem;
+      }
+
+      .article-toc,
+      .callout,
+      .methodology {
+        padding: 1rem;
+      }
+
+      .ba-grid,
+      .related {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="https://aradmanamnaoon.github.io/">ARADMANAMNAOON</a>
+    <a class="header-link" href="https://aradmanamnaoon.github.io/blog/">Blog</a>
+  </header>
+
+  <main class="article-shell" id="main">
+    <article>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="https://aradmanamnaoon.github.io/">Home</a> › <a href="https://aradmanamnaoon.github.io/blog/">Blog</a> › What Is Agentic RAG?
+      </nav>
+
+      <header>
+        <p class="eyebrow">Agentic AI · RAG · Production AI Engineering</p>
+        <h1>What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</h1>
+        <p class="lede">
+          When to use agentic retrieval is now a budgeting question, not a hype question. This guide explains the architecture behind agentic RAG, what the 2026 benchmarks actually measured, and how to evaluate the loop before you pay for it.
+        </p>
+        <div class="byline">
+          <span>By <strong>Seyyed Arad Hosseini Moghaddam</strong></span>
+          <time datetime="2026-10-04">October 4, 2026</time>
+          <span>11 min read</span>
+        </div>
+      </header>
+
+      <nav class="article-toc" aria-label="Table of contents">
+        <h2>In this article</h2>
+        <ol>
+          <li><a href="#what-is-agentic-rag">What is agentic RAG?</a></li>
+          <li><a href="#vs-traditional">Agentic RAG vs traditional RAG</a></li>
+          <li><a href="#architecture">Agentic RAG architecture</a></li>
+          <li><a href="#numbers">What the numbers say</a></li>
+          <li><a href="#when">When to use agentic RAG</a></li>
+          <li><a href="#evaluate">How to evaluate it</a></li>
+          <li><a href="#ship">Ship your first loop</a></li>
+        </ol>
+      </nav>
+
+      <div class="callout">
+        <h2>TL;DR</h2>
+        <ul>
+          <li><strong>Problem:</strong> One-shot RAG pipelines fail quietly on multi-hop questions, and the gap is now measured: 78.9% vs 92.7% accuracy on Google's FRAMES benchmark.</li>
+          <li><strong>Solution:</strong> Wrap retrieval in a bounded plan-retrieve-validate loop where a validator decides whether the evidence is sufficient.</li>
+          <li><strong>Result:</strong> You'll know which questions deserve the loop, what it costs (2-6 retrieval calls, 3-10x tokens), and how to evaluate it.</li>
+        </ul>
+      </div>
+
+      <section class="article-section" id="what-is-agentic-rag">
+        <h2>What is agentic RAG?</h2>
+        <p class="snippet-answer"><strong>Agentic RAG is a retrieval architecture where the model plans the question, searches, grades its own evidence, and searches again until the context is sufficient. Instead of one embed-search-generate pass, it runs a bounded loop of query planning, tool-routed retrieval, and validation before answering.</strong></p>
+        <p>
+          The name sounds like a product category. It isn't. It's a control-flow decision: does your system trust a single retrieval pass, or does it check the evidence and try again?
+        </p>
+        <p>
+          A traditional pipeline is a function. It embeds your question, pulls top-k chunks, and generates an answer. Done. If the right document wasn't in the index, or the question needs two sources stitched together, the pipeline returns a confident wrong answer with no signal that anything went wrong.
+        </p>
+        <p>
+          The agentic version is a workflow with state. A planner decomposes the question, a router picks the retrieval tool for each sub-query, and a validator grades whether the gathered context actually supports an answer. If it doesn't, the system rewrites the query and retrieves again, within a budget.
+        </p>
+      </section>
+
+      <section class="article-section" id="vs-traditional">
+        <h2>Agentic RAG vs traditional RAG: where the one-shot pipeline breaks</h2>
+        <p>
+          The failure isn't average accuracy. One-shot pipelines do fine on lookups. They break on questions that need composition: a fact spread across two documents, a comparison that requires pulling both sides, or a number that lives in a database while the context lives in documents.
+        </p>
+        <p>
+          Here's the difference in one picture.
+        </p>
+
+        <div class="ba-grid">
+          <div class="ba-card ba-before">
+            <div class="ba-label">Before: one-shot pipeline</div>
+            <p>Your question gets one retrieval pass. Wrong or missing chunks still produce an answer, phrased confidently. Nothing in the response tells you the evidence was thin. You find out from an angry user, three weeks later.</p>
+          </div>
+          <div class="ba-card ba-after">
+            <div class="ba-label">After: agentic loop</div>
+            <p>The validator grades the evidence against the question. Insufficient? The system rewrites the query, tries a different tool, or returns "insufficient evidence" instead of guessing. Failures become loud, and loud failures are fixable.</p>
+          </div>
+        </div>
+
+        <table class="compare">
+          <thead>
+            <tr>
+              <th>Dimension</th>
+              <th>Traditional RAG</th>
+              <th>Agentic RAG</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Retrieval calls per query</td>
+              <td>1</td>
+              <td>2-6, with an iteration cap</td>
+            </tr>
+            <tr>
+              <td>Latency p50 / p95</td>
+              <td>1-2s / 2-4s</td>
+              <td>4-8s / 10-15s</td>
+            </tr>
+            <tr>
+              <td>Token cost vs vanilla</td>
+              <td>1x</td>
+              <td>3-10x</td>
+            </tr>
+            <tr>
+              <td>Multi-hop questions</td>
+              <td>Poor</td>
+              <td>Strong</td>
+            </tr>
+            <tr>
+              <td>Tool routing</td>
+              <td>None or fixed</td>
+              <td>Dynamic per sub-query</td>
+            </tr>
+            <tr>
+              <td>Failure mode</td>
+              <td>Silent: confident wrong answer</td>
+              <td>Loud: validator rejects, re-retrieves</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="table-note">Latency and token figures are working estimates from MarsDevs' 2026 guide on this architecture, not measurements from your workload. Benchmark yours.</p>
+      </section>
+
+      <section class="article-section" id="architecture">
+        <h2>Agentic RAG architecture: the loop, the router, the validator</h2>
+        <p>
+          Stripped of vendor naming, every working agentic retrieval system I've read about this year has four components. If yours has more, ask what each extra one is buying you.
+        </p>
+
+        <figure class="fig">
+          <svg viewBox="0 0 760 400" role="img" aria-label="Diagram comparing a one-shot RAG pipeline (query, embed, top-k retrieve, generate, one pass) with an agentic RAG loop (query, planner, retrieve from vector database, SQL, or web, sufficiency check that loops back until evidence is sufficient, then cited answer)">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7db4f0"/>
+              </marker>
+              <marker id="arrowMuted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c0c7d1"/>
+              </marker>
+            </defs>
+
+            <!-- Traditional row -->
+            <text x="30" y="34" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="1">TRADITIONAL RAG · ONE PASS</text>
+            <g font-family="Inter, sans-serif" font-size="13">
+              <rect x="30" y="50" width="110" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="85" y="77" fill="#ededed" text-anchor="middle">Query</text>
+              <rect x="175" y="50" width="110" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="230" y="77" fill="#ededed" text-anchor="middle">Embed</text>
+              <rect x="320" y="50" width="110" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="375" y="77" fill="#ededed" text-anchor="middle">Top-k retrieve</text>
+              <rect x="465" y="50" width="110" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="520" y="77" fill="#ededed" text-anchor="middle">Generate</text>
+              <rect x="610" y="50" width="120" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="670" y="77" fill="#ededed" text-anchor="middle">Answer</text>
+            </g>
+            <g stroke="#c0c7d1" stroke-width="1.5" marker-end="url(#arrowMuted)">
+              <line x1="140" y1="72" x2="170" y2="72"/>
+              <line x1="285" y1="72" x2="315" y2="72"/>
+              <line x1="430" y1="72" x2="460" y2="72"/>
+              <line x1="575" y1="72" x2="605" y2="72"/>
+            </g>
+
+            <!-- Divider -->
+            <line x1="30" y1="130" x2="730" y2="130" stroke="rgb(237 237 237 / 9%)" stroke-width="1"/>
+
+            <!-- Agentic row -->
+            <text x="30" y="168" fill="#7db4f0" font-family="Inter, sans-serif" font-size="13" font-weight="700" letter-spacing="1">AGENTIC RAG · BOUNDED LOOP</text>
+            <g font-family="Inter, sans-serif" font-size="13">
+              <rect x="30" y="186" width="100" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="80" y="213" fill="#ededed" text-anchor="middle">Query</text>
+              <rect x="170" y="186" width="120" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="230" y="213" fill="#ededed" text-anchor="middle">Planner</text>
+              <rect x="330" y="150" width="150" height="110" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="405" y="176" fill="#ededed" text-anchor="middle" font-weight="600">Retrieval router</text>
+              <text x="405" y="198" fill="#c0c7d1" text-anchor="middle" font-size="11">vector DB · SQL</text>
+              <text x="405" y="216" fill="#c0c7d1" text-anchor="middle" font-size="11">web · MCP tools</text>
+              <text x="405" y="234" fill="#c0c7d1" text-anchor="middle" font-size="11">2-6 calls, capped</text>
+              <rect x="330" y="300" width="150" height="52" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="405" y="322" fill="#ededed" text-anchor="middle" font-weight="600">Sufficiency check</text>
+              <text x="405" y="340" fill="#c0c7d1" text-anchor="middle" font-size="11">enough evidence?</text>
+              <rect x="560" y="186" width="170" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="645" y="213" fill="#ededed" text-anchor="middle">Cited answer</text>
+            </g>
+            <g stroke="#7db4f0" stroke-width="1.5" marker-end="url(#arrow)">
+              <line x1="130" y1="208" x2="165" y2="208"/>
+              <line x1="290" y1="208" x2="325" y2="208"/>
+              <line x1="405" y1="260" x2="405" y2="295"/>
+              <line x1="480" y1="208" x2="555" y2="208"/>
+            </g>
+            <!-- loop-back arrows -->
+            <g stroke="#7db4f0" stroke-width="1.5" fill="none" marker-end="url(#arrow)">
+              <path d="M 405 352 C 405 385, 250 385, 250 236"/>
+              <path d="M 330 326 C 300 326, 300 326, 300 286 L 300 236"/>
+            </g>
+            <text x="286" y="378" fill="#7db4f0" font-family="Inter, sans-serif" font-size="11" font-style="italic">insufficient: rewrite query, re-retrieve</text>
+            <text x="590" y="330" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="11" font-style="italic">sufficient: synthesize with citations</text>
+            <line x1="480" y1="330" x2="556" y2="330" stroke="#c0c7d1" stroke-width="1.5" marker-end="url(#arrowMuted)"/>
+          </svg>
+          <figcaption>One-shot retrieval (top) makes a single pass and never checks its evidence. The agentic loop (bottom) plans, routes each sub-query to a tool, and re-retrieves until the sufficiency check passes or the budget runs out.</figcaption>
+        </figure>
+
+        <h3>Query planner</h3>
+        <p>
+          The planner turns "why did churn spike in March?" into sub-questions: pull the March metrics, pull the incident log, pull the release notes. Google's Enterprise Agent Platform ships this exact shape and measured 90.1% routing accuracy across four corpora (Source: Google Research, June 2026).
+        </p>
+
+        <h3>Retrieval router</h3>
+        <p>
+          Each sub-query gets the tool it deserves: a vector database for semantic search, SQL for numbers, web search for anything post-cutoff, MCP connectors for live business systems. Uber's Genie copilot runs hybrid BM25 plus vector retrieval under agent control, and that combination is part of why its incorrect-advice rate dropped 60% (Source: Uber Engineering, May 2025).
+        </p>
+
+        <h3>Sufficiency check</h3>
+        <p>
+          A small model grades the retrieved context against the question: sufficient, partial, or insufficient. This is the component that converts silent failure into loud failure. It's also cheap: grading a chunk costs a fraction of generating an answer.
+        </p>
+
+        <h3>State and memory</h3>
+        <p>
+          The loop needs scratch state: what's been retrieved, which queries failed, what the budget is. In LangGraph that's the graph state; in lighter stacks it's a dict you pass around. Either way, it must be inspectable, because it's what you'll debug at 2am. I covered the evaluable version of this in my guide to designing an <a href="https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/">evaluatable multi-agent RAG system with LangGraph</a>.
+        </p>
+      </section>
+
+      <section class="article-section" id="numbers">
+        <h2>What the 2026 numbers say about agentic retrieval</h2>
+        <p>
+          Three datasets carry real weight this year, and one negative result that deserves more attention than it got.
+        </p>
+        <ul>
+          <li><strong>Google FRAMES benchmark:</strong> agentic loops scored 92.7% accuracy vs 78.9% for the best traditional pipeline across 824 multi-hop questions. Grounding: 84.0% vs 73.2%. On 5+ hop questions the gap widened to 90% vs 62% (Source: PipesHub benchmark on Google FRAMES, reported October 2026).</li>
+          <li><strong>Uber EAg-RAG in production:</strong> acceptable answers up 27% relative, incorrect advice down 60%, measured on a real on-call copilot with real Slack traffic (Source: Uber Engineering, May 2025).</li>
+          <li><strong>Google Enterprise Agent Platform:</strong> up to 34% accuracy improvement on factuality datasets vs standard RAG, with 90.1% routing accuracy across four corpora at near-identical latency (Source: Google Research, June 2026).</li>
+          <li><strong>The negative result:</strong> on FRAMES, adding a small cross-encoder reranker degraded accuracy by 9 points. Small-to-big retrieval was the best traditional technique. More retrieval machinery is not automatically better.</li>
+        </ul>
+        <p>
+          Read the pattern, not the point estimates. Every gain comes from iteration and validation, not from a smarter single retrieval call. And the field is still moving: Adobe's GRASP paper (October 2026) trains an RL policy to coordinate semantic search, keyword search, and paragraph reading, essentially learning when to skim and when to scan. Mistral shipped agentic search in September 2026. The loop is becoming the default, not the exception.
+        </p>
+      </section>
+
+      <section class="article-section" id="when">
+        <h2>When to use agentic RAG (and when one-shot still wins)</h2>
+        <p>
+          The honest answer: most query streams are mixed, and the best systems route. Adaptive RAG classifiers predict query difficulty and send easy questions down the cheap path; MarsDevs' 2026 guide puts the savings at 30-50% of average token cost on mixed streams.
+        </p>
+        <p><strong>Spend the agentic budget when:</strong></p>
+        <ul>
+          <li>The question needs multiple documents to answer (comparison, synthesis, why-did-X-happen).</li>
+          <li>Evidence lives in more than one system: a warehouse, an OLTP database, a wiki.</li>
+          <li>Wrong answers are expensive: regulated advice, on-call decisions, legal or medical context.</li>
+        </ul>
+        <p><strong>Keep the one-shot pipeline when:</strong></p>
+        <ul>
+          <li>Questions are lookups over one corpus and users expect sub-3-second answers.</li>
+          <li>Your eval set shows the one-shot pass already scores above your accuracy bar.</li>
+          <li>You can't afford 3-10x token cost or a 10-15s p95.</li>
+        </ul>
+        <p>
+          One more concession, because it matters: if your analytical backlog is simple lookups, don't build this. The traditional pipeline is cheaper, faster, and easier to debug. The loop earns its cost only where composition is required.
+        </p>
+      </section>
+
+      <section class="article-section" id="evaluate">
+        <h2>How to evaluate an agentic retrieval system</h2>
+        <p>
+          An unvalidated loop is just a slower way to be wrong. Evaluation is where the architecture pays for itself, because every intermediate step is inspectable.
+        </p>
+        <ul>
+          <li><strong>Metrics with published targets:</strong> faithfulness ≥ 0.9, answer relevancy ≥ 0.85, context precision ≥ 0.8 (Source: vdf.ai production guide). Ragas for scoring, Arize Phoenix for tracing, Langfuse for production monitoring.</li>
+          <li><strong>Eval sets that expose the loop:</strong> 50-100 multi-hop questions needing two or three documents. If every question is answerable from one chunk, the loop has nothing to prove.</li>
+          <li><strong>Per-step telemetry:</strong> log the planner's decomposition, each retrieval call, and the validator's verdicts. Regressions should be attributable to a step, not to vibes.</li>
+          <li><strong>Index-change gates:</strong> rerun the eval set on every embedding model upgrade. Practitioners in r/ai_agents report that upgrading embeddings without a full re-index means queries search the old vector space while relevance quietly degrades. I wrote about a related failure mode in my post on a <a href="https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/">Hugging Face NLLB gradient accumulation bug</a>: the bugs that hurt most are the ones that don't crash.</li>
+        </ul>
+      </section>
+
+      <section class="article-section" id="ship">
+        <h2>Ship your first agentic retrieval loop in three steps</h2>
+        <div class="step-box">
+          <strong><span class="step-num">1</span>Write the sufficiency check first</strong>
+          <p>Before wiring any loop, define what counts as enough evidence for an answer. A small model grades each retrieved chunk against the question and returns sufficient, partial, or insufficient. This one function turns silent failures into loud ones.</p>
+        </div>
+        <div class="step-box">
+          <strong><span class="step-num">2</span>Bound the loop with a retrieval budget</strong>
+          <p>Cap the agent at 2-6 retrieval calls per question with a hard token ceiling and stop conditions. Unbounded re-query loops are how these systems end up with 10x token bills and 15-second p95 latency.</p>
+        </div>
+        <div class="step-box">
+          <strong><span class="step-num">3</span>Evaluate on multi-hop questions, not lookups</strong>
+          <p>Build a 50-100 question eval set with multi-hop questions that need two or three documents to answer. Track faithfulness, answer relevancy, and context precision, and rerun it on every retrieval index or embedding model change.</p>
+        </div>
+      </section>
+
+      <section class="article-section" id="faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+          <p class="faq-q">What is agentic RAG in simple terms?</p>
+          <p class="faq-a">Agentic RAG is a retrieval architecture where the model plans the question, searches, grades its own evidence, and searches again until the context is sufficient. A one-shot RAG pipeline retrieves once and generates; the agentic loop runs that retrieve-and-check cycle in a bounded loop and cites what it used.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">How is agentic RAG different from traditional RAG pipelines?</p>
+          <p class="faq-a">A traditional pipeline makes exactly one retrieval call and trusts whatever comes back. The agentic version makes 2-6 retrieval calls, routes each one to a different tool when needed, and validates the evidence before answering. On Google's FRAMES benchmark that difference measured 92.7% accuracy for agentic loops versus 78.9% for the best traditional pipeline.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">When should you not use agentic RAG?</p>
+          <p class="faq-a">Skip it when your questions are lookups over one corpus and your users need sub-3-second answers. FAQ-style queries, ID lookups, and stable single-document questions rarely need a second retrieval pass, so the loop just adds latency and token spend for no accuracy gain.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Does agentic RAG need a knowledge graph like GraphRAG?</p>
+          <p class="faq-a">No. GraphRAG is one retrieval tool an agent can call, not a requirement. Build a tiny eval set of questions where plain vector search feels shaky; only add graph extraction and traversal if it measurably improves those answers, because entity extraction and graph maintenance carry real ongoing cost.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Is agentic RAG worth the extra latency and token cost?</p>
+          <p class="faq-a">For multi-hop and cross-source questions, yes: published benchmarks show double-digit accuracy gains, and Uber measured 60% fewer incorrect answers in production. For easy lookups, no. Route first: send easy queries to a one-shot path and spend the agentic budget only where it pays.</p>
+        </div>
+      </section>
+
+      <section class="methodology">
+        <h2>About this guide</h2>
+        <p><strong>Last updated:</strong> October 4, 2026</p>
+        <p><strong>Methodology:</strong> Benchmark figures come from published 2026 sources: the PipesHub study on Google's FRAMES dataset (824 multi-hop questions), Uber's EAg-RAG engineering write-up, and Google Research's Enterprise Agent Platform post. Latency and cost ranges are practitioner estimates from MarsDevs' 2026 guide and are labeled as such. Community pain points come from r/ai_agents threads from the last 30 days.</p>
+        <p><strong>Conflict of interest:</strong> None. I have no affiliation with any vendor named here. All sources are linked inline.</p>
+        <p><strong>Update cadence:</strong> Reviewed quarterly, or sooner if a major benchmark or framework release changes the numbers.</p>
+      </section>
+
+      <section class="article-section" id="sources">
+        <h2>Sources and further reading</h2>
+        <ul class="source-list">
+          <li><a href="https://www.thenextgentechinsider.com/pulse/agentic-rag-loops-outperform-traditional-pipelines-on-google-frames-benchmark">PipesHub benchmark on Google FRAMES: agentic loops vs traditional pipelines</a></li>
+          <li><a href="https://research.google/blog/unlocking-dependable-responses-with-gemini-enterprise-agent-platforms-agentic-rag/">Google Research: Agentic RAG in Gemini Enterprise Agent Platform</a></li>
+          <li><a href="https://www.uber.com/us/en/blog/enhanced-agentic-rag/">Uber Engineering: Enhanced Agentic-RAG</a></li>
+          <li><a href="https://developer.nvidia.com/blog/traditional-rag-vs-agentic-rag-why-ai-agents-need-dynamic-knowledge-to-get-smarter/">NVIDIA: Traditional RAG vs agentic RAG</a></li>
+          <li><a href="https://research.adobe.com/publication/grasp-granularity-aware-search-policy-for-agentic-rag/">Adobe Research: GRASP, a granularity-aware search policy</a></li>
+          <li><a href="https://mistral.ai/news/agentic-search/">Mistral: Agentic Search announcement</a></li>
+          <li><a href="https://www.marsdevs.com/guides/agentic-rag-2026-guide">MarsDevs: Agentic RAG 2026 guide</a></li>
+          <li><a href="https://neo4j.com/blog/agentic-ai/what-is-agentic-rag/">Neo4j: What is agentic RAG and when to use it</a></li>
+        </ul>
+      </section>
+
+      <section class="article-section" id="related">
+        <h2>Related reading</h2>
+        <div class="related">
+          <a href="https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/">How to Design an Evaluatable Multi-Agent RAG System with LangGraph</a>
+          <a href="https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/">The Hugging Face NLLB Gradient Accumulation Bug</a>
+          <a href="https://aradmanamnaoon.github.io/projects/">Projects: models and systems I've shipped</a>
+          <a href="https://aradmanamnaoon.github.io/blog/">All blog posts</a>
+          <a href="https://aradmanamnaoon.github.io/">Home: AI engineering and data science</a>
+          <a href="https://aradmanamnaoon.github.io/#writing">Writing index</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Seyyed Arad Hosseini Moghaddam</span>
+    <nav aria-label="Footer">
+      <a href="https://aradmanamnaoon.github.io/">Portfolio</a>
+      <a href="https://aradmanamnaoon.github.io/projects/">Projects</a>
+      <a href="https://aradmanamnaoon.github.io/#contact">Contact</a>
+    </nav>
+  </footer>
+</body>
+</html>

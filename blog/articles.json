@@ -25,5 +25,18 @@
       "Agentic AI",
       "Evaluation"
     ]
+  },
+  {
+    "title": "What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines",
+    "url": "/blog/agentic-rag/agentic-rag.html",
+    "date": "2026-10-04",
+    "dateDisplay": "October 4, 2026",
+    "readTime": "11 min read",
+    "description": "Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.",
+    "tags": [
+      "Agentic AI",
+      "RAG",
+      "Production AI Engineering"
+    ]
   }
 ]
