@@ -1,15 +1,22 @@
 import json
 import os
 import re
-from datetime import datetime
 
-# --- Configuration ---
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-ARTICLES_JSON = os.path.join(BASE_DIR, 'articles.json')
-INDEX_HTML = os.path.join(BASE_DIR, 'index.html')
-SITEMAP_XML = os.path.join(BASE_DIR, 'sitemap.xml')
-BLOG_DIR = os.path.join(BASE_DIR, 'blog')
+# --- EXACT FILES TO PROCESS (Hardcoded based on your terminal output) ---
+HTML_FILES = [
+    "index.html",
+    "projects/index.html",
+    "blog/index.html",
+    "blog/evaluatable-multi-agent-rag-langgraph/index.html",
+    "blog/agent-evals/agent-evals.html",
+    "blog/hugging-face-nllb-gradient-accumulation-bug/index.html",
+    "blog/agentic-rag/agentic-rag.html"
+]
+
+ARTICLES_JSON = "articles.json"
+SITEMAP_XML = "sitemap.xml"
 SITE_URL = "https://aradmanamnaoon.github.io"
+MAX_ARTICLES_TO_SHOW = 3
 
 # --- Favicon Injection ---
 FAVICON_LINKS = '''
@@ -21,48 +28,66 @@ FAVICON_LINKS = '''
 '''
 
 def inject_favicons(html_content):
-    """Injects favicon links into the <head> if they don't already exist."""
     if 'rel="icon"' in html_content:
-        return html_content  # Already has favicons
-    
-    # Insert before </head>
+        return html_content
     if '</head>' in html_content:
         return html_content.replace('</head>', FAVICON_LINKS + '</head>')
     return html_content
 
-# --- Blog List Updating ---
-def update_blog_list(html_content, articles):
-    """Updates the blog list section in index.html based on articles.json."""
-    # Create HTML for blog cards
-    blog_cards_html = ""
-    for article in articles:
+# --- Blog List Generation ---
+def generate_blog_html(articles):
+    blog_cards_html = '<div class="blog-list-container">\n'
+    
+    # Sort by date descending and limit to top 3
+    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)
+    top_articles = sorted_articles[:MAX_ARTICLES_TO_SHOW]
+    
+    for article in top_articles:
+        tags_html = "".join([f'<span class="tag">{tag}</span>' for tag in article.get('tags', [])])
+        
         blog_cards_html += f'''
-        <div class="blog-card">
-            <h3><a href="{article['url']}">{article['title']}</a></h3>
-            <p class="blog-date">{article['date']}</p>
-            <p>{article['description']}</p>
+        <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <h3 style="margin-bottom: 0.5rem;"><a href="{article['url']}" style="text-decoration: none; color: inherit;">{article['title']}</a></h3>
+            <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                <span class="blog-date">{article.get('dateDisplay', article['date'])}</span>
+                <span class="blog-readtime" style="margin-left: 1rem;">{article.get('readTime', '')}</span>
+            </div>
+            <p style="margin-bottom: 1rem;">{article['description']}</p>
+            <div class="blog-tags" style="font-size: 0.8rem;">{tags_html}</div>
         </div>'''
     
-    # Replace content between markers (assuming your index.html has these markers)
-    # If you don't have markers, you need to add them around your blog list.
+    blog_cards_html += '</div>'
+    return blog_cards_html
+
+def inject_blog_list(html_content, articles):
+    # 1. Use explicit markers if they exist
     pattern = r'(<!-- BLOG_LIST_START -->).*?(<!-- BLOG_LIST_END -->)'
-    replacement = f'\\1{blog_cards_html}\\2'
-    
     if re.search(pattern, html_content, re.DOTALL):
-        return re.sub(pattern, replacement, html_content, flags=re.DOTALL)
-    else:
-        print("Warning: BLOG_LIST_START/END markers not found in index.html. Skipping blog list update.")
-        return html_content
+        print("  -> Found BLOG_LIST markers. Injecting.")
+        return re.sub(pattern, f'\\1\n{generate_blog_html(articles)}\n\\2', html_content, flags=re.DOTALL)
+    
+    # 2. Fallback: Look for the "Writing." heading
+    writing_pattern = r'(<h[1-6][^>]*>.*?Writing\..*?</h[1-6]>)'
+    if re.search(writing_pattern, html_content, re.IGNORECASE | re.DOTALL):
+        print("  -> Found 'Writing.' heading. Injecting.")
+        return re.sub(writing_pattern, f'\\1\n{generate_blog_html(articles)}', html_content, flags=re.IGNORECASE | re.DOTALL)
+    
+    # 3. Fallback: Look for "Notes" heading (from your screenshot)
+    notes_pattern = r'(<h[1-6][^>]*>.*?Notes.*?</h[1-6]>)'
+    if re.search(notes_pattern, html_content, re.IGNORECASE | re.DOTALL):
+        print("  -> Found 'Notes' heading. Injecting.")
+        return re.sub(notes_pattern, f'\\1\n{generate_blog_html(articles)}', html_content, flags=re.IGNORECASE | re.DOTALL)
+        
+    print("  -> Warning: No suitable heading found. Skipping list injection.")
+    return html_content
 
 # --- Sitemap Generation ---
 def generate_sitemap(articles):
-    """Generates a valid sitemap.xml."""
     urls = [
         f"<url><loc>{SITE_URL}/</loc><priority>1.0</priority></url>",
-        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.8</priority></url>",
-        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>"
+        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>",
+        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.8</priority></url>"
     ]
-    
     for article in articles:
         urls.append(f"<url><loc>{SITE_URL}{article['url']}</loc><priority>0.6</priority></url>")
     
@@ -73,52 +98,40 @@ def generate_sitemap(articles):
     
     with open(SITEMAP_XML, 'w', encoding='utf-8') as f:
         f.write(sitemap_content)
-    print(f"Generated sitemap.xml with {len(urls)} URLs.")
+    print(f"✅ Generated sitemap.xml with {len(urls)} URLs.")
 
 # --- Main Execution ---
 def main():
-    # 1. Load Articles
     if not os.path.exists(ARTICLES_JSON):
-        print(f"Error: {ARTICLES_JSON} not found. Please create it.")
+        print(f"❌ Error: {ARTICLES_JSON} not found in current folder.")
         return
     
     with open(ARTICLES_JSON, 'r', encoding='utf-8') as f:
         articles = json.load(f)
     
-    # 2. Process Index.html
-    if os.path.exists(INDEX_HTML):
-        with open(INDEX_HTML, 'r', encoding='utf-8') as f:
+    print(f"📄 Processing {len(HTML_FILES)} files...\n")
+    
+    for filepath in HTML_FILES:
+        if not os.path.exists(filepath):
+            print(f"⚠️  Skipping missing file: {filepath}")
+            continue
+        
+        print(f"Processing: {filepath}")
+        
+        with open(filepath, 'r', encoding='utf-8') as f:
             html = f.read()
         
-        # Inject Favicons
+        # 1. Inject favicons into ALL files
         html = inject_favicons(html)
-        # Update Blog List
-        html = update_blog_list(html, articles)
         
-        with open(INDEX_HTML, 'w', encoding='utf-8') as f:
+        # 2. Inject blog list ONLY into homepage and blog index
+        if filepath in ['index.html', 'blog/index.html']:
+            html = inject_blog_list(html, articles)
+        
+        with open(filepath, 'w', encoding='utf-8') as f:
             f.write(html)
-        print("Updated index.html (favicons + blog list).")
-    else:
-        print(f"Error: {INDEX_HTML} not found.")
     
-    # 3. Process Blog Posts (Inject Favicons into all HTML files in /blog/)
-    if os.path.exists(BLOG_DIR):
-        for root, dirs, files in os.walk(BLOG_DIR):
-            for file in files:
-                if file.endswith('.html'):
-                    filepath = os.path.join(root, file)
-                    with open(filepath, 'r', encoding='utf-8') as f:
-                        blog_html = f.read()
-                    
-                    blog_html = inject_favicons(blog_html)
-                    
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        f.write(blog_html)
-        print(f"Updated favicons in all blog HTML files.")
-    else:
-        print(f"Warning: Blog directory {BLOG_DIR} not found.")
-    
-    # 4. Generate Sitemap
+    # Generate sitemap
     generate_sitemap(articles)
 
 if __name__ == "__main__":
