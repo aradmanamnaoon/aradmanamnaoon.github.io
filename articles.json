@@ -40,16 +40,12 @@
     ]
   },
   {
-    "title": "Agent Evals",
-    "url": "/blog/agent-evals/",
-    "date": "2026-10-05",
-    "dateDisplay": "October 5, 2026",
-    "readTime": "10 min read",
-    "description": "A practical guide to evaluating AI agents, covering metrics, test harnesses, and common pitfalls in agentic workflows.",
-    "tags": [
-      "Agentic AI",
-      "Evaluation",
-      "LLM"
-    ]
-  }
+  "title": "Evaluating AI Agents in Practice: Metrics, Test Harnesses, and Common Pitfalls",
+  "url": "/blog/agent-evals/",
+  "date": "2026-10-05",
+  "dateDisplay": "October 5, 2026",
+  "readTime": "10 min read",
+  "description": "A practical guide to evaluating AI agents, covering metrics, test harnesses, and common pitfalls in agentic workflows.",
+  "tags": ["Agentic AI", "Evaluation", "LLM"]
+}
 ]

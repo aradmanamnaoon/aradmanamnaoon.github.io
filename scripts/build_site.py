@@ -19,6 +19,7 @@ MAX_ARTICLES_HOMEPAGE = 3
 PROJECTS_PER_PAGE = 6
 
 SKIP_REPOS = {"aradmanamnaoon.github.io", ".github", "aradmanamnaoon"}
+SKIP_FOLDERS = {".git", "node_modules", "scripts", "dist", "assets"}
 
 CURATED = {
     "ai-research-assistant-platform": {
@@ -108,83 +109,107 @@ def add_favicons(html):
         return html.replace('</head>', FAVICON_LINKS + '\n</head>')
     return html
 
+def add_favicons_to_all_html_files():
+    print("🎨 Injecting favicons into all HTML files...")
+    updated = 0
+    skipped = 0
+    failed = 0
+    for root, dirs, files in os.walk(BASE_DIR):
+        dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS and not d.startswith('.')]
+        for filename in files:
+            if not filename.endswith('.html'):
+                continue
+            filepath = os.path.join(root, filename)
+            rel_path = os.path.relpath(filepath, BASE_DIR)
+            try:
+                with open(filepath, encoding='utf-8') as f:
+                    html = f.read()
+                new_html = add_favicons(html)
+                if new_html != html:
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        f.write(new_html)
+                    updated += 1
+                    print(f"   ✓ {rel_path}")
+                else:
+                    skipped += 1
+            except Exception as e:
+                failed += 1
+                print(f"   ⚠️  {rel_path}: {e}")
+    print(f"\n   → Favicons added: {updated} | Already had: {skipped} | Failed: {failed}\n")
+    return updated, skipped
+
 # ============================================================
-#  CLEAN BLOG PAGE (removes duplicate/stale sections)
+#  SAFE CLEANUP (only removes unstyled injected cards)
 # ============================================================
-def clean_blog_page(html):
+def remove_old_injected_cards(html):
     """
-    Clean up blog/index.html:
-    1. Remove stray blog-card blocks from the hero section
-    2. Remove empty blog-list-container divs
-    3. Remove duplicate 'Latest writing' sections
+    Removes ONLY inline-styled blog cards (<div class="blog-card" style="...">)
+    which were injected by old broken script versions.
+    Does NOT touch any section structure, archive, or properly-styled content.
     """
     original = html
     
-    # 1. Remove UNSTYLED blog cards injected into hero section
+    # Remove inline-styled blog cards (signature of the old broken injection)
     html = re.sub(
-        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
+        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*'
+        r'(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
         '', html, flags=re.DOTALL
     )
     
-    # 2. Remove old blog-list-container wrappers
-    html = re.sub(
-        r'<div class="blog-list-container">\s*(?:<div class="blog-card".*?</div>\s*)*</div>\s*',
-        '', html, flags=re.DOTALL
-    )
-    
-    # 3. Remove duplicate "ARTICLE ARCHIVE" sections (keep only first)
-    archive_pattern = r'(<!-- =+\s*ARTICLE ARCHIVE\s*=+ -->)'
-    archive_matches = list(re.finditer(archive_pattern, html))
-    if len(archive_matches) > 1:
-        for m in reversed(archive_matches[1:]):
-            section_start = m.start()
-            next_section = html.find('<section', m.end())
-            if next_section == -1:
-                next_section = html.find('</main>', m.end())
-            if next_section > 0:
-                html = html[:section_start] + html[next_section:]
-    
-    # 4. Remove duplicate AUTO:BLOG_ARTICLES marker pairs (keep first)
-    marker_pattern = r'<!-- AUTO:BLOG_ARTICLES:START -->.*?<!-- AUTO:BLOG_ARTICLES:END -->\s*'
-    marker_matches = list(re.finditer(marker_pattern, html, re.DOTALL))
-    if len(marker_matches) > 1:
-        for m in reversed(marker_matches[1:]):
-            html = html[:m.start()] + html[m.end():]
+    # Remove empty placeholder wrappers
+    html = re.sub(r'<div class="blog-list-container">\s*</div>\s*', '', html)
+    html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
     
     if len(html) != len(original):
-        print(f"   🔧 Cleaned blog page: removed {len(original) - len(html)} chars")
+        print(f"   🔧 Removed {len(original) - len(html)} chars of old injected content")
     
     return html
 
 # ============================================================
-#  CLEAN HOMEPAGE
+#  RESTORE ARCHIVE SECTION (blog page)
 # ============================================================
-def clean_homepage(html):
-    original = html
+def restore_blog_archive(html):
+    """
+    If the archive section is missing (was accidentally deleted),
+    rebuild it in the correct place.
+    """
+    if 'class="blog-archive"' in html:
+        return html  # archive exists, nothing to do
     
-    # Remove old unstyled blog cards
-    html = re.sub(
-        r'<div class="blog-list-container">\s*(?:<div class="blog-card"[^>]*style=[^>]*>.*?</div>\s*)+</div>\s*',
-        '', html, flags=re.DOTALL
-    )
-    html = re.sub(
-        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
-        '', html, flags=re.DOTALL
-    )
+    print("   🔨 Blog archive section was missing — restoring it")
     
-    # Remove empty placeholder divs
-    html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
-    html = re.sub(r'<div class="blog-list-container">\s*</div>\s*', '', html)
-    
-    # Remove duplicate AUTO:HOME_ARTICLES marker pairs (keep first)
-    marker_pattern = r'<!-- AUTO:HOME_ARTICLES:START -->.*?<!-- AUTO:HOME_ARTICLES:END -->\s*'
-    marker_matches = list(re.finditer(marker_pattern, html, re.DOTALL))
-    if len(marker_matches) > 1:
-        for m in reversed(marker_matches[1:]):
-            html = html[:m.start()] + html[m.end():]
-    
-    if len(html) != len(original):
-        print(f"   🔧 Cleaned homepage: removed {len(original) - len(html)} chars")
+    # Build the full archive section
+    archive_section = '''    <!-- =====================================================
+         ARTICLE ARCHIVE
+         ===================================================== -->
+    <section
+      class="blog-archive"
+      aria-labelledby="writing-heading"
+    >
+      <div class="blog-shell">
+        <div class="blog-section-head">
+          <div class="blog-section-number">
+            01 / Archive
+          </div>
+          <h2
+            class="blog-section-title"
+            id="writing-heading"
+          >
+            Latest writing
+          </h2>
+        </div>
+
+        <div class="blog-post-list">
+          <!-- AUTO:BLOG_ARTICLES:START -->
+          <!-- AUTO:BLOG_ARTICLES:END -->
+        </div>
+      </div>
+    </section>
+
+'''
+    # Insert right before </main>
+    if '</main>' in html:
+        html = html.replace('</main>', archive_section + '  </main>', 1)
     
     return html
 
@@ -205,9 +230,10 @@ def ensure_homepage_markers(html):
 def ensure_blog_markers(html):
     if '<!-- AUTO:BLOG_ARTICLES:START -->' in html:
         return html
-    pattern = r'(<div class="blog-post-list">)\s*(.*?)\s*(</div>\s*</div>\s*</section>)'
+    # Try to inject into .blog-post-list
+    pattern = r'(<div class="blog-post-list">)\s*(.*?)\s*(</div>)'
     def add_markers(m):
-        return f'{m.group(1)}\n          <!-- AUTO:BLOG_ARTICLES:START -->\n          <!-- AUTO:BLOG_ARTICLES:END -->\n        {m.group(3)}'
+        return f'{m.group(1)}\n          <!-- AUTO:BLOG_ARTICLES:START -->\n          <!-- AUTO:BLOG_ARTICLES:END -->{m.group(3)}'
     result = re.sub(pattern, add_markers, html, count=1, flags=re.DOTALL)
     if result != html:
         print("   ➕ Added blog article markers")
@@ -579,9 +605,14 @@ def generate_sitemap(articles):
 def main():
     print("=" * 60)
     
+    # 1. Favicons on ALL HTML files
+    add_favicons_to_all_html_files()
+    
+    # 2. Fetch projects
     projects = rank_all_projects()
     print(f"\n📊 Ranked {len(projects)} total projects\n")
     
+    # 3. Load articles
     articles_json = os.path.join(BASE_DIR, "articles.json")
     if os.path.exists(articles_json):
         with open(articles_json, encoding='utf-8') as f:
@@ -591,38 +622,37 @@ def main():
         articles = []
         print("⚠️  articles.json not found\n")
     
-    # ---- index.html ----
+    # 4. index.html
     print("📄 Processing index.html")
     with open("index.html", encoding='utf-8') as f:
         html = f.read()
-    html = add_favicons(html)
-    html = clean_homepage(html)
+    html = remove_old_injected_cards(html)
     html = ensure_homepage_markers(html)
     html = inject_homepage_projects(html, projects)
     html = inject_homepage_blogs(html, articles)
     with open("index.html", 'w', encoding='utf-8') as f:
         f.write(html)
     
-    # ---- projects/index.html ----
+    # 5. projects/index.html
     print("📄 Processing projects/index.html")
     with open("projects/index.html", encoding='utf-8') as f:
         html = f.read()
-    html = add_favicons(html)
     html = inject_projects_page(html, projects)
     with open("projects/index.html", 'w', encoding='utf-8') as f:
         f.write(html)
     
-    # ---- blog/index.html ----
+    # 6. blog/index.html
     print("📄 Processing blog/index.html")
     with open("blog/index.html", encoding='utf-8') as f:
         html = f.read()
-    html = add_favicons(html)
-    html = clean_blog_page(html)
+    html = remove_old_injected_cards(html)
+    html = restore_blog_archive(html)   # restore if missing
     html = ensure_blog_markers(html)
     html = inject_blog_index(html, articles)
     with open("blog/index.html", 'w', encoding='utf-8') as f:
         f.write(html)
     
+    # 7. Sitemap
     print()
     generate_sitemap(articles)
     print("\n✅ Done!")
