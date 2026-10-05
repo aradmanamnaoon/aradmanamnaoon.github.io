@@ -94,7 +94,7 @@ CURATED = {
 }
 
 # ============================================================
-#  FAVICON INJECTION
+#  FAVICON INJECTION (all HTML files)
 # ============================================================
 FAVICON_LINKS = '''    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -136,108 +136,46 @@ def add_favicons_to_all_html_files():
                 failed += 1
                 print(f"   ⚠️  {rel_path}: {e}")
     print(f"\n   → Favicons added: {updated} | Already had: {skipped} | Failed: {failed}\n")
-    return updated, skipped
 
 # ============================================================
-#  SAFE CLEANUP (only removes unstyled injected cards)
+#  SAFE CLEANUP (only removes old unstyled cards, nothing else)
 # ============================================================
 def remove_old_injected_cards(html):
     """
-    Removes ONLY inline-styled blog cards (<div class="blog-card" style="...">)
-    which were injected by old broken script versions.
-    Does NOT touch any section structure, archive, or properly-styled content.
+    Removes ONLY the old inline-styled blog-card divs that were injected
+    by previous buggy script versions. Nothing else is touched.
     """
     original = html
     
-    # Remove inline-styled blog cards (signature of the old broken injection)
+    # Remove old unstyled blog cards (with style="..." attribute)
     html = re.sub(
         r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*'
         r'(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
         '', html, flags=re.DOTALL
     )
     
-    # Remove empty placeholder wrappers
+    # Remove empty blog-list-container wrappers
     html = re.sub(r'<div class="blog-list-container">\s*</div>\s*', '', html)
+    
+    # Remove empty projects-list-container wrappers
     html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
     
     if len(html) != len(original):
-        print(f"   🔧 Removed {len(original) - len(html)} chars of old injected content")
+        print(f"   🔧 Removed {len(original) - len(html)} chars of old content")
     
     return html
 
 # ============================================================
-#  RESTORE ARCHIVE SECTION (blog page)
+#  MARKER CHECKS
 # ============================================================
-def restore_blog_archive(html):
-    """
-    If the archive section is missing (was accidentally deleted),
-    rebuild it in the correct place.
-    """
-    if 'class="blog-archive"' in html:
-        return html  # archive exists, nothing to do
-    
-    print("   🔨 Blog archive section was missing — restoring it")
-    
-    # Build the full archive section
-    archive_section = '''    <!-- =====================================================
-         ARTICLE ARCHIVE
-         ===================================================== -->
-    <section
-      class="blog-archive"
-      aria-labelledby="writing-heading"
-    >
-      <div class="blog-shell">
-        <div class="blog-section-head">
-          <div class="blog-section-number">
-            01 / Archive
-          </div>
-          <h2
-            class="blog-section-title"
-            id="writing-heading"
-          >
-            Latest writing
-          </h2>
-        </div>
-
-        <div class="blog-post-list">
-          <!-- AUTO:BLOG_ARTICLES:START -->
-          <!-- AUTO:BLOG_ARTICLES:END -->
-        </div>
-      </div>
-    </section>
-
-'''
-    # Insert right before </main>
-    if '</main>' in html:
-        html = html.replace('</main>', archive_section + '  </main>', 1)
-    
-    return html
-
-# ============================================================
-#  ENSURE MARKERS EXIST
-# ============================================================
-def ensure_homepage_markers(html):
-    if '<!-- AUTO:HOME_ARTICLES:START -->' in html:
-        return html
-    pattern = r'(<div class="writing-post-list">)\s*(.*?)\s*(</div>\s*</section>)'
-    def add_markers(m):
-        return f'{m.group(1)}\n        <!-- AUTO:HOME_ARTICLES:START -->\n        <!-- AUTO:HOME_ARTICLES:END -->\n        {m.group(3)}'
-    result = re.sub(pattern, add_markers, html, count=1, flags=re.DOTALL)
-    if result != html:
-        print("   ➕ Added homepage article markers")
-    return result
-
-def ensure_blog_markers(html):
-    if '<!-- AUTO:BLOG_ARTICLES:START -->' in html:
-        return html
-    # Try to inject into .blog-post-list
-    pattern = r'(<div class="blog-post-list">)\s*(.*?)\s*(</div>)'
-    def add_markers(m):
-        return f'{m.group(1)}\n          <!-- AUTO:BLOG_ARTICLES:START -->\n          <!-- AUTO:BLOG_ARTICLES:END -->{m.group(3)}'
-    result = re.sub(pattern, add_markers, html, count=1, flags=re.DOTALL)
-    if result != html:
-        print("   ➕ Added blog article markers")
-    return result
+def check_markers(html, marker_name, filepath):
+    """Warn if required markers are missing."""
+    start = f'<!-- {marker_name}:START -->'
+    end = f'<!-- {marker_name}:END -->'
+    if start not in html or end not in html:
+        print(f"   ⚠️  {filepath}: missing {marker_name} markers — will skip injection")
+        return False
+    return True
 
 # ============================================================
 #  API FETCHERS
@@ -605,7 +543,7 @@ def generate_sitemap(articles):
 def main():
     print("=" * 60)
     
-    # 1. Favicons on ALL HTML files
+    # 1. Add favicons to ALL HTML files (including blog posts)
     add_favicons_to_all_html_files()
     
     # 2. Fetch projects
@@ -627,7 +565,6 @@ def main():
     with open("index.html", encoding='utf-8') as f:
         html = f.read()
     html = remove_old_injected_cards(html)
-    html = ensure_homepage_markers(html)
     html = inject_homepage_projects(html, projects)
     html = inject_homepage_blogs(html, articles)
     with open("index.html", 'w', encoding='utf-8') as f:
@@ -646,8 +583,6 @@ def main():
     with open("blog/index.html", encoding='utf-8') as f:
         html = f.read()
     html = remove_old_injected_cards(html)
-    html = restore_blog_archive(html)   # restore if missing
-    html = ensure_blog_markers(html)
     html = inject_blog_index(html, articles)
     with open("blog/index.html", 'w', encoding='utf-8') as f:
         f.write(html)
