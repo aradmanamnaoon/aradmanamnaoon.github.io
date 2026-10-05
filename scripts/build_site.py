@@ -1,67 +1,125 @@
-#!/usr/bin/env python3
-from pathlib import Path
-import html, json, re
-ROOT=Path(__file__).resolve().parents[1]
-SITE="https://aradmanamnaoon.github.io"
-PERSON_ID=f"{SITE}/#person"
+import json
+import os
+import re
+from datetime import datetime
 
-def replace_between(text,start,end,replacement):
-    pattern=re.escape(start)+r".*?"+re.escape(end)
-    text,n=re.subn(pattern,start+"\n"+replacement.rstrip()+"\n"+end,text,count=1,flags=re.S)
-    if n!=1: raise RuntimeError(f"Missing build markers: {start}")
-    return text
+# --- Configuration ---
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ARTICLES_JSON = os.path.join(BASE_DIR, 'articles.json')
+INDEX_HTML = os.path.join(BASE_DIR, 'index.html')
+SITEMAP_XML = os.path.join(BASE_DIR, 'sitemap.xml')
+BLOG_DIR = os.path.join(BASE_DIR, 'blog')
+SITE_URL = "https://aradmanamnaoon.github.io"
 
-def load_articles():
-    p=ROOT/"blog"/"articles.json"
-    data=json.loads(p.read_text(encoding="utf-8"))
-    required={"title","url","date","dateDisplay","readTime","description","tags"}
-    for i,a in enumerate(data,1):
-        missing=required-set(a)
-        if missing: raise ValueError(f"Article {i} missing: {sorted(missing)}")
-        if not a["url"].startswith("/blog/"): raise ValueError(f"Bad article URL: {a['url']}")
-    return sorted(data,key=lambda a:a["date"],reverse=True)
+# --- Favicon Injection ---
+FAVICON_LINKS = '''
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+'''
 
-def home_cards(items):
-    cards=[]
-    for a in items[:3]:
-        tags="\n".join(f'                <span class="writing-post-tag">{html.escape(t)}</span>' for t in a.get("tags",[]))
-        cards.append(f'''        <a class="writing-post-card" href="{html.escape(a["url"])}" aria-label="Read {html.escape(a["title"],quote=True)}">
-          <div><div class="writing-post-meta">{html.escape(a["dateDisplay"])} · {html.escape(a["readTime"])}</div>
-            <h3 class="writing-post-title">{html.escape(a["title"])}</h3>
-            <p class="writing-post-description">{html.escape(a["description"])}</p>
-            <div class="writing-post-tags" aria-label="Article topics">\n{tags}\n            </div>
-          </div><span class="writing-post-arrow" aria-hidden="true">→</span>
-        </a>''')
-    return "\n\n".join(cards)
+def inject_favicons(html_content):
+    """Injects favicon links into the <head> if they don't already exist."""
+    if 'rel="icon"' in html_content:
+        return html_content  # Already has favicons
+    
+    # Insert before </head>
+    if '</head>' in html_content:
+        return html_content.replace('</head>', FAVICON_LINKS + '</head>')
+    return html_content
 
-def blog_cards(items):
-    cards=[]
-    for a in items:
-        tags="\n".join(f'                  <span class="blog-post-tag">{html.escape(t)}</span>' for t in a.get("tags",[]))
-        cards.append(f'''          <article><a class="blog-post" href="{html.escape(a["url"])}" aria-label="Read {html.escape(a["title"],quote=True)}">
-              <div class="blog-post-meta"><time datetime="{a["date"]}">{html.escape(a["dateDisplay"])}</time><br />{html.escape(a["readTime"])}</div>
-              <div><h3 class="blog-post-title">{html.escape(a["title"])}</h3><p class="blog-post-description">{html.escape(a["description"])}</p>
-                <div class="blog-post-tags" aria-label="Article topics">\n{tags}\n                </div></div>
-              <span class="blog-post-arrow" aria-hidden="true">→</span></a></article>''')
-    return "\n\n".join(cards)
+# --- Blog List Updating ---
+def update_blog_list(html_content, articles):
+    """Updates the blog list section in index.html based on articles.json."""
+    # Create HTML for blog cards
+    blog_cards_html = ""
+    for article in articles:
+        blog_cards_html += f'''
+        <div class="blog-card">
+            <h3><a href="{article['url']}">{article['title']}</a></h3>
+            <p class="blog-date">{article['date']}</p>
+            <p>{article['description']}</p>
+        </div>'''
+    
+    # Replace content between markers (assuming your index.html has these markers)
+    # If you don't have markers, you need to add them around your blog list.
+    pattern = r'(<!-- BLOG_LIST_START -->).*?(<!-- BLOG_LIST_END -->)'
+    replacement = f'\\1{blog_cards_html}\\2'
+    
+    if re.search(pattern, html_content, re.DOTALL):
+        return re.sub(pattern, replacement, html_content, flags=re.DOTALL)
+    else:
+        print("Warning: BLOG_LIST_START/END markers not found in index.html. Skipping blog list update.")
+        return html_content
 
-def schema(items):
-    posts=[{"@type":"BlogPosting","@id":f"{SITE}{a['url']}#article","url":f"{SITE}{a['url']}","headline":a["title"],"description":a["description"],"datePublished":a["date"],"dateModified":a.get("modified",a["date"]),"inLanguage":"en","keywords":a.get("tags",[]),"author":{"@id":PERSON_ID},"isPartOf":{"@id":f"{SITE}/blog/#blog"},"mainEntityOfPage":f"{SITE}{a['url']}"} for a in items]
-    graph={"@context":"https://schema.org","@graph":[{"@type":"Blog","@id":f"{SITE}/blog/#blog","url":f"{SITE}/blog/","name":"ARADMANAMNAOON — AI Engineering Blog","description":"First-hand technical notes, experiments, debugging stories, and project breakdowns from AI and machine-learning work.","inLanguage":"en","author":{"@id":PERSON_ID},"publisher":{"@id":PERSON_ID},"blogPost":posts},{"@type":"Person","@id":PERSON_ID,"name":"Seyyed Arad Hosseini Moghaddam","alternateName":"ARADMANAMNAOON","url":f"{SITE}/","sameAs":["https://github.com/aradmanamnaoon","https://huggingface.co/aradmanamnaoon","https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam"]},{"@type":"BreadcrumbList","@id":f"{SITE}/blog/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":f"{SITE}/"},{"@type":"ListItem","position":2,"name":"Blog","item":f"{SITE}/blog/"}]}]}
-    return '  <script type="application/ld+json">\n'+json.dumps(graph,ensure_ascii=False,indent=2)+'\n  </script>'
+# --- Sitemap Generation ---
+def generate_sitemap(articles):
+    """Generates a valid sitemap.xml."""
+    urls = [
+        f"<url><loc>{SITE_URL}/</loc><priority>1.0</priority></url>",
+        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.8</priority></url>",
+        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>"
+    ]
+    
+    for article in articles:
+        urls.append(f"<url><loc>{SITE_URL}{article['url']}</loc><priority>0.6</priority></url>")
+    
+    sitemap_content = f'''<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    {''.join(urls)}
+</urlset>'''
+    
+    with open(SITEMAP_XML, 'w', encoding='utf-8') as f:
+        f.write(sitemap_content)
+    print(f"Generated sitemap.xml with {len(urls)} URLs.")
 
-def sitemap(items):
-    latest=max(a.get("modified",a["date"]) for a in items)
-    rows=[(f"{SITE}/",latest),(f"{SITE}/projects/","2026-10-02"),(f"{SITE}/blog/",latest)]+[(f"{SITE}{a['url']}",a.get("modified",a["date"])) for a in items]
-    lines=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for u,d in rows: lines += ["  <url>",f"    <loc>{html.escape(u)}</loc>",f"    <lastmod>{d}</lastmod>","  </url>"]
-    lines.append("</urlset>")
-    (ROOT/"sitemap.xml").write_text("\n".join(lines)+"\n",encoding="utf-8")
-
+# --- Main Execution ---
 def main():
-    items=load_articles(); latest=max(a.get("modified",a["date"]) for a in items)
-    p=ROOT/"index.html"; t=p.read_text(encoding="utf-8"); t=replace_between(t,"<!-- AUTO:HOME_ARTICLES:START -->","<!-- AUTO:HOME_ARTICLES:END -->",home_cards(items)); t=re.sub(r'("dateModified"\s*:\s*")[0-9]{4}-[0-9]{2}-[0-9]{2}(")',rf'\g<1>{latest}\2',t,count=1); p.write_text(t,encoding="utf-8")
-    p=ROOT/"blog"/"index.html"; t=p.read_text(encoding="utf-8"); t=replace_between(t,"<!-- AUTO:BLOG_ARTICLES:START -->","<!-- AUTO:BLOG_ARTICLES:END -->",blog_cards(items)); t=replace_between(t,"<!-- AUTO:BLOG_SCHEMA:START -->","<!-- AUTO:BLOG_SCHEMA:END -->",schema(items)); p.write_text(t,encoding="utf-8")
-    sitemap(items)
-    print(f"Built {len(items)} article(s): index.html, blog/index.html, sitemap.xml")
-if __name__=="__main__": main()
+    # 1. Load Articles
+    if not os.path.exists(ARTICLES_JSON):
+        print(f"Error: {ARTICLES_JSON} not found. Please create it.")
+        return
+    
+    with open(ARTICLES_JSON, 'r', encoding='utf-8') as f:
+        articles = json.load(f)
+    
+    # 2. Process Index.html
+    if os.path.exists(INDEX_HTML):
+        with open(INDEX_HTML, 'r', encoding='utf-8') as f:
+            html = f.read()
+        
+        # Inject Favicons
+        html = inject_favicons(html)
+        # Update Blog List
+        html = update_blog_list(html, articles)
+        
+        with open(INDEX_HTML, 'w', encoding='utf-8') as f:
+            f.write(html)
+        print("Updated index.html (favicons + blog list).")
+    else:
+        print(f"Error: {INDEX_HTML} not found.")
+    
+    # 3. Process Blog Posts (Inject Favicons into all HTML files in /blog/)
+    if os.path.exists(BLOG_DIR):
+        for root, dirs, files in os.walk(BLOG_DIR):
+            for file in files:
+                if file.endswith('.html'):
+                    filepath = os.path.join(root, file)
+                    with open(filepath, 'r', encoding='utf-8') as f:
+                        blog_html = f.read()
+                    
+                    blog_html = inject_favicons(blog_html)
+                    
+                    with open(filepath, 'w', encoding='utf-8') as f:
+                        f.write(blog_html)
+        print(f"Updated favicons in all blog HTML files.")
+    else:
+        print(f"Warning: Blog directory {BLOG_DIR} not found.")
+    
+    # 4. Generate Sitemap
+    generate_sitemap(articles)
+
+if __name__ == "__main__":
+    main()

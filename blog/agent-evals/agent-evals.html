@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent Evals: How to Score LLM Agents Before They Ship</title>
+  <meta name="description" content="Agent evals explained: score trajectories, build LLM-as-judge prompts that don't flip verdicts, and gate every agent change in CI before it ships. 2026 numbers.">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Seyyed Arad Hosseini Moghaddam">
+  <link rel="canonical" href="https://aradmanamnaoon.github.io/blog/evals-for-llm-agents/">
+
+  <meta property="og:title" content="Agent Evals: How to Score LLM Agents Before They Ship">
+  <meta property="og:description" content="Agent evals explained: score trajectories, build LLM-as-judge prompts that don't flip verdicts, and gate every agent change in CI before it ships. 2026 numbers.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://aradmanamnaoon.github.io/blog/evals-for-llm-agents/">
+  <meta property="og:image" content="https://aradmanamnaoon.github.io/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Agent Evals: How to Score LLM Agents Before They Ship">
+  <meta name="twitter:description" content="Agent evals explained: score trajectories, build LLM-as-judge prompts that don't flip verdicts, and gate every agent change in CI before it ships. 2026 numbers.">
+  <meta name="twitter:image" content="https://aradmanamnaoon.github.io/og-image.jpg">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Seyyed Arad Hosseini Moghaddam",
+    "url": "https://aradmanamnaoon.github.io/",
+    "sameAs": [
+      "https://github.com/aradmanamnaoon",
+      "https://huggingface.co/aradmanamnaoon"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://aradmanamnaoon.github.io/blog/" },
+      { "@type": "ListItem", "position": 3, "name": "Agent Evals", "item": "https://aradmanamnaoon.github.io/blog/evals-for-llm-agents/" }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "Agent Evals: How to Score LLM Agents Before They Ship",
+    "description": "Agent evals explained: score trajectories, build LLM-as-judge prompts that don't flip verdicts, and gate every agent change in CI before it ships. 2026 numbers.",
+    "image": ["https://aradmanamnaoon.github.io/og-image.jpg"],
+    "author": {
+      "@type": "Person",
+      "name": "Seyyed Arad Hosseini Moghaddam",
+      "url": "https://aradmanamnaoon.github.io/",
+      "jobTitle": "AI Engineer & Data Scientist",
+      "sameAs": [
+        "https://github.com/aradmanamnaoon",
+        "https://huggingface.co/aradmanamnaoon"
+      ]
+    },
+    "datePublished": "2026-10-05",
+    "dateModified": "2026-10-05",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Seyyed Arad Hosseini Moghaddam",
+      "url": "https://aradmanamnaoon.github.io/"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://aradmanamnaoon.github.io/blog/evals-for-llm-agents/"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What are agent evals in simple terms?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Agent evals are versioned tests for AI agents that score the whole run, not just the reply: tool calls, arguments, error recovery, cost, and safety, plus the final answer. They gate every agent change in CI, so a regression fails a build instead of a user." }
+      },
+      {
+        "@type": "Question",
+        "name": "How reliable is LLM-as-judge for agent evaluation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "On its own, not reliable enough to gate a release. Judges flip verdicts on identical input, and 2026 research shows style bias dominates position bias while self-preference skews scores. The reliable pattern is one rubric per judge prompt, a version-locked judge model, pairwise comparisons, and agreement checks against deterministic scores and human labels." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do agent evals replace unit tests?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Unit tests and assertions still guard everything exact: argument schemas, budget caps, permission checks, idempotency keys. Agent evals cover the probabilistic rest, the model behavior no assertion can pin. An eval suite on top of missing assertions is expensive decoration; run both." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which agent eval tools should a small team start with?",
+        "acceptedAnswer": { "@type": "Answer", "text": "One tracing tool (Langfuse, LangSmith, or Arize Phoenix) plus one eval runner (Promptfoo or DeepEval) is enough. Tracing tools record every step; eval runners diff scores against a pinned baseline. Add an experiment-first platform like Braintrust later, when suite count justifies it." }
+      },
+      {
+        "@type": "Question",
+        "name": "How many eval cases do you need to catch agent regressions?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Start with 50-100 cases and widen regression thresholds to match: 10% tolerance for small suites, tightened to 5% at around 50 examples because pass metrics move in discrete jumps. Tier it: an 80-case smoke suite on every pull request, a 700-case full suite for agent-code changes, adversarial cases nightly." }
+      }
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    "name": "Agent evals",
+    "description": "Versioned, repeatable tests for AI agents that score the full execution trace (tool selection, arguments, error recovery, cost, safety) as well as the final outcome, and gate agent changes in CI before deployment.",
+    "inDefinedTermSet": {
+      "@type": "DefinedTermSet",
+      "name": "Production AI Engineering Glossary"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Ship your first agent eval suite",
+    "description": "Three steps to go from vibe-checking to a tiered eval suite that gates agent changes in CI.",
+    "totalTime": "PT4H",
+    "step": [
+      {
+        "@type": "HowToStep",
+        "position": 1,
+        "name": "Write five deterministic checks before any judge",
+        "text": "Before paying for a judge, write assertions for what is exactly checkable: tool argument schemas, retrieval and tool-call budgets, permission boundaries, idempotency keys on writes, and final environment state. These are fast, free, and never flip a verdict."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 2,
+        "name": "Build a 50-case eval set from real failures",
+        "text": "Promote failing production traces into a versioned dataset until it holds 50-100 cases. Include adversarial cases: ambiguous instructions, tool timeouts, poisoned tool output. Pin the agent version, prompt version, and model version for every case."
+      },
+      {
+        "@type": "HowToStep",
+        "position": 3,
+        "name": "Add one judge per rubric and calibrate it",
+        "text": "Give each judge prompt a single question and a fixed scale, and version-lock the judge model. Measure its agreement with your deterministic checks and a 30-case hand-labeled subset, then set regression thresholds above the noise floor you measured."
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --page: #14181f;
+      --panel: #1a2029;
+      --ink: #ededed;
+      --muted: #c0c7d1;
+      --accent: #7db4f0;
+      --line: rgb(237 237 237 / 14%);
+      --soft-line: rgb(237 237 237 / 9%);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--page);
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 1px 1px, rgb(237 237 237 / 4%) 1px, transparent 0) 0 0 / 22px 22px,
+        var(--page);
+      color: var(--ink);
+      font-family: Inter, sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--accent);
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: #a8cff8;
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .skip-link {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      z-index: 5;
+      padding: 0.6rem 0.9rem;
+      transform: translateY(-180%);
+      border-radius: 0.5rem;
+      background: var(--accent);
+      color: #14181f;
+      font-weight: 700;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header,
+    .article-shell,
+    .site-footer {
+      width: min(100% - 2.5rem, 850px);
+      margin-inline: auto;
+    }
+
+    .site-header {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .brand {
+      color: var(--ink);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-decoration: none;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-size: 0.875rem;
+      text-decoration: none;
+    }
+
+    .breadcrumb {
+      margin-top: 1.5rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .breadcrumb a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .article-shell {
+      padding-block: clamp(2.5rem, 6vw, 4rem);
+    }
+
+    .eyebrow {
+      margin: 0 0 1rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      color: var(--ink);
+      font-family: "Playfair Display", Georgia, serif;
+      line-height: 1.2;
+      text-wrap: balance;
+    }
+
+    h1 {
+      max-width: 19ch;
+      margin: 0;
+      font-size: clamp(2.5rem, 7vw, 4.75rem);
+      letter-spacing: -0.035em;
+    }
+
+    h2 {
+      margin: 3rem 0 1rem;
+      font-size: clamp(1.7rem, 4vw, 2.25rem);
+      letter-spacing: -0.02em;
+      scroll-margin-top: 1rem;
+    }
+
+    h3 {
+      margin: 1.75rem 0 0.6rem;
+      font-size: 1.35rem;
+    }
+
+    p,
+    li {
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    .lede {
+      max-width: 68ch;
+      margin: 1.4rem 0 1rem;
+      color: var(--ink);
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      line-height: 1.65;
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1rem;
+      margin: 1.25rem 0 2rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .byline strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .article-toc,
+    .callout {
+      margin-block: 2rem;
+      padding: 1.25rem 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .article-toc h2,
+    .callout h2 {
+      margin: 0 0 0.75rem;
+      font-family: Inter, sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0;
+    }
+
+    .callout p,
+    .callout li {
+      font-size: 1rem;
+      margin-block: 0.35rem;
+    }
+
+    .callout ul {
+      margin: 0.5rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .callout strong {
+      color: var(--ink);
+    }
+
+    .article-toc ol {
+      margin: 0;
+      padding-left: 1.25rem;
+    }
+
+    .article-toc li {
+      margin-block: 0.3rem;
+      font-size: 0.95rem;
+    }
+
+    .article-toc a {
+      color: var(--muted);
+    }
+
+    .article-toc a:hover {
+      color: var(--accent);
+    }
+
+    .snippet-answer {
+      padding: 1.1rem 1.3rem;
+      border-left: 3px solid var(--accent);
+      background: rgb(26 32 41 / 80%);
+      border-radius: 0 0.75rem 0.75rem 0;
+      color: var(--ink);
+    }
+
+    .snippet-answer strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-block: 1.5rem;
+    }
+
+    .ba-card {
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .ba-before {
+      border-color: rgb(237 237 237 / 10%);
+    }
+
+    .ba-after {
+      border-color: rgb(125 180 240 / 40%);
+    }
+
+    .ba-label {
+      margin-bottom: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .ba-after .ba-label {
+      color: var(--accent);
+    }
+
+    .ba-before .ba-label {
+      color: var(--muted);
+    }
+
+    .ba-card p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .compare {
+      width: 100%;
+      margin-block: 1.5rem;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    .compare th,
+    .compare td {
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--soft-line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare th {
+      color: var(--ink);
+      background: rgb(26 32 41 / 90%);
+      font-size: 0.88rem;
+    }
+
+    .compare td {
+      color: var(--muted);
+    }
+
+    .compare td:first-child {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .table-note {
+      margin-top: -0.75rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    figure.fig {
+      margin: 1.75rem 0;
+    }
+
+    figure.fig svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: #10141a;
+    }
+
+    figure.fig figcaption {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .step-box {
+      margin-block: 1rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .step-box strong {
+      color: var(--ink);
+      font-size: 1.02rem;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.7rem;
+      height: 1.7rem;
+      margin-right: 0.6rem;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #14181f;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .step-box p {
+      margin: 0.5rem 0 0;
+      font-size: 0.98rem;
+    }
+
+    .faq-item {
+      margin-block: 1.25rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--soft-line);
+    }
+
+    .faq-q {
+      margin: 0 0 0.5rem;
+      color: var(--ink);
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
+    .faq-a {
+      margin: 0;
+    }
+
+    .methodology {
+      margin-block: 2.5rem;
+      padding: 1.25rem 1.4rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgb(26 32 41 / 80%);
+    }
+
+    .methodology h2 {
+      margin: 0 0 0.75rem;
+      font-family: Inter, sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .methodology p {
+      margin-block: 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .methodology strong {
+      color: var(--ink);
+    }
+
+    .related {
+      margin-block: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    .related a {
+      display: block;
+      padding: 0.9rem 1.05rem;
+      border: 1px solid var(--line);
+      border-radius: 0.85rem;
+      background: rgb(26 32 41 / 80%);
+      color: var(--ink);
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .related a:hover {
+      border-color: rgb(125 180 240 / 40%);
+      color: var(--accent);
+    }
+
+    .source-list {
+      margin: 0.75rem 0;
+      padding-left: 1.25rem;
+    }
+
+    .source-list li {
+      margin-block: 0.6rem;
+      font-size: 0.95rem;
+    }
+
+    .site-footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 1.5rem 2.5rem;
+      border-top: 1px solid var(--soft-line);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .site-footer a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .site-footer a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 600px) {
+      .site-header,
+      .article-shell,
+      .site-footer {
+        width: min(100% - 2rem, 850px);
+      }
+
+      .site-header {
+        min-height: 68px;
+      }
+
+      .article-shell {
+        padding-block: 3rem;
+      }
+
+      p,
+      li {
+        font-size: 1rem;
+      }
+
+      .article-toc,
+      .callout,
+      .methodology {
+        padding: 1rem;
+      }
+
+      .ba-grid,
+      .related {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <header class="site-header">
+    <a class="brand" href="https://aradmanamnaoon.github.io/">ARADMANAMNAOON</a>
+    <a class="header-link" href="https://aradmanamnaoon.github.io/blog/">Blog</a>
+  </header>
+
+  <main class="article-shell" id="main">
+    <article>
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="https://aradmanamnaoon.github.io/">Home</a> › <a href="https://aradmanamnaoon.github.io/blog/">Blog</a> › Agent Evals
+      </nav>
+
+      <header>
+        <p class="eyebrow">Agent Evals · Evaluation · Production AI Engineering</p>
+        <h1>Agent Evals: How to Score LLM Agents Before They Ship</h1>
+        <p class="lede">
+          Your agent passed the demo, then shipped three regressions in a week. This guide covers the 2026 eval stack: trajectory scoring, judge prompts that hold their verdicts, and CI gates that block a bad agent change before a user ever sees it.
+        </p>
+        <div class="byline">
+          <span>By <strong>Seyyed Arad Hosseini Moghaddam</strong></span>
+          <time datetime="2026-10-05">October 5, 2026</time>
+          <span>10 min read</span>
+        </div>
+      </header>
+
+      <nav class="article-toc" aria-label="Table of contents">
+        <h2>In this article</h2>
+        <ol>
+          <li><a href="#what-are-agent-evals">What are agent evals?</a></li>
+          <li><a href="#judge-reliability">LLM-as-judge reliability: why verdicts flip</a></li>
+          <li><a href="#trajectory">Trajectory evaluation: score the path, not the reply</a></li>
+          <li><a href="#ci">Agent evaluation in CI/CD: the three-loop pipeline</a></li>
+          <li><a href="#when">When to start agent evals (and when not to)</a></li>
+          <li><a href="#ship">Ship your first eval suite</a></li>
+        </ol>
+      </nav>
+
+      <div class="callout">
+        <h2>TL;DR</h2>
+        <ul>
+          <li><strong>Problem:</strong> Agent evals are mostly missing from real deployments, and the default fix, one big LLM-as-judge prompt, returns different verdicts on identical input (11/27 vs 12/27 complete, unchanged batch).</li>
+          <li><strong>Solution:</strong> Layer the checks: deterministic assertions first, trajectory scoring second, one-rubric judges third, all wired into tiered CI gates with a canary rollout.</li>
+          <li><strong>Result:</strong> You'll know which checks to write first, how to keep a judge honest, and the merge-gate thresholds teams actually use (floors plus a ≤0.02 regression cap).</li>
+        </ul>
+      </div>
+
+      <section class="article-section" id="what-are-agent-evals">
+        <h2>What are agent evals?</h2>
+        <p class="snippet-answer"><strong>Agent evals are versioned tests for AI agents that score the whole run, not just the reply: tool calls, arguments, error recovery, cost, and safety, plus the final answer. They gate every agent change in CI, so a regression fails a build instead of a user.</strong></p>
+        <p>
+          A unit test checks a function. Input goes in, a value comes out, and the assertion is exact. An agent is a different animal: a dozen tool calls, retries, intermediate state, and a final answer that's only right if every step held up.
+        </p>
+        <p>
+          So an eval suite has layers, and each layer fails differently:
+        </p>
+        <ul>
+          <li><strong>Outcome:</strong> did the ticket close, did the PR merge, did the refund post.</li>
+          <li><strong>Trajectory:</strong> did the agent pick the right tool, pass the right arguments, and recover from the failed call.</li>
+          <li><strong>Budget:</strong> did it burn 40 tool calls on a two-call task.</li>
+          <li><strong>Safety:</strong> did it read data it had no business reading.</li>
+        </ul>
+        <p>
+          One score can't carry all four. That's the core insight everything below builds on.
+        </p>
+      </section>
+
+      <section class="article-section" id="judge-reliability">
+        <h2>LLM-as-judge reliability: why verdicts flip</h2>
+        <p>
+          The most-cited pain point of the last 30 days came from an r/LangChain thread titled "LLM-as-judge keeps flipping verdicts on the same input." Their judge scored free-text records against 10 yes/no criteria in a single prompt. Re-running the same batch changed the totals: 11/27 complete, then 12/27, with nothing changed in the input.
+        </p>
+        <p>
+          That's not bad prompting. It's the expected behavior of a model scoring against a target it wasn't calibrated for. The 2026 research puts numbers on it:
+        </p>
+        <ul>
+          <li><strong>Style bias dominates position bias.</strong> A systematic comparison of nine debiasing strategies across judge models found that how an answer is written flips verdicts more than where it appears, and verbosity bias runs in opposite directions: Llama and Gemini prefer longer answers, while Claude Sonnet 4 prefers concise ones (Source: arXiv:2604.23178).</li>
+          <li><strong>Stronger models self-preference harder.</strong> Across 20 judge LLMs, capability correlated with more self-favoritism, and structured multi-dimensional scoring cut self-preference bias by 31.5% on average (Source: arXiv:2604.22891).</li>
+          <li><strong>Judges are still cheap compared to humans.</strong> Benchmark-judge scoring ran about $77.81 against $5,000-7,500 for equivalent human annotation, which is exactly why people keep using them despite the flakiness.</li>
+        </ul>
+        <p>
+          The practitioners who make judges work converge on the same five fixes:
+        </p>
+        <ul>
+          <li><strong>One rubric per prompt.</strong> Ten criteria in one prompt is ten chances to flip. Split it: one judge, one question, one stable scale.</li>
+          <li><strong>Version-lock the judge model</strong> like any production dependency, and flag distribution shifts above 3% when you upgrade it.</li>
+          <li><strong>Compare pairwise,</strong> A versus B, instead of asking for absolute 1-10 scores.</li>
+          <li><strong>Judge the trajectory,</strong> not just the final output. A plausible answer can cover a broken intermediate step.</li>
+          <li><strong>Track the disagreement rate.</strong> In one practitioner setup, a judge run alongside deterministic pass/fail gates ranked every model/harness combo in exactly the same order as pass rate. Its only contribution was breaking one tie, 88.59 vs 87.15.</li>
+        </ul>
+        <p>
+          Which gives you the cleanest rule in this post: <strong>if your judge agrees with a cheap deterministic check on most cases, delete the judge and keep the check.</strong>
+        </p>
+        <h3>The Jev question, honestly</h3>
+        <p>
+          September brought a candidate replacement: Jev, a typed decision model that returns structured verdicts instead of generated text. LangChain measured score variance 92-913x lower than GPT-5.6 and Claude Sonnet 4.6, at about $0.00035 per call versus $28.17 for the Claude run (Source: LangChain blog, September 2026). TypeSafe's jevals library shipped September 23 to build evals on typed decisions.
+        </p>
+        <p>
+          Then Red Hat benchmarked decision models against traditional guardrails and found they don't beat LLM-as-judge or classical classifiers (Source: Red Hat Developers, October 2026). Both camps ran small tests. My read: variance reduction is real and useful, but variance is the second-order problem. The first-order problem is whether the judge's ranking matches your product bar, and no evaluator type fixes that for you. Calibrate whatever you pick against hand-labeled cases.
+        </p>
+      </section>
+
+      <section class="article-section" id="trajectory">
+        <h2>Trajectory evaluation: score the path, not the reply</h2>
+        <p>
+          The 2026 consensus moved past "did the answer look good." An agent is a sequence of decisions, and the sequence is where the debuggable truth lives. NVIDIA frames it as two scoring layers on one trace: step-level process scoring and end-to-end outcome scoring, with executable verification as the gold standard (Source: NVIDIA Technical Blog, 2026).
+        </p>
+        <p>
+          Executable verification is the part worth stealing. Don't ask a judge "did the agent complete the task." Check the world state: the PR merged, the ticket closed, the row landed in the table. FutureAGI's guide makes the same point from the metric side: a healthy aggregate score of 0.85 can hide a 0.62 on argument extraction behind a 0.97 on tool selection, so score dimensions independently and set per-dimension CI thresholds.
+        </p>
+        <p>
+          The trajectory splits cleanly by who scores it:
+        </p>
+        <ul>
+          <li><strong>Code scores the countables:</strong> step counts, loop detection, required-step presence, budget checks (Source: Langfuse's trajectory evaluation guide). No model, no variance, no cost.</li>
+          <li><strong>A judge scores the judgment calls:</strong> plan coherence, error recovery quality, whether a tool choice made sense given what the agent knew at that step.</li>
+          <li><strong>The environment scores the outcome:</strong> state checks, not opinions.</li>
+        </ul>
+        <p>
+          One caveat that showed up this month: agents can tamper with their own traces. A paper titled "LLM Agents Can Easily Tamper with Their Own Traces" demonstrated exactly that (Source: arXiv:2609.30266). If your eval data is the agent's self-reported log, hash the spans and store them outside the loop.
+        </p>
+        <p>
+          If your agent is retrieval-heavy, trajectory scoring overlaps with retrieval evaluation. I covered that side in my post on <a href="https://aradmanamnaoon.github.io/blog/agentic-rag/">what agentic RAG is and how to evaluate it</a>, including the sufficiency-check pattern that pairs naturally with trajectory scoring.
+        </p>
+      </section>
+
+      <section class="article-section" id="ci">
+        <h2>Agent evaluation in CI/CD: the three-loop pipeline</h2>
+        <p>
+          A local eval notebook is where eval suites go to die. The teams shipping this well run the same three loops: offline evals on every pull request, online evals on a canary, and a promotion loop that turns production failures into test cases.
+        </p>
+
+        <figure class="fig">
+          <svg viewBox="0 0 760 400" role="img" aria-label="Diagram of the three-loop agent eval pipeline: a pull request passes a smoke suite (80 cases, 90 seconds) and a full suite (700 cases, 6 minutes) into a merge gate with pass-rate floors and a 0.02 regression cap; the merge deploys a 5% canary scored by online evaluators on version-tagged live traces, which alert and roll back on drift; failing production traces are promoted into the eval dataset, which loops back into the smoke and full suites.">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7db4f0"/>
+              </marker>
+              <marker id="arrowMuted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#c0c7d1"/>
+              </marker>
+            </defs>
+
+            <text x="30" y="34" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="12" font-weight="700" letter-spacing="1">INNER LOOP · EVERY PULL REQUEST</text>
+            <g font-family="Inter, sans-serif" font-size="13">
+              <rect x="30" y="50" width="130" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="95" y="68" fill="#ededed" text-anchor="middle">Agent change</text>
+              <text x="95" y="85" fill="#c0c7d1" text-anchor="middle" font-size="11">prompt + tools + model</text>
+              <rect x="190" y="50" width="150" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="265" y="68" fill="#ededed" text-anchor="middle">Smoke suite</text>
+              <text x="265" y="85" fill="#c0c7d1" text-anchor="middle" font-size="11">80 cases · ~90s</text>
+              <rect x="370" y="50" width="150" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="445" y="68" fill="#ededed" text-anchor="middle">Full suite</text>
+              <text x="445" y="85" fill="#c0c7d1" text-anchor="middle" font-size="11">700 cases · ~6 min</text>
+              <rect x="550" y="50" width="180" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="640" y="68" fill="#ededed" text-anchor="middle">Merge gate</text>
+              <text x="640" y="85" fill="#c0c7d1" text-anchor="middle" font-size="11">floors + regression cap</text>
+            </g>
+            <g stroke="#7db4f0" stroke-width="1.5" marker-end="url(#arrow)">
+              <line x1="162" y1="72" x2="184" y2="72"/>
+              <line x1="342" y1="72" x2="364" y2="72"/>
+              <line x1="522" y1="72" x2="544" y2="72"/>
+            </g>
+            <text x="550" y="114" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="10.5" text-anchor="start">blocks merge: pass ≥ 0.92 floor,</text>
+            <text x="550" y="128" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="10.5" text-anchor="start">regression ≤ 0.02 vs baseline</text>
+
+            <text x="30" y="154" fill="#c0c7d1" font-family="Inter, sans-serif" font-size="12" font-weight="700" letter-spacing="1">MIDDLE LOOP · CANARY (flows right to left)</text>
+            <g font-family="Inter, sans-serif" font-size="13">
+              <rect x="550" y="170" width="180" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="640" y="188" fill="#ededed" text-anchor="middle">Canary deploy</text>
+              <text x="640" y="205" fill="#c0c7d1" text-anchor="middle" font-size="11">5% of traffic</text>
+              <rect x="370" y="170" width="150" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="445" y="188" fill="#ededed" text-anchor="middle">Online evaluators</text>
+              <text x="445" y="205" fill="#c0c7d1" text-anchor="middle" font-size="11">score live traces</text>
+              <rect x="190" y="170" width="150" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="265" y="188" fill="#ededed" text-anchor="middle">Version-tagged traces</text>
+              <text x="265" y="205" fill="#c0c7d1" text-anchor="middle" font-size="11">prompt + model + tools</text>
+              <rect x="30" y="170" width="130" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="95" y="188" fill="#ededed" text-anchor="middle">Alert + rollback</text>
+              <text x="95" y="205" fill="#c0c7d1" text-anchor="middle" font-size="11">on drift</text>
+            </g>
+            <g stroke="#7db4f0" stroke-width="1.5" marker-end="url(#arrow)">
+              <line x1="640" y1="96" x2="640" y2="164"/>
+              <line x1="548" y1="192" x2="526" y2="192"/>
+              <line x1="368" y1="192" x2="346" y2="192"/>
+              <line x1="188" y1="192" x2="166" y2="192"/>
+            </g>
+
+            <text x="30" y="274" fill="#7db4f0" font-family="Inter, sans-serif" font-size="12" font-weight="700" letter-spacing="1">OUTER LOOP · PRODUCTION FAILURES FEED THE DATASET</text>
+            <g font-family="Inter, sans-serif" font-size="13">
+              <rect x="30" y="290" width="130" height="44" rx="9" fill="#1a2029" stroke="rgb(237 237 237 / 14%)"/>
+              <text x="95" y="308" fill="#ededed" text-anchor="middle">Failing traces</text>
+              <text x="95" y="325" fill="#c0c7d1" text-anchor="middle" font-size="11">real production cases</text>
+              <rect x="190" y="290" width="150" height="44" rx="9" fill="#1a2029" stroke="rgb(125 180 240 / 45%)"/>
+              <text x="265" y="308" fill="#ededed" text-anchor="middle">Eval dataset v+1</text>
+              <text x="265" y="325" fill="#c0c7d1" text-anchor="middle" font-size="11">curated, deduped</text>
+            </g>
+            <g stroke="#7db4f0" stroke-width="1.5" marker-end="url(#arrow)">
+              <line x1="95" y1="216" x2="95" y2="284"/>
+              <line x1="162" y1="312" x2="184" y2="312"/>
+            </g>
+            <g stroke="#7db4f0" stroke-width="1.5" fill="none" marker-end="url(#arrow)" stroke-dasharray="5 4">
+              <path d="M 265 336 V 372 H 15 V 74 H 184"/>
+            </g>
+            <text x="286" y="368" fill="#7db4f0" font-family="Inter, sans-serif" font-size="11" font-style="italic">failing traces become eval cases</text>
+          </svg>
+          <figcaption>The three-loop pipeline. Inner loop gates every pull request in about 90 seconds. Middle loop scores the canary against live traffic. Outer loop recycles production failures into the dataset, so the suite that burned you last month covers you this month.</figcaption>
+        </figure>
+
+        <h3>The gate conditions that survive contact with reality</h3>
+        <p>
+          Two gate types, and you want both. Absolute floors stop slow drift: pass rate ≥ 0.92, factual match ≥ 0.92. Max-regression limits stop cliffs: no metric drops more than 0.02 versus the pinned baseline (Source: CallSphere's LangSmith CI/CD guide, 2026). Pin a baseline experiment ID rather than chasing "latest main," or your baseline moves under you.
+        </p>
+        <p>
+          Tune the regression threshold to suite size. Pass metrics move in discrete jumps, so a 10% tolerance is right for small datasets and tightens to 5% at around 50 examples (Source: Focused.io's LangGraph eval pipeline guide).
+        </p>
+        <p>
+          Tier the suites so the inner loop stays fast: a smoke suite of about 80 rows in 90 seconds on every PR, a full suite of about 700 rows in 6 minutes for agent-code changes only, and an adversarial suite nightly, non-blocking (Source: CallSphere, 2026).
+        </p>
+        <p>
+          Before trusting any threshold, calibrate scorer variance on a fixed candidate. Run your judge or scorer three times against an unchanged agent, measure the spread, and set thresholds above that noise floor. A gate tighter than your scorer's jitter rejects good changes at random.
+        </p>
+        <p>
+          On tooling, the useful split is trace-first versus experiment-first. Langfuse, LangSmith, and Arize Phoenix record and score every step in production. Braintrust and Promptfoo lead on experiment diffing and CI gating. Microsoft's run-assert-eval shows the direction this is heading: discover risks, generate runtime policy from findings, and re-run evals to prove the fix. One of their examples cut a billing agent's data-leakage rate from 30% to 5.9% in governed runs.
+        </p>
+        <p>
+          For the wiring underneath, traces should follow your existing observability. I described the trace-level design in my guide to an <a href="https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/">evaluatable multi-agent RAG system with LangGraph</a>; the same span-per-step structure is what makes the middle loop possible.
+        </p>
+      </section>
+
+      <section class="article-section" id="when">
+        <h2>When to start agent evals (and when not to)</h2>
+        <p>
+          The best answer I saw this month, from a practitioner thread on when evals become necessary: the moment you can't tell a regression from a bad day. Before that point, reading transcripts is faster and tells you more.
+        </p>
+        <p>
+          Someone pushed back in the same thread: "If you're using an LLM there's no such thing as deterministic." Fair, but it conflates two layers. The model's output is probabilistic. The properties you gate on don't have to be: whether arguments parsed, whether the write was idempotent, whether the PR merged. Gate on measured properties, accept fuzz inside the model.
+        </p>
+        <p><strong>Hold off on the suite when:</strong></p>
+        <ul>
+          <li>You have fewer than about 10 recurring failure modes. A spreadsheet of transcripts and one reviewer beats a suite.</li>
+          <li>Nothing ships. Evals gate changes; if the agent changes twice a year, the gate has nothing to gate.</li>
+          <li>The agent is read-only with cheap retries and a human in the loop on every action.</li>
+        </ul>
+        <p><strong>Build now when:</strong></p>
+        <ul>
+          <li>The agent writes: refunds, emails, records. Side effects turn silent regressions into incidents.</li>
+          <li>More than one person changes the prompt, and you've had a "who broke this" week.</li>
+          <li>You're swapping models or upgrading prompts quarterly. Each swap needs a before/after comparison you can defend.</li>
+        </ul>
+        <p>
+          The concession, because it matters: if your agent is a weekend project, all of this is procrastination with extra steps. Evals are for systems that change and systems that pay for their mistakes.
+        </p>
+      </section>
+
+      <section class="article-section" id="ship">
+        <h2>Ship your first agent eval suite in three steps</h2>
+        <div class="step-box">
+          <strong><span class="step-num">1</span>Write five deterministic checks before any judge</strong>
+          <p>Before paying for a judge, write assertions for what is exactly checkable: tool argument schemas, retrieval and tool-call budgets, permission boundaries, idempotency keys on writes, and final environment state. These are fast, free, and never flip a verdict.</p>
+        </div>
+        <div class="step-box">
+          <strong><span class="step-num">2</span>Build a 50-case eval set from real failures</strong>
+          <p>Promote failing production traces into a versioned dataset until it holds 50-100 cases. Include adversarial cases: ambiguous instructions, tool timeouts, poisoned tool output. Pin the agent version, prompt version, and model version for every case.</p>
+        </div>
+        <div class="step-box">
+          <strong><span class="step-num">3</span>Add one judge per rubric and calibrate it</strong>
+          <p>Give each judge prompt a single question and a fixed scale, and version-lock the judge model. Measure its agreement with your deterministic checks and a 30-case hand-labeled subset, then set regression thresholds above the noise floor you measured.</p>
+        </div>
+      </section>
+
+      <section class="article-section" id="faq">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-item">
+          <p class="faq-q">What are agent evals in simple terms?</p>
+          <p class="faq-a">Agent evals are versioned tests for AI agents that score the whole run, not just the reply: tool calls, arguments, error recovery, cost, and safety, plus the final answer. They gate every agent change in CI, so a regression fails a build instead of a user.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">How reliable is LLM-as-judge for agent evaluation?</p>
+          <p class="faq-a">On its own, not reliable enough to gate a release. Judges flip verdicts on identical input, and 2026 research shows style bias dominates position bias while self-preference skews scores. The reliable pattern is one rubric per judge prompt, a version-locked judge model, pairwise comparisons, and agreement checks against deterministic scores and human labels.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Do agent evals replace unit tests?</p>
+          <p class="faq-a">No. Unit tests and assertions still guard everything exact: argument schemas, budget caps, permission checks, idempotency keys. Agent evals cover the probabilistic rest, the model behavior no assertion can pin. An eval suite on top of missing assertions is expensive decoration; run both.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">Which agent eval tools should a small team start with?</p>
+          <p class="faq-a">One tracing tool (Langfuse, LangSmith, or Arize Phoenix) plus one eval runner (Promptfoo or DeepEval) is enough. Tracing tools record every step; eval runners diff scores against a pinned baseline. Add an experiment-first platform like Braintrust later, when suite count justifies it.</p>
+        </div>
+        <div class="faq-item">
+          <p class="faq-q">How many eval cases do you need to catch agent regressions?</p>
+          <p class="faq-a">Start with 50-100 cases and widen regression thresholds to match: 10% tolerance for small suites, tightened to 5% at around 50 examples because pass metrics move in discrete jumps. Tier it: an 80-case smoke suite on every pull request, a 700-case full suite for agent-code changes, adversarial cases nightly.</p>
+        </div>
+      </section>
+
+      <section class="methodology">
+        <h2>About this guide</h2>
+        <p><strong>Last updated:</strong> October 5, 2026</p>
+        <p><strong>Methodology:</strong> Built on a 30-day scan of Reddit (r/LangChain, r/mlops, r/AI_Agents), Hacker News, and GitHub activity, September 5 to October 5, 2026, cross-checked against published sources: NVIDIA's agent evaluation guide, LangChain's Jev benchmark, Red Hat's counterpoint benchmark, three arXiv papers on judge bias and trace tampering, and 2026 engineering guides from FutureAGI, Reforge, Langfuse, CallSphere, mpiv.ai, and Focused.io. Every number links to its source inline. Where figures are practitioner estimates rather than benchmarks, the text says so.</p>
+        <p><strong>Conflict of interest:</strong> None. I have no affiliation with any vendor or platform named here.</p>
+        <p><strong>Update cadence:</strong> Reviewed quarterly, or sooner if a major eval framework release changes the numbers.</p>
+      </section>
+
+      <section class="article-section" id="sources">
+        <h2>Sources and further reading</h2>
+        <ul class="source-list">
+          <li><a href="https://developer.nvidia.com/blog/how-to-evaluate-ai-agents-from-tool-calls-to-task-completion/">NVIDIA: How to Evaluate AI Agents From Tool Calls to Task Completion</a></li>
+          <li><a href="https://blog.langchain.com/">LangChain blog: Can Jev Be a Better Agent Evaluator?</a></li>
+          <li><a href="https://developers.redhat.com/articles/2026/10/02/benchmarking-ai-decision-models-against-traditional-guardrails">Red Hat: Benchmarking AI decision models against traditional guardrails</a></li>
+          <li><a href="https://arxiv.org/abs/2609.30266">arXiv: LLM Agents Can Easily Tamper with Their Own Traces</a></li>
+          <li><a href="https://arxiv.org/abs/2604.23178">arXiv: Judging the Judges, bias mitigation strategies in LLM-as-a-judge pipelines</a></li>
+          <li><a href="https://arxiv.org/abs/2604.22891">arXiv: Quantifying and Mitigating Self-Preference Bias of LLM Judges</a></li>
+          <li><a href="https://futureagi.com/blog/definitive-guide-ai-agent-evaluation-2026/">FutureAGI: AI Agent Evaluation, The Definitive 2026 Guide</a></li>
+          <li><a href="https://www.reforge.com/blog/eval-rubrics">Reforge: The Eval Rubric Is Your Agent's Behavior Contract</a></li>
+          <li><a href="https://langfuse.com/resources/engineering/ai-agent-evaluation">Langfuse: AI Agent Evaluation, Trajectory and Tool Calls</a></li>
+          <li><a href="https://www.callsphere.ai/">CallSphere: Continuous Evaluation, Wiring LangSmith into Your CI/CD</a></li>
+          <li><a href="https://www.mpiv.ai/">mpiv.ai: Agent Eval Pipelines, What Operators Actually Need to Know (2026)</a></li>
+          <li><a href="https://www.focused.io/">Focused.io: Evaluation Pipelines for LangGraph Agents</a></li>
+          <li><a href="https://www.reddit.com/r/LangChain/comments/1wvouoq/llmasjudge_keeps_flipping_verdicts_on_the_same/">r/LangChain: LLM-as-judge keeps flipping verdicts on the same input</a></li>
+        </ul>
+      </section>
+
+      <section class="article-section" id="related">
+        <h2>Related reading</h2>
+        <div class="related">
+          <a href="https://aradmanamnaoon.github.io/blog/agentic-rag/">What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</a>
+          <a href="https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/">How to Design an Evaluatable Multi-Agent RAG System with LangGraph</a>
+          <a href="https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/">The Hugging Face NLLB Gradient Accumulation Bug</a>
+          <a href="https://aradmanamnaoon.github.io/projects/">Projects: models and systems I've shipped</a>
+          <a href="https://aradmanamnaoon.github.io/blog/">All blog posts</a>
+          <a href="https://aradmanamnaoon.github.io/">Home: AI engineering and data science</a>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Seyyed Arad Hosseini Moghaddam</span>
+    <nav aria-label="Footer">
+      <a href="https://aradmanamnaoon.github.io/">Portfolio</a>
+      <a href="https://aradmanamnaoon.github.io/projects/">Projects</a>
+      <a href="https://aradmanamnaoon.github.io/#contact">Contact</a>
+    </nav>
+  </footer>
+</body>
+</html>
