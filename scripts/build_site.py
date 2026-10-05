@@ -1,15 +1,69 @@
+#!/usr/bin/env python3
+"""
+============================================================================
+ ARADMANAMNAOON — Complete Site Build System
+============================================================================
+
+ A single script that manages the entire website build process.
+
+ WHAT THIS SCRIPT DOES
+ ---------------------
+ 1.  Organizes and repairs the repository file structure
+ 2.  Standardizes blog post filenames to index.html
+ 3.  Validates and repairs articles.json
+ 4.  Injects favicons into every HTML file
+ 5.  Fetches projects live from GitHub + Hugging Face APIs
+ 6.  Ranks and scores projects by quality + recency
+ 7.  Renders top projects on the homepage
+ 8.  Renders paginated full project list on /projects/
+ 9.  Renders top articles on the homepage
+ 10. Renders full article list on /blog/
+ 11. Generates sitemap.xml
+ 12. Generates robots.txt
+ 13. Validates internal links
+ 14. Backs up files before modification
+ 15. Reports any issues found
+
+ WHAT YOU DO MANUALLY
+ --------------------
+ - Write blog posts (as blog/<slug>/index.html)
+ - Add one entry per post to articles.json
+ - Run this script
+ - Commit and push
+
+ USAGE
+ -----
+     cd /workspaces/aradmanamnaoon.github.io
+     python scripts/build_site.py
+
+ OPTIONS
+ -------
+     --dry-run       Show what would change without writing
+     --no-fetch      Skip API calls (use only cached/local data)
+     --verbose       Print more detail
+     --rollback      Restore all .backup files and exit
+     --validate      Only validate the site, don't rebuild
+
+============================================================================
+"""
+
 import os
 import re
+import sys
 import json
+import shutil
 import urllib.request
 import urllib.error
 from datetime import datetime, timezone
+from html import escape as html_escape
 
-# ============================================================
-#  CONFIGURATION
-# ============================================================
+# ============================================================================
+#  GLOBAL CONFIGURATION
+# ============================================================================
+
 BASE_DIR = os.getcwd()
 SITE_URL = "https://aradmanamnaoon.github.io"
+SITE_NAME = "ARADMANAMNAOON"
 
 GITHUB_USER = "aradmanamnaoon"
 HF_USER = "aradmanamnaoon"
@@ -18,8 +72,41 @@ MAX_PROJECTS_HOMEPAGE = 3
 MAX_ARTICLES_HOMEPAGE = 3
 PROJECTS_PER_PAGE = 6
 
+# Command line flags
+DRY_RUN = "--dry-run" in sys.argv
+NO_FETCH = "--no-fetch" in sys.argv
+VERBOSE = "--verbose" in sys.argv
+ROLLBACK = "--rollback" in sys.argv
+VALIDATE_ONLY = "--validate" in sys.argv
+
+# Repos to exclude from project listing
 SKIP_REPOS = {"aradmanamnaoon.github.io", ".github", "aradmanamnaoon"}
-SKIP_FOLDERS = {".git", "node_modules", "scripts", "dist", "assets"}
+
+# Folders to skip when walking the repo
+SKIP_FOLDERS = {
+    ".git", "node_modules", "scripts", "dist",
+    "assets", ".github", ".vscode", ".devcontainer",
+    "__pycache__", ".pytest_cache"
+}
+
+# Backup suffix for files modified by this script
+BACKUP_SUFFIX = ".build-backup"
+
+# Files that are never modified
+PROTECTED_FILES = {
+    "articles.json",
+    "sitemap.xml",
+    "robots.txt",
+    "CNAME",
+    ".nojekyll",
+}
+
+# ============================================================================
+#  CURATED PROJECT OVERRIDES
+#  This lets you polish specific projects with better titles, descriptions,
+#  metrics, and tags than what the APIs provide.
+#  Keys are the exact repo/model short name.
+# ============================================================================
 
 CURATED = {
     "ai-research-assistant-platform": {
@@ -93,27 +180,315 @@ CURATED = {
     },
 }
 
-# ============================================================
-#  FAVICON INJECTION (all HTML files)
-# ============================================================
+# ============================================================================
+#  FAVICON LINKS
+# ============================================================================
+
 FAVICON_LINKS = '''    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">'''
 
-def add_favicons(html):
-    if 'rel="icon"' in html:
+
+# ============================================================================
+#  UTILITIES
+# ============================================================================
+
+def log(msg, level="info"):
+    """Print a formatted log message."""
+    prefixes = {
+        "info": "   ",
+        "step": "\n▶",
+        "ok": "   ✓",
+        "warn": "   ⚠️ ",
+        "err": "   ❌",
+        "repair": "   🔧",
+    }
+    prefix = prefixes.get(level, "   ")
+    print(f"{prefix} {msg}")
+
+
+def section(title):
+    """Print a section divider."""
+    print()
+    print("=" * 70)
+    print(f"  {title}")
+    print("=" * 70)
+
+
+def file_exists(rel_path):
+    """Check if a file exists relative to BASE_DIR."""
+    return os.path.exists(os.path.join(BASE_DIR, rel_path))
+
+
+def read_file(rel_path):
+    """Read a file relative to BASE_DIR."""
+    with open(os.path.join(BASE_DIR, rel_path), encoding='utf-8') as f:
+        return f.read()
+
+
+def write_file(rel_path, content, backup=True):
+    """Write a file, optionally backing up the original."""
+    full_path = os.path.join(BASE_DIR, rel_path)
+    if DRY_RUN:
+        log(f"[DRY RUN] Would write {rel_path}")
+        return
+    
+    # Backup
+    if backup and os.path.exists(full_path):
+        backup_path = full_path + BACKUP_SUFFIX
+        try:
+            shutil.copy2(full_path, backup_path)
+        except Exception:
+            pass
+    
+    os.makedirs(os.path.dirname(full_path) or BASE_DIR, exist_ok=True)
+    with open(full_path, 'w', encoding='utf-8') as f:
+        f.write(content)
+
+
+def parse_iso(dt_str):
+    """Parse an ISO 8601 datetime string."""
+    if not dt_str:
+        return None
+    try:
+        return datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+
+def days_since(dt):
+    """Calculate days since a datetime."""
+    if dt is None:
+        return 9999
+    now = datetime.now(timezone.utc)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return (now - dt).days
+
+
+def slugify(text):
+    """Convert text to a URL-safe slug."""
+    text = text.lower().strip()
+    text = re.sub(r'[^a-z0-9]+', '-', text)
+    return text.strip('-')[:80]
+
+
+# ============================================================================
+#  STEP 1: ROLLBACK
+# ============================================================================
+
+def rollback_all():
+    """Restore all .build-backup files and exit."""
+    section("ROLLBACK")
+    restored = 0
+    for root, dirs, files in os.walk(BASE_DIR):
+        dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS and not d.startswith('.')]
+        for f in files:
+            if f.endswith(BACKUP_SUFFIX):
+                backup_path = os.path.join(root, f)
+                original_path = backup_path[:-len(BACKUP_SUFFIX)]
+                try:
+                    shutil.copy2(backup_path, original_path)
+                    os.remove(backup_path)
+                    restored += 1
+                    log(f"Restored {os.path.relpath(original_path, BASE_DIR)}", "ok")
+                except Exception as e:
+                    log(f"Failed: {backup_path}: {e}", "err")
+    log(f"Restored {restored} file(s). Exiting.", "ok")
+    sys.exit(0)
+
+
+# ============================================================================
+#  STEP 2: FILE ORGANIZATION AND REPAIR
+# ============================================================================
+
+def repair_blog_filenames():
+    """
+    Rename any non-index.html blog post file to index.html.
+    Returns a dict of {old_url: new_url} for articles.json updating.
+    """
+    section("STEP 1 / 12 — Repairing blog filenames")
+    blog_dir = os.path.join(BASE_DIR, "blog")
+    if not os.path.isdir(blog_dir):
+        log("blog/ folder not found, skipping", "warn")
+        return {}
+    
+    renamed = {}
+    for entry in sorted(os.listdir(blog_dir)):
+        folder_path = os.path.join(blog_dir, entry)
+        if not os.path.isdir(folder_path):
+            continue
+        
+        html_files = [f for f in os.listdir(folder_path) if f.endswith(".html")]
+        if "index.html" in html_files:
+            log(f"blog/{entry}/index.html — OK")
+            continue
+        if not html_files:
+            log(f"blog/{entry}/ has no HTML files", "warn")
+            continue
+        
+        if len(html_files) == 1:
+            old_name = html_files[0]
+            old_path = os.path.join(folder_path, old_name)
+            new_path = os.path.join(folder_path, "index.html")
+            try:
+                if not DRY_RUN:
+                    os.rename(old_path, new_path)
+                old_url = f"/blog/{entry}/{old_name}"
+                new_url = f"/blog/{entry}/"
+                renamed[old_url] = new_url
+                log(f"Renamed blog/{entry}/{old_name} → blog/{entry}/index.html", "repair")
+            except Exception as e:
+                log(f"Could not rename blog/{entry}/{old_name}: {e}", "err")
+        else:
+            log(f"blog/{entry}/ has multiple HTML files: {html_files}", "warn")
+    
+    if not renamed:
+        log("All blog filenames are already correct", "ok")
+    return renamed
+
+
+def repair_orphaned_files():
+    """
+    Detect common problems:
+    - HTML files at blog/ root that should be in a folder
+    - Duplicate content files
+    - Missing index.html in blog post folders
+    """
+    section("STEP 2 / 12 — Checking for orphaned files")
+    blog_dir = os.path.join(BASE_DIR, "blog")
+    if not os.path.isdir(blog_dir):
+        return
+    
+    # HTML files directly in blog/ (other than index.html)
+    for f in os.listdir(blog_dir):
+        full = os.path.join(blog_dir, f)
+        if os.path.isfile(full) and f.endswith(".html") and f != "index.html":
+            log(f"Orphaned file: blog/{f}", "warn")
+            log(f"   Move it to blog/{slugify(f[:-5])}/index.html manually", "info")
+
+
+# ============================================================================
+#  STEP 3: ARTICLES.JSON VALIDATION AND REPAIR
+# ============================================================================
+
+def load_articles():
+    """Load articles.json with fallback to empty list."""
+    path = os.path.join(BASE_DIR, "articles.json")
+    if not os.path.exists(path):
+        log("articles.json not found — creating empty list", "warn")
+        if not DRY_RUN:
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump([], f, indent=2)
+        return []
+    try:
+        with open(path, encoding='utf-8') as f:
+            articles = json.load(f)
+        if not isinstance(articles, list):
+            raise ValueError("articles.json must be a list")
+        return articles
+    except json.JSONDecodeError as e:
+        log(f"articles.json is invalid JSON: {e}", "err")
+        log("Please fix the JSON syntax and re-run.", "info")
+        sys.exit(1)
+
+
+def repair_articles_json(renamed):
+    """Update articles.json with the renamed URLs."""
+    section("STEP 3 / 12 — Repairing articles.json URLs")
+    articles = load_articles()
+    changed = 0
+    for article in articles:
+        old_url = article.get("url", "")
+        # Auto-fix .html URLs to clean folder URLs
+        match = re.match(r'^(/blog/([^/]+))/[^/]+\.html$', old_url)
+        if match:
+            new_url = match.group(1) + "/"
+            article["url"] = new_url
+            log(f"Fixed URL: {old_url} → {new_url}", "repair")
+            changed += 1
+        # Apply renamed map from earlier step
+        elif old_url in renamed:
+            article["url"] = renamed[old_url]
+            log(f"Applied rename: {old_url} → {article['url']}", "repair")
+            changed += 1
+    
+    if changed:
+        write_file("articles.json", json.dumps(articles, indent=2, ensure_ascii=False), backup=False)
+        log(f"Updated {changed} URL(s) in articles.json", "ok")
+    else:
+        log("All URLs in articles.json are correct", "ok")
+    return articles
+
+
+def validate_articles(articles):
+    """Ensure every article has a matching file on disk."""
+    section("STEP 4 / 12 — Validating article links")
+    missing = []
+    for article in articles:
+        url = article.get("url", "")
+        title = article.get("title", "(untitled)")
+        # Convert /blog/foo/ → blog/foo/index.html
+        if url.endswith("/"):
+            rel = url.lstrip("/") + "index.html"
+        else:
+            rel = url.lstrip("/")
+        if not file_exists(rel):
+            missing.append((title, url, rel))
+    
+    if missing:
+        log(f"Found {len(missing)} article(s) with missing files:", "warn")
+        for title, url, rel in missing:
+            log(f"   • \"{title[:60]}\"", "warn")
+            log(f"     URL: {url}", "info")
+            log(f"     Expected: {rel}", "info")
+    else:
+        log(f"All {len(articles)} article URLs are valid", "ok")
+    return missing
+
+
+def validate_article_schema(articles):
+    """Ensure every article has required fields."""
+    section("STEP 5 / 12 — Validating article schema")
+    required = ["title", "url", "date"]
+    issues = 0
+    for i, article in enumerate(articles):
+        for field in required:
+            if field not in article or not article[field]:
+                log(f"Article #{i} missing required field: {field}", "warn")
+                issues += 1
+    if not issues:
+        log(f"All {len(articles)} articles have required fields", "ok")
+    return issues
+
+
+# ============================================================================
+#  STEP 6: FAVICON INJECTION
+# ============================================================================
+
+def has_favicons(html):
+    """Check if HTML already has favicon links."""
+    return 'rel="icon"' in html
+
+
+def inject_favicons(html):
+    """Add favicon links to <head> if missing."""
+    if has_favicons(html):
         return html
     if '</head>' in html:
-        return html.replace('</head>', FAVICON_LINKS + '\n</head>')
+        return html.replace('</head>', FAVICON_LINKS + '\n</head>', 1)
     return html
 
-def add_favicons_to_all_html_files():
-    print("🎨 Injecting favicons into all HTML files...")
+
+def inject_favicons_everywhere():
+    """Walk the repo and add favicons to every HTML file."""
+    section("STEP 6 / 12 — Injecting favicons")
     updated = 0
     skipped = 0
     failed = 0
+    
     for root, dirs, files in os.walk(BASE_DIR):
         dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS and not d.startswith('.')]
         for filename in files:
@@ -124,223 +499,294 @@ def add_favicons_to_all_html_files():
             try:
                 with open(filepath, encoding='utf-8') as f:
                     html = f.read()
-                new_html = add_favicons(html)
+                new_html = inject_favicons(html)
                 if new_html != html:
-                    with open(filepath, 'w', encoding='utf-8') as f:
-                        f.write(new_html)
+                    write_file(rel_path, new_html)
                     updated += 1
-                    print(f"   ✓ {rel_path}")
+                    log(f"Added favicons: {rel_path}", "ok")
                 else:
                     skipped += 1
             except Exception as e:
                 failed += 1
-                print(f"   ⚠️  {rel_path}: {e}")
-    print(f"\n   → Favicons added: {updated} | Already had: {skipped} | Failed: {failed}\n")
+                log(f"Failed: {rel_path}: {e}", "err")
+    
+    log(f"Favicons added: {updated} | Already present: {skipped} | Failed: {failed}", "ok")
 
-# ============================================================
-#  SAFE CLEANUP (only removes old unstyled cards, nothing else)
-# ============================================================
-def remove_old_injected_cards(html):
-    """
-    Removes ONLY the old inline-styled blog-card divs that were injected
-    by previous buggy script versions. Nothing else is touched.
-    """
-    original = html
-    
-    # Remove old unstyled blog cards (with style="..." attribute)
-    html = re.sub(
-        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*'
-        r'(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
-        '', html, flags=re.DOTALL
-    )
-    
-    # Remove empty blog-list-container wrappers
-    html = re.sub(r'<div class="blog-list-container">\s*</div>\s*', '', html)
-    
-    # Remove empty projects-list-container wrappers
-    html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
-    
-    if len(html) != len(original):
-        print(f"   🔧 Removed {len(original) - len(html)} chars of old content")
-    
-    return html
 
-# ============================================================
-#  MARKER CHECKS
-# ============================================================
-def check_markers(html, marker_name, filepath):
-    """Warn if required markers are missing."""
-    start = f'<!-- {marker_name}:START -->'
-    end = f'<!-- {marker_name}:END -->'
-    if start not in html or end not in html:
-        print(f"   ⚠️  {filepath}: missing {marker_name} markers — will skip injection")
-        return False
-    return True
+# ============================================================================
+#  STEP 7: FETCH PROJECTS FROM APIS
+# ============================================================================
 
-# ============================================================
-#  API FETCHERS
-# ============================================================
-def fetch_json(url):
+def http_get_json(url, timeout=20):
+    """Fetch JSON from a URL with error handling."""
     req = urllib.request.Request(url, headers={
-        "User-Agent": "aradmanamnaoon-site-builder",
+        "User-Agent": f"{SITE_NAME}-builder",
         "Accept": "application/json",
     })
     try:
-        with urllib.request.urlopen(req, timeout=20) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        log(f"HTTP {e.code}: {url}", "warn")
+    except urllib.error.URLError as e:
+        log(f"Network error: {url}: {e.reason}", "warn")
     except Exception as e:
-        print(f"   ⚠️  Failed {url}: {e}")
+        log(f"Error: {url}: {e}", "warn")
     return None
 
+
 def fetch_github_repos():
-    print("🌐 Fetching GitHub repos...")
-    repos = fetch_json(f"https://api.github.com/users/{GITHUB_USER}/repos?per_page=100&sort=updated")
-    if not repos: return []
+    """Fetch all public repos from GitHub."""
+    log(f"Fetching GitHub repos for {GITHUB_USER}...")
+    url = f"https://api.github.com/users/{GITHUB_USER}/repos?per_page=100&sort=updated"
+    repos = http_get_json(url)
+    if not repos:
+        return []
+    
     results = []
     for r in repos:
-        if r.get("fork") or r["name"] in SKIP_REPOS: continue
-        tags = r.get("topics", []) or []
+        if r.get("fork"):
+            continue
+        if r["name"] in SKIP_REPOS:
+            continue
+        
+        tags = list(r.get("topics") or [])
         if r.get("language") and r["language"] not in tags:
             tags.insert(0, r["language"])
+        
         results.append({
-            "source": "github", "id": r["name"], "name": r["name"],
+            "source": "github",
+            "id": r["name"],
+            "name": r["name"],
             "title": r["name"].replace("-", " ").replace("_", " ").title(),
             "description": r.get("description") or "",
-            "url": r["html_url"], "stars": r.get("stargazers_count", 0),
-            "forks": r.get("forks_count", 0), "updated": r.get("updated_at", ""),
-            "created": r.get("created_at", ""), "tags": tags[:6],
-            "language": r.get("language") or "", "homepage": r.get("homepage") or "",
+            "url": r["html_url"],
+            "stars": r.get("stargazers_count", 0),
+            "forks": r.get("forks_count", 0),
+            "updated": r.get("updated_at", ""),
+            "created": r.get("created_at", ""),
+            "tags": tags[:6],
+            "language": r.get("language") or "",
+            "homepage": r.get("homepage") or "",
         })
-    print(f"   → {len(results)} repos fetched")
+    
+    log(f"Fetched {len(results)} GitHub repos", "ok")
     return results
 
+
 def fetch_hf_models():
-    print("🌐 Fetching Hugging Face models...")
-    models = fetch_json(f"https://huggingface.co/api/models?author={HF_USER}&limit=100&full=true")
-    if not models: return []
+    """Fetch all public models from Hugging Face."""
+    log(f"Fetching Hugging Face models for {HF_USER}...")
+    url = f"https://huggingface.co/api/models?author={HF_USER}&limit=100&full=true"
+    models = http_get_json(url)
+    if not models:
+        return []
+    
     results = []
     for m in models:
         model_id = m.get("modelId") or m.get("id", "")
-        short_name = model_id.split("/")[-1] if "/" in model_id else model_id
+        short = model_id.split("/")[-1] if "/" in model_id else model_id
+        
         tags = []
-        if m.get("pipeline_tag"): tags.append(m["pipeline_tag"])
+        if m.get("pipeline_tag"):
+            tags.append(m["pipeline_tag"])
+        skip_tags = {"transformers", "pytorch", "safetensors",
+                     "license:apache-2.0", "license:mit", "text-generation"}
         for t in (m.get("tags") or []):
-            if t not in tags and t not in ("transformers", "pytorch", "safetensors", "license:apache-2.0", "license:mit"):
+            if t not in tags and t not in skip_tags:
                 tags.append(t)
+        
         results.append({
-            "source": "hf_model", "id": short_name, "name": short_name,
-            "title": short_name.replace("-", " ").replace("_", " ").title(),
+            "source": "hf_model",
+            "id": short,
+            "name": short,
+            "title": short.replace("-", " ").replace("_", " ").title(),
             "description": (m.get("cardData", {}) or {}).get("short_description", "") or "",
             "url": f"https://huggingface.co/{model_id}",
-            "downloads": m.get("downloads", 0), "likes": m.get("likes", 0),
-            "updated": m.get("lastModified", ""), "created": m.get("createdAt", ""),
+            "downloads": m.get("downloads", 0),
+            "likes": m.get("likes", 0),
+            "updated": m.get("lastModified", ""),
+            "created": m.get("createdAt", ""),
             "tags": tags[:6],
         })
-    print(f"   → {len(results)} models fetched")
+    
+    log(f"Fetched {len(results)} HF models", "ok")
     return results
 
+
 def fetch_hf_datasets():
-    print("🌐 Fetching Hugging Face datasets...")
-    datasets = fetch_json(f"https://huggingface.co/api/datasets?author={HF_USER}&limit=100&full=true")
-    if not datasets: return []
+    """Fetch all public datasets from Hugging Face."""
+    log(f"Fetching Hugging Face datasets for {HF_USER}...")
+    url = f"https://huggingface.co/api/datasets?author={HF_USER}&limit=100&full=true"
+    datasets = http_get_json(url)
+    if not datasets:
+        return []
+    
     results = []
     for d in datasets:
         ds_id = d.get("id", "")
-        short_name = ds_id.split("/")[-1] if "/" in ds_id else ds_id
+        short = ds_id.split("/")[-1] if "/" in ds_id else ds_id
+        
         results.append({
-            "source": "hf_dataset", "id": short_name, "name": short_name,
-            "title": short_name.replace("-", " ").replace("_", " ").title(),
+            "source": "hf_dataset",
+            "id": short,
+            "name": short,
+            "title": short.replace("-", " ").replace("_", " ").title(),
             "description": (d.get("cardData", {}) or {}).get("short_description", "") or "",
             "url": f"https://huggingface.co/datasets/{ds_id}",
-            "downloads": d.get("downloads", 0), "likes": d.get("likes", 0),
-            "updated": d.get("lastModified", ""), "created": d.get("createdAt", ""),
+            "downloads": d.get("downloads", 0),
+            "likes": d.get("likes", 0),
+            "updated": d.get("lastModified", ""),
+            "created": d.get("createdAt", ""),
             "tags": (d.get("tags") or [])[:6],
         })
-    print(f"   → {len(results)} datasets fetched")
+    
+    log(f"Fetched {len(results)} HF datasets", "ok")
     return results
 
-# ============================================================
-#  SCORING & RANKING
-# ============================================================
-def parse_iso(dt_str):
-    if not dt_str: return None
-    try: return datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
-    except Exception: return None
 
-def days_since(dt):
-    if dt is None: return 9999
-    now = datetime.now(timezone.utc)
-    if dt.tzinfo is None: dt = dt.replace(tzinfo=timezone.utc)
-    return (now - dt).days
+# ============================================================================
+#  STEP 8: SCORE AND RANK PROJECTS
+# ============================================================================
 
 def score_project(p):
-    score = p.get("stars", 0) * 10 + p.get("forks", 0) * 5
-    score += p.get("downloads", 0) / 100.0 + p.get("likes", 0) * 5
+    """
+    Score a project for ranking.
+    Higher = better + newer.
+    """
+    score = 0.0
+    score += p.get("stars", 0) * 10
+    score += p.get("forks", 0) * 5
+    score += p.get("downloads", 0) / 100.0
+    score += p.get("likes", 0) * 5
+    
+    # Recency boost
     days = days_since(parse_iso(p.get("updated")))
-    if days < 30: score += 30
-    elif days < 90: score += 15
-    elif days < 365: score += 5
+    if days < 30:
+        score += 30
+    elif days < 90:
+        score += 15
+    elif days < 365:
+        score += 5
+    
     return score
 
+
 def rank_all_projects():
-    all_items = fetch_github_repos() + fetch_hf_models() + fetch_hf_datasets()
+    """Fetch, override, score, and rank all projects."""
+    section("STEP 7 / 12 — Ranking projects")
+    
+    if NO_FETCH:
+        log("Skipping API fetches (--no-fetch flag)", "warn")
+        return []
+    
+    all_items = []
+    all_items.extend(fetch_github_repos())
+    all_items.extend(fetch_hf_models())
+    all_items.extend(fetch_hf_datasets())
+    
+    # Apply curated overrides
     for item in all_items:
         override = CURATED.get(item["id"])
         if override:
-            for k, v in override.items(): item[k] = v
+            for k, v in override.items():
+                item[k] = v
             item["curated"] = True
+    
+    # Score
     for item in all_items:
         item["_score"] = score_project(item)
-    all_items.sort(key=lambda x: (not x.get("featured", False), -x["_score"], x.get("name", "")))
+    
+    # Sort: featured first, then by score descending, then name
+    all_items.sort(key=lambda x: (
+        not x.get("featured", False),
+        -x["_score"],
+        x.get("name", "")
+    ))
+    
+    # Add display dates
     for item in all_items:
         dt = parse_iso(item.get("updated")) or parse_iso(item.get("created"))
-        item["date"] = dt.strftime("%Y-%m-%d") if dt else "2024-01-01"
-        item["dateDisplay"] = dt.strftime("%B %Y") if dt else "2024"
+        if dt:
+            item["date"] = dt.strftime("%Y-%m-%d")
+            item["dateDisplay"] = dt.strftime("%B %Y")
+        else:
+            item["date"] = "2024-01-01"
+            item["dateDisplay"] = "2024"
+    
+    log(f"Total ranked projects: {len(all_items)}", "ok")
+    if VERBOSE:
+        for i, p in enumerate(all_items[:10], 1):
+            log(f"   #{i} [{p['source']}] {p['title']} (score: {p['_score']:.1f})")
+    
     return all_items
 
-# ============================================================
-#  RENDER FUNCTIONS
-# ============================================================
+
+# ============================================================================
+#  STEP 9: RENDER HTML
+# ============================================================================
+
+def get_project_metrics(p):
+    """Get metrics for a project, using curated data if available."""
+    if p.get("metrics"):
+        return p["metrics"]
+    
+    if p["source"] == "github":
+        return [
+            {"value": str(p.get("stars", 0)), "label": "Stars"},
+            {"value": str(p.get("forks", 0)), "label": "Forks"},
+            {"value": p.get("language", "—"), "label": "Language"},
+        ]
+    elif p["source"] in ("hf_model", "hf_dataset"):
+        return [
+            {"value": f"{p.get('downloads', 0):,}", "label": "Downloads"},
+            {"value": str(p.get("likes", 0)), "label": "Likes"},
+            {"value": "HF", "label": "Hosted on"},
+        ]
+    return []
+
+
+def get_project_actions(p):
+    """Get action links for a project."""
+    actions = [{"url": p["url"], "label": "View project ↗", "primary": True}]
+    if p.get("homepage"):
+        actions.append({"url": p["homepage"], "label": "Live demo ↗", "primary": False})
+    return actions
+
+
 def render_homepage_projects(projects):
+    """Render top projects for homepage."""
     top = projects[:MAX_PROJECTS_HOMEPAGE]
     cards = []
+    source_badges = {
+        "github": "GitHub",
+        "hf_model": "Hugging Face",
+        "hf_dataset": "HF Dataset",
+    }
+    
     for i, p in enumerate(top, start=1):
         num = f"{i:02d}"
-        metrics = p.get("metrics", [])
-        if not metrics:
-            if p["source"] == "github":
-                metrics = [
-                    {"value": str(p.get("stars", 0)), "label": "Stars"},
-                    {"value": str(p.get("forks", 0)), "label": "Forks"},
-                    {"value": p.get("language", "—"), "label": "Language"},
-                ]
-            elif p["source"] in ("hf_model", "hf_dataset"):
-                metrics = [
-                    {"value": f"{p.get('downloads', 0):,}", "label": "Downloads"},
-                    {"value": str(p.get("likes", 0)), "label": "Likes"},
-                    {"value": "HF", "label": "Hosted on"},
-                ]
+        metrics = get_project_metrics(p)
         metrics_html = "".join(
             f'<div class="metric"><span class="metric-value">{m["value"]}</span>'
             f'<span class="metric-label">{m["label"]}</span></div>'
             for m in metrics
         )
         tags_html = "".join(f'<span class="project-tag">{t}</span>' for t in p.get("tags", []))
-        actions = [{"url": p["url"], "label": "View project ↗", "primary": True}]
-        if p.get("homepage"):
-            actions.append({"url": p["homepage"], "label": "Live demo ↗", "primary": False})
+        actions = get_project_actions(p)
         actions_html = "".join(
-            f'<a class="project-link {"primary" if a.get("primary") else ""}" href="{a["url"]}" '
-            f'target="_blank" rel="noopener noreferrer">{a["label"]}</a>'
+            f'<a class="project-link {"primary" if a.get("primary") else ""}" '
+            f'href="{a["url"]}" target="_blank" rel="noopener noreferrer">{a["label"]}</a>'
             for a in actions
         )
         desc = p.get("description") or "Source and details on GitHub / Hugging Face."
-        source_badge = {"github": "GitHub", "hf_model": "Hugging Face", "hf_dataset": "HF Dataset"}[p["source"]]
+        type_str = p.get("type", source_badges[p["source"]])
+        
         cards.append(f'''          <article id="{p['id']}" class="featured-project">
             <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
               <div class="project-number" aria-hidden="true">{num}</div>
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">{p.get("type", source_badge)}</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">{type_str}</p>
                 <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">{p["title"]}</h3>
                 <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">{desc}</p>
                 <div class="metric-grid mt-8">{metrics_html}</div>
@@ -350,35 +796,28 @@ def render_homepage_projects(projects):
             </div>
           </article>
 ''')
+    
     return '<div class="mt-14 space-y-6">\n' + "\n".join(cards) + '</div>'
 
+
 def render_paginated_projects(projects):
+    """Render paginated project list with client-side JS."""
     data = []
     for p in projects:
-        metrics = p.get("metrics", [])
-        if not metrics:
-            if p["source"] == "github":
-                metrics = [
-                    {"value": str(p.get("stars", 0)), "label": "Stars"},
-                    {"value": str(p.get("forks", 0)), "label": "Forks"},
-                    {"value": p.get("language", "—"), "label": "Language"},
-                ]
-            elif p["source"] in ("hf_model", "hf_dataset"):
-                metrics = [
-                    {"value": f"{p.get('downloads', 0):,}", "label": "Downloads"},
-                    {"value": str(p.get("likes", 0)), "label": "Likes"},
-                    {"value": "HF", "label": "Hosted on"},
-                ]
-        actions = [{"url": p["url"], "label": "View project ↗", "primary": True}]
-        if p.get("homepage"):
-            actions.append({"url": p["homepage"], "label": "Live demo ↗", "primary": False})
         data.append({
-            "id": p["id"], "title": p["title"], "type": p.get("type", p["source"]),
-            "description": p.get("description") or "", "dateDisplay": p.get("dateDisplay", ""),
-            "metrics": metrics, "tags": p.get("tags", []), "actions": actions,
+            "id": p["id"],
+            "title": p["title"],
+            "type": p.get("type", p["source"]),
+            "description": p.get("description") or "",
+            "dateDisplay": p.get("dateDisplay", ""),
+            "metrics": get_project_metrics(p),
+            "tags": p.get("tags", []),
+            "actions": get_project_actions(p),
             "note": p.get("note", ""),
         })
+    
     projects_json = json.dumps(data, ensure_ascii=False)
+    
     return f'''<div class="projects-paginated" id="projects-paginated"></div>
 <div class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></div>
 
@@ -413,26 +852,48 @@ def render_paginated_projects(projects):
   const container = document.getElementById('projects-paginated');
   const pagination = document.getElementById('projects-pagination');
   if (!container || !pagination) return;
-  function esc(s) {{ return String(s).replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}})[c]); }}
+
+  function esc(s) {{
+    return String(s).replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}})[c]);
+  }}
+
   function renderProjects(page) {{
     const start = (page - 1) * perPage;
     const items = projects.slice(start, start + perPage);
     let html = '';
     items.forEach((p, i) => {{
       const num = String(start + i + 1).padStart(2, '0');
-      const metricsHtml = (p.metrics || []).map(m => `<div class="metric"><strong>${{esc(m.value)}}</strong><span>${{esc(m.label)}}</span></div>`).join('');
+      const metricsHtml = (p.metrics || []).map(m =>
+        `<div class="metric"><strong>${{esc(m.value)}}</strong><span>${{esc(m.label)}}</span></div>`
+      ).join('');
       const tagsHtml = (p.tags || []).map(t => `<span class="tag">${{esc(t)}}</span>`).join('');
-      const actionsHtml = (p.actions || []).map(a => `<a class="action ${{a.primary ? 'primary' : ''}}" href="${{esc(a.url)}}" target="_blank" rel="noopener noreferrer">${{esc(a.label)}}</a>`).join('');
+      const actionsHtml = (p.actions || []).map(a =>
+        `<a class="action ${{a.primary ? 'primary' : ''}}" href="${{esc(a.url)}}" target="_blank" rel="noopener noreferrer">${{esc(a.label)}}</a>`
+      ).join('');
       const noteHtml = p.note ? `<p class="note">${{esc(p.note)}}</p>` : '';
-      html += `<article class="project" id="${{esc(p.id)}}"><div class="num" aria-hidden="true">${{num}}</div><div><p class="type">${{esc(p.type)}}</p><h2>${{esc(p.title)}}</h2><p class="desc">${{esc(p.description)}}</p><div class="metrics">${{metricsHtml}}</div><div class="tags">${{tagsHtml}}</div><div class="actions">${{actionsHtml}}</div>${{noteHtml}}</div></article>`;
+      html += `<article class="project" id="${{esc(p.id)}}">
+        <div class="num" aria-hidden="true">${{num}}</div>
+        <div>
+          <p class="type">${{esc(p.type)}}</p>
+          <h2>${{esc(p.title)}}</h2>
+          <p class="desc">${{esc(p.description)}}</p>
+          <div class="metrics">${{metricsHtml}}</div>
+          <div class="tags">${{tagsHtml}}</div>
+          <div class="actions">${{actionsHtml}}</div>
+          ${{noteHtml}}
+        </div>
+      </article>`;
     }});
     container.innerHTML = html;
   }}
+
   function renderPagination() {{
     let html = '';
-    html += `<button ${{currentPage === 1 ? 'disabled' : ''}} data-page="${{currentPage - 1}}" aria-label="Previous">←</button>`;
-    for (let i = 1; i <= totalPages; i++) html += `<button class="${{i === currentPage ? 'active' : ''}}" data-page="${{i}}">${{i}}</button>`;
-    html += `<button ${{currentPage === totalPages ? 'disabled' : ''}} data-page="${{currentPage + 1}}" aria-label="Next">→</button>`;
+    html += `<button ${{currentPage === 1 ? 'disabled' : ''}} data-page="${{currentPage - 1}}">←</button>`;
+    for (let i = 1; i <= totalPages; i++) {{
+      html += `<button class="${{i === currentPage ? 'active' : ''}}" data-page="${{i}}">${{i}}</button>`;
+    }}
+    html += `<button ${{currentPage === totalPages ? 'disabled' : ''}} data-page="${{currentPage + 1}}">→</button>`;
     pagination.innerHTML = html;
     pagination.querySelectorAll('button[data-page]').forEach(btn => {{
       btn.addEventListener('click', () => {{
@@ -441,156 +902,396 @@ def render_paginated_projects(projects):
           currentPage = p;
           renderProjects(currentPage);
           renderPagination();
-          document.getElementById('selected-projects').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+          document.getElementById('selected-projects')?.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
         }}
       }});
     }});
   }}
+
   renderProjects(currentPage);
   renderPagination();
 }})();
 </script>
 '''
 
+
 def render_homepage_blogs(articles):
-    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)[:MAX_ARTICLES_HOMEPAGE]
+    """Render top articles for homepage."""
+    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)
+    top = sorted_articles[:MAX_ARTICLES_HOMEPAGE]
     cards = []
-    for a in sorted_articles:
-        tags = "".join(f'\n              <span class="writing-post-tag">{t}</span>' for t in a.get("tags", []))
+    
+    for a in top:
+        tags = "".join(
+            f'\n              <span class="writing-post-tag">{t}</span>'
+            for t in a.get("tags", [])
+        )
         cards.append(f'''        <a class="writing-post-card" href="{a["url"]}" aria-label="Read {a["title"]}">
-          <div><div class="writing-post-meta">{a.get("dateDisplay", a["date"])} · {a.get("readTime", "")}</div>
+          <div>
+            <div class="writing-post-meta">{a.get("dateDisplay", a["date"])} · {a.get("readTime", "")}</div>
             <h3 class="writing-post-title">{a["title"]}</h3>
             <p class="writing-post-description">{a["description"]}</p>
             <div class="writing-post-tags" aria-label="Article topics">{tags}
             </div>
-          </div><span class="writing-post-arrow" aria-hidden="true">→</span>
+          </div>
+          <span class="writing-post-arrow" aria-hidden="true">→</span>
         </a>''')
+    
     return "\n\n".join(cards)
+
 
 def render_blog_index(articles):
+    """Render full article list for blog page."""
     sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)
     cards = []
+    
     for a in sorted_articles:
-        tags = "".join(f'\n                  <span class="blog-post-tag">{t}</span>' for t in a.get("tags", []))
-        cards.append(f'''          <article><a class="blog-post" href="{a["url"]}" aria-label="Read {a["title"]}">
-              <div class="blog-post-meta"><time datetime="{a["date"]}">{a.get("dateDisplay", a["date"])}</time><br />{a.get("readTime", "")}</div>
-              <div><h3 class="blog-post-title">{a["title"]}</h3><p class="blog-post-description">{a["description"]}</p>
+        tags = "".join(
+            f'\n                  <span class="blog-post-tag">{t}</span>'
+            for t in a.get("tags", [])
+        )
+        cards.append(f'''          <article>
+            <a class="blog-post" href="{a["url"]}" aria-label="Read {a["title"]}">
+              <div class="blog-post-meta">
+                <time datetime="{a["date"]}">{a.get("dateDisplay", a["date"])}</time><br />
+                {a.get("readTime", "")}
+              </div>
+              <div>
+                <h3 class="blog-post-title">{a["title"]}</h3>
+                <p class="blog-post-description">{a["description"]}</p>
                 <div class="blog-post-tags" aria-label="Article topics">{tags}
-                </div></div>
-              <span class="blog-post-arrow" aria-hidden="true">→</span></a></article>''')
+                </div>
+              </div>
+              <span class="blog-post-arrow" aria-hidden="true">→</span>
+            </a>
+          </article>''')
+    
     return "\n\n".join(cards)
 
-# ============================================================
-#  INJECTION
-# ============================================================
+
+# ============================================================================
+#  STEP 10: INJECT RENDERED CONTENT
+# ============================================================================
+
+def verify_markers(html, marker_name, filepath):
+    """Return True if the AUTO markers exist in HTML."""
+    start = f'<!-- {marker_name}:START -->'
+    end = f'<!-- {marker_name}:END -->'
+    if start not in html or end not in html:
+        log(f"{filepath}: {marker_name} markers missing", "warn")
+        return False
+    return True
+
+
 def inject_homepage_projects(html, projects):
+    """Inject top projects into index.html."""
     rendered = render_homepage_projects(projects)
     pattern = r'(<div class="mt-14 space-y-6">).*?(</div>\s*<div class="mt-16">)'
     if re.search(pattern, html, re.DOTALL):
-        return re.sub(pattern, f'{rendered}\n\n        \\2', html, flags=re.DOTALL)
+        html = re.sub(pattern, f'{rendered}\n\n        \\2', html, flags=re.DOTALL)
+        log("Injected top projects into homepage", "ok")
+    else:
+        log("Homepage project container not found", "warn")
     return html
 
+
 def inject_projects_page(html, projects):
+    """Inject paginated projects into /projects/."""
     rendered = render_paginated_projects(projects)
     pattern = r'(<div class="projects" id="project-list">).*?(</div>\s*(?:<p class="projects-empty"|</section>))'
-    if not re.search(pattern, html, re.DOTALL):
-        print("   ⚠️  projects/index.html: project-list container not found — skipping")
-        return html
-    new_html = re.sub(pattern, f'\\1\n{rendered}\n      \\2', html, flags=re.DOTALL)
-    new_html = re.sub(r'<div class="project-tools"[^>]*>.*?</div>\s*(?=<div class="projects")', '', new_html, flags=re.DOTALL)
-    new_html = re.sub(
+    if re.search(pattern, html, re.DOTALL):
+        html = re.sub(pattern, f'\\1\n{rendered}\n      \\2', html, flags=re.DOTALL)
+        log("Injected paginated projects", "ok")
+    else:
+        log("Projects page container not found", "warn")
+    
+    # Clean up old filter tools and old filter script
+    html = re.sub(r'<div class="project-tools"[^>]*>.*?</div>\s*(?=<div class="projects")', '', html, flags=re.DOTALL)
+    html = re.sub(
         r'<script>\s*\(\(\)\s*=>\s*\{\s*const filterPanel = document\.getElementById\("project-filters"\).*?</script>',
-        '', new_html, flags=re.DOTALL
+        '', html, flags=re.DOTALL
     )
-    new_html = re.sub(r'<p class="projects-empty"[^>]*>.*?</p>', '', new_html, flags=re.DOTALL)
-    return new_html
+    html = re.sub(r'<p class="projects-empty"[^>]*>.*?</p>', '', html, flags=re.DOTALL)
+    return html
+
 
 def inject_homepage_blogs(html, articles):
+    """Inject top articles into homepage."""
+    if not verify_markers(html, "AUTO:HOME_ARTICLES", "index.html"):
+        return html
     rendered = render_homepage_blogs(articles)
     pattern = r'(<!-- AUTO:HOME_ARTICLES:START -->).*?(<!-- AUTO:HOME_ARTICLES:END -->)'
-    if not re.search(pattern, html, re.DOTALL):
-        print("   ⚠️  index.html: AUTO:HOME_ARTICLES markers not found — skipping")
-        return html
-    return re.sub(pattern, f'\\1\n{rendered}\n        <!-- AUTO:HOME_ARTICLES:END -->', html, flags=re.DOTALL)
+    html = re.sub(pattern, f'\\1\n{rendered}\n        <!-- AUTO:HOME_ARTICLES:END -->', html, flags=re.DOTALL)
+    log("Injected top articles into homepage", "ok")
+    return html
+
 
 def inject_blog_index(html, articles):
+    """Inject full article list into blog/index.html."""
+    if not verify_markers(html, "AUTO:BLOG_ARTICLES", "blog/index.html"):
+        return html
     rendered = render_blog_index(articles)
     pattern = r'(<!-- AUTO:BLOG_ARTICLES:START -->).*?(<!-- AUTO:BLOG_ARTICLES:END -->)'
-    if not re.search(pattern, html, re.DOTALL):
-        print("   ⚠️  blog/index.html: AUTO:BLOG_ARTICLES markers not found — skipping")
-        return html
-    return re.sub(pattern, f'\\1\n{rendered}\n<!-- AUTO:BLOG_ARTICLES:END -->', html, flags=re.DOTALL)
+    html = re.sub(pattern, f'\\1\n{rendered}\n<!-- AUTO:BLOG_ARTICLES:END -->', html, flags=re.DOTALL)
+    log("Injected article list into blog page", "ok")
+    return html
 
-# ============================================================
-#  SITEMAP
-# ============================================================
+
+def remove_stale_injected_content(html):
+    """Remove stale injected content from previous buggy script runs."""
+    original = html
+    # Remove old inline-styled blog cards
+    html = re.sub(
+        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*'
+        r'(?=<div class="blog-card"|<p class="blog-intro"|<a class="writing-link"|</div>|</section>|<!--)',
+        '', html, flags=re.DOTALL
+    )
+    # Remove empty placeholder wrappers
+    html = re.sub(r'<div class="blog-list-container">\s*</div>\s*', '', html)
+    html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
+    if len(html) != len(original):
+        log(f"Removed {len(original) - len(html)} chars of stale content", "repair")
+    return html
+
+
+# ============================================================================
+#  STEP 11: GENERATE SITEMAP AND ROBOTS.TXT
+# ============================================================================
+
 def generate_sitemap(articles):
+    """Generate sitemap.xml with all pages."""
+    section("STEP 10 / 12 — Generating sitemap.xml")
+    
     urls = [
-        f"<url><loc>{SITE_URL}/</loc><priority>1.0</priority></url>",
-        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.9</priority></url>",
-        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>"
+        {"loc": f"{SITE_URL}/", "priority": "1.0"},
+        {"loc": f"{SITE_URL}/projects/", "priority": "0.9"},
+        {"loc": f"{SITE_URL}/blog/", "priority": "0.8"},
     ]
     for a in articles:
-        urls.append(f"<url><loc>{SITE_URL}{a['url']}</loc><priority>0.6</priority></url>")
-    content = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + '\n</urlset>'
-    with open("sitemap.xml", 'w', encoding='utf-8') as f:
-        f.write(content)
-    print(f"✅ sitemap.xml ({len(urls)} URLs)")
+        urls.append({
+            "loc": f"{SITE_URL}{a['url']}",
+            "priority": "0.6",
+        })
+    
+    xml_parts = ['<?xml version="1.0" encoding="UTF-8"?>']
+    xml_parts.append('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">')
+    for u in urls:
+        xml_parts.append(f'  <url>')
+        xml_parts.append(f'    <loc>{u["loc"]}</loc>')
+        xml_parts.append(f'    <priority>{u["priority"]}</priority>')
+        xml_parts.append(f'  </url>')
+    xml_parts.append('</urlset>')
+    
+    content = "\n".join(xml_parts)
+    write_file("sitemap.xml", content, backup=False)
+    log(f"Generated sitemap.xml with {len(urls)} URLs", "ok")
 
-# ============================================================
-#  MAIN
-# ============================================================
-def main():
-    print("=" * 60)
+
+def generate_robots_txt():
+    """Generate robots.txt."""
+    section("STEP 11 / 12 — Generating robots.txt")
+    content = f"""User-agent: *
+Allow: /
+
+Sitemap: {SITE_URL}/sitemap.xml
+"""
+    write_file("robots.txt", content, backup=False)
+    log("Generated robots.txt", "ok")
+
+
+# ============================================================================
+#  STEP 12: LINK VALIDATION
+# ============================================================================
+
+def validate_internal_links(html_files):
+    """
+    Check that all internal links point to files that exist.
+    """
+    section("STEP 12 / 12 — Validating internal links")
+    broken = []
     
-    # 1. Add favicons to ALL HTML files (including blog posts)
-    add_favicons_to_all_html_files()
+    for rel_path in html_files:
+        try:
+            html = read_file(rel_path)
+        except Exception:
+            continue
+        
+        # Find all href="..." that don't start with http, //, #, mailto, tel
+        links = re.findall(r'href="([^"]+)"', html)
+        for link in links:
+            if link.startswith(('http://', 'https://', '//', '#', 'mailto:', 'tel:')):
+                continue
+            # Skip query strings and fragments
+            clean_link = link.split('?')[0].split('#')[0]
+            if not clean_link:
+                continue
+            
+            # Resolve the link relative to the file's directory
+            file_dir = os.path.dirname(os.path.join(BASE_DIR, rel_path))
+            if clean_link.startswith('/'):
+                target = os.path.join(BASE_DIR, clean_link.lstrip('/'))
+            else:
+                target = os.path.normpath(os.path.join(file_dir, clean_link))
+            
+            # If it points to a directory, check for index.html
+            if os.path.isdir(target):
+                target = os.path.join(target, "index.html")
+            
+            if not os.path.exists(target):
+                # Only report if it looks like it should be a real file
+                if '.' in os.path.basename(clean_link) or clean_link.endswith('/'):
+                    broken.append((rel_path, link))
     
-    # 2. Fetch projects
-    projects = rank_all_projects()
-    print(f"\n📊 Ranked {len(projects)} total projects\n")
-    
-    # 3. Load articles
-    articles_json = os.path.join(BASE_DIR, "articles.json")
-    if os.path.exists(articles_json):
-        with open(articles_json, encoding='utf-8') as f:
-            articles = json.load(f)
-        print(f"📝 Loaded {len(articles)} articles\n")
+    if broken:
+        log(f"Found {len(broken)} potentially broken internal link(s):", "warn")
+        for src, link in broken[:20]:  # Cap output
+            log(f"   {src} → {link}", "warn")
+        if len(broken) > 20:
+            log(f"   ... and {len(broken) - 20} more", "warn")
     else:
-        articles = []
-        print("⚠️  articles.json not found\n")
+        log("No broken internal links detected", "ok")
     
-    # 4. index.html
-    print("📄 Processing index.html")
-    with open("index.html", encoding='utf-8') as f:
-        html = f.read()
-    html = remove_old_injected_cards(html)
+    return broken
+
+
+# ============================================================================
+#  CLEANUP OLD BACKUPS
+# ============================================================================
+
+def cleanup_old_backups():
+    """Remove .build-backup files older than 30 days."""
+    section("Cleaning up old backups")
+    removed = 0
+    now = datetime.now().timestamp()
+    for root, dirs, files in os.walk(BASE_DIR):
+        dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS and not d.startswith('.')]
+        for f in files:
+            if f.endswith(BACKUP_SUFFIX):
+                path = os.path.join(root, f)
+                age_days = (now - os.path.getmtime(path)) / 86400
+                if age_days > 30:
+                    try:
+                        os.remove(path)
+                        removed += 1
+                    except Exception:
+                        pass
+    if removed:
+        log(f"Removed {removed} old backup(s)", "ok")
+    else:
+        log("No old backups to remove", "ok")
+
+
+# ============================================================================
+#  MAIN
+# ============================================================================
+
+def main():
+    print()
+    print("█" * 70)
+    print(f"  {SITE_NAME} — Complete Build System")
+    print(f"  {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    if DRY_RUN:
+        print("  ⚠️  DRY RUN MODE — no files will be written")
+    if NO_FETCH:
+        print("  ⚠️  NO-FETCH MODE — skipping API calls")
+    print("█" * 70)
+    
+    if ROLLBACK:
+        rollback_all()
+    
+    # ---- STEP 1: Repair blog filenames ----
+    renamed = repair_blog_filenames()
+    
+    # ---- STEP 2: Check for orphaned files ----
+    repair_orphaned_files()
+    
+    # ---- STEP 3: Repair articles.json ----
+    articles = repair_articles_json(renamed)
+    
+    # ---- STEP 4: Validate article links ----
+    missing = validate_articles(articles)
+    
+    # ---- STEP 5: Validate article schema ----
+    validate_article_schema(articles)
+    
+    if VALIDATE_ONLY:
+        section("VALIDATE-ONLY MODE — stopping here")
+        log(f"Articles: {len(articles)}", "ok")
+        log(f"Missing files: {len(missing)}", "ok")
+        sys.exit(0)
+    
+    # ---- STEP 6: Inject favicons everywhere ----
+    inject_favicons_everywhere()
+    
+    # ---- STEP 7: Fetch and rank projects ----
+    projects = rank_all_projects()
+    
+    # ---- STEP 8-9: Process pages ----
+    section("STEP 8 / 12 — Processing index.html")
+    html = read_file("index.html")
+    html = remove_stale_injected_content(html)
     html = inject_homepage_projects(html, projects)
     html = inject_homepage_blogs(html, articles)
-    with open("index.html", 'w', encoding='utf-8') as f:
-        f.write(html)
+    write_file("index.html", html)
+    log("index.html processed", "ok")
     
-    # 5. projects/index.html
-    print("📄 Processing projects/index.html")
-    with open("projects/index.html", encoding='utf-8') as f:
-        html = f.read()
+    section("STEP 9 / 12 — Processing projects/index.html")
+    html = read_file("projects/index.html")
     html = inject_projects_page(html, projects)
-    with open("projects/index.html", 'w', encoding='utf-8') as f:
-        f.write(html)
+    write_file("projects/index.html", html)
+    log("projects/index.html processed", "ok")
     
-    # 6. blog/index.html
-    print("📄 Processing blog/index.html")
-    with open("blog/index.html", encoding='utf-8') as f:
-        html = f.read()
-    html = remove_old_injected_cards(html)
+    section("STEP 9 / 12 — Processing blog/index.html")
+    html = read_file("blog/index.html")
+    html = remove_stale_injected_content(html)
     html = inject_blog_index(html, articles)
-    with open("blog/index.html", 'w', encoding='utf-8') as f:
-        f.write(html)
+    write_file("blog/index.html", html)
+    log("blog/index.html processed", "ok")
     
-    # 7. Sitemap
-    print()
+    # ---- STEP 10: Sitemap ----
     generate_sitemap(articles)
-    print("\n✅ Done!")
+    
+    # ---- STEP 11: robots.txt ----
+    generate_robots_txt()
+    
+    # ---- STEP 12: Validate internal links ----
+    html_files = []
+    for root, dirs, files in os.walk(BASE_DIR):
+        dirs[:] = [d for d in dirs if d not in SKIP_FOLDERS and not d.startswith('.')]
+        for f in files:
+            if f.endswith('.html'):
+                html_files.append(os.path.relpath(os.path.join(root, f), BASE_DIR))
+    validate_internal_links(html_files)
+    
+    # ---- Cleanup old backups ----
+    cleanup_old_backups()
+    
+    # ---- Final report ----
+    print()
+    print("█" * 70)
+    print("  ✅ BUILD COMPLETE")
+    print("█" * 70)
+    print(f"  Articles:      {len(articles)}")
+    print(f"  Projects:      {len(projects)}")
+    print(f"  HTML files:    {len(html_files)}")
+    if missing:
+        print(f"  ⚠️  Missing:    {len(missing)} article file(s)")
+    print()
+    print("  Next steps:")
+    print("    1. Review the changes (git diff)")
+    print("    2. Commit and push")
+    print("    3. Wait ~1 min for GitHub Pages to deploy")
+    print()
+
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\n⚠️  Interrupted by user.")
+        sys.exit(130)
+    except Exception as e:
+        print(f"\n\n❌ FATAL ERROR: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
