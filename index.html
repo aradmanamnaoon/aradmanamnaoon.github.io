@@ -1204,7 +1204,7 @@
           From exploratory notebooks to<br class="hidden sm:block" />
           <span class="italic text-accent">deployed, observable</span> AI systems.
         </h2>
-        <div class="mt-10 grid gap-8 sm:grid-cols-2">
+<div class="mt-10 grid gap-8 sm:grid-cols-2">
           <p class="leading-relaxed text-ink/80">
             I'm a data scientist and AI engineer working across the full machine-learning lifecycle — from data
             preparation and analysis to model design, training, evaluation, deployment, and iteration.
@@ -1331,145 +1331,56 @@
         >
           Where to find my work
         </h2>
-
-        <p class="mt-8 max-w-[60ch] text-lg leading-relaxed text-ink/70">
+<p class="mt-8 max-w-[60ch] text-lg leading-relaxed text-ink/70">
           I build in public. My code, experiments, models, and datasets live on GitHub and Hugging Face —
           that's where I ship and iterate. Dive in and explore.
         </p>
 
         <!-- Featured work: concrete projects before profile links -->
         <div class="mt-14 space-y-6">
-          <article id="persian-gpt" class="featured-project">
+          <article id="persian-lm-from-scratch" class="featured-project">
             <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
               <div class="project-number" aria-hidden="true">01</div>
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">NLP · Transformers · From-scratch training</p>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">Persian NLP · Transformers · From-scratch training</p>
                 <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">Persian GPT — 110M Transformer From Scratch</h3>
-                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
-                  A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation. No pretrained weights, pretrained tokenizer, or distillation.
-                                  </p>
-
-                <div class="metric-grid mt-8">
-                  <div class="metric"><span class="metric-value">110.4M</span><span class="metric-label">Parameters</span></div>
-                  <div class="metric"><span class="metric-value">244M</span><span class="metric-label">Training tokens</span></div>
-                  <div class="metric"><span class="metric-value">14.52</span><span class="metric-label">Test perplexity</span></div>
-                </div>
-
-                <div class="pipeline" aria-label="Persian GPT project pipeline">
-                  <div class="pipeline-step">855K+<br />documents</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">32K BPE<br />tokenizer</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">12-layer<br />GPT</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">Evaluation<br />+ baselines</div>
-                </div>
-
-                <div class="project-tags">
-                  <span class="project-tag">PyTorch</span><span class="project-tag">Transformers</span><span class="project-tag">Causal LM</span><span class="project-tag">BPE</span><span class="project-tag">A100</span><span class="project-tag">Persian NLP</span>
-                </div>
-                <div class="project-actions">
-                  <a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">View model ↗</a>
-                  <a class="project-link" href="https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP" target="_blank" rel="noopener noreferrer">Training dataset ↗</a>
-                </div>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation. No pretrained weights, pretrained tokenizer, or distillation were used.</p>
+                <div class="metric-grid mt-8"><div class="metric"><span class="metric-value">110.4M</span><span class="metric-label">Parameters</span></div><div class="metric"><span class="metric-value">244M</span><span class="metric-label">Training tokens</span></div><div class="metric"><span class="metric-value">14.52</span><span class="metric-label">Test perplexity</span></div></div>
+                <div class="project-tags"><span class="project-tag">PyTorch</span><span class="project-tag">Transformers</span><span class="project-tag">Causal LM</span><span class="project-tag">BPE</span><span class="project-tag">Persian NLP</span></div>
+                <div class="project-actions"><a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
               </div>
             </div>
           </article>
 
-          <article id="cardiac-mri" class="featured-project">
+          <article id="ai-research-assistant-platform" class="featured-project">
             <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
               <div class="project-number" aria-hidden="true">02</div>
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">Medical AI · 3D computer vision · Segmentation</p>
-                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">3D Cardiac MRI Segmentation</h3>
-                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
-                  A complete voxel-level segmentation pipeline for cardiac MRI volumes using PyTorch, MONAI, and a 3D U-Net. The repository covers NIfTI loading, preprocessing, training, mixed precision, sliding-window inference, Dice evaluation, and result visualization.
-                </p>
-
-                <div class="metric-grid mt-8">
-                  <div class="metric"><span class="metric-value">0.8821</span><span class="metric-label">Best validation Dice</span></div>
-                  <div class="metric"><span class="metric-value">3D U-Net</span><span class="metric-label">Architecture</span></div>
-                  <div class="metric"><span class="metric-value">100</span><span class="metric-label">Training epochs</span></div>
-                </div>
-
-                <div class="pipeline" aria-label="Cardiac MRI segmentation pipeline">
-                  <div class="pipeline-step">NIfTI<br />volumes</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">MONAI<br />preprocess</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">3D U-Net<br />training</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">Dice +<br />visualization</div>
-                </div>
-
-                <div class="project-tags">
-                  <span class="project-tag">PyTorch</span><span class="project-tag">MONAI</span><span class="project-tag">3D U-Net</span><span class="project-tag">Medical Imaging</span><span class="project-tag">AMP</span><span class="project-tag">DiceCELoss</span>
-                </div>
-                <div class="project-actions">
-                  <a class="project-link primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View source ↗</a>
-                </div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">Agentic AI · Multi-agent systems · RAG</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">AI Research Assistant Platform</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.</p>
+                <div class="metric-grid mt-8"><div class="metric"><span class="metric-value">103</span><span class="metric-label">Offline tests</span></div><div class="metric"><span class="metric-value">5</span><span class="metric-label">Agent roles</span></div><div class="metric"><span class="metric-value">REST + SSE</span><span class="metric-label">API surface</span></div></div>
+                <div class="project-tags"><span class="project-tag">LangGraph</span><span class="project-tag">LangChain</span><span class="project-tag">LangSmith</span><span class="project-tag">ChromaDB</span><span class="project-tag">FastAPI</span><span class="project-tag">Docker</span></div>
+                <div class="project-actions"><a class="project-link primary" href="https://github.com/aradmanamnaoon/ai-research-assistant-platform" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
               </div>
             </div>
           </article>
 
-          <article id="messy2json" class="featured-project">
+          <article id="medical-image-segmentation" class="featured-project">
             <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
               <div class="project-number" aria-hidden="true">03</div>
               <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">LLM fine-tuning · QLoRA · Structured extraction</p>
-                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">Messy2JSON — Lightweight Structured Extraction</h3>
-                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
-                  Qwen2.5-0.5B fine-tuned with QLoRA to turn messy English text into structured JSON. The project explores parameter-efficient adaptation, 4-bit NF4 quantization, JSON-focused data filtering, and lightweight local inference.
-                </p>
-
-                <div class="metric-grid mt-8">
-                  <div class="metric"><span class="metric-value">99.82%</span><span class="metric-label">Mean token accuracy</span></div>
-                  <div class="metric"><span class="metric-value">0.0045</span><span class="metric-label">Validation loss</span></div>
-                  <div class="metric"><span class="metric-value">~0.85%</span><span class="metric-label">Trainable parameters</span></div>
-                </div>
-
-                <div class="code-window" aria-label="Messy2JSON example">
-                  <div><span style="opacity:.55">INPUT</span>  Best regards, Jane Doe, VP Engineering at Acme, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="751f141b1035141618105b161a18">[email&#160;protected]</a></div>
-                  <div style="margin-top:.6rem"><span style="opacity:.55">OUTPUT</span> {"name": "Jane Doe", "role": "VP Engineering", "company": "Acme", ...}</div>
-                </div>
-
-                <div class="project-tags">
-                  <span class="project-tag">Qwen2.5</span><span class="project-tag">QLoRA</span><span class="project-tag">PEFT</span><span class="project-tag">4-bit NF4</span><span class="project-tag">Transformers</span><span class="project-tag">Structured Output</span>
-                </div>
-                <div class="project-actions">
-                  <a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b" target="_blank" rel="noopener noreferrer">View model ↗</a>
-                  <a class="project-link" href="https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora" target="_blank" rel="noopener noreferrer">LoRA adapter ↗</a>
-                </div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">Medical AI · 3D computer vision · Segmentation</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">3D Cardiac MRI Segmentation</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. The project covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, Dice evaluation, and result visualization.</p>
+                <div class="metric-grid mt-8"><div class="metric"><span class="metric-value">0.8821</span><span class="metric-label">Best validation Dice</span></div><div class="metric"><span class="metric-value">3D U-Net</span><span class="metric-label">Architecture</span></div><div class="metric"><span class="metric-value">100</span><span class="metric-label">Training epochs</span></div></div>
+                <div class="project-tags"><span class="project-tag">PyTorch</span><span class="project-tag">MONAI</span><span class="project-tag">3D U-Net</span><span class="project-tag">Medical Imaging</span><span class="project-tag">DiceCELoss</span></div>
+                <div class="project-actions"><a class="project-link primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
               </div>
             </div>
           </article>
+</div>
 
-          <article id="ai-research-assistant" class="featured-project">
-            <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
-              <div class="project-number" aria-hidden="true">04</div>
-              <div>
-                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">Agentic AI · Multi-agent systems · RAG</p>
-                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">AI Research Assistant Platform</h3>
-                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">
-                  A production-style research assistant built around a LangGraph multi-agent workflow. A planner routes work across retrieval, research, and tool execution; compatible branches run in parallel, a synthesizer produces citation-grounded answers, and a reflector can send weak drafts through a bounded refinement loop. The platform adds ChromaDB RAG, persistent SQLite state, LangSmith tracing and evaluation, REST and SSE APIs with FastAPI, and Docker-ready deployment.
-                </p>
-
-                <div class="metric-grid mt-8">
-                  <div class="metric"><span class="metric-value">103</span><span class="metric-label">Offline tests</span></div>
-                  <div class="metric"><span class="metric-value">5</span><span class="metric-label">Agent roles</span></div>
-                  <div class="metric"><span class="metric-value">REST + SSE</span><span class="metric-label">API surface</span></div>
-                </div>
-
-                <div class="pipeline" aria-label="AI Research Assistant Platform workflow">
-                  <div class="pipeline-step">Question<br />+ context</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">Planner<br />routing</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">RAG + research<br />+ tools</div><div class="pipeline-arrow">→</div>
-                  <div class="pipeline-step">Synthesis<br />+ reflection</div>
-                </div>
-
-                <div class="project-tags">
-                  <span class="project-tag">LangGraph</span><span class="project-tag">LangChain</span><span class="project-tag">LangSmith</span><span class="project-tag">RAG</span><span class="project-tag">ChromaDB</span><span class="project-tag">FastAPI</span><span class="project-tag">Docker</span>
-                </div>
-                <div class="project-actions">
-                  <a class="project-link primary" href="https://github.com/aradmanamnaoon/ai-research-assistant-platform" target="_blank" rel="noopener noreferrer">View source ↗</a>
-                </div>
-              </div>
-            </div>
-          </article>
         </div>
 
         <div class="mt-16">
@@ -1518,7 +1429,7 @@
             <h3 class="mt-10 font-serif text-2xl font-semibold sm:text-3xl">
               Hugging Face
             </h3>
-            <p class="mt-3 text-sm leading-relaxed text-ink/60">
+<p class="mt-3 text-sm leading-relaxed text-ink/60">
               Models, datasets, demos, and fine-tuned transformers.
             </p>
             <p class="mt-6 text-sm font-medium text-accent">
@@ -1614,17 +1525,45 @@
           >
             Latest <span class="italic text-accent">writing.</span>
           </h2>
-<div class="blog-list-container">
-
+</div>
         <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
-            <h3 style="margin-bottom: 0.5rem;"><a href="/blog/agent-evals/" style="text-decoration: none; color: inherit;">Agent Evals</a></h3>
+            <h3 style="margin-bottom: 0.5rem;"><a href="/blog/agentic-rag/agentic-rag.html" style="text-decoration: none; color: inherit;">What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</a></h3>
             <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
-                <span class="blog-date">October 5, 2026</span>
-                <span class="blog-readtime" style="margin-left: 1rem;">10 min read</span>
+                <span class="blog-date">October 4, 2026</span>
+                <span class="blog-readtime" style="margin-left: 1rem;">11 min read</span>
             </div>
-            <p style="margin-bottom: 1rem;">A practical guide to evaluating AI agents, covering metrics, test harnesses, and common pitfalls in agentic workflows.</p>
-            <div class="blog-tags" style="font-size: 0.8rem;"><span class="tag">Agentic AI</span><span class="tag">Evaluation</span><span class="tag">LLM</span></div>
+            <p style="margin-bottom: 1rem;">Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.</p>
+            <div class="blog-tags" style="font-size: 0.8rem;"><span class="tag">Agentic AI</span><span class="tag">RAG</span><span class="tag">Production AI Engineering</span></div>
         </div>
+        <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <h3 style="margin-bottom: 0.5rem;"><a href="/blog/evaluatable-multi-agent-rag-langgraph/" style="text-decoration: none; color: inherit;">How to Design an Evaluatable Multi-Agent RAG System with LangGraph</a></h3>
+            <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                <span class="blog-date">October 3, 2026</span>
+                <span class="blog-readtime" style="margin-left: 1rem;">12 min read</span>
+            </div>
+            <p style="margin-bottom: 1rem;">A practical architecture for a research assistant that combines retrieval, parallel research tools, citation-grounded synthesis, bounded reflection, and offline evaluation with LangGraph.</p>
+            <div class="blog-tags" style="font-size: 0.8rem;"><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">Agentic AI</span><span class="tag">Evaluation</span></div>
+        </div></div>
+</div>
+        <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <h3 style="margin-bottom: 0.5rem;"><a href="/blog/agentic-rag/agentic-rag.html" style="text-decoration: none; color: inherit;">What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</a></h3>
+            <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                <span class="blog-date">October 4, 2026</span>
+                <span class="blog-readtime" style="margin-left: 1rem;">11 min read</span>
+            </div>
+            <p style="margin-bottom: 1rem;">Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.</p>
+            <div class="blog-tags" style="font-size: 0.8rem;"><span class="tag">Agentic AI</span><span class="tag">RAG</span><span class="tag">Production AI Engineering</span></div>
+        </div>
+        <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
+            <h3 style="margin-bottom: 0.5rem;"><a href="/blog/evaluatable-multi-agent-rag-langgraph/" style="text-decoration: none; color: inherit;">How to Design an Evaluatable Multi-Agent RAG System with LangGraph</a></h3>
+            <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
+                <span class="blog-date">October 3, 2026</span>
+                <span class="blog-readtime" style="margin-left: 1rem;">12 min read</span>
+            </div>
+            <p style="margin-bottom: 1rem;">A practical architecture for a research assistant that combines retrieval, parallel research tools, citation-grounded synthesis, bounded reflection, and offline evaluation with LangGraph.</p>
+            <div class="blog-tags" style="font-size: 0.8rem;"><span class="tag">LangGraph</span><span class="tag">RAG</span><span class="tag">Agentic AI</span><span class="tag">Evaluation</span></div>
+        </div></div>
+</div>
         <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
             <h3 style="margin-bottom: 0.5rem;"><a href="/blog/agentic-rag/agentic-rag.html" style="text-decoration: none; color: inherit;">What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</a></h3>
             <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
@@ -1658,10 +1597,22 @@
 
           
         <!-- AUTO:HOME_ARTICLES:START -->
+        <a class="writing-post-card" href="/blog/agent-evals/" aria-label="Read Agent Evals">
+          <div><div class="writing-post-meta">October 5, 2026 · 10 min read</div>
+            <h3 class="writing-post-title">Agent Evals</h3>
+            <p class="writing-post-description">A practical guide to evaluating AI agents, covering metrics, test harnesses, and common pitfalls in agentic workflows.</p>
+            <div class="writing-post-tags" aria-label="Article topics">
+                <span class="writing-post-tag">Agentic AI</span>
+                <span class="writing-post-tag">Evaluation</span>
+                <span class="writing-post-tag">LLM</span>
+            </div>
+          </div><span class="writing-post-arrow" aria-hidden="true">→</span>
+        </a>
+
         <a class="writing-post-card" href="/blog/agentic-rag/agentic-rag.html" aria-label="Read What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines">
           <div><div class="writing-post-meta">October 4, 2026 · 11 min read</div>
             <h3 class="writing-post-title">What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines</h3>
-            <p class="writing-post-description">Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it&#x27;s worth 3-10x the tokens, and how to evaluate it properly.</p>
+            <p class="writing-post-description">Agentic RAG explained: how iterative, self-checking retrieval beats one-shot RAG pipelines, when it's worth 3-10x the tokens, and how to evaluate it properly.</p>
             <div class="writing-post-tags" aria-label="Article topics">
                 <span class="writing-post-tag">Agentic AI</span>
                 <span class="writing-post-tag">RAG</span>
@@ -1679,18 +1630,6 @@
                 <span class="writing-post-tag">RAG</span>
                 <span class="writing-post-tag">Agentic AI</span>
                 <span class="writing-post-tag">Evaluation</span>
-            </div>
-          </div><span class="writing-post-arrow" aria-hidden="true">→</span>
-        </a>
-
-        <a class="writing-post-card" href="/blog/hugging-face-nllb-gradient-accumulation-bug/" aria-label="Read A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run">
-          <div><div class="writing-post-meta">October 2, 2026 · 8 min read</div>
-            <h3 class="writing-post-title">A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run</h3>
-            <p class="writing-post-description">How I traced an almost perfectly linear loss-scaling problem while fine-tuning NLLB-200 for English↔Persian translation—and fixed it with one Trainer setting.</p>
-            <div class="writing-post-tags" aria-label="Article topics">
-                <span class="writing-post-tag">Hugging Face</span>
-                <span class="writing-post-tag">NLLB-200</span>
-                <span class="writing-post-tag">Machine Learning</span>
             </div>
           </div><span class="writing-post-arrow" aria-hidden="true">→</span>
         </a>
@@ -1809,8 +1748,7 @@
           Let's build<br />
           <span class="italic text-accent">something intelligent.</span>
         </h2>
-
-        <div class="contact-layout">
+<div class="contact-layout">
           <form
             action="https://formspree.io/f/mbglvorp"
             method="POST"

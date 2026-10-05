@@ -1,138 +1,663 @@
-import json
 import os
 import re
+import json
+import urllib.request
+import urllib.error
+from datetime import datetime, timezone
+from html import escape as html_escape
 
-# --- EXACT FILES TO PROCESS (Hardcoded based on your terminal output) ---
-HTML_FILES = [
-    "index.html",
-    "projects/index.html",
-    "blog/index.html",
-    "blog/evaluatable-multi-agent-rag-langgraph/index.html",
-    "blog/agent-evals/agent-evals.html",
-    "blog/hugging-face-nllb-gradient-accumulation-bug/index.html",
-    "blog/agentic-rag/agentic-rag.html"
-]
-
-ARTICLES_JSON = "articles.json"
-SITEMAP_XML = "sitemap.xml"
+BASE_DIR = os.getcwd()
 SITE_URL = "https://aradmanamnaoon.github.io"
-MAX_ARTICLES_TO_SHOW = 3
 
-# --- Favicon Injection ---
-FAVICON_LINKS = '''
-    <link rel="icon" href="/favicon.ico" sizes="any">
+GITHUB_USER = "aradmanamnaoon"
+HF_USER = "aradmanamnaoon"
+
+MAX_PROJECTS_HOMEPAGE = 3
+MAX_ARTICLES_HOMEPAGE = 3
+PROJECTS_PER_PAGE = 6
+
+# Repos to skip (templates, forks, personal sites)
+SKIP_REPOS = {"aradmanamnaoon.github.io", ".github", "aradmanamnaoon"}
+
+# ============================================================
+#  CURATED OVERRIDES (optional, for polish)
+#  Any repo/model name here gets its metadata overridden.
+# ============================================================
+CURATED = {
+    "ai-research-assistant-platform": {
+        "type": "Agentic AI · Multi-agent systems · RAG",
+        "title": "AI Research Assistant Platform",
+        "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.",
+        "metrics": [
+            {"value": "103", "label": "Offline tests"},
+            {"value": "5", "label": "Agent roles"},
+            {"value": "REST + SSE", "label": "API surface"},
+        ],
+        "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"],
+        "featured": True,
+    },
+    "persian-lm-from-scratch": {
+        "type": "Persian NLP · Transformers · From-scratch training",
+        "title": "Persian GPT — 110M Transformer From Scratch",
+        "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation. No pretrained weights, pretrained tokenizer, or distillation were used.",
+        "metrics": [
+            {"value": "110.4M", "label": "Parameters"},
+            {"value": "244M", "label": "Training tokens"},
+            {"value": "14.52", "label": "Test perplexity"},
+        ],
+        "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"],
+        "featured": True,
+    },
+    "medical-image-segmentation": {
+        "type": "Medical AI · 3D computer vision · Segmentation",
+        "title": "3D Cardiac MRI Segmentation",
+        "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. The project covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, Dice evaluation, and result visualization.",
+        "metrics": [
+            {"value": "0.8821", "label": "Best validation Dice"},
+            {"value": "3D U-Net", "label": "Architecture"},
+            {"value": "100", "label": "Training epochs"},
+        ],
+        "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"],
+        "featured": True,
+    },
+    "jibay2-medical-v2": {
+        "type": "Medical NLP · QLoRA · Clinical summarization",
+        "title": "Jibay2 Medical — Clinical Note Summarization",
+        "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries. The published pipeline documents data construction, quality filtering, training configuration, limitations, and human-review requirements.",
+        "metrics": [
+            {"value": "2,634", "label": "Dataset examples"},
+            {"value": "1.4403", "label": "Best validation loss"},
+            {"value": "~5.7 min", "label": "Training time"},
+        ],
+        "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"],
+        "note": "Research and documentation project only. Not clinically validated.",
+    },
+    "messy2json-qwen-0.5b": {
+        "type": "LLM fine-tuning · QLoRA · Structured extraction",
+        "title": "Messy2JSON — Lightweight Structured Extraction",
+        "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON. The project explores 4-bit NF4 quantization, parameter-efficient adaptation, JSON-focused filtering, and lightweight inference.",
+        "metrics": [
+            {"value": "99.82%", "label": "Mean token accuracy"},
+            {"value": "0.0045", "label": "Validation loss"},
+            {"value": "~0.85%", "label": "Trainable parameters"},
+        ],
+        "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"],
+    },
+    "nllb-en-fa-psych-translation": {
+        "type": "Machine translation · English → Persian · Psychology",
+        "title": "NLLB English-to-Persian Psychology Translation",
+        "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology and mental-health translation. The training project also produced the debugging investigation behind my first technical blog article.",
+        "metrics": [
+            {"value": "0.6B", "label": "Base-model scale"},
+            {"value": "EN → FA", "label": "Translation direction"},
+            {"value": "NLLB", "label": "Seq2seq architecture"},
+        ],
+        "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"],
+    },
+}
+
+# ============================================================
+#  FAVICON
+# ============================================================
+FAVICON_LINKS = '''    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/site.webmanifest">'''
+
+def inject_favicons(html):
+    if 'rel="icon"' in html:
+        return html
+    if '</head>' in html:
+        return html.replace('</head>', FAVICON_LINKS + '\n</head>')
+    return html
+
+# ============================================================
+#  API FETCHERS
+# ============================================================
+def fetch_json(url):
+    """Fetch JSON from an API endpoint. Returns None on failure."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "aradmanamnaoon-site-builder",
+        "Accept": "application/json",
+    })
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        print(f"   ⚠️  HTTP {e.code} for {url}")
+    except Exception as e:
+        print(f"   ⚠️  Failed {url}: {e}")
+    return None
+
+def fetch_github_repos():
+    """Get all repos, sorted by stars."""
+    print("🌐 Fetching GitHub repos...")
+    repos = fetch_json(f"https://api.github.com/users/{GITHUB_USER}/repos?per_page=100&sort=updated")
+    if not repos:
+        return []
+    
+    results = []
+    for r in repos:
+        if r.get("fork"):
+            continue
+        if r["name"] in SKIP_REPOS:
+            continue
+        
+        # Use topics as tags if available, otherwise language
+        tags = r.get("topics", []) or []
+        if r.get("language") and r["language"] not in tags:
+            tags.insert(0, r["language"])
+        tags = tags[:6]
+        
+        results.append({
+            "source": "github",
+            "id": r["name"],
+            "name": r["name"],
+            "title": r["name"].replace("-", " ").replace("_", " ").title(),
+            "description": r.get("description") or "",
+            "url": r["html_url"],
+            "stars": r.get("stargazers_count", 0),
+            "forks": r.get("forks_count", 0),
+            "updated": r.get("updated_at", ""),
+            "created": r.get("created_at", ""),
+            "tags": tags,
+            "language": r.get("language") or "",
+            "homepage": r.get("homepage") or "",
+        })
+    
+    print(f"   → {len(results)} repos fetched")
+    return results
+
+def fetch_hf_models():
+    """Get HF models with downloads and likes."""
+    print("🌐 Fetching Hugging Face models...")
+    models = fetch_json(f"https://huggingface.co/api/models?author={HF_USER}&limit=100&full=true")
+    if not models:
+        return []
+    
+    results = []
+    for m in models:
+        model_id = m.get("modelId") or m.get("id", "")
+        short_name = model_id.split("/")[-1] if "/" in model_id else model_id
+        
+        # Tags: use pipeline_tag + library + selected tags
+        tags = []
+        if m.get("pipeline_tag"):
+            tags.append(m["pipeline_tag"])
+        for t in (m.get("tags") or []):
+            if t not in tags and t not in ("transformers", "pytorch", "safetensors", "license:apache-2.0", "license:mit"):
+                tags.append(t)
+        tags = tags[:6]
+        
+        results.append({
+            "source": "hf_model",
+            "id": short_name,
+            "name": short_name,
+            "title": short_name.replace("-", " ").replace("_", " ").title(),
+            "description": (m.get("cardData", {}) or {}).get("short_description", "") or "",
+            "url": f"https://huggingface.co/{model_id}",
+            "downloads": m.get("downloads", 0),
+            "likes": m.get("likes", 0),
+            "updated": m.get("lastModified", ""),
+            "created": m.get("createdAt", ""),
+            "tags": tags,
+        })
+    
+    print(f"   → {len(results)} models fetched")
+    return results
+
+def fetch_hf_datasets():
+    """Get HF datasets."""
+    print("🌐 Fetching Hugging Face datasets...")
+    datasets = fetch_json(f"https://huggingface.co/api/datasets?author={HF_USER}&limit=100&full=true")
+    if not datasets:
+        return []
+    
+    results = []
+    for d in datasets:
+        ds_id = d.get("id", "")
+        short_name = ds_id.split("/")[-1] if "/" in ds_id else ds_id
+        
+        results.append({
+            "source": "hf_dataset",
+            "id": short_name,
+            "name": short_name,
+            "title": short_name.replace("-", " ").replace("_", " ").title(),
+            "description": (d.get("cardData", {}) or {}).get("short_description", "") or "",
+            "url": f"https://huggingface.co/datasets/{ds_id}",
+            "downloads": d.get("downloads", 0),
+            "likes": d.get("likes", 0),
+            "updated": d.get("lastModified", ""),
+            "created": d.get("createdAt", ""),
+            "tags": (d.get("tags") or [])[:6],
+        })
+    
+    print(f"   → {len(results)} datasets fetched")
+    return results
+
+# ============================================================
+#  SCORING & RANKING
+# ============================================================
+def parse_iso(dt_str):
+    if not dt_str:
+        return None
+    try:
+        return datetime.fromisoformat(dt_str.replace("Z", "+00:00"))
+    except Exception:
+        return None
+
+def days_since(dt):
+    if dt is None:
+        return 9999
+    now = datetime.now(timezone.utc)
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return (now - dt).days
+
+def score_project(p):
+    """Higher = better + newer."""
+    score = 0.0
+    score += p.get("stars", 0) * 10
+    score += p.get("forks", 0) * 5
+    score += p.get("downloads", 0) / 100.0
+    score += p.get("likes", 0) * 5
+    
+    # Recency boost
+    updated_dt = parse_iso(p.get("updated"))
+    days = days_since(updated_dt)
+    if days < 30:
+        score += 30
+    elif days < 90:
+        score += 15
+    elif days < 365:
+        score += 5
+    
+    return score
+
+def rank_all_projects():
+    """Fetch everything from APIs and return a unified ranked list."""
+    repos = fetch_github_repos()
+    models = fetch_hf_models()
+    datasets = fetch_hf_datasets()
+    
+    all_items = repos + models + datasets
+    
+    # Apply curated overrides by matching name
+    for item in all_items:
+        override = CURATED.get(item["id"])
+        if override:
+            for k, v in override.items():
+                item[k] = v
+            item["curated"] = True
+    
+    # Score everything
+    for item in all_items:
+        item["_score"] = score_project(item)
+    
+    # Sort: curated/featured first, then by score desc
+    all_items.sort(
+        key=lambda x: (
+            not x.get("featured", False),  # featured first
+            -x["_score"],                   # then highest score
+            x.get("name", "")               # stable tiebreaker
+        )
+    )
+    
+    # Assign display dates
+    for item in all_items:
+        dt = parse_iso(item.get("updated")) or parse_iso(item.get("created"))
+        if dt:
+            item["date"] = dt.strftime("%Y-%m-%d")
+            item["dateDisplay"] = dt.strftime("%B %Y")
+        else:
+            item["date"] = "2024-01-01"
+            item["dateDisplay"] = "2024"
+    
+    return all_items
+
+# ============================================================
+#  RENDER PROJECTS (HOMEPAGE)
+# ============================================================
+def render_homepage_projects(projects):
+    top = projects[:MAX_PROJECTS_HOMEPAGE]
+    cards = []
+    for i, p in enumerate(top, start=1):
+        num = f"{i:02d}"
+        metrics = p.get("metrics", [])
+        # If no curated metrics, generate from available data
+        if not metrics:
+            if p["source"] == "github":
+                metrics = [
+                    {"value": str(p.get("stars", 0)), "label": "Stars"},
+                    {"value": str(p.get("forks", 0)), "label": "Forks"},
+                    {"value": p.get("language", "—"), "label": "Language"},
+                ]
+            elif p["source"] in ("hf_model", "hf_dataset"):
+                metrics = [
+                    {"value": f"{p.get('downloads', 0):,}", "label": "Downloads"},
+                    {"value": str(p.get("likes", 0)), "label": "Likes"},
+                    {"value": "HF", "label": "Hosted on"},
+                ]
+        
+        metrics_html = "".join(
+            f'<div class="metric"><span class="metric-value">{m["value"]}</span>'
+            f'<span class="metric-label">{m["label"]}</span></div>'
+            for m in metrics
+        )
+        tags_html = "".join(f'<span class="project-tag">{t}</span>' for t in p.get("tags", []))
+        
+        # Actions
+        actions = []
+        actions.append({"url": p["url"], "label": "View project ↗", "primary": True})
+        if p.get("homepage"):
+            actions.append({"url": p["homepage"], "label": "Live demo ↗", "primary": False})
+        
+        actions_html = "".join(
+            f'<a class="project-link {"primary" if a.get("primary") else ""}" href="{a["url"]}" '
+            f'target="_blank" rel="noopener noreferrer">{a["label"]}</a>'
+            for a in actions
+        )
+        
+        desc = p.get("description") or f"Source and details on GitHub/Hugging Face."
+        source_badge = {"github": "GitHub", "hf_model": "Hugging Face", "hf_dataset": "HF Dataset"}[p["source"]]
+        
+        cards.append(f'''          <article id="{p['id']}" class="featured-project">
+            <div class="grid gap-8 sm:grid-cols-[auto_1fr]">
+              <div class="project-number" aria-hidden="true">{num}</div>
+              <div>
+                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-ink/70">{p.get("type", source_badge)}</p>
+                <h3 class="mt-3 font-serif text-3xl font-bold sm:text-4xl">{p["title"]}</h3>
+                <p class="mt-5 max-w-[70ch] leading-relaxed text-ink/70">{desc}</p>
+                <div class="metric-grid mt-8">{metrics_html}</div>
+                <div class="project-tags">{tags_html}</div>
+                <div class="project-actions">{actions_html}</div>
+              </div>
+            </div>
+          </article>
+''')
+    return '<div class="mt-14 space-y-6">\n' + "\n".join(cards) + '</div>'
+
+# ============================================================
+#  RENDER PROJECTS PAGE (PAGINATED)
+# ============================================================
+def render_paginated_projects(projects):
+    data = []
+    for p in projects:
+        metrics = p.get("metrics", [])
+        if not metrics:
+            if p["source"] == "github":
+                metrics = [
+                    {"value": str(p.get("stars", 0)), "label": "Stars"},
+                    {"value": str(p.get("forks", 0)), "label": "Forks"},
+                    {"value": p.get("language", "—"), "label": "Language"},
+                ]
+            elif p["source"] in ("hf_model", "hf_dataset"):
+                metrics = [
+                    {"value": f"{p.get('downloads', 0):,}", "label": "Downloads"},
+                    {"value": str(p.get("likes", 0)), "label": "Likes"},
+                    {"value": "HF", "label": "Hosted on"},
+                ]
+        
+        actions = [{"url": p["url"], "label": "View project ↗", "primary": True}]
+        if p.get("homepage"):
+            actions.append({"url": p["homepage"], "label": "Live demo ↗", "primary": False})
+        
+        data.append({
+            "id": p["id"],
+            "title": p["title"],
+            "type": p.get("type", p["source"]),
+            "description": p.get("description") or "",
+            "dateDisplay": p.get("dateDisplay", ""),
+            "metrics": metrics,
+            "tags": p.get("tags", []),
+            "actions": actions,
+            "note": p.get("note", ""),
+        })
+    
+    projects_json = json.dumps(data, ensure_ascii=False)
+    
+    return f'''<div class="projects-paginated" id="projects-paginated"></div>
+<div class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></div>
+
+<style>
+.projects-paginated {{ display: grid; gap: 22px; }}
+.projects-pagination {{
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(237,237,237,0.09);
+}}
+.projects-pagination button {{
+  min-width: 44px; min-height: 44px; padding: 0 14px;
+  border: 1px solid rgba(237,237,237,0.13);
+  border-radius: 12px; background: transparent; color: #ededed;
+  font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  transition: all 180ms ease;
+}}
+.projects-pagination button:hover:not(:disabled):not(.active) {{
+  border-color: #7db4f0; color: #7db4f0;
+}}
+.projects-pagination button.active {{
+  background: #7db4f0; color: #14181f; border-color: #7db4f0;
+}}
+.projects-pagination button:disabled {{ opacity: 0.35; cursor: not-allowed; }}
+</style>
+
+<script>
+(function() {{
+  const projects = {projects_json};
+  const perPage = {PROJECTS_PER_PAGE};
+  let currentPage = 1;
+  const totalPages = Math.max(1, Math.ceil(projects.length / perPage));
+
+  const container = document.getElementById('projects-paginated');
+  const pagination = document.getElementById('projects-pagination');
+  if (!container || !pagination) return;
+
+  function esc(s) {{
+    return String(s).replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}})[c]);
+  }}
+
+  function renderProjects(page) {{
+    const start = (page - 1) * perPage;
+    const items = projects.slice(start, start + perPage);
+    let html = '';
+    items.forEach((p, i) => {{
+      const num = String(start + i + 1).padStart(2, '0');
+      const metricsHtml = (p.metrics || []).map(m =>
+        `<div class="metric"><strong>${{esc(m.value)}}</strong><span>${{esc(m.label)}}</span></div>`
+      ).join('');
+      const tagsHtml = (p.tags || []).map(t => `<span class="tag">${{esc(t)}}</span>`).join('');
+      const actionsHtml = (p.actions || []).map(a =>
+        `<a class="action ${{a.primary ? 'primary' : ''}}" href="${{esc(a.url)}}" target="_blank" rel="noopener noreferrer">${{esc(a.label)}}</a>`
+      ).join('');
+      const noteHtml = p.note ? `<p class="note">${{esc(p.note)}}</p>` : '';
+      html += `<article class="project" id="${{esc(p.id)}}">
+        <div class="num" aria-hidden="true">${{num}}</div>
+        <div>
+          <p class="type">${{esc(p.type)}}</p>
+          <h2>${{esc(p.title)}}</h2>
+          <p class="desc">${{esc(p.description)}}</p>
+          <div class="metrics">${{metricsHtml}}</div>
+          <div class="tags">${{tagsHtml}}</div>
+          <div class="actions">${{actionsHtml}}</div>
+          ${{noteHtml}}
+        </div>
+      </article>`;
+    }});
+    container.innerHTML = html;
+  }}
+
+  function renderPagination() {{
+    let html = '';
+    html += `<button ${{currentPage === 1 ? 'disabled' : ''}} data-page="${{currentPage - 1}}" aria-label="Previous page">←</button>`;
+    for (let i = 1; i <= totalPages; i++) {{
+      html += `<button class="${{i === currentPage ? 'active' : ''}}" data-page="${{i}}" aria-label="Page ${{i}}">${{i}}</button>`;
+    }}
+    html += `<button ${{currentPage === totalPages ? 'disabled' : ''}} data-page="${{currentPage + 1}}" aria-label="Next page">→</button>`;
+    pagination.innerHTML = html;
+
+    pagination.querySelectorAll('button[data-page]').forEach(btn => {{
+      btn.addEventListener('click', () => {{
+        const p = parseInt(btn.dataset.page, 10);
+        if (p >= 1 && p <= totalPages && p !== currentPage) {{
+          currentPage = p;
+          renderProjects(currentPage);
+          renderPagination();
+          document.getElementById('selected-projects').scrollIntoView({{ behavior: 'smooth', block: 'start' }});
+        }}
+      }});
+    }});
+  }}
+
+  renderProjects(currentPage);
+  renderPagination();
+}})();
+</script>
 '''
 
-def inject_favicons(html_content):
-    if 'rel="icon"' in html_content:
-        return html_content
-    if '</head>' in html_content:
-        return html_content.replace('</head>', FAVICON_LINKS + '</head>')
-    return html_content
-
-# --- Blog List Generation ---
-def generate_blog_html(articles):
-    blog_cards_html = '<div class="blog-list-container">\n'
-    
-    # Sort by date descending and limit to top 3
-    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)
-    top_articles = sorted_articles[:MAX_ARTICLES_TO_SHOW]
-    
-    for article in top_articles:
-        tags_html = "".join([f'<span class="tag">{tag}</span>' for tag in article.get('tags', [])])
-        
-        blog_cards_html += f'''
-        <div class="blog-card" style="margin-bottom: 2rem; border-bottom: 1px solid #eee; padding-bottom: 1rem;">
-            <h3 style="margin-bottom: 0.5rem;"><a href="{article['url']}" style="text-decoration: none; color: inherit;">{article['title']}</a></h3>
-            <div class="blog-meta" style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">
-                <span class="blog-date">{article.get('dateDisplay', article['date'])}</span>
-                <span class="blog-readtime" style="margin-left: 1rem;">{article.get('readTime', '')}</span>
+# ============================================================
+#  RENDER ARTICLES (from articles.json)
+# ============================================================
+def render_homepage_blogs(articles):
+    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)[:MAX_ARTICLES_HOMEPAGE]
+    cards = []
+    for a in sorted_articles:
+        tags = "".join(f'\n                <span class="writing-post-tag">{t}</span>' for t in a.get("tags", []))
+        cards.append(f'''        <a class="writing-post-card" href="{a["url"]}" aria-label="Read {a["title"]}">
+          <div><div class="writing-post-meta">{a.get("dateDisplay", a["date"])} · {a.get("readTime", "")}</div>
+            <h3 class="writing-post-title">{a["title"]}</h3>
+            <p class="writing-post-description">{a["description"]}</p>
+            <div class="writing-post-tags" aria-label="Article topics">{tags}
             </div>
-            <p style="margin-bottom: 1rem;">{article['description']}</p>
-            <div class="blog-tags" style="font-size: 0.8rem;">{tags_html}</div>
-        </div>'''
-    
-    blog_cards_html += '</div>'
-    return blog_cards_html
+          </div><span class="writing-post-arrow" aria-hidden="true">→</span>
+        </a>''')
+    return "\n\n".join(cards)
 
-def inject_blog_list(html_content, articles):
-    # 1. Use explicit markers if they exist
-    pattern = r'(<!-- BLOG_LIST_START -->).*?(<!-- BLOG_LIST_END -->)'
-    if re.search(pattern, html_content, re.DOTALL):
-        print("  -> Found BLOG_LIST markers. Injecting.")
-        return re.sub(pattern, f'\\1\n{generate_blog_html(articles)}\n\\2', html_content, flags=re.DOTALL)
-    
-    # 2. Fallback: Look for the "Writing." heading
-    writing_pattern = r'(<h[1-6][^>]*>.*?Writing\..*?</h[1-6]>)'
-    if re.search(writing_pattern, html_content, re.IGNORECASE | re.DOTALL):
-        print("  -> Found 'Writing.' heading. Injecting.")
-        return re.sub(writing_pattern, f'\\1\n{generate_blog_html(articles)}', html_content, flags=re.IGNORECASE | re.DOTALL)
-    
-    # 3. Fallback: Look for "Notes" heading (from your screenshot)
-    notes_pattern = r'(<h[1-6][^>]*>.*?Notes.*?</h[1-6]>)'
-    if re.search(notes_pattern, html_content, re.IGNORECASE | re.DOTALL):
-        print("  -> Found 'Notes' heading. Injecting.")
-        return re.sub(notes_pattern, f'\\1\n{generate_blog_html(articles)}', html_content, flags=re.IGNORECASE | re.DOTALL)
-        
-    print("  -> Warning: No suitable heading found. Skipping list injection.")
-    return html_content
+def render_blog_index(articles):
+    sorted_articles = sorted(articles, key=lambda x: x.get('date', ''), reverse=True)
+    cards = []
+    for a in sorted_articles:
+        tags = "".join(f'\n                  <span class="blog-post-tag">{t}</span>' for t in a.get("tags", []))
+        cards.append(f'''          <article><a class="blog-post" href="{a["url"]}" aria-label="Read {a["title"]}">
+              <div class="blog-post-meta"><time datetime="{a["date"]}">{a.get("dateDisplay", a["date"])}</time><br />{a.get("readTime", "")}</div>
+              <div><h3 class="blog-post-title">{a["title"]}</h3><p class="blog-post-description">{a["description"]}</p>
+                <div class="blog-post-tags" aria-label="Article topics">{tags}
+                </div></div>
+              <span class="blog-post-arrow" aria-hidden="true">→</span></a></article>''')
+    return "\n\n".join(cards)
 
-# --- Sitemap Generation ---
+# ============================================================
+#  INJECTION HELPERS
+# ============================================================
+def cleanup_duplicates(html):
+    html = re.sub(
+        r'<div class="blog-list-container">.*?</div>\s*(?=<div class="blog-list-container"|<p class="blog-intro"|<a class="writing-link"|</div>|<!--)',
+        '', html, flags=re.DOTALL
+    )
+    html = re.sub(r'<div class="projects-list-container">\s*</div>\s*', '', html)
+    return html
+
+def inject_homepage_projects(html, projects):
+    rendered = render_homepage_projects(projects)
+    pattern = r'(<div class="mt-14 space-y-6">).*?(</div>\s*<div class="mt-16">)'
+    if re.search(pattern, html, re.DOTALL):
+        return re.sub(pattern, f'{rendered}\n\n        \\2', html, flags=re.DOTALL)
+    intro_pattern = r'(<section id="projects"[^>]*>.*?Where to find my work.*?</p>)'
+    return re.sub(intro_pattern, f'\\1\n\n        {rendered}', html, flags=re.DOTALL)
+
+def inject_projects_page(html, projects):
+    rendered = render_paginated_projects(projects)
+    pattern = r'(<div class="projects" id="project-list">).*?(</div>\s*(?:<p class="projects-empty"|</section>))'
+    new_html = re.sub(pattern, f'\\1\n{rendered}\n      \\2', html, flags=re.DOTALL)
+    new_html = re.sub(r'<div class="project-tools"[^>]*>.*?</div>\s*(?=<div class="projects")', '', new_html, flags=re.DOTALL)
+    new_html = re.sub(
+        r'<script>\s*\(\(\)\s*=>\s*\{\s*const filterPanel = document\.getElementById\("project-filters"\).*?</script>',
+        '', new_html, flags=re.DOTALL
+    )
+    new_html = re.sub(r'<p class="projects-empty"[^>]*>.*?</p>', '', new_html, flags=re.DOTALL)
+    return new_html
+
+def inject_homepage_blogs(html, articles):
+    rendered = render_homepage_blogs(articles)
+    pattern = r'(<!-- AUTO:HOME_ARTICLES:START -->).*?(<!-- AUTO:HOME_ARTICLES:END -->)'
+    return re.sub(pattern, f'\\1\n{rendered}\n<!-- AUTO:HOME_ARTICLES:END -->', html, flags=re.DOTALL)
+
+def inject_blog_index(html, articles):
+    rendered = render_blog_index(articles)
+    pattern = r'(<!-- AUTO:BLOG_ARTICLES:START -->).*?(<!-- AUTO:BLOG_ARTICLES:END -->)'
+    return re.sub(pattern, f'\\1\n{rendered}\n<!-- AUTO:BLOG_ARTICLES:END -->', html, flags=re.DOTALL)
+
+# ============================================================
+#  SITEMAP
+# ============================================================
 def generate_sitemap(articles):
     urls = [
         f"<url><loc>{SITE_URL}/</loc><priority>1.0</priority></url>",
-        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>",
-        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.8</priority></url>"
+        f"<url><loc>{SITE_URL}/projects/</loc><priority>0.9</priority></url>",
+        f"<url><loc>{SITE_URL}/blog/</loc><priority>0.8</priority></url>"
     ]
-    for article in articles:
-        urls.append(f"<url><loc>{SITE_URL}{article['url']}</loc><priority>0.6</priority></url>")
-    
-    sitemap_content = f'''<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    {''.join(urls)}
-</urlset>'''
-    
-    with open(SITEMAP_XML, 'w', encoding='utf-8') as f:
-        f.write(sitemap_content)
-    print(f"✅ Generated sitemap.xml with {len(urls)} URLs.")
+    for a in articles:
+        urls.append(f"<url><loc>{SITE_URL}{a['url']}</loc><priority>0.6</priority></url>")
+    content = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "\n".join(urls) + '\n</urlset>'
+    with open("sitemap.xml", 'w', encoding='utf-8') as f:
+        f.write(content)
+    print(f"✅ sitemap.xml ({len(urls)} URLs)")
 
-# --- Main Execution ---
+# ============================================================
+#  MAIN
+# ============================================================
 def main():
-    if not os.path.exists(ARTICLES_JSON):
-        print(f"❌ Error: {ARTICLES_JSON} not found in current folder.")
-        return
+    print("=" * 60)
     
-    with open(ARTICLES_JSON, 'r', encoding='utf-8') as f:
-        articles = json.load(f)
+    # 1. Fetch projects from APIs (GitHub + Hugging Face)
+    projects = rank_all_projects()
+    print(f"\n📊 Ranked {len(projects)} total projects\n")
     
-    print(f"📄 Processing {len(HTML_FILES)} files...\n")
+    # 2. Load articles
+    articles_json = os.path.join(BASE_DIR, "articles.json")
+    if os.path.exists(articles_json):
+        with open(articles_json, encoding='utf-8') as f:
+            articles = json.load(f)
+        print(f"📝 Loaded {len(articles)} articles from articles.json")
+    else:
+        articles = []
+        print("⚠️  articles.json not found")
     
-    for filepath in HTML_FILES:
-        if not os.path.exists(filepath):
-            print(f"⚠️  Skipping missing file: {filepath}")
-            continue
-        
-        print(f"Processing: {filepath}")
-        
-        with open(filepath, 'r', encoding='utf-8') as f:
-            html = f.read()
-        
-        # 1. Inject favicons into ALL files
-        html = inject_favicons(html)
-        
-        # 2. Inject blog list ONLY into homepage and blog index
-        if filepath in ['index.html', 'blog/index.html']:
-            html = inject_blog_list(html, articles)
-        
-        with open(filepath, 'w', encoding='utf-8') as f:
-            f.write(html)
+    # 3. Process index.html
+    print("\n📄 Processing index.html")
+    with open("index.html", encoding='utf-8') as f:
+        html = f.read()
+    html = inject_favicons(html)
+    html = cleanup_duplicates(html)
+    html = inject_homepage_projects(html, projects)
+    html = inject_homepage_blogs(html, articles)
+    with open("index.html", 'w', encoding='utf-8') as f:
+        f.write(html)
     
-    # Generate sitemap
+    # 4. Process projects/index.html
+    print("📄 Processing projects/index.html")
+    with open("projects/index.html", encoding='utf-8') as f:
+        html = f.read()
+    html = inject_favicons(html)
+    html = cleanup_duplicates(html)
+    html = inject_projects_page(html, projects)
+    with open("projects/index.html", 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    # 5. Process blog/index.html
+    print("📄 Processing blog/index.html")
+    with open("blog/index.html", encoding='utf-8') as f:
+        html = f.read()
+    html = inject_favicons(html)
+    html = cleanup_duplicates(html)
+    html = inject_blog_index(html, articles)
+    with open("blog/index.html", 'w', encoding='utf-8') as f:
+        f.write(html)
+    
+    # 6. Sitemap
+    print()
     generate_sitemap(articles)
+    print("\n✅ Done!")
 
 if __name__ == "__main__":
     main()
