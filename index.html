@@ -315,26 +315,6 @@
         text-rendering: optimizeLegibility;
       }
 
-            /* Single blue dot layer — uniform across the whole viewport. */
-      body::before {
-        content: "" !important;
-        position: fixed !important;
-        inset: 0 !important;
-        z-index: -1 !important;
-        pointer-events: none !important;
-        background-color: transparent !important;
-        background-image: radial-gradient(rgb(125 180 240) 1.4px, transparent 1.4px) !important;
-        background-size: 22px 22px !important;
-        background-repeat: repeat !important;
-        background-position: 0 0 !important;
-        -webkit-mask: none !important;
-                mask: none !important;
-        opacity: 1 !important;
-        transform: none !important;
-        animation: none !important;
-        will-change: auto !important;
-      }
-
       body,
       button,
       input,
