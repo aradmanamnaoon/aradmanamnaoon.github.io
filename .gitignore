@@ -48,3 +48,4 @@ desktop.ini
 .temp/
 .tmp/
 dist/*.map
+*.build-backup
