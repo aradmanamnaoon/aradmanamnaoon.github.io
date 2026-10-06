@@ -317,16 +317,16 @@
         text-rendering: optimizeLegibility;
       }
 
-      /* ONE dot layer, everywhere on the page. !important beats dist/output.css. */
+      /* The one and only dot layer: uniform blue grid across the whole page. */
       body::before {
         content: "" !important;
         position: fixed !important;
-        inset: -24px !important;
+        inset: 0 !important;
         z-index: -1 !important;
         pointer-events: none !important;
         background-color: transparent !important;
-        background-image: radial-gradient(rgb(237 237 237 / 0.16) 1px, transparent 1px) !important;
-        background-size: 16px 16px !important;
+        background-image: radial-gradient(rgb(125 180 240 / 0.55) 1.4px, transparent 1.4px) !important;
+        background-size: 22px 22px !important;
         background-repeat: repeat !important;
         background-position: 0 0 !important;
         -webkit-mask-image: none !important;
@@ -338,29 +338,14 @@
         will-change: transform;
       }
 
-      /* Kill the masked second dot layer dist/output.css puts on body::after.
-         Replace it with a plain soft glow that follows the cursor. */
+      /* Remove the glow layer entirely — not wanted. */
       body::after {
-        content: "" !important;
-        position: fixed !important;
-        inset: 0 !important;
-        z-index: -1 !important;
-        pointer-events: none !important;
-        background-color: transparent !important;
-        background-image: radial-gradient(
-          320px circle at var(--glow-x, -9999px) var(--glow-y, -9999px),
-          rgb(125 180 240 / 0.14),
-          transparent 60%
-        ) !important;
-        background-size: auto !important;
-        background-repeat: no-repeat !important;
-        background-position: 0 0 !important;
+        content: none !important;
+        display: none !important;
+        background: none !important;
         -webkit-mask-image: none !important;
                 mask-image: none !important;
-        -webkit-mask: none !important;
-                mask: none !important;
-        opacity: 1 !important;
-        transform: none !important;
+        opacity: 0 !important;
       }
 
       body,
