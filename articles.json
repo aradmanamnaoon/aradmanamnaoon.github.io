@@ -1,5 +1,14 @@
 [
   {
+    "title": "Agentic Engineering: How to Build Reliable AI Agents",
+    "url": "/blog/agentic-engineering/",
+    "date": "2026-10-06",
+    "dateDisplay": "October 6, 2026",
+    "readTime": "8 min read",
+    "description": "Learn agentic engineering for reliable AI agents: design bounded workflows, validate tools, handle failures, trace runs, and evaluate results.",
+    "tags": ["Agentic Engineering", "LangGraph", "AI Agents"]
+  },
+  {
     "title": "Evaluating AI Agents in Practice: Metrics, Test Harnesses, and Common Pitfalls",
     "url": "/blog/agent-evals/",
     "date": "2026-10-05",

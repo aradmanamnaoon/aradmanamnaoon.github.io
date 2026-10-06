@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-06T09:01:58.874570+00:00",
+  "generated_at": "2026-10-06T09:16:33.816754+00:00",
   "findings": [
     {
       "severity": "High",
@@ -53,15 +53,6 @@
       "line": 78,
       "check": "external-link",
       "message": "External URL could not be verified (HTTP Error 404: Not Found): https://fonts.gstatic.com",
-      "fix": "Check the destination manually."
-    },
-    {
-      "severity": "Low",
-      "category": "Links & assets",
-      "path": "index.html",
-      "line": 82,
-      "check": "external-link",
-      "message": "External URL could not be verified (HTTP Error 404: Not Found): https://aradmanamnaoon.github.io/photo_2026-10-06_09-42-56.jpg",
       "fix": "Check the destination manually."
     },
     {
@@ -194,33 +185,6 @@
       "severity": "Low",
       "category": "Links & assets",
       "path": "blog/agentic-engineering/index.html",
-      "line": 27,
-      "check": "external-link",
-      "message": "External URL could not be verified (HTTP Error 404: Not Found): https://aradmanamnaoon.github.io/blog/agentic-engineering/",
-      "fix": "Check the destination manually."
-    },
-    {
-      "severity": "Low",
-      "category": "Links & assets",
-      "path": "blog/agentic-engineering/index.html",
-      "line": 31,
-      "check": "external-link",
-      "message": "External URL could not be verified (HTTP Error 404: Not Found): https://aradmanamnaoon.github.io/blog/agentic-engineering/",
-      "fix": "Check the destination manually."
-    },
-    {
-      "severity": "Low",
-      "category": "Links & assets",
-      "path": "blog/agentic-engineering/index.html",
-      "line": 36,
-      "check": "external-link",
-      "message": "External URL could not be verified (HTTP Error 404: Not Found): https://aradmanamnaoon.github.io/blog/agentic-engineering/",
-      "fix": "Check the destination manually."
-    },
-    {
-      "severity": "Low",
-      "category": "Links & assets",
-      "path": "blog/agentic-engineering/index.html",
       "line": 85,
       "check": "external-link",
       "message": "External URL could not be verified (HTTP Error 404: Not Found): https://fonts.googleapis.com",
@@ -252,6 +216,15 @@
       "check": "csp-meta",
       "message": "No document-level CSP policy is present.",
       "fix": "Add a tested CSP meta policy; GitHub Pages cannot set arbitrary response headers from repository files."
+    },
+    {
+      "severity": "Low",
+      "category": "Links & assets",
+      "path": "blog/agentic-rag/index.html",
+      "line": 995,
+      "check": "external-link",
+      "message": "External URL could not be verified (HTTP Error 406: Not Acceptable): https://www.uber.com/us/en/blog/enhanced-agentic-rag/",
+      "fix": "Check the destination manually."
     },
     {
       "severity": "Low",
@@ -371,12 +344,30 @@
       "fix": "Remove debug output or gate intentional diagnostics."
     },
     {
+      "severity": "Medium",
+      "category": "SEO",
+      "path": "sitemap.xml",
+      "line": 1,
+      "check": "sitemap-omission",
+      "message": "Sitemap is missing route: https://aradmanamnaoon.github.io/blog/agentic-engineering/",
+      "fix": "Regenerate the sitemap from article routes."
+    },
+    {
       "severity": "Low",
       "category": "SEO",
       "path": "llms.txt",
       "line": 1,
       "check": "llms-article-sync",
       "message": "llms.txt does not list article route /blog/agent-evals/.",
+      "fix": "Add or remove article URLs to keep the machine-readable index in sync."
+    },
+    {
+      "severity": "Low",
+      "category": "SEO",
+      "path": "llms.txt",
+      "line": 1,
+      "check": "llms-article-sync",
+      "message": "llms.txt does not list article route /blog/agentic-engineering/.",
       "fix": "Add or remove article URLs to keep the machine-readable index in sync."
     },
     {

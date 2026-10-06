@@ -126,32 +126,9 @@ def log(message: str, level: str = "info") -> None:
     print(f"{prefix} {message}")
 
 
-def safe_external_url(value: Any) -> bool:
-    if not isinstance(value, str):
-        return False
-    parsed = urllib.parse.urlsplit(value.strip())
-    return (
-        parsed.scheme.lower() == "https"
-        and bool(parsed.netloc)
-        and not parsed.username
-        and not parsed.password
-    )
-
-
 def escape_html(value: Any) -> str:
     return html.escape(str(value if value is not None else ""), quote=True)
 
-
-def safe_json_for_script(value: Any) -> str:
-    """Serialize JSON so data cannot terminate an inline script element."""
-    return (
-        json.dumps(value, ensure_ascii=False, separators=(",", ":"))
-        .replace("&", "\\u0026")
-        .replace("<", "\\u003c")
-        .replace(">", "\\u003e")
-        .replace("\u2028", "\\u2028")
-        .replace("\u2029", "\\u2029")
-    )
 
 
 def discover_root(explicit: str | None) -> Path:
@@ -1617,89 +1594,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
         articles = []
         article_urls = set()
 
-    try:
-        projects = read_json(root / "projects.json")
-        if not isinstance(projects, list):
-            raise SiteError("projects.json must contain a JSON array")
-        project_ids: set[str] = set()
-        for number, project in enumerate(projects, start=1):
-            if not isinstance(project, dict):
-                findings.append(
-                    Finding(
-                        "High",
-                        "Configuration",
-                        "projects.json",
-                        number,
-                        "project-shape",
-                        "Project must be a JSON object.",
-                        "Use the documented project fields.",
-                    )
-                )
-                continue
-
-            for required in (
-                "id",
-                "source",
-                "title",
-                "description",
-                "url",
-                "metrics",
-                "tags",
-            ):
-                if required not in project:
-                    findings.append(
-                        Finding(
-                            "High",
-                            "Configuration",
-                            "projects.json",
-                            number,
-                            "project-field",
-                            f"Project {number} is missing {required!r}.",
-                            "Add the required project field.",
-                        )
-                    )
-
-            if project.get("id") in project_ids:
-                findings.append(
-                    Finding(
-                        "Medium",
-                        "Configuration",
-                        "projects.json",
-                        number,
-                        "duplicate-project",
-                        f"Duplicate project ID {project.get('id')!r}.",
-                        "Give each project a unique ID.",
-                    )
-                )
-            project_ids.add(str(project.get("id", "")))
-
-            if not safe_external_url(project.get("url")):
-                findings.append(
-                    Finding(
-                        "High",
-                        "Security",
-                        "projects.json",
-                        number,
-                        "project-url",
-                        f"Project URL must use HTTPS: {project.get('url')!r}.",
-                        "Use a valid HTTPS URL.",
-                    )
-                )
-    except SiteError as error:
-        findings.append(
-            Finding(
-                "Critical",
-                "Configuration",
-                "projects.json",
-                1,
-                "project-data",
-                str(error),
-                "Repair projects.json.",
-            )
-        )
-        projects = []
-        project_ids = set()
-
     sitemap_path = root / "sitemap.xml"
     if not sitemap_path.exists():
         findings.append(
@@ -1845,44 +1739,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                     )
         except SiteError:
             pass
-
-    projects_page = root / "projects" / "index.html"
-    if projects_page.exists() and projects:
-        try:
-            source = projects_page.read_text(encoding="utf-8")
-            match = re.search(r"const projects = (\[.*?\]);", source, re.S)
-            generated = json.loads(match.group(1)) if match else None
-            ids = (
-                [entry.get("id") for entry in generated]
-                if isinstance(generated, list)
-                else []
-            )
-            expected_ids = [entry.get("id") for entry in projects]
-            if ids != expected_ids:
-                findings.append(
-                    Finding(
-                        "Medium",
-                        "Configuration",
-                        "projects/index.html",
-                        1,
-                        "projects-out-of-sync",
-                        "Rendered project data differs from projects.json.",
-                        "Run the builder to refresh the project archive.",
-                    )
-                )
-        except (OSError, json.JSONDecodeError):
-            findings.append(
-                Finding(
-                    "Medium",
-                    "Configuration",
-                    "projects/index.html",
-                    1,
-                    "projects-data-invalid",
-                    "Could not parse embedded project data.",
-                    "Run the builder to refresh the project archive.",
-                )
-            )
-
     package_path = root / "package.json"
     lock_path = root / "package-lock.json"
     if package_path.exists() and lock_path.exists():
@@ -2194,46 +2050,6 @@ def load_articles(root: Path) -> list[dict[str, Any]]:
     return data
 
 
-def load_projects(root: Path) -> list[dict[str, Any]]:
-    data = read_json(root / "projects.json")
-    if not isinstance(data, list) or not data:
-        raise SiteError(
-            "projects.json must contain at least one curated project"
-        )
-
-    required = {
-        "id",
-        "source",
-        "title",
-        "description",
-        "url",
-        "metrics",
-        "tags",
-    }
-    for number, project in enumerate(data, start=1):
-        if not isinstance(project, dict) or not required.issubset(project):
-            raise SiteError(
-                f"projects.json item {number} is missing required fields"
-            )
-        if project["source"] not in {"github", "hf_model", "hf_dataset"}:
-            raise SiteError(
-                f"projects.json item {number} has unsupported source "
-                f"{project['source']!r}"
-            )
-        if not safe_external_url(project["url"]):
-            raise SiteError(
-                f"projects.json item {number} URL must be HTTPS"
-            )
-        if not re.fullmatch(
-            r"[A-Za-z0-9][A-Za-z0-9._-]*",
-            str(project["id"]),
-        ):
-            raise SiteError(
-                f"projects.json item {number} has an unsafe HTML ID"
-            )
-    return data
-
-
 def article_page(root: Path, route: str) -> Path:
     if route.endswith("/"):
         return root / route.lstrip("/") / "index.html"
@@ -2304,32 +2120,6 @@ def article_data_repair(
         if not article_page(root, article["url"]).exists():
             raise SiteError(f"Article route has no page: {article['url']}")
     return articles
-
-
-def get_json(url: str, timeout: float = 8.0) -> Any | None:
-    request = urllib.request.Request(
-        url,
-        headers={
-            "User-Agent": f"{SITE_NAME}-site-builder",
-            "Accept": "application/json",
-        },
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except (
-        urllib.error.URLError,
-        TimeoutError,
-        json.JSONDecodeError,
-        OSError,
-    ) as error:
-        log(
-            f"Optional metadata refresh failed for {url}: {error}; "
-            "using projects.json values",
-            "warn",
-        )
-        return None
-
 
 def enrich_project(
     project: dict[str, Any], no_fetch: bool
@@ -2539,7 +2329,7 @@ def render_home_articles(articles: list[dict[str, Any]]) -> str:
         articles,
         key=lambda item: item.get("date", ""),
         reverse=True,
-    )[:MAX_ARTICLES_HOMEPAGE]:
+    ):
         tags = "".join(
             f'<span class="writing-post-tag">{escape_html(tag)}</span>'
             for tag in article.get("tags", [])
@@ -2589,15 +2379,29 @@ def render_blog_articles(articles: list[dict[str, Any]]) -> str:
             f'<span class="blog-post-tag">{escape_html(tag)}</span>'
             for tag in article.get("tags", [])
         )
+        title = str(article.get("title") or "Untitled article")
+        url = str(article.get("url") or "/blog/")
+        date = str(article.get("date") or "")
+        date_display = str(article.get("dateDisplay") or date)
+        read_time = str(article.get("readTime") or "")
+        description = str(article.get("description") or "")
+
         records.append(
-            f"""          <article class="blog-post">
-            <div class="blog-post-number" aria-hidden="true">{len(records) + 1:02}</div>
-            <div class="blog-post-content">
-              <div class="blog-post-meta">{escape_html(article.get('dateDisplay', article['date']))} · {escape_html(article.get('readTime', ''))}</div>
-              <h3 class="blog-post-title"><a href="{escape_html(article['url'])}">{escape_html(article['title'])}</a></h3>
-              <p class="blog-post-description">{escape_html(article['description'])}</p>
-              <div class="blog-post-tags">{tags}</div>
-            </div>
+            f"""          <article>
+            <a class="blog-post" href="{escape_html(url)}" aria-label="Read {escape_html(title)}">
+              <div class="blog-post-meta">
+                <time datetime="{escape_html(date)}">{escape_html(date_display)}</time><br />
+                {escape_html(read_time)}
+              </div>
+              <div>
+                <h3 class="blog-post-title">{escape_html(title)}</h3>
+                <p class="blog-post-description">{escape_html(description)}</p>
+                <div class="blog-post-tags" aria-label="Article topics">
+                  {tags}
+                </div>
+              </div>
+              <span class="blog-post-arrow" aria-hidden="true">→</span>
+            </a>
           </article>"""
         )
     return "\n".join(records)
@@ -2747,7 +2551,6 @@ def inject_projects_page(
         count=1,
     )
 
-
 def inject_articles(
     source: str,
     articles: list[dict[str, Any]],
@@ -2763,20 +2566,114 @@ def inject_articles(
         if homepage
         else "<!-- AUTO:BLOG_ARTICLES:END -->"
     )
+    container_class = "writing-list" if homepage else "blog-post-list"
     rendered = (
         render_home_articles(articles)
         if homepage
         else render_blog_articles(articles)
     )
-    updated, ok = replace_between(source, start, end, rendered)
-    if not ok:
+
+    if source.count(start) == 1 and source.count(end) == 1:
+        updated, ok = replace_between(source, start, end, rendered)
+        if ok:
+            return updated
+
+    if source.count(start) or source.count(end):
         log(
-            f"Expected one pair of {start} and {end}; "
+            f"Incomplete or duplicate article markers for {container_class}; "
             "skipped article injection",
             "warn",
         )
-    return updated
+        return source
 
+    containers = []
+    for opening in re.finditer(r"<div\b[^>]*>", source, re.I | re.S):
+        class_match = re.search(
+            r"\bclass\s*=\s*(['\"])(.*?)\1",
+            opening.group(0),
+            re.I | re.S,
+        )
+        if (
+            class_match
+            and container_class in class_match.group(2).split()
+        ):
+            containers.append(opening)
+
+    if len(containers) != 1:
+        log(
+            f"Expected one .{container_class} container; "
+            f"found {len(containers)}. Skipped article injection.",
+            "warn",
+        )
+        return source
+
+    opening = containers[0]
+    depth = 1
+    closing_start = None
+    div_tags = re.compile(r"</?div\b[^>]*>", re.I | re.S)
+
+    for tag in div_tags.finditer(source, opening.end()):
+        if tag.group(0).lower().startswith("</"):
+            depth -= 1
+        else:
+            depth += 1
+
+        if depth == 0:
+            closing_start = tag.start()
+            break
+
+    if closing_start is None:
+        log(
+            f"Could not find the closing </div> for .{container_class}.",
+            "warn",
+        )
+        return source
+
+    replacement = (
+        "\n          "
+        + start
+        + "\n"
+        + rendered
+        + "\n          "
+        + end
+        + "\n        "
+    )
+    log(f"Inserted article markers into .{container_class}", "ok")
+    return source[: opening.end()] + replacement + source[closing_start:]
+
+    opening = containers[0]
+    depth = 1
+    closing_start = None
+    div_tags = re.compile(r"</?div\b[^>]*>", re.I | re.S)
+
+    for tag in div_tags.finditer(source, opening.end()):
+        if tag.group(0).lower().startswith("</"):
+            depth -= 1
+        else:
+            depth += 1
+
+        if depth == 0:
+            closing_start = tag.start()
+            break
+
+    if closing_start is None:
+        log(
+            f"Could not find the closing </div> for .{container_class}.",
+            "warn",
+        )
+        return source
+
+    replacement = (
+        "\n          "
+        + start
+        + "\n"
+        + rendered
+        + "\n          "
+        + end
+        + "\n        "
+    )
+    log(f"Inserted article markers into .{container_class}", "ok")
+    return source[: opening.end()] + replacement + source[closing_start:]
 
 def section_blocks(
     source: str, class_name: str
@@ -3426,14 +3323,11 @@ def cleanup_old_backups(root: Path, keep_days: int = 30) -> int:
             log(f"Could not remove old backup {snapshot}: {error}", "warn")
     return removed
 
-
 def build_site(root: Path, args: argparse.Namespace) -> int:
     articles = load_articles(root)
-    projects = load_projects(root)
     targets = [
         root / "articles.json",
         root / "index.html",
-        root / "projects" / "index.html",
         root / "blog" / "index.html",
         root / "sitemap.xml",
         root / "robots.txt",
@@ -3441,6 +3335,7 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         root / ".gitignore",
     ]
     targets.extend(html_files(root))
+
     for folder in (
         root / "blog"
     ).iterdir() if (root / "blog").exists() else []:
@@ -3462,10 +3357,6 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
 
     renamed = repair_blog_filenames(root, args.dry_run)
     articles = article_data_repair(root, articles, renamed, args.dry_run)
-    enriched = [
-        enrich_project(project, args.no_fetch)
-        for project in projects
-    ]
 
     for page in html_files(root):
         source = page.read_text(encoding="utf-8")
@@ -3476,7 +3367,6 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
     home = root / "index.html"
     source = home.read_text(encoding="utf-8")
     updated = remove_stale_injected_content(source)
-    updated = inject_project_home(updated, enriched)
     updated = inject_articles(updated, articles, homepage=True)
     if (
         updated == source
@@ -3488,21 +3378,10 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         )
     atomic_write(home, updated, args.dry_run)
 
-    projects_page = root / "projects" / "index.html"
-    if not projects_page.exists():
-        raise SiteError("projects/index.html is required")
-    atomic_write(
-        projects_page,
-        inject_projects_page(
-            projects_page.read_text(encoding="utf-8"),
-            enriched,
-        ),
-        args.dry_run,
-    )
-
     blog_page = root / "blog" / "index.html"
     if not blog_page.exists():
         raise SiteError("blog/index.html is required")
+
     blog_source = remove_stale_injected_content(
         blog_page.read_text(encoding="utf-8")
     )
@@ -3519,6 +3398,7 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
 
     if snapshot:
         log(f"Backup snapshot: {snapshot}")
+
     removed_backups = cleanup_old_backups(root)
     if removed_backups:
         log(
@@ -3534,7 +3414,6 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
     ]
     return 1 if errors else 0
 
-
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Build and audit the static portfolio site."
@@ -3547,11 +3426,6 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         "--dry-run",
         action="store_true",
         help="Report generated changes without writing files.",
-    )
-    parser.add_argument(
-        "--no-fetch",
-        action="store_true",
-        help="Use curated project.json metadata without calling external APIs.",
     )
     parser.add_argument(
         "--validate",
