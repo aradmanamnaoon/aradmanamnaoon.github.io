@@ -657,17 +657,14 @@
         background: rgb(255 255 255 / 0.07);
       }
 
-      /* Hero media — hardened centering */
       .hero-media {
         position: relative;
         z-index: 2;
-        display: flex;
-        width: 100%;
+        display: grid;
         min-width: 0;
-        align-self: stretch;
-        align-items: center;
-        justify-content: center;
+        min-height: 1px;
         overflow: visible;
+        place-items: center;
       }
 
       .hero-portrait-frame {
@@ -1614,31 +1611,24 @@
 
         .hero-media {
           grid-row: 1;
-          display: flex;
+          display: block;
           width: 100%;
           max-width: 100%;
-          align-self: center;
-          align-items: center;
-          justify-content: center;
           padding: 0;
           margin: 0;
+          text-align: center;
         }
 
         .hero-portrait-frame {
-          display: block;
+          display: inline-block;
           width: min(72vw, 280px);
           max-width: 100%;
-          margin: 0 auto;
-          margin-inline: auto;
-          flex: 0 0 auto;
+          margin: 0;
+          vertical-align: middle;
         }
 
         .hero-portrait {
-          object-position: center 38%;
-        }
-
-        .hero-portrait {
-          object-position: center 38%;
+          object-position: center 40%;
         }
 
         .hero-copy {
