@@ -539,7 +539,6 @@
         width: 100%;
         grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
         align-items: center;
-        justify-items: center;
         gap: clamp(2.5rem, 6vw, 6rem);
       }
 
@@ -662,13 +661,11 @@
       .hero-media {
         position: relative;
         z-index: 2;
-        display: flex;
-        width: 100%;
+        display: grid;
         min-width: 0;
         min-height: 1px;
-        align-items: center;
-        justify-content: center;
         overflow: visible;
+        place-items: center;
       }
 
       .hero-portrait-frame {
@@ -677,10 +674,8 @@
         visibility: visible;
         opacity: 1;
         width: min(100%, 320px);
-        max-width: 100%;
         aspect-ratio: 1 / 1;
         margin: 0 auto;
-        margin-inline: auto;
         overflow: hidden;
         border: 0;
         border-radius: 50%;
@@ -691,19 +686,14 @@
 
       .hero-portrait {
         display: block;
+        visibility: visible;
+        opacity: 1;
         width: 100%;
         height: 100%;
         border: 0;
         border-radius: 50%;
         object-fit: cover;
-        /* vertical focal point of the photo (43% = slightly above middle) */
-        object-position: 50% 43%;
-        /* fine-tune the crop inside the circle:
-           --portrait-x / --portrait-y  -> nudge left/right/up/down
-           --portrait-zoom              -> zoom in (>1) or out (<1) */
-        transform: translate(var(--portrait-x, 0px), var(--portrait-y, 0px))
-          scale(var(--portrait-zoom, 1));
-        transform-origin: 50% 43%;
+        object-position: center 43%;
       }
 
       .hero-image-caption {
@@ -1622,14 +1612,26 @@
 
         .hero-media {
           grid-row: 1;
+          display: flex;
           width: 100%;
-          justify-content: center;
+          max-width: 100%;
           align-items: center;
+          justify-content: center;
+          padding: 0;
+          margin: 0;
         }
 
         .hero-portrait-frame {
+          display: block;
           width: min(72vw, 280px);
+          max-width: 100%;
+          margin: 0 auto;
           margin-inline: auto;
+          flex: 0 0 auto;
+        }
+
+        .hero-portrait {
+          object-position: center 38%;
         }
 
         .hero-copy {
