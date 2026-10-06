@@ -111,12 +111,12 @@
       currentDotY +=
         (targetDotY - currentDotY) * 0.06;
 
-      document.body.style.setProperty(
+      document.documentElement.style.setProperty(
         '--dot-x',
         `${currentDotX}px`
       );
 
-      document.body.style.setProperty(
+      document.documentElement.style.setProperty(
         '--dot-y',
         `${currentDotY}px`
       );
