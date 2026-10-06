@@ -317,18 +317,50 @@
         text-rendering: optimizeLegibility;
       }
 
-      /* The one and only dot layer */
+      /* ONE dot layer, everywhere on the page. !important beats dist/output.css. */
       body::before {
-        content: "";
-        position: fixed;
-        inset: -24px;
-        z-index: -1;
-        pointer-events: none;
-        background-image: radial-gradient(rgb(237 237 237 / 0.06) 1px, transparent 1px);
-        background-size: 16px 16px;
-        background-repeat: repeat;
-        transform: translate3d(var(--dot-x, 0px), var(--dot-y, 0px), 0);
+        content: "" !important;
+        position: fixed !important;
+        inset: -24px !important;
+        z-index: -1 !important;
+        pointer-events: none !important;
+        background-color: transparent !important;
+        background-image: radial-gradient(rgb(237 237 237 / 0.16) 1px, transparent 1px) !important;
+        background-size: 16px 16px !important;
+        background-repeat: repeat !important;
+        background-position: 0 0 !important;
+        -webkit-mask-image: none !important;
+                mask-image: none !important;
+        -webkit-mask: none !important;
+                mask: none !important;
+        opacity: 1 !important;
+        transform: translate3d(var(--dot-x, 0px), var(--dot-y, 0px), 0) !important;
         will-change: transform;
+      }
+
+      /* Kill the masked second dot layer dist/output.css puts on body::after.
+         Replace it with a plain soft glow that follows the cursor. */
+      body::after {
+        content: "" !important;
+        position: fixed !important;
+        inset: 0 !important;
+        z-index: -1 !important;
+        pointer-events: none !important;
+        background-color: transparent !important;
+        background-image: radial-gradient(
+          320px circle at var(--glow-x, -9999px) var(--glow-y, -9999px),
+          rgb(125 180 240 / 0.14),
+          transparent 60%
+        ) !important;
+        background-size: auto !important;
+        background-repeat: no-repeat !important;
+        background-position: 0 0 !important;
+        -webkit-mask-image: none !important;
+                mask-image: none !important;
+        -webkit-mask: none !important;
+                mask: none !important;
+        opacity: 1 !important;
+        transform: none !important;
       }
 
       body,
