@@ -297,7 +297,6 @@
         scroll-behavior: smooth;
         scroll-padding-top: calc(var(--nav-height) + 1.5rem);
         background-color: #14181f;
-        background-image: none;
       }
 
       body {
@@ -307,8 +306,7 @@
         min-height: 100dvh;
         margin: 0;
         overflow-x: hidden;
-        background-color: #14181f;
-        background-image: none;
+        background: #14181f;
         color: var(--color-text);
         font-family: var(--font-body);
         font-size: 1rem;
@@ -316,6 +314,7 @@
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
       }
+
             /* Single blue dot layer — uniform across the whole viewport. */
       body::before {
         content: "" !important;
