@@ -539,6 +539,7 @@
         width: 100%;
         grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.85fr);
         align-items: center;
+        justify-items: center;
         gap: clamp(2.5rem, 6vw, 6rem);
       }
 
@@ -661,28 +662,25 @@
       .hero-media {
         position: relative;
         z-index: 2;
-        display: grid;
+        display: flex;
         width: 100%;
         min-width: 0;
         min-height: 1px;
-        overflow: visible;
-        place-items: center;
-        place-content: center;
-        justify-items: center;
         align-items: center;
+        justify-content: center;
+        overflow: visible;
       }
 
       .hero-portrait-frame {
         position: relative;
         display: block;
+        visibility: visible;
+        opacity: 1;
         width: min(100%, 320px);
         max-width: 100%;
         aspect-ratio: 1 / 1;
-        /* centering that survives every parent layout */
         margin: 0 auto;
         margin-inline: auto;
-        justify-self: center;
-        align-self: center;
         overflow: hidden;
         border: 0;
         border-radius: 50%;
@@ -1624,10 +1622,14 @@
 
         .hero-media {
           grid-row: 1;
+          width: 100%;
+          justify-content: center;
+          align-items: center;
         }
 
         .hero-portrait-frame {
           width: min(72vw, 280px);
+          margin-inline: auto;
         }
 
         .hero-copy {
