@@ -3398,7 +3398,8 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
 
     blog_page = root / "blog" / "index.html"
     if not blog_page.exists():
-        raise SiteError("blog/index.html is required")
+        log("blog/ directory removed; skipping blog build steps.")
+        blog_page = None
 
     blog_source = remove_stale_injected_content(
         blog_page.read_text(encoding="utf-8")
