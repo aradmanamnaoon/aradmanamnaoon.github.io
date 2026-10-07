@@ -2337,15 +2337,24 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
 </script>"""
 
 
+def latest_articles(
+    articles: list[dict[str, Any]],
+    limit: int | None = None,
+) -> list[dict[str, Any]]:
+    """Return articles newest first; optionally keep only the first N."""
+    ordered = sorted(
+        articles,
+        key=lambda item: str(item.get("date", "")),
+        reverse=True,
+    )
+    return ordered if limit is None else ordered[:limit]
+
+
 def render_home_articles(articles: list[dict[str, Any]]) -> str:
     cards = []
-    for article in sorted(
-        articles,
-        key=lambda item: item.get("date", ""),
-        reverse=True,
-    ):
-        tags = "".join(
-            f'<span class="writing-post-tag">{escape_html(tag)}</span>'
+    for article in latest_articles(articles, MAX_ARTICLES_HOMEPAGE):
+        tags_markup = "".join(
+            f'<li class="writing-tag">{escape_html(tag)}</li>'
             for tag in article.get("tags", [])
         )
         title = str(article.get("title") or "Untitled article")
@@ -2353,10 +2362,6 @@ def render_home_articles(articles: list[dict[str, Any]]) -> str:
         date = str(article.get("date") or "")
         date_display = str(article.get("dateDisplay") or date)
         read_time = str(article.get("readTime") or "")
-        tags_markup = "".join(
-            f"<li class=\"writing-tag\">{escape_html(tag)}</li>"
-            for tag in article.get("tags", [])
-        )
         date_and_read_time = " · ".join(
             value for value in (date_display, read_time) if value
         )
@@ -2384,11 +2389,7 @@ def render_home_articles(articles: list[dict[str, Any]]) -> str:
 
 def render_blog_articles(articles: list[dict[str, Any]]) -> str:
     records = []
-    for article in sorted(
-        articles,
-        key=lambda item: item.get("date", ""),
-        reverse=True,
-    ):
+    for article in latest_articles(articles):
         tags = "".join(
             f'<span class="blog-post-tag">{escape_html(tag)}</span>'
             for tag in article.get("tags", [])
