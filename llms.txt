@@ -1,11 +1,8 @@
 # ARADMANAMNAOON
 
-> Portfolio and technical writing by Seyyed Arad Hosseini Moghaddam, a data scientist and AI engineer working across data science, deep learning, computer vision and medical imaging, NLP and language models, LLM fine-tuning, retrieval-augmented generation, agentic AI, MLOps, and software and cross-platform mobile development.
 
 ## Primary pages
-- [Portfolio](https://aradmanamnaoon.github.io/): Profile, skills, selected work, writing, and contact.
 - [Projects](https://aradmanamnaoon.github.io/projects/): Selected projects across AI, machine learning, language technologies, and software development.
-- [Technical blog](https://aradmanamnaoon.github.io/blog/): First-hand experiments, debugging stories, project breakdowns, and engineering lessons.
 
 ## Areas of work
 - Data science and applied analytics.
@@ -17,10 +14,6 @@
 - MLOps and AI application engineering.
 - Software development and Flutter apps for Android and iOS.
 
-## Featured technical writing
-- [What Is Agentic RAG? How Iterative Retrieval Beats One-Shot Pipelines](https://aradmanamnaoon.github.io/blog/agentic-rag/agentic-rag.html): Agentic RAG explained through iterative retrieval, bounded evidence checks, token and latency tradeoffs, and evaluation.
-- [How to Design an Evaluatable Multi-Agent RAG System with LangGraph](https://aradmanamnaoon.github.io/blog/evaluatable-multi-agent-rag-langgraph/): Workflow design, evidence handling, bounded reflection, and evaluation for multi-agent RAG systems.
-- [A Hugging Face Gradient Accumulation Bug Almost Ruined My 19-Hour NLLB Training Run](https://aradmanamnaoon.github.io/blog/hugging-face-nllb-gradient-accumulation-bug/): Debugging loss scaling while fine-tuning NLLB-200 for English↔Persian translation.
 
 ## Public technical profiles
 - [GitHub](https://github.com/aradmanamnaoon)
