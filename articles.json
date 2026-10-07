@@ -3,7 +3,7 @@
     "title": "Securing MCP Servers: A Practical Developer Guide",
     "url": "/blog/secure-mcp-servers/",
     "date": "2026-10-07",
-    "dateDisplay": "October 6, 2026",
+    "dateDisplay": "October 7, 2026",
     "readTime": "10 min read",
     "description": "A practical guide to securing MCP servers with least-privilege tools, server-side validation, OAuth audience checks, SSRF defenses, sandboxing, and explicit approval for risky actions.",
     "tags": [
