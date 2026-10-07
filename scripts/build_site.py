@@ -513,14 +513,28 @@ def validate_homepage_contract(
         re.I,
     )
     body_css = body_rule.group("declarations").lower() if body_rule else ""
-    if not re.search(r"background-image\s*:\s*radial-gradient\s*\(", body_css):
+    if not re.search(r"background-color\s*:\s*#14181f\b", body_css):
         report(
             "Medium",
             "Homepage / visual design",
-            "dot-grid-body-background",
-            "The homepage body has no direct repeating dot-grid background declaration.",
-            "Restore the subtle 16px radial-gradient pattern and keep the animated pseudo-element layers.",
+            "homepage-body-surface",
+            "The homepage body does not declare the shared dark surface color (#14181f).",
+            "Keep the body surface at #14181f; let dist/output.css provide the dotted pseudo-element background.",
             "body {",
+        )
+
+    inline_dot_layer = re.search(
+        r"(?is)body\s*::before\s*\{[^{}]*radial-gradient\s*\(",
+        source,
+    )
+    if inline_dot_layer:
+        report(
+            "Medium",
+            "Homepage / visual design",
+            "homepage-inline-dot-override",
+            "An inline body::before radial-gradient overrides the shared stylesheet's subtle dotted background.",
+            "Remove the custom body::before radial-gradient block and let dist/output.css draw the background.",
+            "body::before",
         )
     if not re.search(r"isolation\s*:\s*isolate\b", body_css):
         report(
@@ -3098,33 +3112,39 @@ def repair_share_metadata(source: str, root: Path) -> str:
     return source
 
 
-def repair_homepage_dot_background(source: str) -> tuple[str, bool]:
-    """Restore the current homepage's dotted surface without replacing its CSS."""
-    pattern = re.compile(
+def repair_homepage_background(source: str) -> tuple[str, bool]:
+    """Keep the homepage surface dark and defer its dot layer to output.css."""
+    original = source
+
+    # The homepage previously had an inline, high-contrast dot layer. Remove
+    # only that override so the shared stylesheet can render its own subtle,
+    # masked and animated background consistently with the blog page.
+    inline_dot_override = re.compile(
+        r"(?ims)^[ \t]*(?:/\*\s*Single blue dot layer\b.*?\*/[ \t]*\n)?"
+        r"[ \t]*body\s*::before\s*\{(?=[^{}]*radial-gradient)[^{}]*\}[ \t]*\n?"
+    )
+    source = inline_dot_override.sub("", source, count=1)
+
+    body_pattern = re.compile(
         r"(?m)^(?P<indent>[ \t]*)body\s*\{(?P<body>.*?)^(?P=indent)\}",
         re.I | re.S,
     )
-    match = pattern.search(source)
+    match = body_pattern.search(source)
     if not match:
-        return source, False
+        return source, source != original
 
     body = match.group("body")
     original_body = body
     indent = match.group("indent") + "  "
-
     declarations = {
         "position": "relative",
         "isolation": "isolate",
         "background-color": "#14181f",
-        "background-image": "radial-gradient(rgb(237 237 237 / 0.06) 1px, transparent 1px)",
-        "background-size": "16px 16px",
-        "background-position": "var(--dot-x, 0px) var(--dot-y, 0px)",
+        "background-image": "none",
     }
     for name, value in declarations.items():
         declaration = re.compile(
-            r"(?m)^[ \t]*"
-            + re.escape(name)
-            + r"\s*:\s*[^;]*;"
+            r"(?m)^[ \t]*" + re.escape(name) + r"\s*:\s*[^;]*;"
         )
         replacement = f"{indent}{name}: {value};"
         if declaration.search(body):
@@ -3132,10 +3152,9 @@ def repair_homepage_dot_background(source: str) -> tuple[str, bool]:
         else:
             body = body.rstrip("\n") + "\n" + replacement + "\n"
 
-    if body == original_body:
-        return source, False
-    updated = source[: match.start("body")] + body + source[match.end("body") :]
-    return updated, True
+    if body != original_body:
+        source = source[: match.start("body")] + body + source[match.end("body") :]
+    return source, source != original
 
 
 def fix_safe(
@@ -3203,11 +3222,9 @@ def fix_safe(
 
         updated = repair_share_metadata(source, root)
         if relative == "index.html":
-            updated, dot_background_changed = repair_homepage_dot_background(
-                updated
-            )
-            if dot_background_changed:
-                log("Restored the homepage dot-grid surface and stacking context")
+            updated, background_changed = repair_homepage_background(updated)
+            if background_changed:
+                log("Restored the homepage surface and removed its inline dot override")
         if relative == "404.html":
             updated, _ = set_or_add_meta(
                 updated,
