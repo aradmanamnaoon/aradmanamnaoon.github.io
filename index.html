@@ -184,9 +184,7 @@
               {
                 "@id": "https://aradmanamnaoon.github.io/projects/#page"
               },
-              {
-                "@id": "https://aradmanamnaoon.github.io/blog/#blog"
-              }
+              {}
             ]
           },
           {
@@ -1044,36 +1042,7 @@
       }
 
       
-      .writing-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-        align-items: stretch;
-        gap: 1.5rem;
-      }
-
-      .writing-card {
-        display: flex;
-        min-width: 0;
-        height: 100%;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.85rem;
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-lg);
-        padding: clamp(1.25rem, 3vw, 1.75rem);
-        background:
-          linear-gradient(145deg, rgb(125 180 240 / 0.07), transparent 62%),
-          rgb(255 255 255 / 0.02);
-        color: inherit;
-        overflow-wrap: anywhere;
-        transition:
-          transform 180ms var(--ease-standard),
-          border-color 180ms var(--ease-standard),
-          background-color 180ms var(--ease-standard),
-          box-shadow 180ms var(--ease-standard);
-      }
-
-      .writing-card:hover {
+.writing-card:hover {
         transform: translateY(-3px);
         border-color: rgb(125 180 240 / 0.45);
         background-color: rgb(255 255 255 / 0.035);
@@ -1172,19 +1141,7 @@
         font-size: 0.68rem;
       }
 
-      .writing-arrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        margin-top: auto;
-        padding-top: 0.35rem;
-        color: var(--color-accent);
-        font-size: 0.9rem;
-        font-weight: 700;
-        text-decoration: none;
-      }
-
-      .writing-arrow span {
+.writing-arrow span {
         transition: transform 180ms var(--ease-standard);
       }
 
@@ -1681,11 +1638,7 @@
           gap: 0.5rem;
         }
 
-        .writing-card {
-          gap: 0.85rem;
-        }
-
-        .contact-layout {
+.contact-layout {
           gap: 2.5rem;
         }
 
@@ -2259,69 +2212,6 @@
               human-in-the-loop workflows.
             </p>
           </article>
-        </div>
-      </section>
-      <section class="section" id="writing" aria-labelledby="writing-title">
-        <div class="section-heading-group">
-          <p class="section-kicker">Writing</p>
-          <div class="section-heading-row">
-            <h2 class="section-title" id="writing-title">Latest writing.</h2>
-            
-          </div>
-          <p class="section-intro">
-            Technical notes, project breakdowns, experiments, and lessons from
-            building AI and machine-learning systems.
-          </p>
-        </div>
-
-        <div class="writing-list">
-          <!-- AUTO:HOME_ARTICLES:START -->
-          <article class="writing-card">
-            <div class="writing-meta">
-              <time datetime="2026-10-07">October 7, 2026 · 10 min read</time>
-            </div>
-            <h3 class="writing-title">
-              
-            </h3>
-            <p class="writing-description">
-              A practical guide to securing MCP servers with least-privilege tools, server-side validation, OAuth audience checks, SSRF defenses, sandboxing, and explicit approval for risky actions.
-            </p>
-            <ul class="writing-tags" aria-label="Article topics">
-              <li class="writing-tag">MCP</li><li class="writing-tag">AI Agent Security</li><li class="writing-tag">Security</li>
-            </ul>
-            
-          </article>
-          <article class="writing-card">
-            <div class="writing-meta">
-              <time datetime="2026-10-06">October 6, 2026 · 8 min read</time>
-            </div>
-            <h3 class="writing-title">
-              
-            </h3>
-            <p class="writing-description">
-              Learn agentic engineering for reliable AI agents: design bounded workflows, validate tools, handle failures, trace runs, and evaluate results.
-            </p>
-            <ul class="writing-tags" aria-label="Article topics">
-              <li class="writing-tag">Agentic Engineering</li><li class="writing-tag">LangGraph</li><li class="writing-tag">AI Agents</li>
-            </ul>
-            
-          </article>
-          <article class="writing-card">
-            <div class="writing-meta">
-              <time datetime="2026-10-05">October 5, 2026 · 10 min read</time>
-            </div>
-            <h3 class="writing-title">
-              
-            </h3>
-            <p class="writing-description">
-              A practical guide to evaluating AI agents, covering metrics, test harnesses, and common pitfalls in agentic workflows.
-            </p>
-            <ul class="writing-tags" aria-label="Article topics">
-              <li class="writing-tag">Agentic AI</li><li class="writing-tag">Evaluation</li><li class="writing-tag">LLM</li>
-            </ul>
-            
-          </article>
-          <!-- AUTO:HOME_ARTICLES:END -->
         </div>
       </section>
 
