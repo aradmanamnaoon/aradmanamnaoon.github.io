@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 """Build, audit, and safely maintain this static GitHub Pages site.
 
-Responsibilities: optional GitHub / Hugging Face metadata refresh, project
-rendering, favicon injection, sitemap and robots generation, link checks,
-backups, dry runs, and rollback. The audit engine checks supported source,
-configuration, and content files under the repository, excluding generated,
-dependency, and VCS directories. `--fix-safe` applies only narrowly defined,
-repeatable fixes. Uncertain findings are reported instead of rewriting
-arbitrary content.
+Responsibilities: project rendering, favicon injection, sitemap and robots
+generation, link checks, backups, dry runs, and rollback. The audit engine
+checks supported source, configuration, and content files under the
+repository, excluding generated, dependency, and VCS directories.
+`--fix-safe` applies only narrowly defined, repeatable fixes. Uncertain
+findings are reported instead of rewriting arbitrary content.
 
 No third-party Python packages are required.
 """
@@ -127,7 +126,6 @@ def log(message: str, level: str = "info") -> None:
 
 def escape_html(value: Any) -> str:
     return html.escape(str(value if value is not None else ""), quote=True)
-
 
 
 def discover_root(explicit: str | None) -> Path:
@@ -1857,62 +1855,6 @@ def load_projects(root: Path) -> list[dict[str, Any]]:
     return data
 
 
-
-    source = project["source"]
-    token = os.environ.get("GITHUB_TOKEN", "").strip()
-    gh_headers = (
-        {"Authorization": f"Bearer {token}"} if token else None
-    )
-
-    if source == "github":
-        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
-        data = (
-            get_json(
-                f"https://api.github.com/repos/{slug}",
-                headers=gh_headers,
-            )
-            if slug
-            else None
-        )
-        if isinstance(data, dict):
-            result["stars"] = data.get("stargazers_count", 0)
-            result["forks"] = data.get("forks_count", 0)
-            result["language"] = data.get("language") or "—"
-    elif source in {"hf_model", "hf_dataset"}:
-        prefix = "datasets/" if source == "hf_dataset" else ""
-        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
-        data = (
-            get_json(f"https://huggingface.co/api/{prefix}{slug}")
-            if slug
-            else None
-        )
-        if isinstance(data, dict):
-            result["downloads"] = data.get("downloads", 0)
-            result["likes"] = data.get("likes", 0)
-    return result
-
-    source = project["source"]
-    if source == "github":
-        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
-        data = get_json(f"https://api.github.com/repos/{slug}") if slug else None
-        if isinstance(data, dict):
-            result["stars"] = data.get("stargazers_count", 0)
-            result["forks"] = data.get("forks_count", 0)
-            result["language"] = data.get("language") or "—"
-    elif source in {"hf_model", "hf_dataset"}:
-        prefix = "datasets/" if source == "hf_dataset" else ""
-        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
-        data = (
-            get_json(f"https://huggingface.co/api/{prefix}{slug}")
-            if slug
-            else None
-        )
-        if isinstance(data, dict):
-            result["downloads"] = data.get("downloads", 0)
-            result["likes"] = data.get("likes", 0)
-    return result
-
-
 def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
     actions = [
         {
@@ -1946,220 +1888,65 @@ def safe_json_for_script(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
 
 
-def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
-    payload = []
-    for project in projects:
-        payload.append(
-            {
-                "id": project["id"],
-                "title": project["title"],
-                "type": project.get("type", project["source"]),
-                "description": project.get("description") or "",
-                "dateDisplay": project.get("dateDisplay", ""),
-                "tags": project.get("tags", []),
-                "actions": project_actions(project),
-                "note": project.get("note", ""),
-            }
-        )
-    data = safe_json_for_script(payload)
-
-    template = """<div class="projects-paginated" id="projects-paginated" aria-live="polite"></div>
-<nav class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></nav>
-<style>
-.projects-pagination {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-}
-.projects-pagination .pag-status {
-  margin: 0;
-  font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.5);
-  letter-spacing: 0.02em;
-}
-.projects-pagination .pag-status strong {
-  color: rgba(255, 255, 255, 0.85);
-  font-weight: 600;
-}
-.projects-pagination .pag-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.375rem;
-  flex-wrap: wrap;
-}
-.projects-pagination .pag-btn {
-  min-width: 2.5rem;
-  height: 2.5rem;
-  padding: 0 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.7);
-  border-radius: 0.5rem;
-  font-family: inherit;
-  font-size: 0.875rem;
-  font-weight: 500;
-  line-height: 1;
-  cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
-}
-.projects-pagination .pag-btn:hover:not(:disabled):not(.pag-active) {
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
-}
-.projects-pagination .pag-btn:active:not(:disabled) {
-  transform: translateY(1px);
-}
-.projects-pagination .pag-btn.pag-active {
-  background: #3b82f6;
-  color: #ffffff;
-  border-color: #3b82f6;
-  font-weight: 600;
-  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
-}
-.projects-pagination .pag-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-.projects-pagination .pag-btn:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-.projects-pagination .pag-ellipsis {
-  min-width: 2.5rem;
-  height: 2.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.35);
-  font-size: 0.875rem;
-  user-select: none;
-}
-</style>
-<script>
-(function() {
-  var projects = __DATA__;
-  var perPage = __PER_PAGE__;
-  var currentPage = 1;
-  var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
-  var container = document.getElementById('projects-paginated');
-  var pagination = document.getElementById('projects-pagination');
-  if (!container || !pagination) return;
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-    });
-  }
-
-  function renderProjects(page) {
-    var start = (page - 1) * perPage;
-    var items = projects.slice(start, start + perPage);
-    var html = items.map(function(p, i) {
-      var num = String(start + i + 1).padStart(2, '0');
-      var tags = (p.tags || []).map(function(t) {
-        return '<span class="tag">' + esc(t) + '</span>';
-      }).join('');
-      var actions = (p.actions || []).map(function(a) {
-        var cls = a.primary ? 'action primary' : 'action';
-        return '<a class="' + cls + '" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.label) + '</a>';
-      }).join('');
-      var note = p.note ? '<p class="note">' + esc(p.note) + '</p>' : '';
-      return '<article class="project" id="' + esc(p.id) + '">' +
-        '<div class="num" aria-hidden="true">' + num + '</div>' +
-        '<div>' +
-          '<p class="type">' + esc(p.type) + '</p>' +
-          '<h2>' + esc(p.title) + '</h2>' +
-          '<p class="desc">' + esc(p.description) + '</p>' +
-          '<div class="tags">' + tags + '</div>' +
-          '<div class="actions">' + actions + '</div>' +
-          note +
-        '</div>' +
-      '</article>';
-    }).join('');
-    container.innerHTML = html;
-  }
-
-  function pageNumbers(current, total) {
-    if (total <= 7) {
-      var all = [];
-      for (var i = 1; i <= total; i++) all.push(i);
-      return all;
+def render_home_projects(projects: list[dict[str, Any]]) -> str:
+    cards = []
+    source_names = {
+        "github": "GitHub",
+        "hf_model": "Hugging Face",
+        "hf_dataset": "HF Dataset",
     }
-    var arr = [1];
-    if (current > 3) arr.push('left');
-    var lo = Math.max(2, current - 1);
-    var hi = Math.min(total - 1, current + 1);
-    for (var j = lo; j <= hi; j++) arr.push(j);
-    if (current < total - 2) arr.push('right');
-    arr.push(total);
-    return arr;
-  }
+    legacy_anchors = {
+        "persian-lm-from-scratch": "persian-gpt",
+        "ai-research-assistant-platform": "research-assistant",
+        "medical-image-segmentation": "cardiac-mri",
+    }
+    for index, project in enumerate(
+        projects[:MAX_PROJECTS_HOMEPAGE],
+        start=1,
+    ):
+        tags = "".join(
+            f'<span class="project-tag">{escape_html(tag)}</span>'
+            for tag in project.get("tags", [])
+        )
+        actions = "".join(
+            f'<a class="project-link {"primary" if action.get("primary") else ""}" '
+            f'href="{escape_html(action["url"])}" target="_blank" '
+            f'rel="noopener noreferrer">{escape_html(action["label"])}</a>'
+            for action in project_actions(project)
+        )
+        project_id = str(project.get("id") or f"project-{index}")
+        alias = legacy_anchors.get(project_id, "")
+        alias_markup = (
+            f'<span id="{escape_html(alias)}" class="sr-only"></span>\n            '
+            if alias and alias != project_id
+            else ""
+        )
+        project_type = project.get(
+            "type",
+            source_names.get(str(project.get("source") or ""), "Project"),
+        )
+        type_label = " · ".join(
+            str(value)
+            for value in (project_type, *project.get("tags", [])[:2])
+            if value
+        )
+        featured = " project-card-featured" if index == 1 else ""
+        cards.append(
+            f"""          <article
+            id="{escape_html(project_id)}"
+            class="surface-card project-card{featured}"
+          >
+            {alias_markup}<p class="project-number">{index:02} / {escape_html(type_label)}</p>
+            <h3 class="card-title">{escape_html(project.get('title') or 'Untitled project')}</h3>
+            <p class="card-copy">
+              {escape_html(project.get('description') or 'Project details and source repository.')}
+            </p>
+            <div class="project-tags">{tags}</div>
+            <div class="project-actions">{actions}</div>
+          </article>"""
+        )
+    return "\n".join(cards)
 
-  function renderPagination() {
-    var parts = [];
-
-    parts.push(
-      '<button type="button" class="pag-btn pag-nav" data-page="' + (currentPage - 1) + '"' +
-      (currentPage === 1 ? ' disabled aria-disabled="true"' : '') +
-      ' aria-label="Previous page"><span aria-hidden="true">&larr;</span></button>'
-    );
-
-    var nums = pageNumbers(currentPage, totalPages);
-    nums.forEach(function(n) {
-      if (typeof n === 'string') {
-        parts.push('<span class="pag-ellipsis" aria-hidden="true">&hellip;</span>');
-        return;
-      }
-      var isActive = n === currentPage;
-      parts.push(
-        '<button type="button" class="pag-btn' + (isActive ? ' pag-active' : '') + '"' +
-        ' data-page="' + n + '"' +
-        (isActive ? ' aria-current="page"' : '') +
-        ' aria-label="Page ' + n + '">' + n + '</button>'
-      );
-    });
-
-    parts.push(
-      '<button type="button" class="pag-btn pag-nav" data-page="' + (currentPage + 1) + '"' +
-      (currentPage === totalPages ? ' disabled aria-disabled="true"' : '') +
-      ' aria-label="Next page"><span aria-hidden="true">&rarr;</span></button>'
-    );
-
-    var startItem = (currentPage - 1) * perPage + 1;
-    var endItem = Math.min(currentPage * perPage, projects.length);
-
-    pagination.innerHTML =
-      '<p class="pag-status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
-      '<div class="pag-controls">' + parts.join('') + '</div>';
-
-    pagination.querySelectorAll('button[data-page]:not([disabled])').forEach(function(button) {
-      button.addEventListener('click', function() {
-        var page = Number.parseInt(button.dataset.page, 10);
-        if (page >= 1 && page <= totalPages && page !== currentPage) {
-          currentPage = page;
-          renderProjects(page);
-          renderPagination();
-          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
-  }
-
-  renderProjects(currentPage);
-  renderPagination();
-})();
-</script>"""
-
-    return template.replace("__DATA__", data).replace("__PER_PAGE__", str(PROJECTS_PER_PAGE))
 
 def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     payload = []
@@ -3035,13 +2822,11 @@ def cleanup_old_backups(root: Path, keep_days: int = 30) -> int:
 
 
 def build_site(root: Path, args: argparse.Namespace) -> int:
-    raw_projects = load_projects(root)
-    if raw_projects:
-        log(f"Loaded {len(raw_projects)} project(s) from projects.json")
+    projects = load_projects(root)
+    if projects:
+        log(f"Loaded {len(projects)} project(s) from projects.json")
     else:
         log("No projects.json found; project injection skipped", "warn")
-    
-    projects = raw_projects
 
     targets = [
         root / "index.html",
@@ -3139,11 +2924,6 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         action="store_true",
         help="Opt in to checking external links "
         "(network requests may be slow or blocked).",
-    )
-    parser.add_argument(
-        "--no-fetch",
-        action="store_true",
-        help="Skip GitHub / Hugging Face API metadata refresh.",
     )
     parser.add_argument(
         "--report",
