@@ -435,8 +435,29 @@ def validate_homepage_contract(
         )
     else:
         attrs, image_line = hero_images[0]
+        hero_filename = "photo_2026-10-06_09-42-56.jpg"
+        accepted_srcs = {
+            HERO_IMAGE_URL,
+            f"/{hero_filename}",
+            f"./{hero_filename}",
+            hero_filename,
+        }
+        actual_src = (attrs.get("src") or "").strip()
+        if actual_src not in accepted_srcs:
+            check_finding(
+                findings,
+                "High",
+                "Homepage / image SEO",
+                path,
+                root,
+                image_line,
+                "hero-image-src",
+                "The hero image src does not match the current homepage contract.",
+                f'Set src="{HERO_IMAGE_URL}" or a relative form '
+                f'like "/{hero_filename}" on the .hero-portrait image.',
+            )
+
         expected = {
-            "src": HERO_IMAGE_URL,
             "alt": HERO_IMAGE_ALT,
             "title": HERO_IMAGE_TITLE,
             "width": str(HERO_IMAGE_WIDTH),
@@ -448,7 +469,7 @@ def validate_homepage_contract(
             if (attrs.get(attribute) or "").strip() != value:
                 check_finding(
                     findings,
-                    "High" if attribute in {"src", "alt"} else "Medium",
+                    "High" if attribute == "alt" else "Medium",
                     "Homepage / image SEO",
                     path,
                     root,
