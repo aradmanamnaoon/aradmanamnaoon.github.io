@@ -1,5 +1,13 @@
 [
   {
+    "id": "agent-guardrails",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/agent-guardrails",
+    "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents",
+    "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.",
+    "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"]
+  },
+  {
     "id": "persian-lm-from-scratch",
     "source": "hf_model",
     "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
@@ -43,7 +51,7 @@
     "id": "persian-wikipedia-cleaned-for-persian-NLP",
     "source": "hf_dataset",
     "url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP",
-    "title": "Persian Wikipedia Cleaned For Persian Nlp",
+    "title": "Persian Wikipedia Cleaned For Persian NLP",
     "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.",
     "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"]
   },
