@@ -128,13 +128,13 @@ def log(message: str, level: str = "info") -> None:
 def escape_html(value: Any) -> str:
     return html.escape(str(value if value is not None else ""), quote=True)
 
-
-def get_json(url: str, timeout: int = 8) -> Any:
+def get_json(url: str, timeout: int = 8, headers: dict | None = None) -> Any:
     """Fetch JSON from a URL. Returns None on any error."""
+    request_headers = {"User-Agent": "StaticSiteBuild/1.0"}
+    if headers:
+        request_headers.update(headers)
     try:
-        request = urllib.request.Request(
-            url, headers={"User-Agent": "StaticSiteBuild/1.0"}
-        )
+        request = urllib.request.Request(url, headers=request_headers)
         with urllib.request.urlopen(request, timeout=timeout) as response:
             return json.loads(response.read().decode("utf-8"))
     except Exception:
@@ -1874,6 +1874,39 @@ def enrich_project(
     result = dict(project)
     if no_fetch:
         return result
+
+    source = project["source"]
+    token = os.environ.get("GITHUB_TOKEN", "").strip()
+    gh_headers = (
+        {"Authorization": f"Bearer {token}"} if token else None
+    )
+
+    if source == "github":
+        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
+        data = (
+            get_json(
+                f"https://api.github.com/repos/{slug}",
+                headers=gh_headers,
+            )
+            if slug
+            else None
+        )
+        if isinstance(data, dict):
+            result["stars"] = data.get("stargazers_count", 0)
+            result["forks"] = data.get("forks_count", 0)
+            result["language"] = data.get("language") or "—"
+    elif source in {"hf_model", "hf_dataset"}:
+        prefix = "datasets/" if source == "hf_dataset" else ""
+        slug = urllib.parse.urlsplit(project["url"]).path.strip("/")
+        data = (
+            get_json(f"https://huggingface.co/api/{prefix}{slug}")
+            if slug
+            else None
+        )
+        if isinstance(data, dict):
+            result["downloads"] = data.get("downloads", 0)
+            result["likes"] = data.get("likes", 0)
+    return result
 
     source = project["source"]
     if source == "github":
