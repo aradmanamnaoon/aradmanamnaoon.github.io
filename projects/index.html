@@ -656,28 +656,9 @@
       <div class="projects" id="project-list">
 <div class="projects-paginated" id="projects-paginated"></div>
 <div class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></div>
-
-<style>
-.projects-paginated { display: grid; gap: 22px; }
-.projects-pagination {
-  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
-  margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(237,237,237,0.09);
-}
-.projects-pagination button {
-  min-width: 44px; min-height: 44px; padding: 0 14px;
-  border: 1px solid rgba(237,237,237,0.13);
-  border-radius: 12px; background: transparent; color: #ededed;
-  font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
-  transition: all 180ms ease;
-}
-.projects-pagination button:hover:not(:disabled):not(.active) { border-color: #7db4f0; color: #7db4f0; }
-.projects-pagination button.active { background: #7db4f0; color: #14181f; border-color: #7db4f0; }
-.projects-pagination button:disabled { opacity: 0.35; cursor: not-allowed; }
-</style>
-
 <script>
 (function() {
-  const projects = [{"id": "persian-lm-from-scratch", "title": "Persian GPT — 110M Transformer From Scratch", "type": "Persian NLP · Transformers · From-scratch training", "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation.", "dateDisplay": "September 2026", "metrics": [{"value": "110.4M", "label": "Parameters"}, {"value": "244M", "label": "Training tokens"}, {"value": "14.52", "label": "Test perplexity"}], "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "ai-research-assistant-platform", "title": "AI Research Assistant Platform", "type": "Agentic AI · Multi-agent systems · RAG", "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.", "dateDisplay": "October 2026", "metrics": [{"value": "103", "label": "Offline tests"}, {"value": "5", "label": "Agent roles"}, {"value": "REST + SSE", "label": "API surface"}], "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "medical-image-segmentation", "title": "3D Cardiac MRI Segmentation", "type": "Medical AI · 3D computer vision · Segmentation", "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net.", "dateDisplay": "September 2026", "metrics": [{"value": "0.8821", "label": "Best validation Dice"}, {"value": "3D U-Net", "label": "Architecture"}, {"value": "100", "label": "Training epochs"}], "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"], "actions": [{"url": "https://github.com/aradmanamnaoon/medical-image-segmentation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "jibay2-medical-v2", "title": "Jibay2 Medical — Clinical Note Summarization", "type": "Medical NLP · QLoRA · Clinical summarization", "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.", "dateDisplay": "September 2026", "metrics": [{"value": "2,634", "label": "Dataset examples"}, {"value": "1.4403", "label": "Best validation loss"}, {"value": "~5.7 min", "label": "Training time"}], "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b", "title": "Messy2JSON — Lightweight Structured Extraction", "type": "LLM fine-tuning · QLoRA · Structured extraction", "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.", "dateDisplay": "September 2026", "metrics": [{"value": "99.82%", "label": "Mean token accuracy"}, {"value": "0.0045", "label": "Validation loss"}, {"value": "~0.85%", "label": "Trainable parameters"}], "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "persian-wikipedia-cleaned-for-persian-NLP", "title": "Persian Wikipedia Cleaned For Persian Nlp", "type": "hf_dataset", "description": "", "dateDisplay": "September 2026", "metrics": [{"value": "30", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"], "actions": [{"url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "nllb-en-fa-psych-translation", "title": "NLLB English-to-Persian Psychology Translation", "type": "Machine translation · English → Persian · Psychology", "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.", "dateDisplay": "September 2026", "metrics": [{"value": "0.6B", "label": "Base-model scale"}, {"value": "EN → FA", "label": "Translation direction"}, {"value": "NLLB", "label": "Seq2seq architecture"}], "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b-lora", "title": "Messy2Json Qwen 0.5B Lora", "type": "hf_model", "description": "", "dateDisplay": "September 2026", "metrics": [{"value": "15", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["text-generation", "peft", "base_model:adapter:Qwen/Qwen2.5-0.5B-Instruct", "lora", "sft", "trl"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "aradmanamnaoon", "title": "Aradmanamnaoon", "type": "github", "description": "", "dateDisplay": "October 2026", "metrics": [{"value": "0", "label": "Stars"}, {"value": "0", "label": "Forks"}, {"value": "", "label": "Language"}], "tags": [], "actions": [{"url": "https://github.com/aradmanamnaoon/aradmanamnaoon", "label": "View project ↗", "primary": true}], "note": ""}];
+  const projects = [{"id": "agent-guardrails", "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents", "type": "github", "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Stars"}, {"value": "0", "label": "Forks"}, {"value": "Python", "label": "Language"}], "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"], "actions": [{"url": "https://github.com/aradmanamnaoon/agent-guardrails", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "persian-lm-from-scratch", "title": "Persian GPT — 110M Transformer From Scratch", "type": "hf_model", "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "ai-research-assistant-platform", "title": "AI Research Assistant Platform", "type": "github", "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Stars"}, {"value": "0", "label": "Forks"}, {"value": "Python", "label": "Language"}], "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "medical-image-segmentation", "title": "3D Cardiac MRI Segmentation", "type": "github", "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Stars"}, {"value": "0", "label": "Forks"}, {"value": "Python", "label": "Language"}], "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"], "actions": [{"url": "https://github.com/aradmanamnaoon/medical-image-segmentation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "jibay2-medical-v2", "title": "Jibay2 Medical — Clinical Note Summarization", "type": "hf_model", "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b", "title": "Messy2JSON — Lightweight Structured Extraction", "type": "hf_model", "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "persian-wikipedia-cleaned-for-persian-NLP", "title": "Persian Wikipedia Cleaned For Persian NLP", "type": "hf_dataset", "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"], "actions": [{"url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "nllb-en-fa-psych-translation", "title": "NLLB English-to-Persian Psychology Translation", "type": "hf_model", "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b-lora", "title": "Messy2Json Qwen 0.5B Lora", "type": "hf_model", "description": "LoRA adapter for the Messy2JSON Qwen model.", "dateDisplay": "", "metrics": [{"value": "0", "label": "Downloads"}, {"value": "0", "label": "Likes"}, {"value": "HF", "label": "Hosted on"}], "tags": ["text-generation", "peft", "lora", "sft", "trl"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora", "label": "View project ↗", "primary": true}], "note": ""}];
   const perPage = 6;
   let currentPage = 1;
   const totalPages = Math.max(1, Math.ceil(projects.length / perPage));
@@ -688,40 +669,29 @@
   function renderProjects(page) {
     const start = (page - 1) * perPage;
     const items = projects.slice(start, start + perPage);
-    let html = '';
-    items.forEach((p, i) => {
+    container.innerHTML = items.map((p, i) => {
       const num = String(start + i + 1).padStart(2, '0');
-      const mh = (p.metrics || []).map(m => `<div class="metric"><strong>${esc(m.value)}</strong><span>${esc(m.label)}</span></div>`).join('');
-      const th = (p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
-      const ah = (p.actions || []).map(a => `<a class="action ${a.primary ? 'primary' : ''}" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.label)}</a>`).join('');
-      const nh = p.note ? `<p class="note">${esc(p.note)}</p>` : '';
-      html += `<article class="project" id="${esc(p.id)}"><div class="num" aria-hidden="true">${num}</div><div><p class="type">${esc(p.type)}</p><h2>${esc(p.title)}</h2><p class="desc">${esc(p.description)}</p><div class="metrics">${mh}</div><div class="tags">${th}</div><div class="actions">${ah}</div>${nh}</div></article>`;
-    });
-    container.innerHTML = html;
+      const metrics = (p.metrics || []).map(m => `<div class="metric"><strong>${esc(m.value)}</strong><span>${esc(m.label)}</span></div>`).join('');
+      const tags = (p.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
+      const actions = (p.actions || []).map(a => `<a class="action ${a.primary ? 'primary' : ''}" href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.label)}</a>`).join('');
+      const note = p.note ? `<p class="note">${esc(p.note)}</p>` : '';
+      return `<article class="project" id="${esc(p.id)}"><div class="num" aria-hidden="true">${num}</div><div><p class="type">${esc(p.type)}</p><h2>${esc(p.title)}</h2><p class="desc">${esc(p.description)}</p><div class="metrics">${metrics}</div><div class="tags">${tags}</div><div class="actions">${actions}</div>${note}</div></article>`;
+    }).join('');
   }
   function renderPagination() {
-    let html = '';
-    html += `<button ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}">←</button>`;
-    for (let i = 1; i <= totalPages; i++) html += `<button class="${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
-    html += `<button ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}">→</button>`;
-    pagination.innerHTML = html;
-    pagination.querySelectorAll('button[data-page]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const p = parseInt(btn.dataset.page, 10);
-        if (p >= 1 && p <= totalPages && p !== currentPage) {
-          currentPage = p;
-          renderProjects(currentPage);
-          renderPagination();
-          document.getElementById('selected-projects')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
+    let buttons = `<button ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}" aria-label="Previous page">←</button>`;
+    for (let page = 1; page <= totalPages; page++) buttons += `<button class="${page === currentPage ? 'active' : ''}" data-page="${page}" aria-current="${page === currentPage ? 'page' : 'false'}">${page}</button>`;
+    buttons += `<button ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}" aria-label="Next page">→</button>`;
+    pagination.innerHTML = buttons;
+    pagination.querySelectorAll('button[data-page]').forEach(button => button.addEventListener('click', () => {
+      const page = Number.parseInt(button.dataset.page, 10);
+      if (page >= 1 && page <= totalPages && page !== currentPage) { currentPage = page; renderProjects(page); renderPagination(); }
+    }));
   }
   renderProjects(currentPage);
   renderPagination();
 })();
 </script>
-
       </div>
 
       
