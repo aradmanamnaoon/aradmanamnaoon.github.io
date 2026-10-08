@@ -25,6 +25,8 @@ jobs:
           python-version: '3.12'
 
       - name: Run Build Script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python scripts/build_site.py
 
       - name: Commit and Push Changes
