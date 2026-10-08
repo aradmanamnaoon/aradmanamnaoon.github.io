@@ -2068,7 +2068,19 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     }}).join('');
   }}
   function renderPagination() {{
-    let buttons = `<button ${{currentPage === 1 ? 'disabled' : ''}} data-page="${{currentPage - 1}}" aria-label="Previous page">←</button>`;
+    const baseBtn = "min-w-[2.5rem] h-10 px-3 rounded-lg border border-white/10 bg-white/5 text-white/75 text-sm font-medium transition hover:bg-white/10 hover:text-white hover:border-white/20 disabled:opacity-35 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2";
+const activeBtn = "bg-blue-500 text-white border-blue-500 font-semibold";
+
+let buttons = `<button ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}" aria-label="Previous page" class="${baseBtn}">←</button>`;
+
+for (let page = 1; page <= totalPages; page++) {
+  const cls = page === currentPage ? `${baseBtn} ${activeBtn}` : baseBtn;
+  buttons += `<button class="${cls}" data-page="${page}" aria-current="${page === currentPage ? 'page' : 'false'}">${page}</button>`;
+}
+
+buttons += `<button ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}" aria-label="Next page" class="${baseBtn}">→</button>`;
+
+pagination.className = "flex items-center justify-center gap-2 mt-12 py-6 flex-wrap";
     for (let page = 1; page <= totalPages; page++) buttons += `<button class="${{page === currentPage ? 'active' : ''}}" data-page="${{page}}" aria-current="${{page === currentPage ? 'page' : 'false'}}">${{page}}</button>`;
     buttons += `<button ${{currentPage === totalPages ? 'disabled' : ''}} data-page="${{currentPage + 1}}" aria-label="Next page">→</button>`;
     pagination.innerHTML = buttons;
