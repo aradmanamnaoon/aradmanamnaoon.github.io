@@ -2024,8 +2024,6 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
           </article>"""
         )
     return "\n".join(cards)
-
-
 def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     payload = []
     for project in projects:
@@ -2043,56 +2041,208 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
             }
         )
     data = safe_json_for_script(payload)
-    return f"""<div class="projects-paginated" id="projects-paginated"></div>
-<div class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></div>
-<script>
-(function() {{
-  const projects = {data};
-  const perPage = {PROJECTS_PER_PAGE};
-  let currentPage = 1;
-  const totalPages = Math.max(1, Math.ceil(projects.length / perPage));
-  const container = document.getElementById('projects-paginated');
-  const pagination = document.getElementById('projects-pagination');
-  if (!container || !pagination) return;
-  function esc(s) {{ return String(s).replace(/[&<>"']/g, c => ({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}})[c]); }}
-  function renderProjects(page) {{
-    const start = (page - 1) * perPage;
-    const items = projects.slice(start, start + perPage);
-    container.innerHTML = items.map((p, i) => {{
-      const num = String(start + i + 1).padStart(2, '0');
-      const metrics = (p.metrics || []).map(m => `<div class="metric"><strong>${{esc(m.value)}}</strong><span>${{esc(m.label)}}</span></div>`).join('');
-      const tags = (p.tags || []).map(t => `<span class="tag">${{esc(t)}}</span>`).join('');
-      const actions = (p.actions || []).map(a => `<a class="action ${{a.primary ? 'primary' : ''}}" href="${{esc(a.url)}}" target="_blank" rel="noopener noreferrer">${{esc(a.label)}}</a>`).join('');
-      const note = p.note ? `<p class="note">${{esc(p.note)}}</p>` : '';
-      return `<article class="project" id="${{esc(p.id)}}"><div class="num" aria-hidden="true">${{num}}</div><div><p class="type">${{esc(p.type)}}</p><h2>${{esc(p.title)}}</h2><p class="desc">${{esc(p.description)}}</p><div class="metrics">${{metrics}}</div><div class="tags">${{tags}}</div><div class="actions">${{actions}}</div>${{note}}</div></article>`;
-    }}).join('');
-  }}
-  function renderPagination() {{
-    const baseBtn = "min-w-[2.5rem] h-10 px-3 rounded-lg border border-white/10 bg-white/5 text-white/75 text-sm font-medium transition hover:bg-white/10 hover:text-white hover:border-white/20 disabled:opacity-35 disabled:cursor-not-allowed focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-500 focus-visible:outline-offset-2";
-const activeBtn = "bg-blue-500 text-white border-blue-500 font-semibold";
 
-let buttons = `<button ${currentPage === 1 ? 'disabled' : ''} data-page="${currentPage - 1}" aria-label="Previous page" class="${baseBtn}">←</button>`;
-
-for (let page = 1; page <= totalPages; page++) {
-  const cls = page === currentPage ? `${baseBtn} ${activeBtn}` : baseBtn;
-  buttons += `<button class="${cls}" data-page="${page}" aria-current="${page === currentPage ? 'page' : 'false'}">${page}</button>`;
+    template = """<div class="projects-paginated" id="projects-paginated" aria-live="polite"></div>
+<nav class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></nav>
+<style>
+.projects-pagination {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
+.projects-pagination .pag-status {
+  margin: 0;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.02em;
+}
+.projects-pagination .pag-status strong {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+.projects-pagination .pag-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+.projects-pagination .pag-btn {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+.projects-pagination .pag-btn:hover:not(:disabled):not(.pag-active) {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.projects-pagination .pag-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.projects-pagination .pag-btn.pag-active {
+  background: #3b82f6;
+  color: #ffffff;
+  border-color: #3b82f6;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.3);
+}
+.projects-pagination .pag-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.projects-pagination .pag-btn:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+.projects-pagination .pag-ellipsis {
+  min-width: 2.5rem;
+  height: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 0.875rem;
+  user-select: none;
+}
+</style>
+<script>
+(function() {
+  var projects = __DATA__;
+  var perPage = __PER_PAGE__;
+  var currentPage = 1;
+  var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
+  var container = document.getElementById('projects-paginated');
+  var pagination = document.getElementById('projects-pagination');
+  if (!container || !pagination) return;
 
-buttons += `<button ${currentPage === totalPages ? 'disabled' : ''} data-page="${currentPage + 1}" aria-label="Next page" class="${baseBtn}">→</button>`;
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
 
-pagination.className = "flex items-center justify-center gap-2 mt-12 py-6 flex-wrap";
-    for (let page = 1; page <= totalPages; page++) buttons += `<button class="${{page === currentPage ? 'active' : ''}}" data-page="${{page}}" aria-current="${{page === currentPage ? 'page' : 'false'}}">${{page}}</button>`;
-    buttons += `<button ${{currentPage === totalPages ? 'disabled' : ''}} data-page="${{currentPage + 1}}" aria-label="Next page">→</button>`;
-    pagination.innerHTML = buttons;
-    pagination.querySelectorAll('button[data-page]').forEach(button => button.addEventListener('click', () => {{
-      const page = Number.parseInt(button.dataset.page, 10);
-      if (page >= 1 && page <= totalPages && page !== currentPage) {{ currentPage = page; renderProjects(page); renderPagination(); }}
-    }}));
-  }}
+  function renderProjects(page) {
+    var start = (page - 1) * perPage;
+    var items = projects.slice(start, start + perPage);
+    var html = items.map(function(p, i) {
+      var num = String(start + i + 1).padStart(2, '0');
+      var metrics = (p.metrics || []).map(function(m) {
+        return '<div class="metric"><strong>' + esc(m.value) + '</strong><span>' + esc(m.label) + '</span></div>';
+      }).join('');
+      var tags = (p.tags || []).map(function(t) {
+        return '<span class="tag">' + esc(t) + '</span>';
+      }).join('');
+      var actions = (p.actions || []).map(function(a) {
+        var cls = a.primary ? 'action primary' : 'action';
+        return '<a class="' + cls + '" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.label) + '</a>';
+      }).join('');
+      var note = p.note ? '<p class="note">' + esc(p.note) + '</p>' : '';
+      return '<article class="project" id="' + esc(p.id) + '">' +
+        '<div class="num" aria-hidden="true">' + num + '</div>' +
+        '<div>' +
+          '<p class="type">' + esc(p.type) + '</p>' +
+          '<h2>' + esc(p.title) + '</h2>' +
+          '<p class="desc">' + esc(p.description) + '</p>' +
+          '<div class="metrics">' + metrics + '</div>' +
+          '<div class="tags">' + tags + '</div>' +
+          '<div class="actions">' + actions + '</div>' +
+          note +
+        '</div>' +
+      '</article>';
+    }).join('');
+    container.innerHTML = html;
+  }
+
+  function pageNumbers(current, total) {
+    if (total <= 7) {
+      var all = [];
+      for (var i = 1; i <= total; i++) all.push(i);
+      return all;
+    }
+    var arr = [1];
+    if (current > 3) arr.push('left');
+    var lo = Math.max(2, current - 1);
+    var hi = Math.min(total - 1, current + 1);
+    for (var j = lo; j <= hi; j++) arr.push(j);
+    if (current < total - 2) arr.push('right');
+    arr.push(total);
+    return arr;
+  }
+
+  function renderPagination() {
+    var parts = [];
+
+    parts.push(
+      '<button type="button" class="pag-btn pag-nav" data-page="' + (currentPage - 1) + '"' +
+      (currentPage === 1 ? ' disabled aria-disabled="true"' : '') +
+      ' aria-label="Previous page"><span aria-hidden="true">&larr;</span></button>'
+    );
+
+    var nums = pageNumbers(currentPage, totalPages);
+    nums.forEach(function(n) {
+      if (typeof n === 'string') {
+        parts.push('<span class="pag-ellipsis" aria-hidden="true">&hellip;</span>');
+        return;
+      }
+      var isActive = n === currentPage;
+      parts.push(
+        '<button type="button" class="pag-btn' + (isActive ? ' pag-active' : '') + '"' +
+        ' data-page="' + n + '"' +
+        (isActive ? ' aria-current="page"' : '') +
+        ' aria-label="Page ' + n + '">' + n + '</button>'
+      );
+    });
+
+    parts.push(
+      '<button type="button" class="pag-btn pag-nav" data-page="' + (currentPage + 1) + '"' +
+      (currentPage === totalPages ? ' disabled aria-disabled="true"' : '') +
+      ' aria-label="Next page"><span aria-hidden="true">&rarr;</span></button>'
+    );
+
+    var startItem = (currentPage - 1) * perPage + 1;
+    var endItem = Math.min(currentPage * perPage, projects.length);
+
+    pagination.innerHTML =
+      '<p class="pag-status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
+      '<div class="pag-controls">' + parts.join('') + '</div>';
+
+    pagination.querySelectorAll('button[data-page]:not([disabled])').forEach(function(button) {
+      button.addEventListener('click', function() {
+        var page = Number.parseInt(button.dataset.page, 10);
+        if (page >= 1 && page <= totalPages && page !== currentPage) {
+          currentPage = page;
+          renderProjects(page);
+          renderPagination();
+          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  }
+
   renderProjects(currentPage);
   renderPagination();
-}})();
+})();
 </script>"""
+
+    return template.replace("__DATA__", data).replace("__PER_PAGE__", str(PROJECTS_PER_PAGE))
 
 
 def replace_between(
