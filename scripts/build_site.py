@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Build, audit, and safely maintain this static GitHub Pages site.
 
-The builder retains the repository's original responsibilities: optional GitHub /
-Hugging Face metadata refresh, project and article rendering, favicon injection,
-blog archive repair, sitemap and robots generation, link checks, backups, dry runs,
-and rollback. The audit engine checks supported source, configuration, and content
-files under the repository, excluding generated, dependency, and VCS directories.
-``--fix-safe`` applies only narrowly defined, repeatable fixes. Uncertain findings
-are reported instead of rewriting arbitrary content.
+Responsibilities: optional GitHub / Hugging Face metadata refresh, project
+rendering, favicon injection, sitemap and robots generation, link checks,
+backups, dry runs, and rollback. The audit engine checks supported source,
+configuration, and content files under the repository, excluding generated,
+dependency, and VCS directories. `--fix-safe` applies only narrowly defined,
+repeatable fixes. Uncertain findings are reported instead of rewriting
+arbitrary content.
 
-No third-party Python packages are required. Existing CLI flags remain supported.
+No third-party Python packages are required.
 """
 
 from __future__ import annotations
@@ -47,7 +47,6 @@ HERO_IMAGE_TITLE = "Seyyed Arad Hosseini Moghaddam headshot"
 HERO_IMAGE_WIDTH = 853
 HERO_IMAGE_HEIGHT = 1280
 MAX_PROJECTS_HOMEPAGE = 3
-MAX_ARTICLES_HOMEPAGE = 3
 PROJECTS_PER_PAGE = 6
 FAVICON_LINKS = """    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -130,6 +129,17 @@ def escape_html(value: Any) -> str:
     return html.escape(str(value if value is not None else ""), quote=True)
 
 
+def get_json(url: str, timeout: int = 8) -> Any:
+    """Fetch JSON from a URL. Returns None on any error."""
+    try:
+        request = urllib.request.Request(
+            url, headers={"User-Agent": "StaticSiteBuild/1.0"}
+        )
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            return json.loads(response.read().decode("utf-8"))
+    except Exception:
+        return None
+
 
 def discover_root(explicit: str | None) -> Path:
     root = (
@@ -138,14 +148,13 @@ def discover_root(explicit: str | None) -> Path:
         else Path(__file__).resolve().parents[1]
     )
     markers = (
-        root / "articles.json",
         root / "index.html",
         root / "scripts" / "build_site.py",
     )
     if not all(path.exists() for path in markers):
         raise SiteError(
             f"{root} does not look like the site root "
-            "(expected articles.json, index.html, scripts/build_site.py)"
+            "(expected index.html, scripts/build_site.py)"
         )
     return root
 
@@ -891,7 +900,7 @@ def validate_html_page(
 
     if (
         path.name == "index.html"
-        and path.parent.name not in {"blog", "projects"}
+        and path.parent.name not in {"projects"}
         and not re.search(r"property=[\"']og:image:width", source, re.I)
     ):
         check_finding(
@@ -1354,56 +1363,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
             page, root, findings, parsed_pages, check_external
         )
 
-    blog_index = root / "blog" / "index.html"
-    if blog_index.exists():
-        blog_source = blog_index.read_text(encoding="utf-8", errors="replace")
-        archives = section_blocks(blog_source, "blog-archive")
-        if len(archives) != 1:
-            findings.append(
-                Finding(
-                    "High",
-                    "Code quality",
-                    "blog/index.html",
-                    1,
-                    "blog-archive-count",
-                    f"Expected one blog archive section; found {len(archives)}.",
-                    "Run with --fix-blog to repair duplicate or missing archive structure.",
-                )
-            )
-        for marker in (
-            "<!-- AUTO:BLOG_ARTICLES:START -->",
-            "<!-- AUTO:BLOG_ARTICLES:END -->",
-        ):
-            if blog_source.count(marker) != 1:
-                findings.append(
-                    Finding(
-                        "High",
-                        "Code quality",
-                        "blog/index.html",
-                        1,
-                        "blog-article-markers",
-                        f"Expected one {marker} marker; found "
-                        f"{blog_source.count(marker)}.",
-                        "Run with --fix-blog to restore a single marker pair.",
-                    )
-                )
-        if re.search(
-            r"</h1>\s*(?:</div>\s*){2,}\s*<p class=\"blog-intro",
-            blog_source,
-            re.S,
-        ):
-            findings.append(
-                Finding(
-                    "Medium",
-                    "Code quality",
-                    "blog/index.html",
-                    1,
-                    "blog-orphan-divs",
-                    "The blog hero contains likely orphaned closing div tags.",
-                    "Run with --fix-blog to repair the known hero pattern.",
-                )
-            )
-
     for file_path in walk_files(root):
         relative = relpath(file_path, root)
         try:
@@ -1520,94 +1479,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                     "Prefer HTTPS if supported by the destination.",
                 )
 
-    try:
-        articles = read_json(root / "articles.json")
-        if not isinstance(articles, list):
-            raise SiteError("articles.json must contain a JSON array")
-        article_urls: set[str] = set()
-        for number, article in enumerate(articles, start=1):
-            if not isinstance(article, dict):
-                findings.append(
-                    Finding(
-                        "High",
-                        "Configuration",
-                        "articles.json",
-                        number,
-                        "article-shape",
-                        "Article must be a JSON object.",
-                        "Use the documented article fields.",
-                    )
-                )
-                continue
-
-            for required in ("title", "url", "date", "description"):
-                if not article.get(required):
-                    findings.append(
-                        Finding(
-                            "High",
-                            "Configuration",
-                            "articles.json",
-                            number,
-                            "article-field",
-                            f"Article {number} is missing {required!r}.",
-                            "Add the required article field.",
-                        )
-                    )
-
-            route = article.get("url", "")
-            parsed = urllib.parse.urlsplit(route) if isinstance(route, str) else None
-            if (
-                not parsed
-                or parsed.scheme
-                or parsed.netloc
-                or not route.startswith("/blog/")
-                or ".." in parsed.path.split("/")
-            ):
-                findings.append(
-                    Finding(
-                        "High",
-                        "Configuration",
-                        "articles.json",
-                        number,
-                        "article-route",
-                        f"Invalid local article route: {route!r}.",
-                        "Use a safe /blog/<slug>/ route.",
-                    )
-                )
-            else:
-                article_urls.add(route)
-                page_path = (
-                    root / route.lstrip("/") / "index.html"
-                    if route.endswith("/")
-                    else root / route.lstrip("/")
-                )
-                if not page_path.exists():
-                    findings.append(
-                        Finding(
-                            "High",
-                            "Links & assets",
-                            "articles.json",
-                            number,
-                            "article-page",
-                            f"Article page does not exist: {route}.",
-                            "Restore the page or correct the route.",
-                        )
-                    )
-    except SiteError as error:
-        findings.append(
-            Finding(
-                "Critical",
-                "Configuration",
-                "articles.json",
-                1,
-                "article-data",
-                str(error),
-                "Repair articles.json.",
-            )
-        )
-        articles = []
-        article_urls = set()
-
     sitemap_path = root / "sitemap.xml"
     if not sitemap_path.exists():
         findings.append(
@@ -1618,7 +1489,7 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                 1,
                 "sitemap-missing",
                 "sitemap.xml is missing.",
-                "Generate it from existing static routes and articles.json.",
+                "Generate it from existing static routes.",
             )
         )
     else:
@@ -1632,9 +1503,7 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
             expected = {
                 f"{SITE_URL}/",
                 f"{SITE_URL}/projects/",
-                f"{SITE_URL}/blog/",
             }
-            expected.update(f"{SITE_URL}{url}" for url in article_urls)
             for url in sorted(locs - expected):
                 findings.append(
                     Finding(
@@ -1656,7 +1525,7 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                         1,
                         "sitemap-omission",
                         f"Sitemap is missing route: {url}",
-                        "Regenerate the sitemap from article routes.",
+                        "Regenerate the sitemap.",
                     )
                 )
         except (ET.ParseError, OSError):
@@ -1689,44 +1558,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                 "Add the sitemap URL.",
             )
         )
-
-    llms_path = root / "llms.txt"
-    if llms_path.exists() and article_urls:
-        llms_content = llms_path.read_text(encoding="utf-8", errors="replace")
-        for route in sorted(article_urls):
-            full_url = f"{SITE_URL}{route}"
-            if full_url not in llms_content:
-                findings.append(
-                    Finding(
-                        "Low",
-                        "SEO",
-                        "llms.txt",
-                        1,
-                        "llms-article-sync",
-                        f"llms.txt does not list article route {route}.",
-                        "Add or remove article URLs to keep the machine-readable "
-                        "index in sync.",
-                    )
-                )
-        known_routes = {f"{SITE_URL}{route}" for route in article_urls}
-        for url in re.findall(
-            r"https://aradmanamnaoon\.github\.io/blog/[^\s)\]>]+",
-            llms_content,
-        ):
-            cleaned = url.rstrip(".,")
-            if cleaned not in known_routes and cleaned != f"{SITE_URL}/blog/":
-                position = llms_content.find(url)
-                findings.append(
-                    Finding(
-                        "Low",
-                        "SEO",
-                        "llms.txt",
-                        llms_content[:position].count("\n") + 1,
-                        "llms-stale-route",
-                        f"llms.txt includes an unregistered article route: {url}.",
-                        "Remove the stale URL or register the corresponding article.",
-                    )
-                )
 
     manifest_path = root / "site.webmanifest"
     if manifest_path.exists():
@@ -1847,34 +1678,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                             f"Remove it from the index with: git rm -- {tracked_path}",
                         )
                     )
-
-            tracked_local = subprocess.run(
-                [
-                    git,
-                    "-C",
-                    str(root),
-                    "ls-files",
-                    "--error-unmatch",
-                    "ts locally",
-                ],
-                check=False,
-                capture_output=True,
-                text=True,
-                timeout=5,
-            )
-            if tracked_local.returncode == 0:
-                findings.append(
-                    Finding(
-                        "Low",
-                        "Configuration",
-                        "ts locally",
-                        1,
-                        "tracked-local-file",
-                        "The suspicious local-only path is tracked by Git.",
-                        "Review its contents, then remove it with: "
-                        "git rm -- 'ts locally'",
-                    )
-                )
         except (OSError, subprocess.TimeoutExpired):
             pass
 
@@ -2034,106 +1837,15 @@ def rollback(root: Path) -> int:
     return restored
 
 
-def load_articles(root: Path) -> list[dict[str, Any]]:
-    data = read_json(root / "articles.json")
-    if not isinstance(data, list) or not data:
-        raise SiteError("articles.json must contain at least one article")
-
-    required = ("title", "url", "date", "description")
-    for number, article in enumerate(data, start=1):
-        if not isinstance(article, dict) or any(
-            not article.get(key) for key in required
-        ):
-            raise SiteError(
-                f"articles.json item {number} is missing a required field"
-            )
-        route = article["url"]
-        parsed = (
-            urllib.parse.urlsplit(route) if isinstance(route, str) else None
-        )
-        if (
-            not parsed
-            or parsed.scheme
-            or parsed.netloc
-            or not route.startswith("/blog/")
-            or ".." in parsed.path.split("/")
-        ):
-            raise SiteError(
-                f"articles.json item {number} has an unsafe local URL: {route!r}"
-            )
+def load_projects(root: Path) -> list[dict[str, Any]]:
+    path = root / "projects.json"
+    if not path.exists():
+        return []
+    data = read_json(path)
+    if not isinstance(data, list):
+        raise SiteError("projects.json must contain a JSON array")
     return data
 
-
-def article_page(root: Path, route: str) -> Path:
-    if route.endswith("/"):
-        return root / route.lstrip("/") / "index.html"
-    return root / route.lstrip("/")
-
-
-def repair_blog_filenames(
-    root: Path, dry_run: bool = False
-) -> dict[str, str]:
-    renamed: dict[str, str] = {}
-    blog_dir = root / "blog"
-    for folder in sorted(blog_dir.iterdir()) if blog_dir.exists() else []:
-        if not folder.is_dir() or folder.name.startswith("."):
-            continue
-        candidates = [
-            folder / f"{folder.name}.html",
-            folder / "article.html",
-            folder / "post.html",
-        ]
-        old = next(
-            (candidate for candidate in candidates if candidate.is_file()),
-            None,
-        )
-        target = folder / "index.html"
-        if old and not target.exists():
-            old_url = f"/blog/{folder.name}/{old.name}"
-            renamed[old_url] = f"/blog/{folder.name}/"
-            if dry_run:
-                log(
-                    f"Would rename {relpath(old, root)} "
-                    f"to {relpath(target, root)}"
-                )
-            else:
-                old.rename(target)
-                log(
-                    f"Renamed {relpath(old, root)} to {relpath(target, root)}",
-                    "ok",
-                )
-    return renamed
-
-
-def article_data_repair(
-    root: Path,
-    articles: list[dict[str, Any]],
-    renamed: dict[str, str],
-    dry_run: bool,
-) -> list[dict[str, Any]]:
-    changed = False
-    for article in articles:
-        route = article["url"]
-        if route in renamed:
-            article["url"] = renamed[route]
-            changed = True
-        if re.fullmatch(r"/blog/[^/]+/[^/]+\.html", article["url"]):
-            candidate = "/".join(article["url"].split("/")[:3]) + "/"
-            if article_page(root, candidate).exists():
-                article["url"] = candidate
-                changed = True
-
-    if changed:
-        atomic_write(
-            root / "articles.json",
-            json.dumps(articles, indent=2, ensure_ascii=False),
-            dry_run,
-        )
-
-    for article in articles:
-        if not article_page(root, article["url"]).exists():
-            raise SiteError(f"Article route has no page: {article['url']}")
-    return articles
 
 def enrich_project(
     project: dict[str, Any], no_fetch: bool
@@ -2210,6 +1922,19 @@ def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
             }
         )
     return actions
+
+
+def safe_external_url(url: Any) -> str | None:
+    if not isinstance(url, str) or not url:
+        return None
+    parsed = urllib.parse.urlsplit(url)
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+        return None
+    return url
+
+
+def safe_json_for_script(value: Any) -> str:
+    return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
 
 
 def render_home_projects(projects: list[dict[str, Any]]) -> str:
@@ -2335,91 +2060,6 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
   renderPagination();
 }})();
 </script>"""
-
-
-def latest_articles(
-    articles: list[dict[str, Any]],
-    limit: int | None = None,
-) -> list[dict[str, Any]]:
-    """Return articles newest first; optionally keep only the first N."""
-    ordered = sorted(
-        articles,
-        key=lambda item: str(item.get("date", "")),
-        reverse=True,
-    )
-    return ordered if limit is None else ordered[:limit]
-
-
-def render_home_articles(articles: list[dict[str, Any]]) -> str:
-    cards = []
-    for article in latest_articles(articles, MAX_ARTICLES_HOMEPAGE):
-        tags_markup = "".join(
-            f'<li class="writing-tag">{escape_html(tag)}</li>'
-            for tag in article.get("tags", [])
-        )
-        title = str(article.get("title") or "Untitled article")
-        url = str(article.get("url") or "/blog/")
-        date = str(article.get("date") or "")
-        date_display = str(article.get("dateDisplay") or date)
-        read_time = str(article.get("readTime") or "")
-        date_and_read_time = " · ".join(
-            value for value in (date_display, read_time) if value
-        )
-        cards.append(
-            f"""          <article class="writing-card">
-            <div class="writing-meta">
-              <time datetime="{escape_html(date)}">{escape_html(date_and_read_time)}</time>
-            </div>
-            <h3 class="writing-title">
-              <a href="{escape_html(url)}">{escape_html(title)}</a>
-            </h3>
-            <p class="writing-description">
-              {escape_html(article.get('description') or 'Read the full article for details.')}
-            </p>
-            <ul class="writing-tags" aria-label="Article topics">
-              {tags_markup}
-            </ul>
-            <a class="writing-arrow" href="{escape_html(url)}" aria-label="Read {escape_html(title)}">
-              Read more <span aria-hidden="true">→</span>
-            </a>
-          </article>"""
-        )
-    return "\n".join(cards)
-
-
-def render_blog_articles(articles: list[dict[str, Any]]) -> str:
-    records = []
-    for article in latest_articles(articles):
-        tags = "".join(
-            f'<span class="blog-post-tag">{escape_html(tag)}</span>'
-            for tag in article.get("tags", [])
-        )
-        title = str(article.get("title") or "Untitled article")
-        url = str(article.get("url") or "/blog/")
-        date = str(article.get("date") or "")
-        date_display = str(article.get("dateDisplay") or date)
-        read_time = str(article.get("readTime") or "")
-        description = str(article.get("description") or "")
-
-        records.append(
-            f"""          <article>
-            <a class="blog-post" href="{escape_html(url)}" aria-label="Read {escape_html(title)}">
-              <div class="blog-post-meta">
-                <time datetime="{escape_html(date)}">{escape_html(date_display)}</time><br />
-                {escape_html(read_time)}
-              </div>
-              <div>
-                <h3 class="blog-post-title">{escape_html(title)}</h3>
-                <p class="blog-post-description">{escape_html(description)}</p>
-                <div class="blog-post-tags" aria-label="Article topics">
-                  {tags}
-                </div>
-              </div>
-              <span class="blog-post-arrow" aria-hidden="true">→</span>
-            </a>
-          </article>"""
-        )
-    return "\n".join(records)
 
 
 def replace_between(
@@ -2566,190 +2206,9 @@ def inject_projects_page(
         count=1,
     )
 
-def inject_articles(
-    source: str,
-    articles: list[dict[str, Any]],
-    homepage: bool,
-) -> str:
-    start = (
-        "<!-- AUTO:HOME_ARTICLES:START -->"
-        if homepage
-        else "<!-- AUTO:BLOG_ARTICLES:START -->"
-    )
-    end = (
-        "<!-- AUTO:HOME_ARTICLES:END -->"
-        if homepage
-        else "<!-- AUTO:BLOG_ARTICLES:END -->"
-    )
-    container_class = "writing-list" if homepage else "blog-post-list"
-    rendered = (
-        render_home_articles(articles)
-        if homepage
-        else render_blog_articles(articles)
-    )
-
-    if source.count(start) == 1 and source.count(end) == 1:
-        updated, ok = replace_between(source, start, end, rendered)
-        if ok:
-            return updated
-
-    if source.count(start) or source.count(end):
-        log(
-            f"Incomplete or duplicate article markers for {container_class}; "
-            "skipped article injection",
-            "warn",
-        )
-        return source
-
-    containers = []
-    for opening in re.finditer(r"<div\b[^>]*>", source, re.I | re.S):
-        class_match = re.search(
-            r"\bclass\s*=\s*(['\"])(.*?)\1",
-            opening.group(0),
-            re.I | re.S,
-        )
-        if (
-            class_match
-            and container_class in class_match.group(2).split()
-        ):
-            containers.append(opening)
-
-    if len(containers) != 1:
-        log(
-            f"Expected one .{container_class} container; "
-            f"found {len(containers)}. Skipped article injection.",
-            "warn",
-        )
-        return source
-
-    opening = containers[0]
-    depth = 1
-    closing_start = None
-    div_tags = re.compile(r"</?div\b[^>]*>", re.I | re.S)
-
-    for tag in div_tags.finditer(source, opening.end()):
-        if tag.group(0).lower().startswith("</"):
-            depth -= 1
-        else:
-            depth += 1
-
-        if depth == 0:
-            closing_start = tag.start()
-            break
-
-    if closing_start is None:
-        log(
-            f"Could not find the closing </div> for .{container_class}.",
-            "warn",
-        )
-        return source
-
-    replacement = (
-        "\n          "
-        + start
-        + "\n"
-        + rendered
-        + "\n          "
-        + end
-        + "\n        "
-    )
-    log(f"Inserted article markers into .{container_class}", "ok")
-    return source[: opening.end()] + replacement + source[closing_start:]
-
-    opening = containers[0]
-    depth = 1
-    closing_start = None
-    div_tags = re.compile(r"</?div\b[^>]*>", re.I | re.S)
-
-    for tag in div_tags.finditer(source, opening.end()):
-        if tag.group(0).lower().startswith("</"):
-            depth -= 1
-        else:
-            depth += 1
-
-        if depth == 0:
-            closing_start = tag.start()
-            break
-
-    if closing_start is None:
-        log(
-            f"Could not find the closing </div> for .{container_class}.",
-            "warn",
-        )
-        return source
-
-    replacement = (
-        "\n          "
-        + start
-        + "\n"
-        + rendered
-        + "\n          "
-        + end
-        + "\n        "
-    )
-    log(f"Inserted article markers into .{container_class}", "ok")
-    return source[: opening.end()] + replacement + source[closing_start:]
-
-def section_blocks(
-    source: str, class_name: str
-) -> list[tuple[int, int]]:
-    """Return balanced section ranges containing a class token."""
-    opening = re.compile(
-        r"<section\b(?=[^>]*\bclass\s*=\s*['\"][^'\"]*\b"
-        + re.escape(class_name)
-        + r"\b)[^>]*>",
-        re.I,
-    )
-    blocks = []
-    position = 0
-    while match := opening.search(source, position):
-        depth = 1
-        token = re.compile(r"</?section\b[^>]*>", re.I)
-        cursor = match.end()
-        for tag in token.finditer(source, cursor):
-            if tag.group(0).lower().startswith("</section"):
-                depth -= 1
-                if depth == 0:
-                    blocks.append((match.start(), tag.end()))
-                    position = tag.end()
-                    break
-            elif not tag.group(0).endswith("/>"):
-                depth += 1
-        else:
-            break
-    return blocks
-
-
-def remove_orphaned_divs_in_hero(source: str) -> tuple[str, int]:
-    heroes = section_blocks(source, "blog-hero")
-    if not heroes:
-        return source, 0
-
-    start, end = heroes[0]
-    hero = source[start:end]
-    pattern = re.compile(
-        r"(</h1>)\s*((?:</div>\s*)+)\s*(<p\s+class=\"blog-intro\")",
-        re.S | re.I,
-    )
-    match = pattern.search(hero)
-    if not match:
-        return source, 0
-
-    count = match.group(2).count("</div>")
-    fixed = pattern.sub(r"\1\n\n        \3", hero, count=1)
-    return source[:start] + fixed + source[end:], count
-
 
 def remove_stale_injected_content(source: str) -> str:
-    """Remove only known legacy injected containers and inline blog cards."""
-    source = re.sub(
-        r'<div class="blog-card"\s+style="[^"]*"[^>]*>.*?</div>\s*'
-        r'(?=<div class="blog-card"|<p class="blog-intro"|'
-        r'<a class="writing-link"|</div>|</section>|<!--)',
-        "",
-        source,
-        flags=re.S,
-    )
+    """Remove only known legacy injected containers."""
     source = re.sub(
         r'<div class="(?:blog-list|projects-list)-container">\s*</div>\s*',
         "",
@@ -2758,90 +2217,11 @@ def remove_stale_injected_content(source: str) -> str:
     return source
 
 
-BLOG_ARCHIVE_TEMPLATE = """  <section class="blog-archive" aria-labelledby="blog-archive-title">
-    <div class="blog-archive-inner">
-      <h2 id="blog-archive-title">Writing</h2>
-      <div class="blog-post-list">
-          <!-- AUTO:BLOG_ARTICLES:START -->
-          <!-- AUTO:BLOG_ARTICLES:END -->
-      </div>
-    </div>
-  </section>
-"""
-
-
-def repair_blog_layout(source: str) -> str:
-    """Repair known hero/archive damage while keeping the first valid archive."""
-    original = source
-    source, removed = remove_orphaned_divs_in_hero(source)
-    if removed:
-        log(
-            f"Removed {removed} orphaned closing div tag(s) from the blog hero",
-            "ok",
-        )
-
-    archives = section_blocks(source, "blog-archive")
-    for start, end in reversed(archives[1:]):
-        source = source[:start] + source[end:]
-
-    start_marker = "<!-- AUTO:BLOG_ARTICLES:START -->"
-    end_marker = "<!-- AUTO:BLOG_ARTICLES:END -->"
-    archives = section_blocks(source, "blog-archive")
-    if not archives:
-        if "</main>" in source:
-            source = source.replace(
-                "</main>",
-                BLOG_ARCHIVE_TEMPLATE + "  </main>",
-                1,
-            )
-        elif "</body>" in source:
-            source = source.replace(
-                "</body>",
-                BLOG_ARCHIVE_TEMPLATE + "</body>",
-                1,
-            )
-        archives = section_blocks(source, "blog-archive")
-
-    if archives and (
-        source.count(start_marker) != 1 or source.count(end_marker) != 1
-    ):
-        source = source.replace(start_marker, "").replace(end_marker, "")
-        archives = section_blocks(source, "blog-archive")
-        if archives:
-            archive_start, archive_end = archives[0]
-            archive = source[archive_start:archive_end]
-            listing = re.search(
-                r'<div\s+class="blog-post-list"[^>]*>',
-                archive,
-                re.I,
-            )
-            if listing:
-                position = archive_start + listing.end()
-                marker_pair = (
-                    f"\n          {start_marker}\n"
-                    f"          {end_marker}"
-                )
-                source = source[:position] + marker_pair + source[position:]
-
-    if source == original:
-        log("Blog layout already clean")
-    return source
-
-
-def generate_sitemap(
-    root: Path,
-    articles: list[dict[str, Any]],
-    dry_run: bool,
-) -> None:
+def generate_sitemap(root: Path, dry_run: bool) -> None:
     locations = [
         (f"{SITE_URL}/", "1.0"),
         (f"{SITE_URL}/projects/", "0.9"),
-        (f"{SITE_URL}/blog/", "0.8"),
     ]
-    locations.extend(
-        (f"{SITE_URL}{article['url']}", "0.6")
-        for article in articles
-    )
     xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -3117,9 +2497,6 @@ def repair_homepage_background(source: str) -> tuple[str, bool]:
     """Keep the homepage surface dark and defer its dot layer to output.css."""
     original = source
 
-    # The homepage previously had an inline, high-contrast dot layer. Remove
-    # only that override so the shared stylesheet can render its own subtle,
-    # masked and animated background consistently with the blog page.
     inline_dot_override = re.compile(
         r"(?ims)^[ \t]*(?:/\*\s*Single blue dot layer\b.*?\*/[ \t]*\n)?"
         r"[ \t]*body\s*::before\s*\{(?=[^{}]*radial-gradient)[^{}]*\}[ \t]*\n?"
@@ -3231,7 +2608,7 @@ def fix_safe(
                 updated,
                 "description",
                 "The requested page could not be found. Return to the "
-                "portfolio, projects, or writing archive.",
+                "portfolio or projects archive.",
             )
 
         page_parser = PageParser()
@@ -3341,12 +2718,21 @@ def cleanup_old_backups(root: Path, keep_days: int = 30) -> int:
             log(f"Could not remove old backup {snapshot}: {error}", "warn")
     return removed
 
+
 def build_site(root: Path, args: argparse.Namespace) -> int:
-    articles = load_articles(root)
+    raw_projects = load_projects(root)
+    if raw_projects:
+        log(f"Loaded {len(raw_projects)} project(s) from projects.json")
+    else:
+        log("No projects.json found; project injection skipped", "warn")
+
+    projects = [
+        enrich_project(project, args.no_fetch) for project in raw_projects
+    ]
+
     targets = [
-        root / "articles.json",
         root / "index.html",
-        root / "blog" / "index.html",
+        root / "projects" / "index.html",
         root / "sitemap.xml",
         root / "robots.txt",
         root / "site.webmanifest",
@@ -3354,27 +2740,10 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
     ]
     targets.extend(html_files(root))
 
-    for folder in (
-        root / "blog"
-    ).iterdir() if (root / "blog").exists() else []:
-        if folder.is_dir():
-            targets.extend(
-                folder / name
-                for name in (
-                    f"{folder.name}.html",
-                    "article.html",
-                    "post.html",
-                    "index.html",
-                )
-            )
-
     snapshot = backup_paths(root, targets, args.dry_run)
     safe_changes = fix_safe(root, args.dry_run, create_backup=False)
     if safe_changes:
         log(f"Applied or proposed {safe_changes} safe repository repair(s)")
-
-    renamed = repair_blog_filenames(root, args.dry_run)
-    articles = article_data_repair(root, articles, renamed, args.dry_run)
 
     for page in html_files(root):
         source = page.read_text(encoding="utf-8")
@@ -3382,37 +2751,22 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         if updated != source:
             atomic_write(page, updated, args.dry_run)
 
-    home = root / "index.html"
-    source = home.read_text(encoding="utf-8")
-    updated = remove_stale_injected_content(source)
-    updated = inject_articles(updated, articles, homepage=True)
-    if (
-        updated == source
-        and not re.search(r"AUTO:HOME_ARTICLES:START", source)
-    ):
-        log(
-            "Homepage article markers not found; other build outputs continue",
-            "warn",
-        )
-    atomic_write(home, updated, args.dry_run)
+    if projects:
+        home = root / "index.html"
+        source = home.read_text(encoding="utf-8")
+        updated = remove_stale_injected_content(source)
+        updated = inject_project_home(updated, projects)
+        atomic_write(home, updated, args.dry_run)
 
-    blog_page = root / "blog" / "index.html"
-    if not blog_page.exists():
-        log("blog/ directory removed; skipping blog build steps.")
-        blog_page = None
+        projects_page = root / "projects" / "index.html"
+        if projects_page.exists():
+            projects_source = projects_page.read_text(encoding="utf-8")
+            updated_page = inject_projects_page(projects_source, projects)
+            atomic_write(projects_page, updated_page, args.dry_run)
+        else:
+            log("projects/index.html not found; skipping paginated project injection", "warn")
 
-    blog_source = remove_stale_injected_content(
-        blog_page.read_text(encoding="utf-8")
-    )
-    blog_source = repair_blog_layout(blog_source)
-    blog_source = inject_articles(
-        blog_source,
-        articles,
-        homepage=False,
-    )
-    atomic_write(blog_page, blog_source, args.dry_run)
-
-    generate_sitemap(root, articles, args.dry_run)
+    generate_sitemap(root, args.dry_run)
     generate_robots(root, args.dry_run)
 
     if snapshot:
@@ -3432,6 +2786,7 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         if item.severity in {"Critical", "High"}
     ]
     return 1 if errors else 0
+
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -3467,15 +2822,15 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
         help="Restore the latest build snapshot.",
     )
     parser.add_argument(
-        "--fix-blog",
-        action="store_true",
-        help="Repair only duplicate article markers in blog/index.html.",
-    )
-    parser.add_argument(
         "--check-external",
         action="store_true",
         help="Opt in to checking external links "
         "(network requests may be slow or blocked).",
+    )
+    parser.add_argument(
+        "--no-fetch",
+        action="store_true",
+        help="Skip GitHub / Hugging Face API metadata refresh.",
     )
     parser.add_argument(
         "--report",
@@ -3496,18 +2851,6 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.rollback:
         rollback(root)
-        return 0
-
-    if args.fix_blog:
-        page = root / "blog" / "index.html"
-        if not page.exists():
-            raise SiteError("blog/index.html not found")
-        source = page.read_text(encoding="utf-8")
-        backup_paths(root, [page], args.dry_run)
-        updated = repair_blog_layout(
-            remove_stale_injected_content(source)
-        )
-        atomic_write(page, updated, args.dry_run)
         return 0
 
     if args.fix_safe:
