@@ -1,5 +1,20 @@
 [
   {
+    "id": "holdout-ledger",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/Holdout-Ledger",
+    "title": "Holdout Ledger: Dataset Leakage Audit Workbench",
+    "description": "A local workbench for inspecting text and entity overlap across train, validation, and test splits. Includes an evidence dashboard, offline reports, SQLite audit snapshots, and reviewed repair plans that preserve every test record. CI checks track newly exposed holdout IDs; lexical detection limits are documented.",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "SQLite",
+      "MinHash",
+      "Dataset Evaluation",
+      "Docker"
+    ]
+  },
+  {
     "id": "agent-guardrails",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/agent-guardrails",
