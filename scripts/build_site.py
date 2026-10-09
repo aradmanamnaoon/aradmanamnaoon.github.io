@@ -45,7 +45,7 @@ HERO_IMAGE_ALT = (
 HERO_IMAGE_TITLE = "Seyyed Arad Hosseini Moghaddam headshot"
 HERO_IMAGE_WIDTH = 853
 HERO_IMAGE_HEIGHT = 1280
-MAX_PROJECTS_HOMEPAGE = 3
+MAX_PROJECTS_HOMEPAGE = 4
 PROJECTS_PER_PAGE = 6
 FAVICON_LINKS = """    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
