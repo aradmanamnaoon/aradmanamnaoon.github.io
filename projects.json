@@ -23,14 +23,6 @@
     "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"]
   },
   {
-    "id": "tool-failure-lab",
-    "source": "github",
-    "url": "https://github.com/aradmanamnaoon/tool-failure-lab",
-    "title": "Tool Failure Lab: Agent Regression Tests Under Tool Failures",
-    "description": "A Python test harness that injects repeatable tool errors, timeouts, and corrupt payloads, then checks completion claims against recorded evidence. Includes call and cost budgets, JSON reports, a CLI, and a FastAPI endpoint. The included synthetic suite separates contract compliance from task completion.",
-    "tags": ["Python", "Pydantic", "FastAPI", "Agent Evaluation", "Fault Injection", "pytest"]
-  },
-  {
     "id": "persian-lm-from-scratch",
     "source": "hf_model",
     "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
