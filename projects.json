@@ -1,5 +1,21 @@
 [
   {
+    "id": "cohortseal",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/cohortseal",
+    "title": "CohortSeal",
+    "description": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.",
+    "tags": [
+      "Python",
+      "FastAPI",
+      "SQLite",
+      "MONAI",
+      "DICOM",
+      "Hugging Face",
+      "Medical Imaging"
+    ]
+  },
+  {
     "id": "holdout-ledger",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/Holdout-Ledger",
@@ -20,7 +36,16 @@
     "url": "https://github.com/aradmanamnaoon/agent-guardrails",
     "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents",
     "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.",
-    "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"]
+    "tags": [
+      "Agent Skills",
+      "AI Safety",
+      "Claude Code",
+      "Cursor",
+      "Codex",
+      "SKILL.md",
+      "Open Source",
+      "Guardrails"
+    ]
   },
   {
     "id": "persian-lm-from-scratch",
@@ -28,7 +53,13 @@
     "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
     "title": "Persian GPT — 110M Transformer From Scratch",
     "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation.",
-    "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"]
+    "tags": [
+      "PyTorch",
+      "Transformers",
+      "Causal LM",
+      "BPE",
+      "Persian NLP"
+    ]
   },
   {
     "id": "ai-research-assistant-platform",
@@ -36,7 +67,14 @@
     "url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform",
     "title": "AI Research Assistant Platform",
     "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.",
-    "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"]
+    "tags": [
+      "LangGraph",
+      "LangChain",
+      "LangSmith",
+      "ChromaDB",
+      "FastAPI",
+      "Docker"
+    ]
   },
   {
     "id": "medical-image-segmentation",
@@ -44,7 +82,13 @@
     "url": "https://github.com/aradmanamnaoon/medical-image-segmentation",
     "title": "3D Cardiac MRI Segmentation",
     "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net.",
-    "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"]
+    "tags": [
+      "PyTorch",
+      "MONAI",
+      "3D U-Net",
+      "Medical Imaging",
+      "DiceCELoss"
+    ]
   },
   {
     "id": "jibay2-medical-v2",
@@ -52,7 +96,13 @@
     "url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2",
     "title": "Jibay2 Medical — Clinical Note Summarization",
     "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.",
-    "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"]
+    "tags": [
+      "QLoRA",
+      "Unsloth",
+      "TRL",
+      "PEFT",
+      "Clinical NLP"
+    ]
   },
   {
     "id": "messy2json-qwen-0.5b",
@@ -60,7 +110,13 @@
     "url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b",
     "title": "Messy2JSON — Lightweight Structured Extraction",
     "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.",
-    "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"]
+    "tags": [
+      "Qwen2.5",
+      "QLoRA",
+      "PEFT",
+      "4-bit NF4",
+      "Structured Output"
+    ]
   },
   {
     "id": "persian-wikipedia-cleaned-for-persian-NLP",
@@ -68,7 +124,14 @@
     "url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP",
     "title": "Persian Wikipedia Cleaned For Persian NLP",
     "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.",
-    "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"]
+    "tags": [
+      "size_categories:100K<n<1M",
+      "format:json",
+      "modality:text",
+      "library:datasets",
+      "library:pandas",
+      "library:polars"
+    ]
   },
   {
     "id": "nllb-en-fa-psych-translation",
@@ -76,7 +139,13 @@
     "url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation",
     "title": "NLLB English-to-Persian Psychology Translation",
     "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.",
-    "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"]
+    "tags": [
+      "NLLB-200",
+      "Transformers",
+      "Machine Translation",
+      "Persian",
+      "Psychology"
+    ]
   },
   {
     "id": "messy2json-qwen-0.5b-lora",
@@ -84,6 +153,12 @@
     "url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora",
     "title": "Messy2Json Qwen 0.5B Lora",
     "description": "LoRA adapter for the Messy2JSON Qwen model.",
-    "tags": ["text-generation", "peft", "lora", "sft", "trl"]
+    "tags": [
+      "text-generation",
+      "peft",
+      "lora",
+      "sft",
+      "trl"
+    ]
   }
 ]
