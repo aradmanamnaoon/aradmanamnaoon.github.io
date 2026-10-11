@@ -53,3 +53,7 @@
  .interaction-rail,.hub-back-top,.hub-dialog,.site-toasts,.case-collapse,.case-interactive-toc,.case-actions,.project-selection-tools,.skill-compare-toolbar,.skill-controls,.project-choice-row,.focus-explorer {display:none!important;}
  .case-fold-body[hidden] {display:block!important;}
 }
+
+/* Deep-link targets remain below sticky navigation after filters reset. */
+#skills-directory .inventory-card[id],
+#projects-paginated .project[id] { scroll-margin-top: clamp(6rem, 10vh, 8rem); }

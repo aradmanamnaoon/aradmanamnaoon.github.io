@@ -2597,7 +2597,7 @@ def render_skills_directory(root: Path) -> str:
         )
     if tool_groups:
         cards.append(
-            '<article class="inventory-card inventory-tools" data-reveal="true"><h3>Libraries and tools</h3>'
+            '<article class="inventory-card inventory-tools" id="libraries_and_tools" data-reveal="true"><h3>Libraries and tools</h3>'
             '<div class="tools-grid">'
             + "".join(tool_groups)
             + "</div></article>"

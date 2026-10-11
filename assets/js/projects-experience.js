@@ -220,18 +220,11 @@
     }
   });
 
-  const topButton = document.createElement('button');
-  topButton.type = 'button';
-  topButton.className = 'archive-top';
-  topButton.setAttribute('aria-label', 'Back to top');
-  topButton.title = 'Back to top';
-  topButton.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 14 7-7 7 7M12 7v12"/></svg>';
-  document.body.append(topButton);
-  topButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: motionOK() ? 'smooth' : 'auto' }));
+  // The global interaction hub owns the single accessible Back to top button.
+  // Keep this archive's chapter tracker, without introducing a second control.
 
   function updateScroll() {
     paintQueued = false;
-    topButton.classList.toggle('is-visible', window.scrollY > 900);
     const cards = [...container.querySelectorAll('.project')];
     if (!cards.length) {
       chapter.textContent = '00 / ' + String(api.count()).padStart(2, '0');

@@ -5,6 +5,8 @@
   const explorer = document.getElementById('skills-explorer');
   if (!grid || !explorer) return;
   const cards = [...grid.querySelectorAll('.inventory-card')];
+  // Cache semantic content before auxiliary pin/copy buttons are added.
+  const searchCorpus = new Map(cards.map(card => [card, card.textContent.toLocaleLowerCase()]));
   const input = document.getElementById('skills-query');
   const count = document.getElementById('skills-count');
   const clear = document.getElementById('skills-clear');
@@ -25,7 +27,7 @@
     let visible = 0;
     for (const card of cards) {
       const groupOK = !groups[area] || groups[area].includes(card.id) || card.classList.contains('inventory-tools');
-      const queryOK = !query || card.textContent.toLocaleLowerCase().includes(query);
+      const queryOK = !query || searchCorpus.get(card).includes(query);
       const show = groupOK && queryOK;
       card.hidden = !show;
       card.classList.toggle('skill-filtered-out', !show);

@@ -6,7 +6,14 @@
  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
  const animate = () => !reduced.matches;
  const toast = (text, ok=true) => window.SiteInteractions?.toast(text,ok);
- const store=(key,fallback)=>{try {return JSON.parse(localStorage.getItem(key)||'null')||fallback;}catch(_){return fallback;}};
+ const store=(key,fallback)=>{
+   try {
+     const value=JSON.parse(localStorage.getItem(key)||'null');
+     return Array.isArray(value)
+       ? value.filter(item=>typeof item==='string' && item.length<150).slice(0,100)
+       : fallback;
+   } catch(_) { return fallback; }
+ };
  const save=(key,value)=>{try{localStorage.setItem(key,JSON.stringify(value));}catch(_){}};
  const button=(text,cls,label)=>{const b=document.createElement('button');b.type='button';b.className=cls;b.textContent=text;b.setAttribute('aria-label',label||text);return b};
  const heading=(text)=>{const h=document.createElement('h3');h.textContent=text;return h};
@@ -52,7 +59,7 @@
    const tools=document.createElement('div');tools.className='project-selection-tools';
    const savedButton=button('Saved projects: 0','hub-secondary-button','Show saved projects');
    const compareButton=button('Compare: 0 / 3','hub-secondary-button','Compare up to three projects');
-   const resetButton=button('Clear selection','hub-secondary-button','Clear saved and comparison selection');
+   const resetButton=button('Clear saved and comparison','hub-secondary-button','Clear saved and comparison selection');
    const set=new Set();
    tools.append(savedButton,compareButton,resetButton);
    const explorer=document.getElementById('archive-explorer');
@@ -85,7 +92,18 @@
        const note=document.createElement('small');note.textContent=project.note||'';
        card.append(note);
        const link=document.createElement('a');
-       link.href='/projects/#'+encodeURIComponent(project.id);link.textContent='Open project';card.append(link);
+       link.href='/projects/#'+encodeURIComponent(project.id);
+       link.textContent='Open project';
+       link.addEventListener('click',event=>{
+         event.preventDefault();
+         dialog.close();
+         const fragment='#'+encodeURIComponent(project.id);
+         // Trigger the archive's existing paging/filters reset even when this
+         // is already the current fragment. Native same-hash clicks do nothing.
+         if(location.hash===fragment) window.dispatchEvent(new Event('hashchange'));
+         else location.hash=fragment;
+       });
+       card.append(link);
        grid.append(card);
      });
      content.append(grid);
@@ -133,7 +151,8 @@
    const cards=[...container?.querySelectorAll('.inventory-card')||[]];
    if(!cards.length)return;
    const key='arad-pinned-skills-v1';
-   const selected=new Set(store(key,[]));
+   const validIds=new Set(cards.map(card=>card.id||'libraries_and_tools'));
+   const selected=new Set(store(key,[]).filter(id=>validIds.has(id)));
    const toolbar=document.createElement('div');toolbar.className='skill-compare-toolbar';
    const show=button('Pinned skills: 0','hub-secondary-button','Show pinned skills');
    const clear=button('Unpin all','hub-secondary-button','Clear pinned skills');
@@ -171,8 +190,18 @@
      if(!selected.size){const p=document.createElement('p');p.textContent='Pin skill groups to build a quick reference. Selections stay on this device.';target.append(p);}
      cards.filter(c=>selected.has(c.id||'libraries_and_tools')).forEach(card=>{
        const link=document.createElement('a');const id=card.id;
-       link.href=id?'#'+id:'#skills-directory';link.textContent=card.querySelector('h3')?.textContent||'Skill group';
-       link.addEventListener('click',()=>panel.close());target.append(link);
+       link.href='#'+id;
+       link.textContent=card.querySelector('h3')?.textContent||'Skill group';
+       link.addEventListener('click',event=>{
+         panel.close();
+         document.getElementById('skills-clear')?.click();
+         event.preventDefault();
+         history.replaceState(null,'','#'+encodeURIComponent(id));
+         requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({
+           behavior:animate()?'smooth':'auto',block:'start'
+         }));
+       });
+       target.append(link);
      });
      panel.showModal?.();
    }

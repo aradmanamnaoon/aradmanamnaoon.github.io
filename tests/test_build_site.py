@@ -75,7 +75,7 @@ class PortfolioGeneratorTests(unittest.TestCase):
                     "statistics_and_humanities_data", "programming", "rag",
                     "mobile_development", "software_and_delivery", "libraries_and_tools"):
             self.assertIn(key + ":", source)
-        self.assertIn('inventory-card inventory-tools', inventory)
+        self.assertIn('id="libraries_and_tools"', inventory)
 
     def test_skills_page_is_readable_and_accessible(self) -> None:
         page = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")

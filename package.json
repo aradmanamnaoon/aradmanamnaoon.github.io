@@ -6,7 +6,7 @@
   "scripts": {
     "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "test": "python3 -m unittest discover -s tests -v && node --test tests/test_service_worker.cjs tests/test_motion.cjs tests/test_projects_experience.cjs tests/test_site_refinements.cjs tests/test_brand_skill_icons.cjs tests/test_interactions.cjs tests/test_theme_controls.cjs",
+    "test": "python3 -m unittest discover -s tests -v && node --test tests/test_service_worker.cjs tests/test_motion.cjs tests/test_projects_experience.cjs tests/test_site_refinements.cjs tests/test_brand_skill_icons.cjs tests/test_interactions.cjs tests/test_theme_controls.cjs tests/test_site_audit.cjs",
     "build:site": "python3 scripts/build_site.py",
     "build": "npm run build:css && python3 scripts/build_site.py",
     "validate": "python3 scripts/build_site.py --validate"

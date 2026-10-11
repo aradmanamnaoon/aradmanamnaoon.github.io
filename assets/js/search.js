@@ -11,7 +11,14 @@
  const wrap=results.closest('.utility-results');
  const recentKey='arad-recent-search-v1';
  let index=null, pending=null, debounce=0;
- const recent=(()=>{try{return JSON.parse(localStorage.getItem(recentKey)||'[]');}catch(_){return [];}})();
+ const recent=(()=>{
+   try {
+     const values=JSON.parse(localStorage.getItem(recentKey)||'[]');
+     return Array.isArray(values)
+       ? values.filter(item=>typeof item==='string' && item.length<=120).slice(0,4)
+       : [];
+   } catch(_) { return []; }
+ })();
  const recentBox=document.createElement('div');recentBox.className='utility-hints';recentBox.setAttribute('aria-label','Recent searches');
  form.after(recentBox);
  function drawRecent(){

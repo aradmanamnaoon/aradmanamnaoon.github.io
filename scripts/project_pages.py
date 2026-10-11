@@ -78,6 +78,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     return f'''<!doctype html>
 <html lang="en">
 <head>
+  <script src="/assets/js/theme-init.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{esc(seo_title)}</title>
@@ -114,7 +115,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
   {schema}
   <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
-  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
+  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-audit-v2" />
 </head>
 <body class="project-case-study">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -138,7 +139,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
   <script src="/assets/js/interaction-hub.js?v=20261011-theme-v5" defer></script>
-  <script src="/assets/js/page-extras.js?v=20261011-interactive-v1" defer></script>
+  <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
 </body>
 </html>'''
 

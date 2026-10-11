@@ -58,10 +58,11 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
         f'<a href="{esc(item["url"])}">{esc(item["title"])}</a>'
         for item in search_entries(projects)[1:] if "#" not in item["url"]
     )
-    search_script = '<script src="/assets/js/search.js" defer></script>' if kind == "search" else ""
+    search_script = '<script src="/assets/js/search.js?v=20261011-search-v2" defer></script>' if kind == "search" else ""
     page = f'''<!doctype html>
 <html lang="en">
 <head>
+  <script src="/assets/js/theme-init.js"></script>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{esc(title)}</title>
@@ -75,7 +76,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="stylesheet" href="/assets/css/ux.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
   <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
-  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
+  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-audit-v2" />
 </head>
 <body class="utility-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -98,7 +99,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   {search_script}
   <script src="/assets/js/interaction-hub.js?v=20261011-theme-v5" defer></script>
-  <script src="/assets/js/page-extras.js?v=20261011-interactive-v1" defer></script>
+  <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
 </body>
 </html>'''
     return "\n".join(line.rstrip() for line in page.split("\n"))
