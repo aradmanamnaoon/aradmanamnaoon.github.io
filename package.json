@@ -1,14 +1,26 @@
 {
   "name": "my-intro-site",
   "version": "1.0.0",
-  "description": "",
+  "description": "Personal research portfolio for medical AI, machine learning, data science, and software projects.",
   "main": "index.js",
   "scripts": {
     "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "python3 -m unittest discover -s tests -v",
+    "build:site": "python3 scripts/build_site.py",
+    "build": "npm run build:css && python3 scripts/build_site.py",
+    "validate": "python3 scripts/build_site.py --validate"
   },
-  "keywords": [],
+  "keywords": [
+    "medical AI",
+    "deep learning",
+    "machine learning",
+    "medical imaging",
+    "data science",
+    "humanities data",
+    "NLP",
+    "AI portfolio"
+  ],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
