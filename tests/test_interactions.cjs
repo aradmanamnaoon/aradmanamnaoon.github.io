@@ -117,7 +117,7 @@ test('light theme tokens, legible surfaces and cache versions cover every route'
     'scripts/project_pages.py','scripts/utility_pages.py'
   ];
   for(const route of routes) {
-    assert.match(read(route), /interaction-hub\.css\?v=20261011-light-v2/, route);
+    assert.match(read(route), /interaction-hub\.css\?v=20261011-sound-v3/, route);
   }
 });
 test('light palette reaches WCAG AA contrast for regular text and controls', () => {

@@ -23,7 +23,8 @@
     root.dataset.themeSetting = settings.theme;
     const btn = document.getElementById('hub-theme');
     if (btn) {
-      btn.textContent = 'Theme: ' + settings.theme;
+      const state = btn.querySelector('.hub-rail-state');
+      if (state) state.textContent = settings.theme;
       btn.setAttribute('aria-label', 'Theme: ' + settings.theme + '. Switch to next theme');
     }
   };
@@ -35,32 +36,49 @@
   applyTheme();
   prefersDark.addEventListener?.('change', () => { if (settings.theme === 'system') applyTheme(); });
 
-  function tone(success = true) {
-    if (!settings.sound) return;
+  // Web Audio is created/resumed inside an explicit user gesture (sound toggle
+  // or test button). Scheduling while suspended is safe: currentTime freezes
+  // until the browser allows playback. Failed playback must never be reported
+  // as audible success.
+  function tone(success = true, preview = false) {
+    if (!settings.sound && !preview) return Promise.resolve(false);
     try {
       const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) return;
-      audioContext ||= new Audio();
-      if (audioContext.state === 'suspended') audioContext.resume();
-      const osc = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      osc.type = 'sine';
-      osc.frequency.value = success ? 680 : 340;
-      gain.gain.setValueAtTime(.0001, audioContext.currentTime);
-      gain.gain.exponentialRampToValueAtTime(.026, audioContext.currentTime + .012);
-      gain.gain.exponentialRampToValueAtTime(.0001, audioContext.currentTime + .105);
-      osc.connect(gain); gain.connect(audioContext.destination);
-      osc.start(); osc.stop(audioContext.currentTime + .115);
-    } catch (_) { /* audio is strictly optional */ }
+      if (!Audio) return Promise.resolve(false);
+      if (!audioContext || audioContext.state === 'closed') audioContext = new Audio();
+      const context = audioContext;
+      const resume = context.state === 'suspended' ? context.resume() : Promise.resolve();
+      const start = context.currentTime + .02;
+      const notes = success ? [523.25, 783.99] : [392, 293.66];
+      notes.forEach((frequency, index) => {
+        const osc = context.createOscillator();
+        const gain = context.createGain();
+        const at = start + index * .16;
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(frequency, at);
+        gain.gain.setValueAtTime(.0001, at);
+        gain.gain.exponentialRampToValueAtTime(.12, at + .018);
+        gain.gain.exponentialRampToValueAtTime(.0001, at + .21);
+        osc.connect(gain);
+        gain.connect(context.destination);
+        osc.start(at);
+        osc.stop(at + .23);
+      });
+      return Promise.resolve(resume).then(
+        () => context.state === 'running',
+        () => false
+      );
+    } catch (_) { return Promise.resolve(false); }
   }
   const toasts = document.createElement('div');
   toasts.id = 'site-toasts'; toasts.setAttribute('role', 'status');
   toasts.setAttribute('aria-live', 'polite'); toasts.setAttribute('aria-atomic', 'true');
   document.body.append(toasts);
-  function toast(message, success = true) {
+  function toast(message, success = true, silent = false) {
     const el = document.createElement('div');
     el.className = 'site-toast'; el.textContent = message;
-    toasts.append(el); tone(success);
+    toasts.append(el);
+    if (!silent) void tone(success);
     setTimeout(() => el.remove(), 3600);
   }
 
@@ -98,6 +116,7 @@
   const commands = () => actions.concat([
     {title: 'Cycle theme', subtitle: 'Dark / light / system', run: themeCycle},
     {title: 'Toggle sounds', subtitle: 'Off by default', run: soundCycle},
+    {title: 'Test sound', subtitle: 'Play a sample sound when enabled', run: testSound},
     {title: 'Copy page link', subtitle: 'Share the current page', run: copyPage},
     {title: 'Keyboard shortcuts', subtitle: 'Show accessibility shortcuts', run: openHelp}
   ]);
@@ -147,17 +166,27 @@
   });
 
   const help = document.createElement('dialog');
-  help.className = 'hub-dialog hub-help'; help.setAttribute('aria-label', 'Keyboard shortcuts');
-  help.innerHTML = '<div class="hub-dialog-head"><h2>Keyboard shortcuts</h2><button type="button" class="hub-close" aria-label="Close keyboard help">×</button></div>' +
-    '<dl class="hub-shortcuts"><dt>Ctrl / Cmd + K</dt><dd>Open command palette</dd>' +
-    '<dt>?</dt><dd>Show this help</dd><dt>Esc</dt><dd>Close a dialog</dd>' +
-    '<dt>Home</dt><dd>Scroll to page beginning</dd><dt>Tab / Shift + Tab</dt><dd>Move between controls</dd></dl>';
+  const touchHelp = matchMedia('(max-width: 760px), (pointer: coarse)');
+  help.className = 'hub-dialog hub-help'; help.setAttribute('aria-label', 'Website help');
+  help.innerHTML = '<div class="hub-dialog-head"><h2>Website help</h2><button type="button" class="hub-close" aria-label="Close help">×</button></div>' +
+    '<div class="hub-help-content"></div>';
   document.body.append(help);
   help.querySelector('.hub-close').addEventListener('click', () => close(help));
   help.addEventListener('click', e => { if (e.target === help) close(help); });
   help.addEventListener('close',()=>{beforeDialog?.focus?.({preventScroll:true});beforeDialog=null;});
   function openHelp() {
     if (!help.showModal) return;
+    const mobile = touchHelp.matches;
+    help.querySelector('h2').textContent = mobile ? 'Explore the website' : 'Keyboard shortcuts';
+    help.querySelector('.hub-help-content').innerHTML = mobile ?
+      '<p>Use the bottom bar to search pages, change theme, toggle sounds, or play a test sound.</p>' +
+      '<nav class="hub-help-links" aria-label="Quick navigation">' +
+      '<a href="/">Home</a><a href="/projects/">Projects</a><a href="/skills/">Skills</a>' +
+      '<a href="/search/">Search</a><a href="/#contact">Contact</a></nav>' +
+      '<p>Swipe through project filters and use the menu at the top to explore more pages. Tap a project symbol to animate it.</p>' :
+      '<dl class="hub-shortcuts"><dt>Ctrl / Cmd + K</dt><dd>Open command palette</dd>' +
+      '<dt>?</dt><dd>Show this help</dd><dt>Esc</dt><dd>Close a dialog</dd>' +
+      '<dt>Home</dt><dd>Scroll to page beginning</dd><dt>Tab / Shift + Tab</dt><dd>Move between controls</dd></dl>';
     beforeDialog = document.activeElement; help.showModal(); help.querySelector('.hub-close').focus();
   }
   async function copyPage() {
@@ -166,26 +195,66 @@
       toast('Page link copied');
     } catch (_) { toast('Copy unavailable in this browser', false); }
   }
-  function soundCycle() {
-    settings.sound = !settings.sound; save();
+  function updateSoundControls() {
     const button = document.getElementById('hub-sound');
-    if (button) { button.textContent = settings.sound ? 'Sound: on' : 'Sound: off'; button.setAttribute('aria-pressed', String(settings.sound)); }
-    toast(settings.sound ? 'UI sounds enabled' : 'UI sounds disabled');
+    if (button) {
+      const state = button.querySelector('.hub-rail-state');
+      if (state) state.textContent = settings.sound ? 'on' : 'off';
+      button.setAttribute('aria-pressed', String(settings.sound));
+      button.setAttribute('aria-label', settings.sound ? 'Turn UI sounds off' : 'Turn UI sounds on');
+    }
+    const test = document.getElementById('hub-test-sound');
+    if (test) {
+      test.disabled = false;
+      test.title = 'Preview a sound without changing preferences';
+    }
+  }
+  async function soundCycle() {
+    if (settings.sound) {
+      settings.sound = false;
+      save(); updateSoundControls();
+      toast('UI sounds disabled', true, true);
+      return;
+    }
+    // Call tone directly from this click handler to unlock audio on mobile.
+    settings.sound = true;
+    const playing = await tone(true);
+    if (!playing) {
+      settings.sound = false;
+      save(); updateSoundControls();
+      toast('Audio unavailable or blocked. Check browser site sound permissions.', false, true);
+      return;
+    }
+    save(); updateSoundControls();
+    toast('UI sounds enabled. Preview requested.', true, true);
+  }
+  async function testSound() {
+    // A direct tap can preview sound without changing the opt-in preference.
+    const playing = await tone(true, true);
+    toast(playing ? 'Sound preview requested. Check device volume if silent.' :
+      'Audio blocked. Check browser permissions and tab mute.',
+      playing, true);
   }
 
   const rail = document.createElement('div');
   rail.className = 'interaction-rail'; rail.setAttribute('role','group'); rail.setAttribute('aria-label','Website preferences and navigation');
-  rail.innerHTML = '<button id="hub-commands" type="button" aria-label="Open command palette">⌕ <span>Search</span></button>' +
-    '<button id="hub-theme" type="button" aria-label="Switch theme">Theme: dark</button>' +
-    '<button id="hub-sound" type="button" aria-pressed="false">Sound: off</button>' +
-    '<button id="hub-shortcuts" type="button" aria-label="Keyboard shortcuts help">?</button>';
+  rail.innerHTML = '<button id="hub-commands" type="button" aria-label="Search and navigate">' +
+      '<span class="hub-rail-icon" aria-hidden="true">⌕</span><span class="hub-rail-label">Search</span></button>' +
+    '<button id="hub-theme" type="button" aria-label="Switch theme">' +
+      '<span class="hub-rail-icon" aria-hidden="true">◐</span><span class="hub-rail-label">Theme</span><span class="hub-rail-state">dark</span></button>' +
+    '<button id="hub-sound" type="button" aria-label="Turn UI sounds on" aria-pressed="false">' +
+      '<span class="hub-rail-icon" aria-hidden="true">♫</span><span class="hub-rail-label">Sound</span><span class="hub-rail-state">off</span></button>' +
+    '<button id="hub-test-sound" type="button" aria-label="Play test sound">' +
+      '<span class="hub-rail-icon" aria-hidden="true">♪</span><span class="hub-rail-label">Test</span></button>' +
+    '<button id="hub-shortcuts" type="button" aria-label="Help and quick navigation">' +
+      '<span class="hub-rail-icon" aria-hidden="true">?</span><span class="hub-rail-label">Help</span></button>';
   document.body.append(rail);
   rail.querySelector('#hub-commands').addEventListener('click',openPalette);
   rail.querySelector('#hub-theme').addEventListener('click',themeCycle);
   rail.querySelector('#hub-sound').addEventListener('click',soundCycle);
+  rail.querySelector('#hub-test-sound').addEventListener('click',testSound);
   rail.querySelector('#hub-shortcuts').addEventListener('click',openHelp);
-  rail.querySelector('#hub-sound').setAttribute('aria-pressed',String(settings.sound));
-  rail.querySelector('#hub-sound').textContent=settings.sound?'Sound: on':'Sound: off';
+  updateSoundControls();
   applyTheme();
   document.addEventListener('keydown', e => {
     const typing = e.target.closest?.('input, textarea, select, [contenteditable="true"]');
@@ -257,5 +326,5 @@
     for(let i=0;i<18;i++){const piece=document.createElement('span');piece.style.setProperty('--i',String(i));span.append(piece);}
     document.body.append(span);setTimeout(()=>span.remove(),1150);
   }
-  window.SiteInteractions = Object.freeze({toast,openPalette,openHelp,copyPage,celebrate,themeCycle});
+  window.SiteInteractions = Object.freeze({toast,openPalette,openHelp,copyPage,celebrate,themeCycle,testSound});
 })();
