@@ -37,7 +37,7 @@ test('global interaction hub supports modal navigation, themes, preference persi
  for(const feature of [
   'Command palette','Keyboard shortcuts','hub-command-search','prefers-reduced-motion',
   'localStorage','dark', 'light','system','aria-selected','aria-live',
-  'requestAnimationFrame','audioContext','navigator.clipboard',
+  'requestAnimationFrame','navigator.clipboard',
   'site-toasts','hub-back-top','contact-form-status','celebrate()'
  ]) assert.ok(hub.includes(feature),feature);
  assert.match(hub,/e\.metaKey \|\| e\.ctrlKey/);
@@ -45,6 +45,9 @@ test('global interaction hub supports modal navigation, themes, preference persi
  assert.match(hub,/beforeDialog.*focus/);
  assert.match(hub,/navigator\.clipboard\.writeText/);
  assert.doesNotMatch(hub,/hub-cursor|follower\.style\.transform/);
+ assert.doesNotMatch(hub,/AudioContext|oscillator|soundCycle|testSound|hub-sound|hub-test-sound/);
+ assert.match(hub,/Cycle theme/);
+ assert.match(hub,/\.hub-rail-state/);
 });
 
 test('mobile and accessibility fallbacks are intentional',()=>{
@@ -117,7 +120,7 @@ test('light theme tokens, legible surfaces and cache versions cover every route'
     'scripts/project_pages.py','scripts/utility_pages.py'
   ];
   for(const route of routes) {
-    assert.match(read(route), /interaction-hub\.css\?v=20261011-sound-v4/, route);
+    assert.match(read(route), /interaction-hub\.css\?v=20261011-theme-v5/, route);
   }
 });
 test('light palette reaches WCAG AA contrast for regular text and controls', () => {
@@ -151,4 +154,19 @@ test('only native cursor and smoothly fading dot illumination remain', () => {
   assert.match(motion,/circle 520px at var\(--dot-pointer-x/);
   assert.match(motion,/background-size: 30px 30px/);
   assert.match(motion,/transparent 100%/);
+});
+
+test('mobile dock has 3 spaced controls with visible theme state and no audio remnants', () => {
+  const hub = read('assets/js/interaction-hub.js');
+  const css = read('assets/css/interaction-hub.css');
+  const pkg = read('package.json');
+  assert.match(css,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
+  assert.match(css,/\.interaction-rail button \{ display:inline-flex/);
+  assert.match(css,/gap:\.55rem/);
+  assert.match(css,/\.hub-rail-state \{display:inline-block/);
+  assert.match(hub,/hub-theme/);
+  assert.match(hub,/hub-shortcuts/);
+  assert.doesNotMatch(hub,/id="hub-sound"|id="hub-test-sound"/);
+  assert.doesNotMatch(css,/hub-test-sound|hub-sound/);
+  assert.doesNotMatch(pkg,/test_sound\.cjs/);
 });

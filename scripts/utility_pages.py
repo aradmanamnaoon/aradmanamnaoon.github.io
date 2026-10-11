@@ -74,7 +74,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v8" />
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-sound-v4" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-theme-v5" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="utility-page">
@@ -97,7 +97,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <script src="/animations.js?v=20261011-motion-exp-v7" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   {search_script}
-  <script src="/assets/js/interaction-hub.js?v=20261011-sound-v4" defer></script>
+  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v5" defer></script>
   <script src="/assets/js/page-extras.js?v=20261011-interactive-v1" defer></script>
 </body>
 </html>'''

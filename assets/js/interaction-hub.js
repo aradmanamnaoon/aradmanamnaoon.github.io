@@ -6,15 +6,16 @@
   const root = document.documentElement;
   const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)');
   const prefersDark = matchMedia('(prefers-color-scheme: dark)');
-  const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const storageKey = 'arad-ui-preferences-v1';
-  const settings = { theme: 'dark', sound: false };
+  const settings = { theme: 'dark' };
   try {
     const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
-    if (['dark', 'light', 'system'].includes(saved.theme)) settings.theme = saved.theme;
-    settings.sound = saved.sound === true;
+    if (['dark', 'light', 'system'].includes(saved?.theme)) settings.theme = saved.theme;
+    // Discard the obsolete audio preference from the old stored object.
+    if (saved && Object.prototype.hasOwnProperty.call(saved, 'sound')) {
+      localStorage.setItem(storageKey, JSON.stringify(settings));
+    }
   } catch (_) {}
-  let audioContext = null;
   const reduced = () => prefersReduced.matches;
   const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(settings)); } catch (_) {} };
   const applyTheme = () => {
@@ -24,8 +25,11 @@
     const btn = document.getElementById('hub-theme');
     if (btn) {
       const state = btn.querySelector('.hub-rail-state');
-      if (state) state.textContent = settings.theme;
-      btn.setAttribute('aria-label', 'Theme: ' + settings.theme + '. Switch to next theme');
+      const label = settings.theme[0].toUpperCase() + settings.theme.slice(1);
+      const next = { dark: 'Light', light: 'System', system: 'Dark' }[settings.theme];
+      if (state) state.textContent = label;
+      btn.title = 'Current theme: ' + label + '. Switch to ' + next;
+      btn.setAttribute('aria-label', 'Theme: ' + label + '. Switch to ' + next);
     }
   };
   function themeCycle() {
@@ -36,49 +40,14 @@
   applyTheme();
   prefersDark.addEventListener?.('change', () => { if (settings.theme === 'system') applyTheme(); });
 
-  // Web Audio is created/resumed inside an explicit user gesture (sound toggle
-  // or test button). Scheduling while suspended is safe: currentTime freezes
-  // until the browser allows playback. Failed playback must never be reported
-  // as audible success.
-  function tone(success = true, preview = false) {
-    if (!settings.sound && !preview) return Promise.resolve(false);
-    try {
-      const Audio = window.AudioContext || window.webkitAudioContext;
-      if (!Audio) return Promise.resolve(false);
-      if (!audioContext || audioContext.state === 'closed') audioContext = new Audio();
-      const context = audioContext;
-      const resume = context.state === 'suspended' ? context.resume() : Promise.resolve();
-      const start = context.currentTime + .02;
-      const notes = success ? [523.25, 783.99] : [392, 293.66];
-      notes.forEach((frequency, index) => {
-        const osc = context.createOscillator();
-        const gain = context.createGain();
-        const at = start + index * .16;
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(frequency, at);
-        gain.gain.setValueAtTime(.0001, at);
-        gain.gain.exponentialRampToValueAtTime(.12, at + .018);
-        gain.gain.exponentialRampToValueAtTime(.0001, at + .21);
-        osc.connect(gain);
-        gain.connect(context.destination);
-        osc.start(at);
-        osc.stop(at + .23);
-      });
-      return Promise.resolve(resume).then(
-        () => context.state === 'running',
-        () => false
-      );
-    } catch (_) { return Promise.resolve(false); }
-  }
   const toasts = document.createElement('div');
   toasts.id = 'site-toasts'; toasts.setAttribute('role', 'status');
   toasts.setAttribute('aria-live', 'polite'); toasts.setAttribute('aria-atomic', 'true');
   document.body.append(toasts);
-  function toast(message, success = true, silent = false) {
+  function toast(message) {
     const el = document.createElement('div');
     el.className = 'site-toast'; el.textContent = message;
     toasts.append(el);
-    if (!silent) void tone(success);
     setTimeout(() => el.remove(), 3600);
   }
 
@@ -115,8 +84,6 @@
   palette.addEventListener('close', () => { beforeDialog?.focus?.({preventScroll:true}); beforeDialog = null; });
   const commands = () => actions.concat([
     {title: 'Cycle theme', subtitle: 'Dark / light / system', run: themeCycle},
-    {title: 'Toggle sounds', subtitle: 'Off by default', run: soundCycle},
-    {title: 'Test sound', subtitle: 'Play a sample sound when enabled', run: testSound},
     {title: 'Copy page link', subtitle: 'Share the current page', run: copyPage},
     {title: 'Keyboard shortcuts', subtitle: 'Show accessibility shortcuts', run: openHelp}
   ]);
@@ -179,7 +146,7 @@
     const mobile = touchHelp.matches;
     help.querySelector('h2').textContent = mobile ? 'Explore the website' : 'Keyboard shortcuts';
     help.querySelector('.hub-help-content').innerHTML = mobile ?
-      '<p>Use the bottom bar to search pages, change theme, toggle sounds, or play a test sound.</p>' +
+      '<p>Use the bottom bar to search pages, choose the display theme, or open quick navigation.</p>' +
       '<nav class="hub-help-links" aria-label="Quick navigation">' +
       '<a href="/">Home</a><a href="/projects/">Projects</a><a href="/skills/">Skills</a>' +
       '<a href="/search/">Search</a><a href="/#contact">Contact</a></nav>' +
@@ -195,66 +162,19 @@
       toast('Page link copied');
     } catch (_) { toast('Copy unavailable in this browser', false); }
   }
-  function updateSoundControls() {
-    const button = document.getElementById('hub-sound');
-    if (button) {
-      const state = button.querySelector('.hub-rail-state');
-      if (state) state.textContent = settings.sound ? 'on' : 'off';
-      button.setAttribute('aria-pressed', String(settings.sound));
-      button.setAttribute('aria-label', settings.sound ? 'Turn UI sounds off' : 'Turn UI sounds on');
-    }
-    const test = document.getElementById('hub-test-sound');
-    if (test) {
-      test.disabled = false;
-      test.title = 'Preview a sound without changing preferences';
-    }
-  }
-  async function soundCycle() {
-    if (settings.sound) {
-      settings.sound = false;
-      save(); updateSoundControls();
-      toast('UI sounds disabled', true, true);
-      return;
-    }
-    // Call tone directly from this click handler to unlock audio on mobile.
-    settings.sound = true;
-    const playing = await tone(true);
-    if (!playing) {
-      settings.sound = false;
-      save(); updateSoundControls();
-      toast('Audio unavailable or blocked. Check browser site sound permissions.', false, true);
-      return;
-    }
-    save(); updateSoundControls();
-    toast('UI sounds enabled. Preview requested.', true, true);
-  }
-  async function testSound() {
-    // A direct tap can preview sound without changing the opt-in preference.
-    const playing = await tone(true, true);
-    toast(playing ? 'Sound preview requested. Check device volume if silent.' :
-      'Audio blocked. Check browser permissions and tab mute.',
-      playing, true);
-  }
-
   const rail = document.createElement('div');
   rail.className = 'interaction-rail'; rail.setAttribute('role','group'); rail.setAttribute('aria-label','Website preferences and navigation');
   rail.innerHTML = '<button id="hub-commands" type="button" aria-label="Search and navigate">' +
       '<span class="hub-rail-icon" aria-hidden="true">⌕</span><span class="hub-rail-label">Search</span></button>' +
-    '<button id="hub-theme" type="button" aria-label="Switch theme">' +
-      '<span class="hub-rail-icon" aria-hidden="true">◐</span><span class="hub-rail-label">Theme</span><span class="hub-rail-state">dark</span></button>' +
-    '<button id="hub-sound" type="button" aria-label="Turn UI sounds on" aria-pressed="false">' +
-      '<span class="hub-rail-icon" aria-hidden="true">♫</span><span class="hub-rail-label">Sound</span><span class="hub-rail-state">off</span></button>' +
-    '<button id="hub-test-sound" type="button" aria-label="Play test sound">' +
-      '<span class="hub-rail-icon" aria-hidden="true">♪</span><span class="hub-rail-label">Test</span></button>' +
+    '<button id="hub-theme" type="button" aria-label="Cycle display theme">' +
+      '<span class="hub-rail-icon" aria-hidden="true">◐</span><span class="hub-rail-label">Theme</span>' +
+      '<span class="hub-rail-state">Dark</span></button>' +
     '<button id="hub-shortcuts" type="button" aria-label="Help and quick navigation">' +
       '<span class="hub-rail-icon" aria-hidden="true">?</span><span class="hub-rail-label">Help</span></button>';
   document.body.append(rail);
   rail.querySelector('#hub-commands').addEventListener('click',openPalette);
   rail.querySelector('#hub-theme').addEventListener('click',themeCycle);
-  rail.querySelector('#hub-sound').addEventListener('click',soundCycle);
-  rail.querySelector('#hub-test-sound').addEventListener('click',testSound);
   rail.querySelector('#hub-shortcuts').addEventListener('click',openHelp);
-  updateSoundControls();
   applyTheme();
   document.addEventListener('keydown', e => {
     const typing = e.target.closest?.('input, textarea, select, [contenteditable="true"]');
@@ -307,5 +227,5 @@
     for(let i=0;i<18;i++){const piece=document.createElement('span');piece.style.setProperty('--i',String(i));span.append(piece);}
     document.body.append(span);setTimeout(()=>span.remove(),1150);
   }
-  window.SiteInteractions = Object.freeze({toast,openPalette,openHelp,copyPage,celebrate,themeCycle,testSound});
+  window.SiteInteractions = Object.freeze({toast,openPalette,openHelp,copyPage,celebrate,themeCycle});
 })();
