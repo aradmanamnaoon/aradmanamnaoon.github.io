@@ -13,7 +13,7 @@ const MIN_SYSTEM_MEMORY_GB = 8;
 const MIN_MAX_BUFFER_SIZE = 1024 * 1024 * 1024;
 const MIN_STORAGE_BUFFER_BINDING_SIZE = 128 * 1024 * 1024;
 
-document.addEventListener("DOMContentLoaded", () => {
+function initializeCvChatUi() {
   const openButtons = [
     document.getElementById("cv-chat-open"),
     document.getElementById("cv-chat-floating")
@@ -225,4 +225,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initializeCvChatUi, { once: true });
+} else {
+  initializeCvChatUi();
+}
