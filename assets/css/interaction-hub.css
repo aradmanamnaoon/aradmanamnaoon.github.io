@@ -1,0 +1,76 @@
+/* Site-wide progressive interaction layer. Dark is the existing default.
+   Appending one stylesheet prevents changes to the content and SEO templates. */
+.interaction-rail { position:fixed; z-index:1075; inset:auto auto 18px 18px; display:flex; flex-wrap:wrap; align-items:center; gap:5px; padding:5px; max-width:calc(100vw - 112px); border:1px solid rgba(149,193,239,.3); border-radius:15px; background:rgba(26,35,46,.96); color:#e7f0fa; box-shadow:0 7px 34px rgba(0,0,0,.17); }
+.interaction-rail button { min-height:38px; padding:7px 10px; border:0; border-radius:9px; background:transparent; color:inherit; font:600 .7rem/1.2 Inter,system-ui,sans-serif; cursor:pointer; white-space:nowrap; }
+.interaction-rail button:hover,.interaction-rail button:focus-visible { color:#f5fbff; background:#334860; }
+.interaction-rail button:focus-visible { outline:2px solid #bddfff; outline-offset:2px; }
+#hub-shortcuts { width:38px; font-size:1rem; }
+.site-toast { padding:.7rem .9rem; border:1px solid #81b4e1; border-radius:11px; background:#253a50; color:#f0f8ff; box-shadow:0 8px 30px rgba(0,0,0,.22); animation:hub-toast-in .23s ease-out both; font:.82rem/1.4 Inter,system-ui,sans-serif; }
+#site-toasts { position:fixed; z-index:1900; inset:auto 16px 90px auto; display:grid; gap:8px; max-width:min(350px,calc(100vw - 32px)); pointer-events:none; }
+@keyframes hub-toast-in { from {opacity:0;transform:translateY(12px)} to {opacity:1;transform:translateY(0)} }
+.hub-dialog { width:min(600px,calc(100% - 24px)); max-height:min(680px,90dvh); overflow-y:auto; position:fixed; inset:0; margin:auto; padding:clamp(1.15rem,4vw,1.75rem); background:#1a2532; color:#eaf2fa; border:1px solid rgba(125,180,240,.36); border-radius:20px; box-shadow:0 28px 100px rgba(0,0,0,.43); }
+.hub-dialog::backdrop { background:rgba(3,9,15,.73); backdrop-filter:blur(6px); }
+.hub-dialog-head { display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem; }
+.hub-dialog h2 { margin:0;font:600 clamp(1.25rem,3vw,1.6rem)/1.3 Inter,system-ui,sans-serif; }
+.hub-close { width:44px;height:44px;border:1px solid rgba(150,196,244,.3);border-radius:12px;background:#28384b;color:#e9f2fb;cursor:pointer;font-size:1.4rem; }
+.hub-label { display:block;margin:0 0 .5rem;font-size:.82rem;color:#b3c9dc; }
+#hub-command-search { width:100%;min-height:49px;padding:.7rem .85rem;color:#f2f8ff;background:#111a24;border:1px solid #557997;border-radius:12px;font:500 .94rem/1.3 Inter,system-ui,sans-serif; }
+.hub-command-results { display:grid;gap:6px;max-height:340px;overflow-y:auto;margin:1rem 0 0; }
+.hub-command { display:grid;gap:2px;text-align:left;padding:.8rem .9rem;min-height:56px;border:1px solid transparent;border-radius:11px;background:transparent;color:#edf4fb;cursor:pointer;font:500 .91rem/1.35 Inter,system-ui,sans-serif; }
+.hub-command small { color:#a1b8cd;font-size:.77rem; }
+.hub-command:hover,.hub-command[aria-selected="true"] { background:#2c4054;border-color:#618cb5; }
+.hub-hint { margin:.85rem 0 0;color:#a9c0d4;font-size:.72rem; }
+.hub-shortcuts { display:grid;grid-template-columns:minmax(125px,1fr) 1.6fr;gap:.9rem;align-items:baseline; }
+.hub-shortcuts dt { font:700 .8rem/1.4 Inter,system-ui,sans-serif;color:#bddbfa; }
+.hub-shortcuts dd { margin:0;color:#d6e3ee;font-size:.85rem; }
+.hub-back-top { position:fixed;z-index:1074;bottom:18px;right:18px;width:51px;height:51px;display:grid;place-items:center;padding:3px;border:1px solid rgba(136,186,233,.4);border-radius:50%;color:#d4e7fa;background:#26364a;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s ease,transform .25s ease,visibility .25s ease;cursor:pointer; }
+.hub-back-top.is-visible { opacity:1;visibility:visible;transform:none; }
+.hub-back-top:focus-visible { outline:2px solid #9fcfff;outline-offset:3px; }
+.hub-back-top svg {width:42px;height:42px;}
+.hub-ring-track {stroke:#455d73;stroke-width:2;fill:none;}
+.hub-ring-progress {stroke:#9fceff;stroke-width:2.7;fill:none;stroke-dasharray:125.66;stroke-dashoffset:calc(125.66 * (1 - var(--progress,0)));transform-origin:center;transform:rotate(-90deg);}
+.hub-ring-arrow {stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;}
+.hub-cursor {position:fixed;z-index:1100;left:0;top:0;width:5px;height:5px;opacity:0;background:#d1e7ff;border-radius:50%;pointer-events:none;transform:translate3d(-50px,-50px,0);transition:opacity .2s ease;}
+.hub-cursor.visible {opacity:.6;}
+.hub-reveal-ready {opacity:.92;transform:translateY(8px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.hub-reveal-ready.hub-revealed {opacity:1;transform:none;}
+.hub-celebration {position:fixed;inset:48% 40% auto;z-index:2100;pointer-events:none;}
+.hub-celebration span {position:absolute;width:6px;height:10px;left:50%;top:0;background:hsl(calc(190 + var(--i)*10) 66% 75%);animation:hub-celebrate .95s ease-out both;}
+@keyframes hub-celebrate {to{opacity:0;transform:translate(calc((var(--i) - 9)*15px),calc((var(--i) - 9)*7px)) rotate(200deg)}}
+
+/* Full-theme choices. Light controls change the page surfaces while retaining the
+   site's typography, layout, identity and blue accent color. */
+html[data-theme="light"] {color-scheme:light;--ux-bg:#edf2f7;--ux-ink:#172738;--ux-muted:#4c6277;--ux-line:rgba(34,61,87,.23);}
+html[data-theme="light"] body {background:#edf2f7!important;color:#1b2d40!important;}
+html[data-theme="light"] :is(header.site-header,header.nav-wrap,.nav-wrap,.site-nav,.utility-header,footer,.footer-nav,.site-header) {background-color:#e6edf5!important;color:#1b2d40!important;}
+html[data-theme="light"] :is(main,.shell,.utility-main,.utility-page,.project-case-study) {color:#1b2d40;}
+html[data-theme="light"] :is(.inventory-card,.inventory-tools,.tools-grid > p,.case-section,.metric,.project-card,.research-direction,.research-evidence-card,.faq-item,.surface-card,.project,.archive .project,.story-panel,.story-section,.archive-explorer,.skills-explorer,.utility-result,.utility-directory,.contact-card,.card) {background:#fff!important;color:#1c3045!important;border-color:#b5c7d8!important;}
+html[data-theme="light"] :is(h1,h2,h3,h4,p,li,strong,.title,.hero-bio,.desc,.lede,.context,.section-heading,.card-title,.project-note,.project-metric strong,.metric strong,.nav a,.site-nav-links a,.nav-links a,.brand) {color:inherit;}
+html[data-theme="light"] :is(.project-actions a,.pill-link,.project-link,.action,.utility-action,.nav-toggle,.archive-topic,.skills-areas button) {border-color:#8eaec9;}
+html[data-theme="light"] :is(.project-metric,.case-section .metric) {background:#eaf1f8!important;border-color:#b5c7d8!important;}
+html[data-theme="light"] :is(input,textarea,select) {background:#f8fbff!important;color:#1a2f43!important;border-color:#9fb7cd!important;}
+html[data-theme="light"] :is(.archive .project .type,.archive .project .desc,.archive .project .note,.project-note,.project-number,.eyebrow,.kicker,.muted) {color:#465e75!important;}
+html[data-theme="light"] :is(.contact-form-status,.footer-copyright) {color:#3e5368!important;}
+html[data-theme="light"] .site-toast {background:#dcecf8;color:#172a3a;}
+html[data-theme="light"] body::before {opacity:.35;}
+html[data-theme="light"] body::after {opacity:.8;}
+/* Explicit reduced-motion and coarse-pointer fallbacks. */
+@media (hover:none),(pointer:coarse) {.hub-cursor{display:none!important;}}
+@media (prefers-reduced-motion:reduce) {
+  .hub-cursor{display:none!important;}
+  .hub-reveal-ready{opacity:1;transform:none;transition:none;}
+  .hub-back-top,.hub-command,.site-toast,.hub-celebration span{animation:none!important;transition:none!important;}
+  .hub-celebration{display:none;}
+}
+@media(max-width:760px) {
+  .interaction-rail {left:8px;bottom:8px;max-width:calc(100vw - 76px);padding:3px;gap:2px;border-radius:12px;}
+  .interaction-rail button{padding:8px;font-size:.68rem;min-height:40px;}
+  .interaction-rail #hub-commands span{display:none;}
+  .hub-back-top{bottom:10px;right:10px;width:48px;height:48px;}
+  #site-toasts{bottom:66px;}
+  .hub-dialog{width:calc(100% - 16px);padding:1rem;max-height:88dvh;}
+}
+@media(max-width:380px) {
+  .interaction-rail button{font-size:.6rem;padding:7px 5px;}
+  .interaction-rail #hub-shortcuts{width:29px;}
+}

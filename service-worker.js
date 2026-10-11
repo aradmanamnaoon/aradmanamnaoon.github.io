@@ -1,11 +1,13 @@
 /* Network-first pages; a small cached fallback for offline navigation. */
-const CACHE = 'arad-portfolio-v7';
+const CACHE = 'arad-portfolio-v8';
 const CORE = [
   '/', '/projects/', '/skills/', '/search/',
   '/offline.html', '/dist/output.css', '/assets/css/ux.css', '/assets/css/motion.css',
   '/animations.js', '/assets/js/site-ui.js', '/assets/js/search.js', '/search-index.json',
   '/assets/js/projects-experience.js', '/assets/css/projects-experience.css',
-  '/assets/js/project-symbols.js', '/assets/js/brand-icons.js', '/assets/js/skills-experience.js', '/assets/css/skills-experience.css'
+  '/assets/js/project-symbols.js', '/assets/js/brand-icons.js', '/assets/js/skills-experience.js', '/assets/css/skills-experience.css',
+  '/assets/js/interaction-hub.js', '/assets/css/interaction-hub.css',
+  '/assets/js/page-extras.js', '/assets/css/page-extras.css'
 ];
 
 self.addEventListener('install', function (event) {

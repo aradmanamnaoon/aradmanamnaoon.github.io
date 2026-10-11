@@ -2345,6 +2345,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     },
     count: function() { return visibleProjects.length; },
     total: function() { return projects.length; },
+    all: function() { return projects.slice(); },
     currentPage: function() { return currentPage; },
     perPage: function() { return perPage; }
   };
