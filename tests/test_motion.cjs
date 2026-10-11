@@ -42,7 +42,7 @@ test('system reduced motion leaves evidence readable and skips animated intro', 
   assert.ok(!elements.some(item => item.tag === 'script'));
 });
 
-test('resuming a saved pause preserves the native cursor on a fine pointer', () => {
+test('retired pause state is ignored and no motion button is created', () => {
   const nodes = [];
   const html = { classList: classes(), scrollHeight: 1200 };
   const nav = { append(node) { nodes.push(node); } };
@@ -51,23 +51,26 @@ test('resuming a saved pause preserves the native cursor on a fine pointer', () 
     body: { append: node => nodes.push(node), classList: classes() },
     querySelector: selector => selector.includes('Primary navigation') ? nav : null,
     querySelectorAll: () => [],
-    createElement: tag => ({ tag, className: '', style: {}, classList: classes(),
-      setAttribute() {}, addEventListener(type, callback) { this[type] = callback; },
-      getContext: () => null }),
+    createElement: tag => ({
+      tag, className: '', style: {}, classList: classes(),
+      setAttribute() {}, addEventListener() {}, getContext: () => null,
+    }),
     addEventListener() {},
   };
   const context = {
     document, window: { onpageswap: null }, navigator: {},
     matchMedia: query => ({ matches: query.includes('pointer: fine'), addEventListener() {} }),
-    localStorage: { getItem: () => 'true', setItem() {} }, sessionStorage: {},
+    localStorage: { getItem: () => { throw Error('legacy preference must not be read'); } },
+    sessionStorage: {
+      getItem: key => key === 'arad-intro-seen' ? 'true' : null,
+      setItem() {}, removeItem() {},
+    },
     addEventListener() {}, innerHeight: 800, innerWidth: 1200, scrollY: 0,
     requestAnimationFrame() {}, performance: { now: () => 0 },
   };
   vm.runInNewContext(source, context);
-  assert.ok(html.classList.contains('motion-off'));
-  const toggle = nodes.find(node => node.className === 'motion-toggle');
-  toggle.click();
   assert.ok(!html.classList.contains('motion-off'));
+  assert.ok(!nodes.some(node => node.className === 'motion-toggle'));
   assert.ok(!nodes.some(node => node.className === 'motion-cursor'));
   assert.ok(!html.classList.contains('motion-pointer'));
 });
@@ -84,4 +87,14 @@ test('one dot grid, native cursor and viewport-wide desktop chapters', () => {
   assert.ok(!css.includes('cursor: none'));
   assert.ok(!source.includes("createElement('canvas')"));
   assert.ok(!source.includes("createElement('div'); cursor.className"));
+});
+
+test('pause control and legacy CSS are removed while reduced motion remains', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'assets/css/motion.css'), 'utf8');
+  assert.ok(!source.includes('function control()'));
+  assert.ok(!source.includes('arad-motion-paused'));
+  assert.ok(!source.includes('Pause motion'));
+  assert.ok(!css.includes('.motion-toggle'));
+  assert.ok(source.includes("reduced.addEventListener?.('change', preference)"));
+  assert.ok(source.includes("const enabled = () => !reduced.matches"));
 });

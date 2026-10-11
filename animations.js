@@ -5,9 +5,9 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const desktop = matchMedia('(min-width: 900px)');
-  let paused = false;
-  try { paused = localStorage.getItem('arad-motion-paused') === 'true'; } catch (_) {}
-  const enabled = () => !reduced.matches && !paused;
+  // Respect the operating system's reduced-motion preference.
+  // Ignore the retired user-controlled pause setting from older releases.
+  const enabled = () => !reduced.matches;
   let storyMedia = null, storyLoaded = false, storyPromise = null, storyObserver = null, detailReady = false;
 
   function preference() {
@@ -25,24 +25,6 @@
       detail();
       if (storyLoaded) pinStory(); else watchStory();
     }
-  }
-  function control() {
-    const nav = document.querySelector('nav[aria-label="Primary navigation"] .site-nav-links, nav[aria-label="Primary navigation"] .nav-links');
-    if (!nav) return;
-    const button = document.createElement('button');
-    button.type = 'button'; button.className = 'motion-toggle';
-    const label = () => {
-      button.disabled = reduced.matches;
-      button.setAttribute('aria-pressed', String(paused || reduced.matches));
-      button.textContent = reduced.matches ? 'Reduced motion' : paused ? 'Resume motion' : 'Pause motion';
-    };
-    label(); nav.append(button);
-    button.addEventListener('click', () => {
-      paused = !paused;
-      try { localStorage.setItem('arad-motion-paused', String(paused)); } catch (_) {}
-      label(); preference();
-    });
-    reduced.addEventListener?.('change', () => { label(); preference(); });
   }
   function intro() {
     if (!enabled()) return;
@@ -230,7 +212,6 @@
     gsap.registerPlugin(ScrollTrigger);
     storyMedia = gsap.matchMedia();
     storyMedia.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
-      if (paused) return;
       viewport.scrollLeft = 0; story.classList.add('story-pinned');
       const distance = () => Math.max(1, track.scrollWidth - viewport.clientWidth);
       // Viewport-wide panels keep every pinned chapter within the visible screen.
@@ -299,7 +280,8 @@
     heroMask(); reveals(); splitText(); counters(); pointer();
   }
   function init() {
-    control(); preference(); progress(); dots(); intro(); story(); routes();
+    reduced.addEventListener?.('change', preference);
+    preference(); progress(); dots(); intro(); story(); routes();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
