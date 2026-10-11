@@ -162,8 +162,8 @@ test('only native cursor and smoothly fading dot illumination remain', () => {
 });
 
 test('desktop Back to top does not overlap the CV assistant launcher', () => {
-  const css=read('assets/css/interaction-hub.css');
-  assert.match(css, /Desktop floating controls occupy distinct regions/);
+  const css = read('assets/css/interaction-hub.css');
+  assert.ok(css.includes('Desktop floating controls occupy distinct regions'));
   assert.ok(css.includes('.hub-back-top { left:18px; right:auto; bottom:84px; }'));
 });
 
