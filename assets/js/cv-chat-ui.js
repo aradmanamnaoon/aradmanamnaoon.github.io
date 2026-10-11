@@ -31,6 +31,7 @@ function initializeCvChatUi() {
   let deviceCheckPromise = null;
   let deviceSupported = false;
   let requirementMessageShown = false;
+  let lastLauncher = null;
 
   function addMessage(text, type) {
     const message = document.createElement("div");
@@ -148,22 +149,33 @@ function initializeCvChatUi() {
     return deviceCheckPromise;
   }
 
-  function openChat() {
+  function openChat(event) {
+    lastLauncher = event?.currentTarget || document.activeElement;
     windowBox.classList.add("active");
     windowBox.setAttribute("aria-hidden", "false");
-    void ensureDeviceSupport();
-  }
-
-  for (const button of openButtons) {
-    button.addEventListener("click", openChat);
-  }
-
-  if (closeButton) {
-    closeButton.addEventListener("click", () => {
-      windowBox.classList.remove("active");
-      windowBox.setAttribute("aria-hidden", "true");
+    openButtons.forEach(button => button.setAttribute("aria-expanded", "true"));
+    closeButton?.focus({ preventScroll: true });
+    void ensureDeviceSupport().then(supported => {
+      if (supported && windowBox.getAttribute("aria-hidden") === "false" &&
+          document.activeElement === closeButton) input.focus({ preventScroll: true });
     });
   }
+  function closeChat() {
+    if (windowBox.getAttribute("aria-hidden") === "true") return;
+    windowBox.classList.remove("active");
+    windowBox.setAttribute("aria-hidden", "true");
+    openButtons.forEach(button => button.setAttribute("aria-expanded", "false"));
+    if (lastLauncher?.isConnected) lastLauncher.focus({ preventScroll: true });
+  }
+  for (const button of openButtons) {
+    button.setAttribute("aria-controls", "cv-chat-window");
+    button.setAttribute("aria-expanded", "false");
+    button.addEventListener("click", openChat);
+  }
+  closeButton?.addEventListener("click", closeChat);
+  windowBox.addEventListener("keydown", event => {
+    if (event.key === "Escape") { event.preventDefault(); closeChat(); }
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();

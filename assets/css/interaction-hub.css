@@ -339,3 +339,11 @@ html[data-theme="light"] .hub-help-links a {background:#e8f2fb;color:#1d517e;bor
   .interaction-rail button,.interaction-rail #hub-shortcuts {padding:5px 1px;font-size:.62rem;}
   .interaction-rail .hub-rail-label {font-size:.62rem;}
 }
+
+/* Keep desktop back-to-top clear of the CV assistant launcher and panel. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  body:has(#cv-chat-floating) .hub-back-top { bottom: clamp(6.25rem, 10vh, 7.5rem); }
+  body:has(#cv-chat-window[aria-hidden="false"]) .hub-back-top {
+    opacity: 0; visibility: hidden; pointer-events: none;
+  }
+}

@@ -1,36 +1,29 @@
-name: Desktop Chromium UX Audit
-
+name: Desktop Browser Audit
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  desktop-audit:
+  smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Install desktop browser test dependencies
-        run: |
-          npm ci
-          npm install --no-save --package-lock=false playwright@1.56.1
-          npx playwright install --with-deps chromium
-      - name: Exercise desktop routes and controls
-        run: node tests/desktop_audit.cjs
-      - name: Upload failure screenshots
+      - name: Check Chrome availability
+        run: google-chrome --version
+      - name: Desktop layout and interaction checks
+        run: node tests/desktop-smoke.cjs
+      - name: Upload audit screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: desktop-audit-failures
-          path: artifacts/desktop-audit/
+          name: desktop-audit-screenshots
+          path: test-artifacts/
           if-no-files-found: ignore

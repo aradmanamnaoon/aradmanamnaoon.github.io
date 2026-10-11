@@ -2333,7 +2333,7 @@
     </footer>
 
     <!-- Portfolio note: project metrics are sourced from the linked public repositories and model cards. -->
-    <script src="./animations.js?v=20261011-motion-exp-v8" defer></script>
+    <script src="./animations.js?v=20261011-motion-exp-v7" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
     <script src="/assets/js/project-symbols.js?v=20261011-glyph-v8" defer></script>
 
@@ -2458,25 +2458,28 @@
       }
     </script>
 
-    <button id="cv-chat-floating" class="cv-chat-button">
+    <button id="cv-chat-floating" class="cv-chat-button" type="button" aria-controls="cv-chat-window" aria-expanded="false">
       🤖 Ask AI about Arad
     </button>
 
     <section
       id="cv-chat-window"
       class="cv-chat-window"
+      role="dialog"
+      aria-label="AI CV assistant"
+      aria-modal="false"
       aria-hidden="true"
     >
       <header class="cv-chat-header">
         <div>
           <p>CV Assistant</p>
         </div>
-        <button id="cv-chat-close" aria-label="Close chat">×</button>
+        <button id="cv-chat-close" type="button" aria-label="Close chat">×</button>
       </header>
 
-      <div id="cv-chat-status">Ready</div>
+      <div id="cv-chat-status" role="status" aria-live="polite">Ready</div>
 
-      <div id="cv-chat-messages" class="cv-chat-messages">
+      <div id="cv-chat-messages" class="cv-chat-messages" role="log" aria-live="polite" aria-relevant="additions">
         <div class="cv-chat-message ai">
           Hello 👋
           <br /><br />
@@ -2495,7 +2498,7 @@
       </form>
     </section>
     <script src="/assets/js/site-ui.js" defer></script>
-  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v6" defer></script>
+  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v5" defer></script>
   <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
 </body>
 </html>

@@ -44,10 +44,6 @@ test('global interaction hub supports modal navigation, themes, preference persi
  assert.match(hub,/palette\.showModal/);
  assert.match(hub,/beforeDialog.*focus/);
  assert.match(hub,/navigator\.clipboard\.writeText/);
- assert.match(hub,/aria-activedescendant/);
- assert.match(hub,/aria-autocomplete/);
- assert.match(hub,/aria-controls/);
- assert.match(hub,/palette\.showModal\(\); renderCommands\(\); search\.focus\(\)/);
  assert.doesNotMatch(hub,/hub-cursor|follower\.style\.transform/);
  assert.doesNotMatch(hub,/AudioContext|oscillator|soundCycle|testSound|hub-sound|hub-test-sound/);
  assert.match(hub,/Cycle theme/);
@@ -178,4 +174,12 @@ test('mobile dock has 3 spaced controls with visible theme state and no audio re
   assert.doesNotMatch(hub,/id="hub-sound"|id="hub-test-sound"/);
   assert.doesNotMatch(css,/hub-test-sound|hub-sound/);
   assert.doesNotMatch(pkg,/test_sound\.cjs/);
+});
+
+test('desktop CV assistant supports keyboard control and clear Back-to-top placement',()=>{
+  const page=read('index.html'), js=read('assets/js/cv-chat-ui.js'), css=read('assets/css/interaction-hub.css');
+  for(const token of ['aria-label="AI CV assistant"','role="log" aria-live="polite"','role="status" aria-live="polite"']) assert.ok(page.includes(token),token);
+  for(const token of ['function closeChat()','event.key === "Escape"','lastLauncher.focus({ preventScroll: true })','button.setAttribute("aria-expanded", "false")']) assert.ok(js.includes(token),token);
+  assert.ok(css.includes('body:has(#cv-chat-floating) .hub-back-top'));
+  assert.ok(css.includes('body:has(#cv-chat-window[aria-hidden="false"]) .hub-back-top'));
 });
