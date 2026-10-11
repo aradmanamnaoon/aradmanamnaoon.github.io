@@ -1,5 +1,132 @@
 [
   {
+    "id": "persian-lm-from-scratch",
+    "source": "hf_model",
+    "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
+    "title": "Persian GPT — 110M Transformer From Scratch",
+    "description": "A 110.4M-parameter decoder-only transformer trained end to end for Persian. The project covers a cleaned Wikipedia corpus, custom 32K BPE tokenizer, training pipeline, n-gram baselines, and held-out evaluation.",
+    "tags": [
+      "PyTorch",
+      "Transformers",
+      "Causal LM",
+      "BPE",
+      "Persian NLP"
+    ],
+    "homepage_featured": true,
+    "homepage_order": 1,
+    "type": "Flagship model · Persian NLP · From-scratch training",
+    "metrics": [
+      {
+        "value": "110.4M",
+        "label": "parameters"
+      },
+      {
+        "value": "244M",
+        "label": "training tokens"
+      },
+      {
+        "value": "14.52",
+        "label": "held-out perplexity"
+      }
+    ],
+    "note": "A research portfolio model; the held-out perplexity is a language-model metric, not an instruction-following benchmark.",
+    "research": {
+      "context": "This project demonstrates an end-to-end low-resource language-model workflow for Persian, from corpus preparation through tokenizer design, training, and held-out evaluation.",
+      "methods": [
+        "855,724 cleaned Persian Wikipedia documents",
+        "Custom 32K byte-pair encoding tokenizer",
+        "PyTorch decoder-only Transformer",
+        "N-gram baselines and held-out perplexity"
+      ],
+      "limitations": "The reported perplexity is specific to the held-out corpus and tokenizer. It is not a measure of factuality, instruction following, or downstream task performance."
+    }
+  },
+  {
+    "id": "medical-image-segmentation",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/medical-image-segmentation",
+    "title": "3D Cardiac MRI Segmentation",
+    "description": "A complete 3D cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. It covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, and voxel-level evaluation on Medical Segmentation Decathlon Task02 Heart.",
+    "tags": [
+      "PyTorch",
+      "MONAI",
+      "3D U-Net",
+      "Medical Imaging",
+      "DiceCELoss"
+    ],
+    "homepage_featured": true,
+    "homepage_order": 2,
+    "type": "Medical AI · 3D MRI · Deep learning",
+    "metrics": [
+      {
+        "value": "0.8821",
+        "label": "best validation Dice"
+      },
+      {
+        "value": "100",
+        "label": "training epochs"
+      },
+      {
+        "value": "3D U-Net",
+        "label": "architecture"
+      }
+    ],
+    "note": "Research project on a public benchmark dataset; not clinically validated or deployed for clinical decision-making.",
+    "research": {
+      "context": "The project investigates voxel-level cardiac structure segmentation from volumetric MRI, a setting where models must use three-dimensional spatial context.",
+      "methods": [
+        "Medical Segmentation Decathlon Task02 Heart",
+        "PyTorch and MONAI preprocessing",
+        "3D U-Net with DiceCELoss and AdamW",
+        "Mixed precision and sliding-window inference"
+      ],
+      "limitations": "The reported validation Dice is from this project’s benchmark split. The system has not been clinically validated and is not a clinical decision-support tool."
+    }
+  },
+  {
+    "id": "ai-research-assistant-platform",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform",
+    "title": "AI Research Assistant Platform",
+    "description": "A multi-agent research assistant built with LangGraph, ChromaDB RAG, FastAPI, and LangSmith. Planning, retrieval, parallel research, tool execution, citation-grounded synthesis, bounded reflection, persistent state, and streaming are covered in the public implementation.",
+    "tags": [
+      "LangGraph",
+      "LangChain",
+      "LangSmith",
+      "ChromaDB",
+      "FastAPI",
+      "Docker"
+    ],
+    "homepage_featured": true,
+    "homepage_order": 3,
+    "type": "Agentic AI · RAG · Evaluated system",
+    "metrics": [
+      {
+        "value": "103",
+        "label": "offline tests"
+      },
+      {
+        "value": "5",
+        "label": "agent roles"
+      },
+      {
+        "value": "REST + SSE",
+        "label": "API surface"
+      }
+    ],
+    "note": "Offline tests use a deterministic fake-LLM mode; the test count measures exercised software behavior, not answer quality.",
+    "research": {
+      "context": "This system explores how retrieval, web research, tools, synthesis, and bounded reflection can be orchestrated and tested as a stateful research workflow.",
+      "methods": [
+        "LangGraph stateful workflow with parallel branches",
+        "ChromaDB retrieval and local ONNX embeddings",
+        "SQLite persistence and FastAPI REST/SSE endpoints",
+        "Deterministic offline suite plus LangSmith evaluation tooling"
+      ],
+      "limitations": "The offline suite validates application contracts with deterministic model behavior. It does not establish comparative research-answer quality or clinical safety."
+    }
+  },
+  {
     "id": "cohortseal",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/cohortseal",
@@ -45,49 +172,6 @@
       "SKILL.md",
       "Open Source",
       "Guardrails"
-    ]
-  },
-  {
-    "id": "persian-lm-from-scratch",
-    "source": "hf_model",
-    "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
-    "title": "Persian GPT — 110M Transformer From Scratch",
-    "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation.",
-    "tags": [
-      "PyTorch",
-      "Transformers",
-      "Causal LM",
-      "BPE",
-      "Persian NLP"
-    ]
-  },
-  {
-    "id": "ai-research-assistant-platform",
-    "source": "github",
-    "url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform",
-    "title": "AI Research Assistant Platform",
-    "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.",
-    "tags": [
-      "LangGraph",
-      "LangChain",
-      "LangSmith",
-      "ChromaDB",
-      "FastAPI",
-      "Docker"
-    ]
-  },
-  {
-    "id": "medical-image-segmentation",
-    "source": "github",
-    "url": "https://github.com/aradmanamnaoon/medical-image-segmentation",
-    "title": "3D Cardiac MRI Segmentation",
-    "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net.",
-    "tags": [
-      "PyTorch",
-      "MONAI",
-      "3D U-Net",
-      "Medical Imaging",
-      "DiceCELoss"
     ]
   },
   {
