@@ -101,7 +101,7 @@ async function run() {
       await send('Page.navigate', { url: base + route });
       await waitUntil(async () => await js('document.readyState === "complete" && !!window.SiteInteractions && location.pathname === ' + JSON.stringify(route)), route);
       await delay(200);
-      const layout = await js('(() => {const d=document.documentElement; const h=document.querySelector("h1");return {title:document.title,width:innerWidth,actual:d.scrollWidth,heading:!!h,nav:!!document.querySelector(\'nav[aria-label="Primary navigation"]\'),rail:!!document.querySelector(".interaction-rail"),customCursor:!!document.querySelector(".motion-cursor")};})()');
+      const layout = await js('(() => {const d=document.documentElement; const h=document.querySelector("h1");return {title:document.title,width:innerWidth,actual:d.scrollWidth,heading:!!h,nav:!!document.querySelector(\'nav[aria-label="Primary navigation"], .utility-header\'),rail:!!document.querySelector(".interaction-rail"),customCursor:!!document.querySelector(".motion-cursor")};})()');
       assert.equal(layout.width, width, route + ' viewport');
       assert.ok(layout.heading && layout.nav && layout.rail, route + ' document shell');
       assert.ok(!layout.customCursor, route + ' unexpected custom cursor');
