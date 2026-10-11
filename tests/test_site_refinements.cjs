@@ -94,6 +94,21 @@ test('pointer halos are gone but small pointer-reactive dots are retained', () =
   assert.doesNotMatch(projectsStyle, /470px circle at var\(--archive-x/);
 });
 
+test('CV assistant stays desktop-only without removing desktop functionality', () => {
+  const html = read('index.html');
+  const styles = read('src/input.css');
+  for (const source of [html, styles]) {
+    assert.match(source, /@media \(max-width: 767px\), \(hover: none\) and \(pointer: coarse\)/);
+    for (const id of ['cv-chat-open', 'cv-chat-floating', 'cv-chat-window']) {
+      assert.ok(source.includes('#' + id), 'Missing mobile hide rule for ' + id);
+    }
+    assert.match(source, /display: none !important/);
+  }
+  assert.match(html, /id="cv-chat-open"/);
+  assert.match(html, /id="cv-chat-floating"/);
+  assert.match(html, /import\("\.\/assets\/js\/cv-chat-ui\.js"\)/);
+});
+
 test('symbol animation supports hover, keyboard, touch and reduced motion', () => {
   assert.match(symbolsStyle,/\.project-symbol:focus-visible/);
   assert.match(symbolsStyle,/\.project-symbol\.symbol-play/);

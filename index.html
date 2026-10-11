@@ -1643,12 +1643,16 @@
           padding: 1rem;
         }
 
-        #cv-chat-floating {
-          right: 0.75rem;
-          bottom: 0.75rem;
-          min-height: 48px;
-          padding-inline: 0.95rem;
-          font-size: 0.8rem;
+      }
+
+      /* CV assistant is desktop-only. Keep both launchers and any open panel
+         out of visual flow and the accessibility tree on mobile/touch devices. */
+      @media (max-width: 767px), (hover: none) and (pointer: coarse) {
+        #cv-chat-open,
+        #cv-chat-floating,
+        #cv-chat-window,
+        #cv-chat-window[aria-hidden="false"] {
+          display: none !important;
         }
       }
           </style>
