@@ -164,7 +164,7 @@ test('only native cursor and smoothly fading dot illumination remain', () => {
 test('desktop Back to top does not overlap the CV assistant launcher', () => {
   const css=read('assets/css/interaction-hub.css');
   assert.match(css, /Desktop floating controls occupy distinct regions/);
-  assert.match(css, /\\.hub-back-top \\{ left:18px; right:auto; bottom:84px; \\}/);
+  assert.ok(css.includes('.hub-back-top { left:18px; right:auto; bottom:84px; }'));
 });
 
 test('mobile dock has 3 spaced controls with visible theme state and no audio remnants', () => {
