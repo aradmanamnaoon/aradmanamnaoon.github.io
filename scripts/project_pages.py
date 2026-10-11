@@ -111,9 +111,9 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v8" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
   {schema}
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-theme-v5" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="project-case-study">

@@ -73,8 +73,8 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v8" />
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-theme-v5" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="utility-page">

@@ -21,11 +21,11 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image: radial-gradient(circle, rgb(170 221 255 / .95) 1px, transparent 1.5px);
+  background-image: radial-gradient(circle, rgb(218 241 255 / 1) 1px, transparent 1.5px);
   background-size: 30px 30px;
   opacity: 0;
   transition: opacity 220ms ease;
-  mask-image: radial-gradient(circle 520px at var(--dot-pointer-x, -1000px) var(--dot-pointer-y, -1000px), rgb(0 0 0 / .33) 0%, rgb(0 0 0 / .22) 16%, rgb(0 0 0 / .09) 40%, transparent 100%);
+  mask-image: radial-gradient(circle 520px at var(--dot-pointer-x, -1000px) var(--dot-pointer-y, -1000px), #000 0%, rgb(0 0 0 / .94) 10%, rgb(0 0 0 / .73) 24%, rgb(0 0 0 / .36) 46%, rgb(0 0 0 / .09) 70%, transparent 100%);
 }
 @media (hover: hover) and (pointer: fine) {
   body.dots-active:not(.motion-disabled)::after { opacity: 1; }

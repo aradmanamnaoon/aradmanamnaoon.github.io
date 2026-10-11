@@ -87,6 +87,8 @@ test('pointer halos are gone but small pointer-reactive dots are retained', () =
   assert.match(symbolsStyle, /body\.dots-active/);
   assert.match(symbolsStyle, /dot-pointer-x/);
   assert.match(symbolsStyle, /background-size:\s*30px 30px/);
+  assert.match(symbolsStyle, /mask-image: radial-gradient\(circle 520px/);
+  assert.match(symbolsStyle, /rgb\(0 0 0 \/ \.73\) 24%/);
   assert.match(symbolsStyle, /\.motion-tilt::before\s*\{\s*content:\s*none/);
   assert.match(projectsStyle, /\.archive \.project::before\s*\{\s*content:\s*none/);
   assert.doesNotMatch(projectsStyle, /470px circle at var\(--archive-x/);

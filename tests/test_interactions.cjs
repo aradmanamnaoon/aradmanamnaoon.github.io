@@ -120,7 +120,7 @@ test('light theme tokens, legible surfaces and cache versions cover every route'
     'scripts/project_pages.py','scripts/utility_pages.py'
   ];
   for(const route of routes) {
-    assert.match(read(route), /interaction-hub\.css\?v=20261011-theme-v5/, route);
+    assert.match(read(route), /interaction-hub\.css\?v=20261011-dotlight-v6/, route);
   }
 });
 test('light palette reaches WCAG AA contrast for regular text and controls', () => {
@@ -154,6 +154,10 @@ test('only native cursor and smoothly fading dot illumination remain', () => {
   assert.match(motion,/circle 520px at var\(--dot-pointer-x/);
   assert.match(motion,/background-size: 30px 30px/);
   assert.match(motion,/transparent 100%/);
+  assert.match(motion,/rgb\(218 241 255 \/ 1\)/);
+  assert.match(motion,/rgb\(0 0 0 \/ \.94\) 10%/);
+  assert.match(css,/body\.dots-active:not\(\.motion-disabled\)::after \{ opacity: 1; \}/);
+  assert.match(css,/rgb\(23 105 169 \/ \.96\)/);
 });
 
 test('mobile dock has 3 spaced controls with visible theme state and no audio remnants', () => {
