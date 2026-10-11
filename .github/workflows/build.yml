@@ -24,10 +24,24 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Run Build Script
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: Install CSS build dependencies
+        run: npm ci
+
+      - name: Build stylesheet
+        run: npm run build:css
+
+      - name: Run generator tests
+        run: npm test
+
+      - name: Build site
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: python scripts/build_site.py
+        run: npm run build
 
       - name: Commit and Push Changes
         run: |
