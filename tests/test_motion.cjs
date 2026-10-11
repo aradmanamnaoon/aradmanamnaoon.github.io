@@ -26,6 +26,7 @@ test('system reduced motion leaves evidence readable and skips animated intro', 
     querySelector: () => null,
     querySelectorAll: selector => selector === '[data-reveal="true"]' ? [evidence] : [],
     createElement: tag => ({ tag, className: '', style: {}, setAttribute() {}, getContext: () => null }),
+    addEventListener() {},
   };
   const context = {
     document, window: { onpageswap: null }, navigator: {},
