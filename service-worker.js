@@ -1,0 +1,55 @@
+/* Network-first pages; a small cached fallback for offline navigation. */
+const CACHE = 'arad-portfolio-v1';
+const CORE = [
+  '/', '/research/', '/projects/', '/skills/', '/search/',
+  '/offline.html', '/dist/output.css', '/assets/css/ux.css',
+  '/assets/js/site-ui.js', '/assets/js/search.js', '/search-index.json'
+];
+
+self.addEventListener('install', function (event) {
+  event.waitUntil(caches.open(CACHE).then(function (cache) {
+    return cache.addAll(CORE);
+  }).then(function () { return self.skipWaiting(); }));
+});
+self.addEventListener('activate', function (event) {
+  event.waitUntil(Promise.all([
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (key) { return key !== CACHE; })
+        .map(function (key) { return caches.delete(key); }));
+    }),
+    self.clients.claim()
+  ]));
+});
+self.addEventListener('fetch', function (event) {
+  const request = event.request;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin || request.method !== 'GET') return;
+
+  if (request.mode === 'navigate') {
+    event.respondWith(fetch(request).then(function (response) {
+      if (response.ok) {
+        const copy = response.clone();
+        event.waitUntil(caches.open(CACHE).then(function (cache) {
+          return cache.put(request, copy);
+        }));
+      }
+      return response;
+    }).catch(async function () {
+      const cached = await caches.match(request, { ignoreSearch: true });
+      if (cached) return cached;
+      const offline = await caches.match('/offline.html');
+      if (!offline) return Response.error();
+      return new Response(await offline.text(), {
+        status: 503, statusText: 'Service Unavailable',
+        headers: { 'Content-Type': 'text/html; charset=utf-8' }
+      });
+    }));
+    return;
+  }
+
+  if (CORE.includes(url.pathname)) {
+    event.respondWith(fetch(request).catch(function () {
+      return caches.match(request);
+    }));
+  }
+});

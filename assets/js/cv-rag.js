@@ -1232,11 +1232,6 @@ export async function clearCvRagCache() {
 
 
 
-    console.log(
-      "CV RAG cache cleared"
-    );
-
-
   }
 
   catch(error) {

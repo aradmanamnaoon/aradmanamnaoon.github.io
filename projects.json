@@ -39,6 +39,27 @@
         "N-gram baselines and held-out perplexity"
       ],
       "limitations": "The reported perplexity is specific to the held-out corpus and tokenizer. It is not a measure of factuality, instruction following, or downstream task performance."
+    },
+    "slug": "persian-gpt-from-scratch",
+    "caseStudy": {
+      "title": "Persian GPT from scratch: a 110M parameter language model",
+      "description": "A 110.4M-parameter Persian GPT trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and held-out perplexity evaluation.",
+      "lede": "An end-to-end Persian language-modeling experiment, from preparing a cleaned Wikipedia corpus and building a tokenizer to training a decoder-only Transformer and comparing held-out perplexity against n-gram baselines.",
+      "challenge": "Persian has fewer openly documented from-scratch training examples than high-resource languages. The goal here was to build a transparent, reproducible baseline workflow and document what the resulting language-model metric does and does not establish.",
+      "approach": [
+        "Cleaned and prepared 855,724 Persian Wikipedia documents, totaling about 244 million training tokens.",
+        "Trained a custom 32,000-token byte-pair encoding tokenizer on the prepared corpus.",
+        "Implemented and trained a 110.4M-parameter decoder-only Transformer in PyTorch for two epochs (7,450 training steps).",
+        "Evaluated the held-out split with loss and perplexity, then compared perplexity with unigram and interpolated 5-gram baselines."
+      ],
+      "results": [
+        "Held-out test perplexity: 14.52; validation perplexity: 14.02.",
+        "The held-out interpolated 5-gram baseline perplexity was 171.60, and the unigram baseline was 1,590.26.",
+        "The reported language-model metrics apply only to the documented corpus split and tokenizer."
+      ],
+      "limitations": "This is a small research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been evaluated for broad Persian fluency, safety, or downstream usefulness. Perplexity does not establish factuality or real-world performance.",
+      "sourceLabel": "Read the model card and download details",
+      "seoTitle": "Persian GPT From Scratch: 110M Model | Arad"
     }
   },
   {
@@ -81,6 +102,27 @@
         "Mixed precision and sliding-window inference"
       ],
       "limitations": "The reported validation Dice is from this project’s benchmark split. The system has not been clinically validated and is not a clinical decision-support tool."
+    },
+    "slug": "3d-cardiac-mri-segmentation",
+    "caseStudy": {
+      "title": "3D cardiac MRI segmentation with MONAI and a 3D U-Net",
+      "description": "A cardiac MRI segmentation pipeline built with PyTorch, MONAI, the Task02 Heart benchmark, a 3D U-Net, and sliding-window inference.",
+      "lede": "This project segments cardiac structures in volumetric MRI. It documents a complete research pipeline from NIfTI loading and preprocessing through mixed-precision training, sliding-window inference, and validation-set Dice evaluation.",
+      "challenge": "Cardiac MRI volumes contain three-dimensional spatial context, so the workflow needs to preserve volumetric information through preprocessing, training, and inference. The project focuses on a public benchmark task and transparent reporting of its validation result.",
+      "approach": [
+        "Used the Medical Segmentation Decathlon Task02 Heart dataset and NIfTI volumes.",
+        "Built preprocessing and data-loading steps with PyTorch and MONAI.",
+        "Trained a 3D U-Net with DiceCELoss and AdamW for 100 epochs, using mixed precision (FP16).",
+        "Applied sliding-window inference to full 3D volumes and evaluated voxel-level overlap with Dice."
+      ],
+      "results": [
+        "Best reported validation Dice: 0.8821 on the documented benchmark split.",
+        "Training configuration: 100 epochs, 3D U-Net, mixed-precision training.",
+        "The result is a project-reported benchmark validation metric, not a clinical performance estimate."
+      ],
+      "limitations": "This work has not been clinically validated, prospectively tested, or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The validation score describes only the project’s benchmark split.",
+      "sourceLabel": "View the source code and experiment notes",
+      "seoTitle": "3D Cardiac MRI Segmentation with MONAI | Arad"
     }
   },
   {
@@ -124,6 +166,27 @@
         "Deterministic offline suite plus LangSmith evaluation tooling"
       ],
       "limitations": "The offline suite validates application contracts with deterministic model behavior. It does not establish comparative research-answer quality or clinical safety."
+    },
+    "slug": "multi-agent-ai-research-assistant",
+    "caseStudy": {
+      "title": "Multi-agent AI research assistant with LangGraph and RAG",
+      "description": "A multi-agent research assistant using LangGraph, ChromaDB RAG, FastAPI, parallel research, cited synthesis, persistent state, and offline tests.",
+      "lede": "A full-stack research workflow that combines planning, retrieval, parallel research, tool execution, cited synthesis, bounded reflection, persistent state, and server-sent event streaming.",
+      "challenge": "Research tasks often require several different operations: break down a query, retrieve relevant material, gather evidence, synthesize findings, and preserve progress. This project explores how to orchestrate those steps in a testable, stateful application.",
+      "approach": [
+        "Used LangGraph to coordinate five roles and parallel research branches.",
+        "Connected ChromaDB retrieval with local ONNX embeddings and configurable research tools.",
+        "Implemented FastAPI REST and server-sent event (SSE) interfaces, with SQLite checkpointing for persistent workflow state.",
+        "Added citation-grounded synthesis, bounded reflection, LangSmith evaluation tooling, and deterministic offline tests."
+      ],
+      "results": [
+        "The repository reports 103 offline tests for application behavior in deterministic fake-LLM mode.",
+        "The workflow exposes REST and SSE interfaces and includes five agent roles.",
+        "Tests exercise software contracts; they are not a measure of answer correctness, evidence quality, or research usefulness."
+      ],
+      "limitations": "The deterministic fake-LLM test mode validates application behavior rather than live-model answer quality. The system has not been shown to outperform human research workflows or establish the correctness and completeness of generated research. Human verification of cited sources remains necessary.",
+      "sourceLabel": "Inspect the repository and implementation",
+      "seoTitle": "AI Research Assistant with LangGraph & RAG | Arad"
     }
   },
   {

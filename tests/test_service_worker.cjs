@@ -1,0 +1,63 @@
+const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
+const test = require('node:test');
+const vm = require('node:vm');
+
+const source = fs.readFileSync(path.join(__dirname, '..', 'service-worker.js'), 'utf8');
+const origin = 'https://aradmanamnaoon.github.io';
+
+function workerWith(fetcher, cachedOffline) {
+  const handlers = {};
+  const cache = { put: async () => {}, addAll: async () => {} };
+  const context = {
+    URL, Response, fetch: fetcher,
+    caches: {
+      open: async () => cache,
+      match: async (request) => request === '/offline.html' ? cachedOffline : undefined,
+      keys: async () => [], delete: async () => true,
+    },
+    self: {
+      location: { origin },
+      addEventListener: (name, handler) => { handlers[name] = handler; },
+      skipWaiting: async () => {}, clients: { claim: async () => {} },
+    },
+  };
+  vm.runInNewContext(source, context);
+  return handlers.fetch;
+}
+
+function dispatch(handler, url, method = 'GET', mode = 'navigate') {
+  let response;
+  const event = {
+    request: { url, method, mode },
+    respondWith(promise) { response = Promise.resolve(promise); },
+    waitUntil() {},
+  };
+  handler(event);
+  return response;
+}
+
+test('offline navigation returns branded content with 503', async () => {
+  const fetchEvent = workerWith(
+    async () => { throw new Error('offline'); },
+    new Response('<h1>You are offline.</h1>', { status: 200 }),
+  );
+  const response = await dispatch(fetchEvent, origin + '/new-page/');
+  assert.equal(response.status, 503);
+  assert.match(await response.text(), /You are offline/);
+});
+
+test('server 404 is passed through and not replaced by offline content', async () => {
+  const fetchEvent = workerWith(
+    async () => new Response('Not found', { status: 404 }),
+    new Response('Offline', { status: 200 }),
+  );
+  const response = await dispatch(fetchEvent, origin + '/missing/');
+  assert.equal(response.status, 404);
+});
+
+test('cross-origin requests are not intercepted', () => {
+  const fetchEvent = workerWith(async () => new Response('ok'), undefined);
+  assert.equal(dispatch(fetchEvent, 'https://formspree.io/f/example', 'POST', 'cors'), undefined);
+});

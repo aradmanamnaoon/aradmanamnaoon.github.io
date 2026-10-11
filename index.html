@@ -8,7 +8,7 @@
     <title>Seyyed Arad Hosseini Moghaddam | Medical AI &amp; Data Science</title>
     <meta
       name="description"
-      content="AI engineer focused on deep learning for medical imaging, machine learning, statistics, and data science for humanities research. Explore reproducible projects and methods."
+      content="AI engineer focused on medical imaging, deep learning, and statistics for humanities data. Explore machine-learning projects, methods, and results."
     />
     <meta name="author" content="Seyyed Arad Hosseini Moghaddam" />
     <meta name="theme-color" content="#14181f" />
@@ -39,7 +39,7 @@
     />
     <meta
       property="og:description"
-      content="Medical imaging and deep learning projects, statistics and humanities data science, Persian NLP, and reproducible AI research by Seyyed Arad Hosseini Moghaddam."
+      content="Medical imaging and deep learning, statistics for humanities data, Persian NLP, and reproducible machine-learning projects by Seyyed Arad Hosseini Moghaddam."
     />
     <meta property="og:url" content="https://aradmanamnaoon.github.io/" />
     <meta
@@ -63,7 +63,7 @@
     />
     <meta
       name="twitter:description"
-      content="Medical imaging and deep learning projects, statistics and humanities data science, Persian NLP, and reproducible AI research by Seyyed Arad Hosseini Moghaddam."
+      content="Medical imaging and deep learning, statistics for humanities data, Persian NLP, and reproducible machine-learning projects by Seyyed Arad Hosseini Moghaddam."
     />
     <meta
       name="twitter:image"
@@ -1461,30 +1461,6 @@
         font: inherit;
       }
 
-      /* Subtle reveal and motion preferences */
-      .reveal {
-        opacity: 1;
-        transform: none;
-      }
-
-      @media (prefers-reduced-motion: no-preference) {
-        .reveal {
-          animation: section-arrive 700ms var(--ease-standard) both;
-        }
-
-        @keyframes section-arrive {
-          from {
-            opacity: 0.72;
-            transform: translateY(12px);
-          }
-
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      }
-
       @media (prefers-reduced-motion: reduce) {
         *,
         *::before,
@@ -1691,7 +1667,8 @@
         }
       }
           </style>
-  </head>
+    <link rel="stylesheet" href="/assets/css/ux.css" />
+</head>
 
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
@@ -2016,6 +1993,7 @@
           <article
             id="persian-lm-from-scratch"
             class="surface-card project-card project-card-featured"
+            data-reveal="true"
           >
             <span id="persian-gpt" class="sr-only"></span>
             <p class="project-number">01 / Flagship model · Persian NLP · From-scratch training · PyTorch · Transformers</p>
@@ -2026,11 +2004,12 @@
             <div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>110.4M</strong><span>parameters</span></div><div class="project-metric"><strong>244M</strong><span>training tokens</span></div><div class="project-metric"><strong>14.52</strong><span>held-out perplexity</span></div></div>
             <p class="project-note">A research portfolio model; the held-out perplexity is a language-model metric, not an instruction-following benchmark.</p>
             <div class="project-tags"><span class="project-tag">PyTorch</span><span class="project-tag">Transformers</span><span class="project-tag">Causal LM</span><span class="project-tag">BPE</span><span class="project-tag">Persian NLP</span></div>
-            <div class="project-actions"><a class="project-link primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
+            <div class="project-actions"><a class="project-link primary" href="/projects/persian-gpt-from-scratch/">Read case study</a><a class="project-link " href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">View source ↗</a></div>
           </article>
           <article
             id="medical-image-segmentation"
             class="surface-card project-card"
+            data-reveal="true"
           >
             <span id="cardiac-mri" class="sr-only"></span>
             <p class="project-number">02 / Medical AI · 3D MRI · Deep learning · PyTorch · MONAI</p>
@@ -2041,11 +2020,12 @@
             <div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>0.8821</strong><span>best validation Dice</span></div><div class="project-metric"><strong>100</strong><span>training epochs</span></div><div class="project-metric"><strong>3D U-Net</strong><span>architecture</span></div></div>
             <p class="project-note">Research project on a public benchmark dataset; not clinically validated or deployed for clinical decision-making.</p>
             <div class="project-tags"><span class="project-tag">PyTorch</span><span class="project-tag">MONAI</span><span class="project-tag">3D U-Net</span><span class="project-tag">Medical Imaging</span><span class="project-tag">DiceCELoss</span></div>
-            <div class="project-actions"><a class="project-link primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
+            <div class="project-actions"><a class="project-link primary" href="/projects/3d-cardiac-mri-segmentation/">Read case study</a><a class="project-link " href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View source ↗</a></div>
           </article>
           <article
             id="ai-research-assistant-platform"
             class="surface-card project-card"
+            data-reveal="true"
           >
             <span id="research-assistant" class="sr-only"></span>
             <p class="project-number">03 / Agentic AI · RAG · Evaluated system · LangGraph · LangChain</p>
@@ -2056,7 +2036,7 @@
             <div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>103</strong><span>offline tests</span></div><div class="project-metric"><strong>5</strong><span>agent roles</span></div><div class="project-metric"><strong>REST + SSE</strong><span>API surface</span></div></div>
             <p class="project-note">Offline tests use a deterministic fake-LLM mode; the test count measures exercised software behavior, not answer quality.</p>
             <div class="project-tags"><span class="project-tag">LangGraph</span><span class="project-tag">LangChain</span><span class="project-tag">LangSmith</span><span class="project-tag">ChromaDB</span><span class="project-tag">FastAPI</span><span class="project-tag">Docker</span></div>
-            <div class="project-actions"><a class="project-link primary" href="https://github.com/aradmanamnaoon/ai-research-assistant-platform" target="_blank" rel="noopener noreferrer">View project ↗</a></div>
+            <div class="project-actions"><a class="project-link primary" href="/projects/multi-agent-ai-research-assistant/">Read case study</a><a class="project-link " href="https://github.com/aradmanamnaoon/ai-research-assistant-platform" target="_blank" rel="noopener noreferrer">View source ↗</a></div>
           </article>
           <!-- AUTO:HOME_PROJECTS:END -->
         </div>
@@ -2496,5 +2476,6 @@
         <button type="submit">Send</button>
       </form>
     </section>
-  </body>
+    <script src="/assets/js/site-ui.js" defer></script>
+</body>
 </html>

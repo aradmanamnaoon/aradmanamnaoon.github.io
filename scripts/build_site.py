@@ -34,6 +34,13 @@ from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any, Iterable
 
+SCRIPT_DIRECTORY = str(Path(__file__).resolve().parent)
+if SCRIPT_DIRECTORY not in sys.path:
+    sys.path.insert(0, SCRIPT_DIRECTORY)
+
+from project_pages import generate as generate_project_pages
+from utility_pages import generate as generate_utility_pages
+
 SITE_URL = "https://aradmanamnaoon.github.io"
 SITE_NAME = "ARADMANAMNAOON"
 GITHUB_USER = "aradmanamnaoon"
@@ -540,48 +547,25 @@ def validate_homepage_contract(
             "body {",
         )
 
-    inline_dot_layer = re.search(
-        r"(?is)body\s*::before\s*\{[^{}]*radial-gradient\s*\(",
-        source,
-    )
-    if inline_dot_layer:
-        report(
-            "Medium",
-            "Homepage / visual design",
-            "homepage-inline-dot-override",
-            "An inline body::before radial-gradient overrides the shared stylesheet's subtle dotted background.",
-            "Remove the custom body::before radial-gradient block and let dist/output.css draw the background.",
-            "body::before",
-        )
-    if not re.search(r"isolation\s*:\s*isolate\b", body_css):
-        report(
-            "Medium",
-            "Homepage / visual design",
-            "dot-grid-stacking-context",
-            "The body does not isolate the negative-z-index dot layers from the root background.",
-            "Add isolation: isolate to the body rule so the dot and glow layers paint above the body surface and behind content.",
-            "body {",
-        )
-
     stylesheet = root / "dist" / "output.css"
     if not stylesheet.is_file():
         report(
             "High",
             "Homepage / visual design",
-            "dot-grid-stylesheet",
-            "dist/output.css is missing, so its body pseudo-element dot layers cannot load.",
-            "Restore the built stylesheet referenced by index.html.",
+            "site-stylesheet",
+            "dist/output.css is missing, so shared design and motion styles cannot load.",
+            "Restore the built stylesheet referenced by the site pages.",
             "dist/output.css",
         )
     else:
         css = stylesheet.read_text(encoding="utf-8", errors="replace").lower()
-        if not all(token in css for token in ("body:before", "body:after", "radial-gradient", "--glow-x")):
+        if not all(token in css for token in ('[data-reveal="true"]', "motion-enabled", "prefers-reduced-motion", "view-transition")):
             report(
-                "High",
+                "Medium",
                 "Homepage / visual design",
-                "dot-grid-css-layers",
-                "dist/output.css is missing one or more dot-grid or cursor-glow declarations.",
-                "Restore the body pseudo-element dot grid, radial mask, and --glow-x mask position in the source stylesheet, then rebuild output.css.",
+                "motion-css",
+                "The compiled stylesheet is missing a scroll reveal, reduced-motion, or page-transition rule.",
+                "Keep progressive reveal styling, reduced-motion overrides, and the optional native view transition in src/input.css, then rebuild.",
                 "dist/output.css",
             )
 
@@ -590,8 +574,8 @@ def validate_homepage_contract(
         report(
             "High",
             "Homepage / visual design",
-            "dot-grid-animation-script",
-            "animations.js is missing, so mouse-reactive dot variables cannot update.",
+            "motion-script",
+            "animations.js is missing, so progressive scroll reveals cannot initialize.",
             "Restore the script referenced by the homepage.",
             "animations.js",
         )
@@ -599,14 +583,14 @@ def validate_homepage_contract(
         script = animation_script.read_text(encoding="utf-8", errors="replace")
         if not all(
             token in script
-            for token in ("mousemove", "--dot-x", "--dot-y", "--glow-x", "--glow-y")
+            for token in ("IntersectionObserver", "prefers-reduced-motion", 'data-reveal="true"', "is-revealed")
         ):
             report(
                 "High",
                 "Homepage / visual design",
-                "dot-grid-animation-hooks",
-                "animations.js is missing one or more mousemove CSS-variable hooks.",
-                "Restore the mousemove handler that updates --dot-x, --dot-y, --glow-x, and --glow-y.",
+                "scroll-reveal-hooks",
+                "animations.js is missing one or more scroll reveal or reduced-motion hooks.",
+                "Keep scroll reveal logic progressive, IntersectionObserver-based, and disabled when reduced motion is requested.",
                 "animations.js",
             )
 
@@ -907,7 +891,8 @@ def validate_html_page(
             )
 
     if (
-        path.name == "index.html"
+        not noindex
+        and path.name == "index.html"
         and path.parent.name not in {"projects"}
         and not re.search(r"property=[\"']og:image:width", source, re.I)
     ):
@@ -1514,6 +1499,11 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
                 f"{SITE_URL}/projects/",
                 f"{SITE_URL}/skills/",
             }
+            expected.update(
+                f"{SITE_URL}/projects/{project['slug'].strip('/')}/"
+                for project in load_projects(root)
+                if project.get("caseStudy") and project.get("slug")
+            )
             for url in sorted(locs - expected):
                 findings.append(
                     Finding(
@@ -1859,6 +1849,23 @@ def load_projects(root: Path) -> list[dict[str, Any]]:
         raise SiteError("Every project must be an object with a non-empty id")
     if len(ids) != len(set(ids)):
         raise SiteError("Project ids in projects.json must be unique")
+    case_study_slugs = [
+        str(item.get("slug") or "")
+        for item in data
+        if item.get("caseStudy")
+    ]
+    if any(not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", slug) for slug in case_study_slugs):
+        raise SiteError("Case-study slugs must be lowercase URL-safe words separated by hyphens")
+    if len(case_study_slugs) != len(set(case_study_slugs)):
+        raise SiteError("Case-study slugs must be unique")
+    for item in data:
+        if item.get("caseStudy") and not isinstance(item.get("caseStudy"), dict):
+            raise SiteError(f"Project {item['id']} caseStudy must be an object")
+        if item.get("caseStudy") and not all(
+            isinstance(item["caseStudy"].get(key), str) and item["caseStudy"].get(key).strip()
+            for key in ("title", "description", "lede", "challenge", "limitations")
+        ):
+            raise SiteError(f"Project {item['id']} caseStudy needs complete page copy")
     featured = [item for item in data if item.get("homepage_featured")]
     if len(featured) > MAX_PROJECTS_HOMEPAGE:
         raise SiteError(
@@ -1879,13 +1886,21 @@ def load_projects(root: Path) -> list[dict[str, Any]]:
 
 
 def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
-    actions = [
+    case_study = project.get("caseStudy")
+    slug = str(project.get("slug") or "").strip("/")
+    actions = []
+    if isinstance(case_study, dict) and slug:
+        actions.append(
+            {"url": f"/projects/{slug}/", "label": "Read case study", "primary": True, "external": False}
+        )
+    actions.append(
         {
             "url": project["url"],
-            "label": "View project ↗",
-            "primary": True,
+            "label": "View source ↗" if actions else "View project ↗",
+            "primary": not actions,
+            "external": True,
         }
-    ]
+    )
     homepage = project.get("homepage")
     if safe_external_url(homepage):
         actions.append(
@@ -1893,6 +1908,7 @@ def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
                 "url": homepage,
                 "label": "Live demo ↗",
                 "primary": False,
+                "external": True,
             }
         )
     return actions
@@ -1966,8 +1982,9 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
         )
         actions = "".join(
             f'<a class="project-link {"primary" if action.get("primary") else ""}" '
-            f'href="{escape_html(action["url"])}" target="_blank" '
-            f'rel="noopener noreferrer">{escape_html(action["label"])}</a>'
+            f'href="{escape_html(action["url"])}"'
+            + (' target="_blank" rel="noopener noreferrer"' if action.get("external") else "")
+            + f'>{escape_html(action["label"])}</a>'
             for action in project_actions(project)
         )
         project_id = str(project.get("id") or f"project-{index}")
@@ -1991,6 +2008,7 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
             f"""          <article
             id="{escape_html(project_id)}"
             class="surface-card project-card{featured}"
+            data-reveal="true"
           >
             {alias_markup}<p class="project-number">{index:02} / {escape_html(type_label)}</p>
             <h3 class="card-title">{escape_html(project.get('title') or 'Untitled project')}</h3>
@@ -2024,7 +2042,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
         )
     data = safe_json_for_script(payload)
 
-    template = """<div class="projects-paginated" id="projects-paginated" aria-live="polite"></div>
+    template = """<div class="projects-paginated" id="projects-paginated" role="region" aria-label="Projects, page 1"></div>
 <nav class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></nav>
 <style>
 .project-metrics {
@@ -2139,11 +2157,18 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
 (function() {
   var projects = __DATA__;
   var perPage = __PER_PAGE__;
-  var currentPage = 1;
+  function hashProjectId() {
+    try { return decodeURIComponent(window.location.hash.slice(1)); }
+    catch (_) { return ''; }
+  }
+  var hashId = hashProjectId();
+  var hashIndex = projects.findIndex(function(project) { return project.id === hashId; });
+  var currentPage = hashIndex >= 0 ? Math.floor(hashIndex / perPage) + 1 : 1;
   var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
   var container = document.getElementById('projects-paginated');
   var pagination = document.getElementById('projects-pagination');
   if (!container || !pagination) return;
+  container.setAttribute('tabindex', '-1');
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function(c) {
@@ -2161,7 +2186,8 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
       }).join('');
       var actions = (p.actions || []).map(function(a) {
         var cls = a.primary ? 'action primary' : 'action';
-        return '<a class="' + cls + '" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.label) + '</a>';
+        var external = a.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+        return '<a class="' + cls + '" href="' + esc(a.url) + '"' + external + '>' + esc(a.label) + '</a>';
       }).join('');
       var note = p.note ? '<p class="note">' + esc(p.note) + '</p>' : '';
       var metrics = (p.metrics || []).map(function(m) {
@@ -2237,7 +2263,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     var endItem = Math.min(currentPage * perPage, projects.length);
 
     pagination.innerHTML =
-      '<p class="pag-status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
+      '<p class="pag-status" role="status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
       '<div class="pag-controls">' + parts.join('') + '</div>';
 
     pagination.querySelectorAll('button[data-page]:not([disabled])').forEach(function(button) {
@@ -2247,7 +2273,10 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
           currentPage = page;
           renderProjects(page);
           renderPagination();
-          container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          container.setAttribute('aria-label', 'Projects, page ' + page);
+          container.focus({ preventScroll: true });
+          var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
         }
       });
     });
@@ -2255,6 +2284,20 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
 
   renderProjects(currentPage);
   renderPagination();
+  if (hashIndex >= 0) {
+    requestAnimationFrame(function() {
+      document.getElementById(hashId)?.scrollIntoView({ block: 'start' });
+    });
+  }
+  window.addEventListener('hashchange', function() {
+    var id = hashProjectId();
+    var index = projects.findIndex(function(project) { return project.id === id; });
+    if (index < 0) return;
+    currentPage = Math.floor(index / perPage) + 1;
+    renderProjects(currentPage);
+    renderPagination();
+    document.getElementById(id)?.scrollIntoView({ block: 'start' });
+  });
 })();
 </script>"""
 
@@ -2454,7 +2497,7 @@ def render_skills_directory(root: Path) -> str:
         cards.append(
             '<article class="inventory-card" id="'
             + escape_html(slug)
-            + '"><h3>'
+            + '" data-reveal="true"><h3>'
             + escape_html(title)
             + "</h3>"
             + (f"<p>{description}</p>" if description else "")
@@ -2482,7 +2525,7 @@ def render_skills_directory(root: Path) -> str:
         )
     if tool_groups:
         cards.append(
-            '<article class="inventory-card"><h3>Libraries and tools</h3>'
+            '<article class="inventory-card" data-reveal="true"><h3>Libraries and tools</h3>'
             '<div class="tools-grid">'
             + "".join(tool_groups)
             + "</div></article>"
@@ -2519,7 +2562,7 @@ def render_research_projects(projects: list[dict[str, Any]]) -> str:
         cards.append(
             '<article class="research-evidence-card" id="'
             + escape_html(project["id"])
-            + '"><p class="kicker">'
+            + '" data-reveal="true"><p class="kicker">'
             + escape_html(project.get("type", "Project"))
             + "</p><h3>"
             + escape_html(project.get("title", "Project"))
@@ -2558,13 +2601,16 @@ def remove_stale_injected_content(source: str) -> str:
     return source
 
 
-def generate_sitemap(root: Path, dry_run: bool) -> None:
+def generate_sitemap(
+    root: Path, dry_run: bool, project_routes: Iterable[str] = ()
+) -> None:
     locations = [
         (f"{SITE_URL}/", "1.0"),
         (f"{SITE_URL}/research/", "0.9"),
         (f"{SITE_URL}/projects/", "0.9"),
         (f"{SITE_URL}/skills/", "0.8"),
     ]
+    locations.extend((f"{SITE_URL}{route}", "0.7") for route in project_routes)
     xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
@@ -2585,6 +2631,51 @@ def generate_robots(root: Path, dry_run: bool) -> None:
         f"Sitemap: {SITE_URL}/sitemap.xml\n"
     )
     atomic_write(root / "robots.txt", content, dry_run)
+
+
+def generate_llms_txt(
+    root: Path, projects: list[dict[str, Any]], dry_run: bool
+) -> None:
+    featured = [project for project in projects if project.get("homepage_featured")]
+    work = []
+    for project in featured:
+        title = str(project.get("title") or "Project")
+        description = str(project.get("description") or "")
+        slug = str(project.get("slug") or "").strip("/")
+        if slug and isinstance(project.get("caseStudy"), dict):
+            work.append(
+                f"- [{title} case study]({SITE_URL}/projects/{slug}/): {description} "
+                f"[source project]({project['url']})"
+            )
+        else:
+            work.append(f"- [{title}]({project['url']}): {description}")
+    content = f"""# Seyyed Arad Hosseini Moghaddam
+
+AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. This portfolio supports academic review and prospective graduate study with verifiable project evidence, methods, and limitations.
+
+## Primary pages
+- [Research profile]({SITE_URL}/research/): Research interests, documented project evidence, methods, and limitations.
+- [Projects]({SITE_URL}/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, data work, and software.
+- [Skills and tools]({SITE_URL}/skills/): Full categorized skills inventory based on the portfolio CV knowledge base.
+
+## Flagship work
+{chr(10).join(work)}
+
+## Areas of work
+- Deep learning, machine learning, medical imaging, and 3D image segmentation.
+- Statistics, exploratory analysis, and data science for humanities-related datasets.
+- Python, SQL, PyTorch, TensorFlow, MONAI, Hugging Face, Transformers, PEFT, LoRA, and QLoRA.
+- NLP, Persian language modeling, machine translation, RAG, LangChain, LangGraph, LangSmith, and MCP.
+- FastAPI, Docker, MLflow, Git, GitHub Actions, web development, Django, PyQt6, and Flutter for Android and iOS.
+
+## Public profiles
+- [GitHub](https://github.com/{GITHUB_USER})
+- [Hugging Face](https://huggingface.co/{HF_USER})
+- [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam/)
+
+Completed projects are distinguished from research interests. Medical-imaging projects are not presented as clinically validated, and no undocumented academic affiliations are claimed.
+"""
+    atomic_write(root / "llms.txt", content, dry_run)
 
 
 def image_dimensions(path: Path) -> tuple[int, int] | None:
@@ -2946,14 +3037,6 @@ def fix_safe(
             updated, background_changed = repair_homepage_background(updated)
             if background_changed:
                 log("Restored the homepage surface and removed its inline dot override")
-        if relative == "404.html":
-            updated, _ = set_or_add_meta(
-                updated,
-                "description",
-                "The requested page could not be found. Return to the "
-                "portfolio or projects archive.",
-            )
-
         page_parser = PageParser()
         page_parser.feed(updated)
         is_noindex = any(
@@ -3078,7 +3161,17 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         root / "robots.txt",
         root / "site.webmanifest",
         root / ".gitignore",
+        root / "llms.txt",
+        root / "404.html",
+        root / "offline.html",
+        root / "search" / "index.html",
+        root / "search-index.json",
     ]
+    targets.extend(
+        root / "projects" / str(project["slug"]) / "index.html"
+        for project in projects
+        if project.get("caseStudy") and project.get("slug")
+    )
     targets.extend(html_files(root))
 
     snapshot = backup_paths(root, targets, args.dry_run)
@@ -3133,8 +3226,13 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         else:
             log("skills/index.html not found; skipping skills directory injection", "warn")
 
-    generate_sitemap(root, args.dry_run)
+    project_routes = generate_project_pages(
+        root, projects, SITE_URL, args.dry_run, atomic_write
+    )
+    generate_utility_pages(root, projects, args.dry_run, atomic_write)
+    generate_sitemap(root, args.dry_run, project_routes)
     generate_robots(root, args.dry_run)
+    generate_llms_txt(root, projects, args.dry_run)
 
     if snapshot:
         log(f"Backup snapshot: {snapshot}")

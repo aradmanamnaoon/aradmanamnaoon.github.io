@@ -1,16 +1,16 @@
 # Seyyed Arad Hosseini Moghaddam
 
-AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. The broader portfolio includes Persian NLP, language models, LLM fine-tuning, RAG, agentic AI, software engineering, and Flutter development.
+AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. This portfolio supports academic review and prospective graduate study with verifiable project evidence, methods, and limitations.
 
 ## Primary pages
-- [Research profile](https://aradmanamnaoon.github.io/research/): Research interests, documented project evidence, methods, and limitations for academic review and prospective graduate study.
-- [Projects](https://aradmanamnaoon.github.io/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, datasets, and software.
-- [Skills and tools](https://aradmanamnaoon.github.io/skills/): Full categorized skill inventory generated from the portfolio CV knowledge base.
+- [Research profile](https://aradmanamnaoon.github.io/research/): Research interests, documented project evidence, methods, and limitations.
+- [Projects](https://aradmanamnaoon.github.io/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, data work, and software.
+- [Skills and tools](https://aradmanamnaoon.github.io/skills/): Full categorized skills inventory based on the portfolio CV knowledge base.
 
 ## Flagship work
-- [Persian GPT — 110M transformer from scratch](https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch): Persian corpus preparation, custom tokenizer, transformer training, baselines, and held-out evaluation.
-- [3D Cardiac MRI Segmentation](https://github.com/aradmanamnaoon/medical-image-segmentation): PyTorch, MONAI, 3D U-Net, benchmark validation, and documented clinical limitations.
-- [AI Research Assistant Platform](https://github.com/aradmanamnaoon/ai-research-assistant-platform): LangGraph multi-agent workflow, RAG, persistence, citations, streaming, and offline tests.
+- [Persian GPT — 110M Transformer From Scratch case study](https://aradmanamnaoon.github.io/projects/persian-gpt-from-scratch/): A 110.4M-parameter decoder-only transformer trained end to end for Persian. The project covers a cleaned Wikipedia corpus, custom 32K BPE tokenizer, training pipeline, n-gram baselines, and held-out evaluation. [source project](https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch)
+- [3D Cardiac MRI Segmentation case study](https://aradmanamnaoon.github.io/projects/3d-cardiac-mri-segmentation/): A complete 3D cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. It covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, and voxel-level evaluation on Medical Segmentation Decathlon Task02 Heart. [source project](https://github.com/aradmanamnaoon/medical-image-segmentation)
+- [AI Research Assistant Platform case study](https://aradmanamnaoon.github.io/projects/multi-agent-ai-research-assistant/): A multi-agent research assistant built with LangGraph, ChromaDB RAG, FastAPI, and LangSmith. Planning, retrieval, parallel research, tool execution, citation-grounded synthesis, bounded reflection, persistent state, and streaming are covered in the public implementation. [source project](https://github.com/aradmanamnaoon/ai-research-assistant-platform)
 
 ## Areas of work
 - Deep learning, machine learning, medical imaging, and 3D image segmentation.
@@ -24,4 +24,4 @@ AI Engineer and Data Scientist focused on deep learning and machine learning for
 - [Hugging Face](https://huggingface.co/aradmanamnaoon)
 - [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam/)
 
-The portfolio distinguishes completed public work from research interests and does not claim clinical validation or academic affiliations that are not documented.
+Completed projects are distinguished from research interests. Medical-imaging projects are not presented as clinically validated, and no undocumented academic affiliations are claimed.
