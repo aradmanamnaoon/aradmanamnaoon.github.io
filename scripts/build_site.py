@@ -1510,7 +1510,9 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
             }
             expected = {
                 f"{SITE_URL}/",
+                f"{SITE_URL}/research/",
                 f"{SITE_URL}/projects/",
+                f"{SITE_URL}/skills/",
             }
             for url in sorted(locs - expected):
                 findings.append(
@@ -1852,7 +1854,28 @@ def load_projects(root: Path) -> list[dict[str, Any]]:
     data = read_json(path)
     if not isinstance(data, list):
         raise SiteError("projects.json must contain a JSON array")
-    return data
+    ids = [str(item.get("id", "")) for item in data if isinstance(item, dict)]
+    if len(ids) != len(data) or any(not project_id for project_id in ids):
+        raise SiteError("Every project must be an object with a non-empty id")
+    if len(ids) != len(set(ids)):
+        raise SiteError("Project ids in projects.json must be unique")
+    featured = [item for item in data if item.get("homepage_featured")]
+    if len(featured) > MAX_PROJECTS_HOMEPAGE:
+        raise SiteError(
+            f"At most {MAX_PROJECTS_HOMEPAGE} projects can be featured on the homepage"
+        )
+    for item in featured:
+        if not isinstance(item.get("homepage_order"), int):
+            raise SiteError(
+                f"Featured project {item['id']} needs an integer homepage_order"
+            )
+    return sorted(
+        data,
+        key=lambda item: (
+            not bool(item.get("homepage_featured")),
+            item.get("homepage_order", 999),
+        ),
+    )
 
 
 def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
@@ -1888,6 +1911,33 @@ def safe_json_for_script(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
 
 
+def render_project_metrics(
+    project: dict[str, Any], compact: bool = False
+) -> str:
+    metrics = project.get("metrics", [])
+    if not isinstance(metrics, list):
+        return ""
+    items = []
+    for metric in metrics:
+        if not isinstance(metric, dict):
+            continue
+        value = escape_html(metric.get("value", ""))
+        label = escape_html(metric.get("label", ""))
+        if not value or not label:
+            continue
+        items.append(
+            f'<div class="project-metric"><strong>{value}</strong>'
+            f'<span>{label}</span></div>'
+        )
+    if not items:
+        return ""
+    return (
+        '<div class="project-metrics" aria-label="Reported project metrics">'
+        + "".join(items)
+        + "</div>"
+    )
+
+
 def render_home_projects(projects: list[dict[str, Any]]) -> str:
     cards = []
     source_names = {
@@ -1907,6 +1957,12 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
         tags = "".join(
             f'<span class="project-tag">{escape_html(tag)}</span>'
             for tag in project.get("tags", [])
+        )
+        metrics = render_project_metrics(project, compact=True)
+        note = (
+            f'<p class="project-note">{escape_html(project["note"])}</p>'
+            if project.get("note")
+            else ""
         )
         actions = "".join(
             f'<a class="project-link {"primary" if action.get("primary") else ""}" '
@@ -1941,6 +1997,8 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
             <p class="card-copy">
               {escape_html(project.get('description') or 'Project details and source repository.')}
             </p>
+            {metrics}
+            {note}
             <div class="project-tags">{tags}</div>
             <div class="project-actions">{actions}</div>
           </article>"""
@@ -1960,6 +2018,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
                 "dateDisplay": project.get("dateDisplay", ""),
                 "tags": project.get("tags", []),
                 "actions": project_actions(project),
+                "metrics": project.get("metrics", []),
                 "note": project.get("note", ""),
             }
         )
@@ -1968,6 +2027,36 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     template = """<div class="projects-paginated" id="projects-paginated" aria-live="polite"></div>
 <nav class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></nav>
 <style>
+.project-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.project-metric {
+  min-width: 8rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+}
+.project-metric strong,
+.project-metric span {
+  display: block;
+}
+.project-metric strong {
+  color: #7db4f0;
+  font-size: 1.1rem;
+}
+.project-metric span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+}
+.project-note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.9rem;
+  border-left: 2px solid #7db4f0;
+  padding-left: 0.8rem;
+}
 .projects-pagination {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -2075,12 +2164,20 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
         return '<a class="' + cls + '" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.label) + '</a>';
       }).join('');
       var note = p.note ? '<p class="note">' + esc(p.note) + '</p>' : '';
+      var metrics = (p.metrics || []).map(function(m) {
+        return '<div class="project-metric"><strong>' + esc(m.value) +
+          '</strong><span>' + esc(m.label) + '</span></div>';
+      }).join('');
+      var metricMarkup = metrics
+        ? '<div class="project-metrics" aria-label="Reported project metrics">' + metrics + '</div>'
+        : '';
       return '<article class="project" id="' + esc(p.id) + '">' +
         '<div class="num" aria-hidden="true">' + num + '</div>' +
         '<div>' +
           '<p class="type">' + esc(p.type) + '</p>' +
           '<h2>' + esc(p.title) + '</h2>' +
           '<p class="desc">' + esc(p.description) + '</p>' +
+          metricMarkup +
           '<div class="tags">' + tags + '</div>' +
           '<div class="actions">' + actions + '</div>' +
           note +
@@ -2309,6 +2406,148 @@ def inject_projects_page(
     )
 
 
+SKILL_CATEGORY_LABELS = {
+    "programming": "Programming and Data Handling",
+    "statistics_and_humanities_data": "Statistics and Humanities Data Science",
+    "mobile_development": "Mobile Application Development",
+    "deep_learning": "Machine Learning and Deep Learning",
+    "computer_vision": "Computer Vision",
+    "medical_imaging": "Medical Imaging and Medical AI",
+    "natural_language_processing": "Natural Language Processing",
+    "llm_engineering": "Large Language Model Engineering",
+    "rag": "Retrieval-Augmented Generation",
+    "agentic_ai": "Agentic AI and Orchestration",
+    "fine_tuning": "Model Fine-Tuning",
+    "software_and_delivery": "Software Engineering and Delivery",
+}
+
+
+def render_skills_directory(root: Path) -> str:
+    knowledge_path = root / "assets" / "cv" / "cv-knowledge-base.json"
+    if not knowledge_path.exists():
+        knowledge_path = root / "assets" / "data" / "cv-knowledge-base.json"
+    if not knowledge_path.exists():
+        raise SiteError("The CV knowledge base is required to build skills/index.html")
+    knowledge = read_json(knowledge_path)
+    skills = knowledge.get("skills", {})
+    cards: list[str] = []
+    fields = ("skills", "methods", "frameworks", "technologies", "target_platforms")
+    for slug, category in skills.items():
+        if not isinstance(category, dict):
+            continue
+        items: list[str] = []
+        for field in fields:
+            values = category.get(field, [])
+            if isinstance(values, list):
+                for value in values:
+                    if isinstance(value, str) and value.strip() and value not in items:
+                        items.append(value)
+        if not items:
+            continue
+        title = SKILL_CATEGORY_LABELS.get(
+            slug, slug.replace("_", " ").title()
+        )
+        description = escape_html(category.get("description", ""))
+        list_items = "".join(
+            f"<li>{escape_html(item)}</li>" for item in items
+        )
+        cards.append(
+            '<article class="inventory-card" id="'
+            + escape_html(slug)
+            + '"><h3>'
+            + escape_html(title)
+            + "</h3>"
+            + (f"<p>{description}</p>" if description else "")
+            + f'<ul class="skill-list">{list_items}</ul></article>'
+        )
+
+    tool_groups: list[str] = []
+    for group_name, entries in knowledge.get("tools_and_frameworks", {}).items():
+        if not isinstance(entries, list):
+            continue
+        names = []
+        for entry in entries:
+            if isinstance(entry, dict) and isinstance(entry.get("name"), str):
+                if entry["name"] not in names:
+                    names.append(entry["name"])
+        if not names:
+            continue
+        label = group_name.replace("_", " ").title()
+        tool_groups.append(
+            "<p><strong>"
+            + escape_html(label)
+            + ":</strong> "
+            + ", ".join(escape_html(name) for name in names)
+            + "</p>"
+        )
+    if tool_groups:
+        cards.append(
+            '<article class="inventory-card"><h3>Libraries and tools</h3>'
+            '<div class="tools-grid">'
+            + "".join(tool_groups)
+            + "</div></article>"
+        )
+    return "\n".join(cards)
+
+
+def render_research_projects(projects: list[dict[str, Any]]) -> str:
+    selected = [
+        project
+        for project in projects
+        if project.get("homepage_featured") and project.get("research")
+    ]
+    cards = []
+    for project in selected:
+        research = project["research"]
+        methods = research.get("methods", [])
+        method_markup = "".join(
+            f"<li>{escape_html(method)}</li>"
+            for method in methods
+            if isinstance(method, str)
+        )
+        metrics = render_project_metrics(project)
+        note = (
+            f'<p class="limitations">{escape_html(research.get("limitations", ""))}</p>'
+            if research.get("limitations")
+            else ""
+        )
+        actions = "".join(
+            f'<a href="{escape_html(action["url"])}" rel="noopener noreferrer">'
+            f'{escape_html(action["label"])}</a>'
+            for action in project_actions(project)
+        )
+        cards.append(
+            '<article class="research-evidence-card" id="'
+            + escape_html(project["id"])
+            + '"><p class="kicker">'
+            + escape_html(project.get("type", "Project"))
+            + "</p><h3>"
+            + escape_html(project.get("title", "Project"))
+            + "</h3><p class=\"context\">"
+            + escape_html(research.get("context", project.get("description", "")))
+            + "</p>"
+            + metrics
+            + (f'<ul class="research-methods">{method_markup}</ul>' if method_markup else "")
+            + note
+            + '<p class="actions">'
+            + actions
+            + "</p></article>"
+        )
+    if not cards:
+        return '<p class="endnote">Featured project evidence will appear here after the next build.</p>'
+    return "\n".join(cards)
+
+
+def inject_generated_page(
+    source: str, start_marker: str, end_marker: str, content: str
+) -> str:
+    if source.count(start_marker) != 1 or source.count(end_marker) != 1:
+        log(f"Generated page markers are incomplete: {start_marker}", "warn")
+        return source
+    updated, ok = replace_between(source, start_marker, end_marker, content)
+    return updated if ok else source
+
+
 def remove_stale_injected_content(source: str) -> str:
     """Remove only known legacy injected containers."""
     source = re.sub(
@@ -2322,7 +2561,9 @@ def remove_stale_injected_content(source: str) -> str:
 def generate_sitemap(root: Path, dry_run: bool) -> None:
     locations = [
         (f"{SITE_URL}/", "1.0"),
+        (f"{SITE_URL}/research/", "0.9"),
         (f"{SITE_URL}/projects/", "0.9"),
+        (f"{SITE_URL}/skills/", "0.8"),
     ]
     xml = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -2831,6 +3072,8 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
     targets = [
         root / "index.html",
         root / "projects" / "index.html",
+        root / "research" / "index.html",
+        root / "skills" / "index.html",
         root / "sitemap.xml",
         root / "robots.txt",
         root / "site.webmanifest",
@@ -2863,6 +3106,32 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
             atomic_write(projects_page, updated_page, args.dry_run)
         else:
             log("projects/index.html not found; skipping paginated project injection", "warn")
+
+        research_page = root / "research" / "index.html"
+        if research_page.exists():
+            source = research_page.read_text(encoding="utf-8")
+            updated = inject_generated_page(
+                source,
+                "<!-- AUTO:RESEARCH_PROJECTS:START -->",
+                "<!-- AUTO:RESEARCH_PROJECTS:END -->",
+                render_research_projects(projects),
+            )
+            atomic_write(research_page, updated, args.dry_run)
+        else:
+            log("research/index.html not found; skipping research evidence injection", "warn")
+
+        skills_page = root / "skills" / "index.html"
+        if skills_page.exists():
+            source = skills_page.read_text(encoding="utf-8")
+            updated = inject_generated_page(
+                source,
+                "<!-- AUTO:SKILLS:START -->",
+                "<!-- AUTO:SKILLS:END -->",
+                render_skills_directory(root),
+            )
+            atomic_write(skills_page, updated, args.dry_run)
+        else:
+            log("skills/index.html not found; skipping skills directory injection", "warn")
 
     generate_sitemap(root, args.dry_run)
     generate_robots(root, args.dry_run)
