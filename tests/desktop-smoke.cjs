@@ -119,8 +119,9 @@ async function run() {
       '/projects/3d-cardiac-mri-segmentation/', '/projects/persian-gpt-from-scratch/',
       '/projects/multi-agent-ai-research-assistant/', '/404.html', '/offline.html'];
     for (const route of routes) await visit(route);
-    for (const width of [1024, 1280]) {
-      for (const route of ['/', '/projects/', '/skills/']) await visit(route, width, 800);
+    for (const width of [1024, 1280, 1920]) {
+      const height = width === 1920 ? 1080 : 800;
+      for (const route of ['/', '/projects/', '/skills/']) await visit(route, width, height);
     }
     await visit('/');
     assert.ok(await js('(() => { document.querySelector("#hub-commands").click(); return document.querySelector(".hub-dialog").open && document.activeElement.id==="hub-command-search" })()'),
