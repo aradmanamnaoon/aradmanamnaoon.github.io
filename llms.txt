@@ -1,24 +1,27 @@
-# ARADMANAMNAOON
+# Seyyed Arad Hosseini Moghaddam
 
+AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. The broader portfolio includes Persian NLP, language models, LLM fine-tuning, RAG, agentic AI, software engineering, and Flutter development.
 
 ## Primary pages
-- [Projects](https://aradmanamnaoon.github.io/projects/): Selected projects across AI, machine learning, language technologies, and software development.
+- [Research profile](https://aradmanamnaoon.github.io/research/): Research interests, documented project evidence, methods, and limitations for academic review and prospective graduate study.
+- [Projects](https://aradmanamnaoon.github.io/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, datasets, and software.
+- [Skills and tools](https://aradmanamnaoon.github.io/skills/): Full categorized skill inventory generated from the portfolio CV knowledge base.
+
+## Flagship work
+- [Persian GPT — 110M transformer from scratch](https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch): Persian corpus preparation, custom tokenizer, transformer training, baselines, and held-out evaluation.
+- [3D Cardiac MRI Segmentation](https://github.com/aradmanamnaoon/medical-image-segmentation): PyTorch, MONAI, 3D U-Net, benchmark validation, and documented clinical limitations.
+- [AI Research Assistant Platform](https://github.com/aradmanamnaoon/ai-research-assistant-platform): LangGraph multi-agent workflow, RAG, persistence, citations, streaming, and offline tests.
 
 ## Areas of work
-- Data science and applied analytics.
-- Deep learning and model training from scratch.
-- Computer vision and medical imaging.
-- Natural language processing and language models.
-- LLM fine-tuning, including LoRA and QLoRA.
-- Retrieval-augmented generation and agentic AI.
-- MLOps and AI application engineering.
-- Software development and Flutter apps for Android and iOS.
+- Deep learning, machine learning, medical imaging, and 3D image segmentation.
+- Statistics, exploratory analysis, and data science for humanities-related datasets.
+- Python, SQL, PyTorch, TensorFlow, MONAI, Hugging Face, Transformers, PEFT, LoRA, and QLoRA.
+- NLP, Persian language modeling, machine translation, RAG, LangChain, LangGraph, LangSmith, and MCP.
+- FastAPI, Docker, MLflow, Git, GitHub Actions, web development, Django, PyQt6, and Flutter for Android and iOS.
 
-
-## Public technical profiles
+## Public profiles
 - [GitHub](https://github.com/aradmanamnaoon)
 - [Hugging Face](https://huggingface.co/aradmanamnaoon)
-- [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam)
+- [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam/)
 
-## Identity
-Seyyed Arad Hosseini Moghaddam publishes under the visible site brand ARADMANAMNAOON.
+The portfolio distinguishes completed public work from research interests and does not claim clinical validation or academic affiliations that are not documented.
