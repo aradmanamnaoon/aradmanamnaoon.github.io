@@ -46,8 +46,25 @@ class PortfolioGeneratorTests(unittest.TestCase):
 
     def test_skills_page_comes_from_cv_knowledge_base(self) -> None:
         rendered = build_site.render_skills_directory(ROOT)
-        for skill in ("Python", "SQL", "Flutter", "PyQt6", "Humanities Data Analysis"):
+        for skill in ("Python", "SQL", "Flutter", "PyQt6", "Humanities Data Analysis",
+                      "Classical Machine Learning", "Random forests", "Linear regression",
+                      "k-means clustering", "Cross-validation", "scikit-learn"):
             self.assertIn(skill.lower(), rendered.lower())
+
+    def test_skills_page_is_readable_and_accessible(self) -> None:
+        page = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('class="breadcrumbs shell"', page)
+        self.assertIn('body > .skip-link:focus-visible', page)
+        self.assertIn('background:#1c232d', page)
+        self.assertIn('grid-template-columns:1fr', page)
+        self.assertIn('id="classical_machine_learning"', page)
+        self.assertIn('LLM Tools:', page)
+
+    def test_cv_knowledge_base_copies_remain_in_sync(self) -> None:
+        self.assertEqual(
+            (ROOT / "assets" / "cv" / "cv-knowledge-base.json").read_bytes(),
+            (ROOT / "assets" / "data" / "cv-knowledge-base.json").read_bytes(),
+        )
 
     def test_page_markers_replace_only_generated_content(self) -> None:
         template = "before<!-- START -->old<!-- END -->after"

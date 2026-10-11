@@ -2469,7 +2469,8 @@ SKILL_CATEGORY_LABELS = {
     "programming": "Programming and Data Handling",
     "statistics_and_humanities_data": "Statistics and Humanities Data Science",
     "mobile_development": "Mobile Application Development",
-    "deep_learning": "Machine Learning and Deep Learning",
+    "classical_machine_learning": "Classical Machine Learning",
+    "deep_learning": "Deep Learning",
     "computer_vision": "Computer Vision",
     "medical_imaging": "Medical Imaging and Medical AI",
     "natural_language_processing": "Natural Language Processing",
@@ -2531,7 +2532,7 @@ def render_skills_directory(root: Path) -> str:
                     names.append(entry["name"])
         if not names:
             continue
-        label = group_name.replace("_", " ").title()
+        label = "LLM Tools" if group_name == "llm_tools" else group_name.replace("_", " ").title()
         tool_groups.append(
             "<p><strong>"
             + escape_html(label)

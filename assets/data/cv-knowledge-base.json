@@ -649,8 +649,32 @@
         "iOS"
       ]
     },
+    "classical_machine_learning": {
+      "description": "Classical supervised and unsupervised machine-learning methods, with an emphasis on feature preparation, sound evaluation, and reproducible baselines.",
+      "skills": [
+        "Supervised learning",
+        "Unsupervised learning",
+        "Linear regression",
+        "Logistic regression",
+        "Decision trees",
+        "Random forests",
+        "Gradient boosting",
+        "Support vector machines (SVM)",
+        "k-nearest neighbors (k-NN)",
+        "k-means clustering",
+        "Principal component analysis (PCA)",
+        "Feature engineering",
+        "Cross-validation",
+        "Hyperparameter tuning",
+        "Train/validation/test splits",
+        "Model evaluation and comparison"
+      ],
+      "frameworks": [
+        "scikit-learn"
+      ]
+    },
     "deep_learning": {
-      "description": "Building and experimenting with deep learning architectures.",
+      "description": "Deep neural network design, training, optimization, and model evaluation.",
       "skills": [
         "Neural networks",
         "CNNs",
@@ -838,6 +862,14 @@
         "usage": [
           "Machine learning experimentation",
           "Deep learning workflows"
+        ]
+      },
+      {
+        "name": "scikit-learn",
+        "usage": [
+          "Classical machine learning",
+          "Preprocessing and feature engineering",
+          "Cross-validation and model selection"
         ]
       }
     ],
