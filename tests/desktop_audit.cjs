@@ -7,6 +7,7 @@ const assert = require('node:assert/strict');
 const {spawn} = require('node:child_process');
 const {setTimeout: delay} = require('node:timers/promises');
 const fs = require('node:fs');
+const net = require('node:net');
 const path = require('node:path');
 const {chromium} = require('playwright');
 
@@ -38,7 +39,14 @@ async function check(label, task, page) {
 
 async function waitForServer() {
   for (let i=0;i<50;i++) {
-    try { const r=await fetch(BASE+'/'); if(r.ok)return; } catch (_) {}
+    const listening = await new Promise(resolve => {
+      const socket = net.createConnection({host:'127.0.0.1',port:PORT});
+      socket.setTimeout(500);
+      socket.once('connect', () => { socket.destroy(); resolve(true); });
+      socket.once('error', () => { socket.destroy(); resolve(false); });
+      socket.once('timeout', () => { socket.destroy(); resolve(false); });
+    });
+    if (listening) return;
     await delay(200);
   }
   throw new Error('HTTP server did not start');
