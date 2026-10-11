@@ -12,6 +12,7 @@
 
   function preference() {
     root.classList.toggle('motion-off', !enabled());
+    if (!enabled()) document.body.classList.remove('dots-active');
     root.classList.toggle('motion-enabled', enabled() && 'IntersectionObserver' in window);
     if (!enabled()) {
       document.querySelectorAll('[data-reveal="true"]').forEach(el => el.classList.add('is-revealed'));
@@ -20,11 +21,8 @@
       document.querySelector('.story-section')?.classList.remove('story-pinned');
       document.querySelector('.motion-intro')?.remove();
       document.querySelector('.motion-curtain')?.remove();
-      root.classList.remove('motion-pointer');
-      document.querySelector('.motion-cursor')?.classList.remove('is-visible');
     } else {
       detail();
-      if (fine.matches && document.querySelector('.motion-cursor')) root.classList.add('motion-pointer');
       if (storyLoaded) pinStory(); else watchStory();
     }
   }
@@ -152,81 +150,69 @@
     ], { duration: 1050, easing: 'cubic-bezier(.22,1,.36,1)' });
   }
   function dots() {
-    const canvas = document.createElement('canvas'); canvas.className = 'motion-dots';
-    canvas.setAttribute('aria-hidden', 'true'); document.body.append(canvas);
-    const ctx = canvas.getContext('2d'); if (!ctx) return;
-    let width = 0, height = 0, x = -9999, y = -9999, touched = 0, drawing = false;
-    function resize() {
-      const dpr = Math.min(devicePixelRatio || 1, 1.5);
-      width = innerWidth; height = innerHeight;
-      canvas.width = Math.round(width * dpr); canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // One CSS dot grid is the only background layer. Move a radial light
+    // across it rather than drawing a second, differently sized canvas grid.
+    const surface = document.body;
+    const supportsHover = fine.matches;
+    if (!supportsHover) return; // No pointer tracking or animation loop on touch devices.
+    let raf = 0, px = -1000, py = -1000;
+    function paint() {
+      raf = 0;
+      if (!enabled() || document.hidden) return;
+      surface.style.setProperty('--dot-pointer-x', px + 'px');
+      surface.style.setProperty('--dot-pointer-y', py + 'px');
     }
-    function draw(now) {
-      if (!enabled() || document.hidden) { ctx.clearRect(0, 0, width, height); drawing = false; return; }
-      ctx.clearRect(0, 0, width, height);
-      const fade = Math.max(0, 1 - (now - touched) / 950);
-      if (!fade) { drawing = false; return; }
-      for (let px = 15; px < width; px += 30) for (let py = 15; py < height; py += 30) {
-        const d2 = (px - x) ** 2 + (py - y) ** 2;
-        if (d2 > 260 ** 2) continue;
-        const power = (1 - Math.sqrt(d2) / 260) * fade;
-        ctx.fillStyle = 'rgba(154,213,255,' + (power * .88).toFixed(3) + ')';
-        ctx.beginPath(); ctx.arc(px, py, 1.3 + power * 2.6, 0, Math.PI * 2); ctx.fill();
-      }
-      requestAnimationFrame(draw);
+    function move(event) {
+      if (!enabled() || event.pointerType === 'touch') return;
+      px = event.clientX; py = event.clientY;
+      surface.classList.add('dots-active');
+      if (!raf) raf = requestAnimationFrame(paint);
     }
-    function wake(event) {
-      if (!enabled()) return;
-      x = event.clientX; y = event.clientY; touched = performance.now();
-      if (!drawing) { drawing = true; requestAnimationFrame(draw); }
+    function clear() {
+      surface.classList.remove('dots-active');
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
     }
-    addEventListener('resize', resize, { passive: true }); resize();
-    addEventListener('pointermove', wake, { passive: true });
-    addEventListener('pointerdown', wake, { passive: true });
+    addEventListener('pointermove', move, { passive: true });
+    document.addEventListener('pointerleave', clear);
+    addEventListener('blur', clear);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) clear(); });
   }
   function pointer() {
+    // Preserve subtle card depth on fine pointers without replacing the
+    // browser's accessible native cursor or moving actionable controls.
     if (!fine.matches || !enabled()) return;
-    const cursor = document.createElement('div'); cursor.className = 'motion-cursor';
-    cursor.setAttribute('aria-hidden', 'true'); document.body.append(cursor);
-    root.classList.add('motion-pointer');
-    let active = null, bounds = null, magnetic = null, magneticBounds = null;
-    let pending = false, x = -100, y = -100, cursorRadius = 13;
+    let active = null, bounds = null, pending = false, x = 0, y = 0;
     document.addEventListener('pointermove', event => {
-      if (!enabled()) return;
+      if (!enabled() || event.pointerType === 'touch') return;
       x = event.clientX; y = event.clientY;
-      cursor.classList.add('is-visible');
-      cursor.classList.toggle('is-hover', !!event.target.closest('a, button, summary'));
-      cursor.classList.toggle('is-drag', !!event.target.closest('.story-viewport'));
-      cursor.classList.toggle('is-text', !!event.target.closest('input, textarea, [contenteditable="true"]'));
-      cursorRadius = cursor.classList.contains('is-drag') ? 27 : cursor.classList.contains('is-hover') ? 23 : 13;
-      if (!pending) { pending = true; requestAnimationFrame(() => {
-        pending = false;
-        cursor.style.transform = 'translate3d(' + (x - cursorRadius) + 'px,' + (y - cursorRadius) + 'px,0)';
-      }); }
-      const card = event.target.closest('.project-card, .research-evidence-card, .inventory-card, .case-section, .surface-card');
+      const card = event.target.closest?.('.project-card, .research-evidence-card, .inventory-card, .case-section, .surface-card');
       if (card !== active) {
-        if (active) { active.classList.remove('motion-tilt'); active.style.removeProperty('--tilt-x'); active.style.removeProperty('--tilt-y'); }
-        active = card; bounds = card?.getBoundingClientRect(); card?.classList.add('motion-tilt');
+        if (active) {
+          active.classList.remove('motion-tilt');
+          active.style.removeProperty('--tilt-x');
+          active.style.removeProperty('--tilt-y');
+        }
+        active = card; bounds = card?.getBoundingClientRect();
+        card?.classList.add('motion-tilt');
       }
-      if (active && bounds) {
-        const rx = (y - bounds.top) / bounds.height - .5, ry = (x - bounds.left) / bounds.width - .5;
-        active.style.setProperty('--tilt-x', (-rx * 4).toFixed(2) + 'deg');
-        active.style.setProperty('--tilt-y', (ry * 4).toFixed(2) + 'deg');
-        active.style.setProperty('--spot-x', (x - bounds.left - 110) + 'px');
-        active.style.setProperty('--spot-y', (y - bounds.top - 110) + 'px');
-      }
-      const link = event.target.closest('.hero-button, .pill-link, .action, .utility-action');
-      if (link !== magnetic) {
-        if (magnetic) { magnetic.style.removeProperty('--mag-x'); magnetic.style.removeProperty('--mag-y'); magnetic.classList.remove('motion-magnetic'); }
-        magnetic = link; magneticBounds = link?.getBoundingClientRect(); magnetic?.classList.add('motion-magnetic');
-      }
-      if (magnetic && magneticBounds) {
-        magnetic.style.setProperty('--mag-x', (((x - magneticBounds.left) / magneticBounds.width - .5) * 9).toFixed(1) + 'px');
-        magnetic.style.setProperty('--mag-y', (((y - magneticBounds.top) / magneticBounds.height - .5) * 9).toFixed(1) + 'px');
+      if (active && bounds && !pending) {
+        pending = true;
+        requestAnimationFrame(() => {
+          pending = false;
+          if (!active || !enabled()) return;
+          const rx = (y - bounds.top) / bounds.height - .5;
+          const ry = (x - bounds.left) / bounds.width - .5;
+          active.style.setProperty('--tilt-x', (-rx * 3).toFixed(2) + 'deg');
+          active.style.setProperty('--tilt-y', (ry * 3).toFixed(2) + 'deg');
+          active.style.setProperty('--spot-x', (x - bounds.left - 110) + 'px');
+          active.style.setProperty('--spot-y', (y - bounds.top - 110) + 'px');
+        });
       }
     }, { passive: true });
-    document.addEventListener('pointerleave', () => cursor.classList.remove('is-visible'));
+    document.addEventListener('pointerleave', () => {
+      if (active) active.classList.remove('motion-tilt');
+      active = null; bounds = null;
+    });
   }
   function loadScript(path) {
     return new Promise((resolve, reject) => {
@@ -247,6 +233,7 @@
       if (paused) return;
       viewport.scrollLeft = 0; story.classList.add('story-pinned');
       const distance = () => Math.max(1, track.scrollWidth - viewport.clientWidth);
+      // Viewport-wide panels keep every pinned chapter within the visible screen.
       gsap.to(track, { x: () => -distance(), ease: 'none', scrollTrigger: {
         trigger: story, pin: true, start: 'top top', end: () => '+=' + Math.max(900, distance()),
         scrub: .65, snap: { snapTo: 1 / (panels.length - 1), duration: { min: .18, max: .42 }, delay: .08 },

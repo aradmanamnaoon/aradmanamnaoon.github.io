@@ -42,7 +42,7 @@ test('system reduced motion leaves evidence readable and skips animated intro', 
   assert.ok(!elements.some(item => item.tag === 'script'));
 });
 
-test('resuming a saved pause initializes pointer motion on a fine pointer', () => {
+test('resuming a saved pause preserves the native cursor on a fine pointer', () => {
   const nodes = [];
   const html = { classList: classes(), scrollHeight: 1200 };
   const nav = { append(node) { nodes.push(node); } };
@@ -68,6 +68,20 @@ test('resuming a saved pause initializes pointer motion on a fine pointer', () =
   const toggle = nodes.find(node => node.className === 'motion-toggle');
   toggle.click();
   assert.ok(!html.classList.contains('motion-off'));
-  assert.ok(nodes.some(node => node.className === 'motion-cursor'));
-  assert.ok(html.classList.contains('motion-pointer'));
+  assert.ok(!nodes.some(node => node.className === 'motion-cursor'));
+  assert.ok(!html.classList.contains('motion-pointer'));
+});
+
+// Regression checks for layered backgrounds and mobile-friendly story layout.
+test('one dot grid, native cursor and viewport-wide desktop chapters', () => {
+  const css = fs.readFileSync(path.join(__dirname, '..', 'assets/css/motion.css'), 'utf8');
+  assert.ok(css.includes('body::before'));
+  assert.ok(css.includes('background-size: 30px 30px'));
+  assert.ok(css.includes('body::after'));
+  assert.ok(css.includes('flex-basis: 100dvw'));
+  assert.ok(css.includes('min-height: 100svh'));
+  assert.ok(css.includes('@media (max-width: 899px)'));
+  assert.ok(!css.includes('cursor: none'));
+  assert.ok(!source.includes("createElement('canvas')"));
+  assert.ok(!source.includes("createElement('div'); cursor.className"));
 });
