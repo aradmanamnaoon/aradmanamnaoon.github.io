@@ -1668,6 +1668,7 @@
       }
           </style>
     <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
 </head>
 
   <body>
@@ -1686,7 +1687,6 @@
         <div class="site-nav-links">
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
-          <a href="/research/">Research</a>
           <a href="/projects/">Projects</a>
           
           
@@ -1859,9 +1859,34 @@
             models, datasets, methods, and limitations for review.
           </p>
           <p>
-            <a class="project-link primary" href="/research/">Read my research profile ↗</a>
+            <a class="project-link primary" href="/projects/#research-directions">Explore methods and project evidence ↗</a>
           </p>
         </div>
+      </section>
+
+      <section class="story-section" aria-labelledby="story-title">
+        <div class="story-head">
+          <p class="section-kicker">Research pipeline · conceptual illustration</p>
+          <h2 id="story-title">From complex signals to reviewable evidence.</h2>
+          <p>Three connected practices shape my work. The diagrams below illustrate the workflow; they are not patient images or model outputs.</p>
+        </div>
+        <div class="story-viewport" tabindex="0" role="region" aria-label="Swipeable research pipeline: medical imaging, language models, humanities data">
+          <div class="story-track">
+            <article class="story-panel" data-step="01">
+              <div><p class="story-kicker">Medical imaging</p><h3>Read the volume.</h3><p>Prepare volumetric cardiac MRI, train a 3D segmentation model, and report validation Dice with its dataset limits.</p><a href="/projects/3d-cardiac-mri-segmentation/">Explore cardiac MRI segmentation ↗</a></div>
+              <div class="story-visual" aria-hidden="true"><svg viewBox="0 0 320 320"><circle cx="160" cy="160" r="119"/><circle cx="160" cy="160" r="89"/><path d="M36 162h47l21-39 30 73 27-86 29 58 19-24h77"/><path d="M118 247c-51-39-48-91-8-107 25-10 40 0 50 12 10-12 25-22 50-12 40 16 43 68-8 107l-42 31z" class="story-fill"/></svg></div>
+            </article>
+            <article class="story-panel" data-step="02">
+              <div><p class="story-kicker">Persian language modeling</p><h3>Build the model.</h3><p>Clean a corpus, train a tokenizer and a 110M parameter Transformer, then compare held-out perplexity with explicit baselines.</p><a href="/projects/persian-gpt-from-scratch/">Explore Persian GPT ↗</a></div>
+              <div class="story-visual" aria-hidden="true"><svg viewBox="0 0 320 320"><path d="M35 75h250M35 125h250M35 175h250M35 225h250M65 45v210M125 45v210M185 45v210M245 45v210"/><path d="M70 75C120 100 120 175 180 175S240 225 275 225"/><circle cx="70" cy="75" r="11" class="story-fill"/><circle cx="180" cy="175" r="11" class="story-fill"/><circle cx="275" cy="225" r="11" class="story-fill"/></svg></div>
+            </article>
+            <article class="story-panel" data-step="03">
+              <div><p class="story-kicker">Quantitative humanities</p><h3>Ask human questions.</h3><p>Apply statistical and data-science methods to humanities datasets. This is a research direction; the portfolio does not present an invented completed study.</p><a href="/projects/#research-directions">Read the research directions ↗</a></div>
+              <div class="story-visual" aria-hidden="true"><svg viewBox="0 0 320 320"><path d="M40 266h240M40 266V55"/><path d="M60 220l45-50 45 12 45-78 48 25 39-61"/><circle cx="60" cy="220" r="8"/><circle cx="105" cy="170" r="8"/><circle cx="150" cy="182" r="8"/><circle cx="195" cy="104" r="8"/><circle cx="243" cy="129" r="8"/><circle cx="282" cy="68" r="8"/></svg></div>
+            </article>
+          </div>
+        </div>
+        <div class="story-controls"><button type="button" data-direction="previous" aria-label="Previous research panel">←</button><button type="button" data-direction="next" aria-label="Next research panel">→</button></div>
       </section>
 
       <section id="skills" aria-labelledby="skills-heading">
@@ -2103,7 +2128,7 @@
               research direction; the site does not present an unpublished case study
               as completed work.
             </p>
-            <a class="project-link" href="/research/">Read research interests ↗</a>
+            <a class="project-link" href="/projects/#research-directions">Read research directions ↗</a>
           </article>
         </div>
       </section>

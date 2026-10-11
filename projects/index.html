@@ -598,6 +598,7 @@
   <meta property="og:image:height" content="848">
   <!-- AUTO:BREADCRUMB:SCHEMA:START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://aradmanamnaoon.github.io/projects/"}]}</script><!-- AUTO:BREADCRUMB:SCHEMA:END -->
   <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
 </head>
 
 <body class="relative bg-surface font-sans text-ink antialiased">
@@ -609,7 +610,6 @@
 
       <div class="nav-links">
         <a class="nav-secondary" href="../#about">About</a>
-        <a href="../research/">Research</a>
         <a href="../skills/">Skills</a>
         <a href="./" aria-current="page">Projects</a>
         
@@ -647,6 +647,29 @@
           rel="noopener noreferrer"
         >Hugging Face ↗</a>
       </div>
+    </section>
+
+    <section class="research-hub shell" id="research-directions" aria-labelledby="directions-title">
+      <p class="eyebrow">Research profile · graduate study · open portfolio</p>
+      <h2 id="directions-title">Two complementary directions</h2>
+      <p class="research-lede">I focus on deep learning and machine learning for medical applications, particularly medical imaging. I also pursue statistics and data science for humanities-related datasets. These directions and the public projects below do not imply an academic affiliation, publication, or clinical validation.</p>
+      <div class="research-directions">
+        <article class="research-direction" data-reveal="true"><p class="eyebrow">01 / Medical machine learning</p><h3>Deep learning for medical applications</h3><p>Medical imaging and 3D segmentation are the primary focus. The work emphasizes data preparation, model architecture, validation, inference, and transparent reporting of benchmark results and their limits.</p><a href="/projects/3d-cardiac-mri-segmentation/">Cardiac MRI segmentation project ↗</a></article>
+        <article class="research-direction" data-reveal="true"><p class="eyebrow">02 / Quantitative humanities</p><h3>Statistics and data science for humanities datasets</h3><p>A research direction applying statistical analysis and data-science workflows to humanities-related data. The portfolio currently describes this as an area of interest rather than presenting an unverified completed case study.</p><a href="/skills/#statistics_and_humanities_data">Related methods and skills ↗</a></article>
+      </div>
+      <div class="research-evidence" id="evidence" aria-labelledby="evidence-title">
+        <p class="eyebrow">Selected evidence</p>
+        <h2 id="evidence-title">Projects, methods, and limitations</h2>
+        <p class="research-lede">These projects show different parts of my technical range. Metrics are reproduced from the public project records and should be interpreted within each project's dataset and evaluation setup.</p>
+        <div class="research-projects">
+          <!-- AUTO:RESEARCH_PROJECTS:START -->
+<article class="research-evidence-card" id="evidence-persian-lm-from-scratch" data-reveal="true"><p class="kicker">Flagship model · Persian NLP · From-scratch training</p><h3>Persian GPT — 110M Transformer From Scratch</h3><p class="context">This project demonstrates an end-to-end low-resource language-model workflow for Persian, from corpus preparation through tokenizer design, training, and held-out evaluation.</p><div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>110.4M</strong><span>parameters</span></div><div class="project-metric"><strong>244M</strong><span>training tokens</span></div><div class="project-metric"><strong>14.52</strong><span>held-out perplexity</span></div></div><ul class="research-methods"><li>855,724 cleaned Persian Wikipedia documents</li><li>Custom 32K byte-pair encoding tokenizer</li><li>PyTorch decoder-only Transformer</li><li>N-gram baselines and held-out perplexity</li></ul><p class="limitations">The reported perplexity is specific to the held-out corpus and tokenizer. It is not a measure of factuality, instruction following, or downstream task performance.</p><p class="actions"><a href="/projects/persian-gpt-from-scratch/" rel="noopener noreferrer">Read case study</a><a href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" rel="noopener noreferrer">View source ↗</a></p></article>
+<article class="research-evidence-card" id="evidence-medical-image-segmentation" data-reveal="true"><p class="kicker">Medical AI · 3D MRI · Deep learning</p><h3>3D Cardiac MRI Segmentation</h3><p class="context">The project investigates voxel-level cardiac structure segmentation from volumetric MRI, a setting where models must use three-dimensional spatial context.</p><div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>0.8821</strong><span>best validation Dice</span></div><div class="project-metric"><strong>100</strong><span>training epochs</span></div><div class="project-metric"><strong>3D U-Net</strong><span>architecture</span></div></div><ul class="research-methods"><li>Medical Segmentation Decathlon Task02 Heart</li><li>PyTorch and MONAI preprocessing</li><li>3D U-Net with DiceCELoss and AdamW</li><li>Mixed precision and sliding-window inference</li></ul><p class="limitations">The reported validation Dice is from this project’s benchmark split. The system has not been clinically validated and is not a clinical decision-support tool.</p><p class="actions"><a href="/projects/3d-cardiac-mri-segmentation/" rel="noopener noreferrer">Read case study</a><a href="https://github.com/aradmanamnaoon/medical-image-segmentation" rel="noopener noreferrer">View source ↗</a></p></article>
+<article class="research-evidence-card" id="evidence-ai-research-assistant-platform" data-reveal="true"><p class="kicker">Agentic AI · RAG · Evaluated system</p><h3>AI Research Assistant Platform</h3><p class="context">This system explores how retrieval, web research, tools, synthesis, and bounded reflection can be orchestrated and tested as a stateful research workflow.</p><div class="project-metrics" aria-label="Reported project metrics"><div class="project-metric"><strong>103</strong><span>offline tests</span></div><div class="project-metric"><strong>5</strong><span>agent roles</span></div><div class="project-metric"><strong>REST + SSE</strong><span>API surface</span></div></div><ul class="research-methods"><li>LangGraph stateful workflow with parallel branches</li><li>ChromaDB retrieval and local ONNX embeddings</li><li>SQLite persistence and FastAPI REST/SSE endpoints</li><li>Deterministic offline suite plus LangSmith evaluation tooling</li></ul><p class="limitations">The offline suite validates application contracts with deterministic model behavior. It does not establish comparative research-answer quality or clinical safety.</p><p class="actions"><a href="/projects/multi-agent-ai-research-assistant/" rel="noopener noreferrer">Read case study</a><a href="https://github.com/aradmanamnaoon/ai-research-assistant-platform" rel="noopener noreferrer">View source ↗</a></p></article>
+          <!-- AUTO:RESEARCH_PROJECTS:END -->
+        </div>
+      </div>
+      <div class="research-approach" aria-labelledby="approach-title"><p class="eyebrow">Research approach</p><h2 id="approach-title">Document the method and its limits</h2><p class="research-lede">I aim to make technical work reviewable: state the problem, describe the data and model, report the evaluation protocol, publish reproducible code or artifacts, and make limitations visible. This portfolio supports academic review, prospective graduate study, and research collaboration.</p><p><a href="/Profile.pdf" download>Download CV ↓</a> · <a href="/skills/">See all skills and tools ↗</a></p></div>
     </section>
 
     <section
@@ -888,13 +911,24 @@
       button.addEventListener('click', function() {
         var page = Number.parseInt(button.dataset.page, 10);
         if (page >= 1 && page <= totalPages && page !== currentPage) {
-          currentPage = page;
-          renderProjects(page);
-          renderPagination();
-          container.setAttribute('aria-label', 'Projects, page ' + page);
-          container.focus({ preventScroll: true });
-          var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            document.documentElement.classList.contains('motion-off');
+          var update = function() {
+            currentPage = page;
+            renderProjects(page);
+            renderPagination();
+            container.setAttribute('aria-label', 'Projects, page ' + page);
+            container.focus({ preventScroll: true });
+          };
+          if (!reduceMotion && document.startViewTransition) {
+            var transition = document.startViewTransition(update);
+            transition.finished.then(function() {
+              container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }).catch(function() { container.scrollIntoView({ block: 'start' }); });
+          } else {
+            update();
+            container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          }
         }
       });
     });

@@ -3,8 +3,7 @@
 AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. This portfolio supports academic review and prospective graduate study with verifiable project evidence, methods, and limitations.
 
 ## Primary pages
-- [Research profile](https://aradmanamnaoon.github.io/research/): Research interests, documented project evidence, methods, and limitations.
-- [Projects](https://aradmanamnaoon.github.io/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, data work, and software.
+- [Projects and research directions](https://aradmanamnaoon.github.io/projects/): Public projects, research interests, documented methods, metrics, and limitations across medical AI, Persian language modeling, NLP, RAG, agentic AI, humanities data, and software.
 - [Skills and tools](https://aradmanamnaoon.github.io/skills/): Full categorized skills inventory based on the portfolio CV knowledge base.
 
 ## Flagship work

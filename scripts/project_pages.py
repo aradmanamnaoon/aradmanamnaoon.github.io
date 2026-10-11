@@ -111,16 +111,17 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
   {schema}
 </head>
 <body class="project-case-study">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="shell site-header">
-    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/research/">Research</a><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
+    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">{esc(project.get('title') or title)}</span></nav>
   </header>
   <main id="main" class="shell">
-    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a><a class="action" href="/research/">Research profile</a></div></header>
+    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a><a class="action" href="/projects/#research-directions">Research directions</a></div></header>
     <section aria-label="Reported project metrics" class="metrics">{metric_html}</section>
     <div class="case-grid">
       <section class="case-section" data-reveal="true" aria-labelledby="challenge-heading"><p class="eyebrow">01 · Context</p><h2 id="challenge-heading">Research question</h2><p>{esc(study.get('challenge', ''))}</p></section>
@@ -128,7 +129,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
       <section class="case-section" data-reveal="true" aria-labelledby="results-heading"><p class="eyebrow">03 · Evaluation</p><h2 id="results-heading">Reported results</h2><ul>{list_items('results')}</ul></section>
       <section class="case-section limitations" data-reveal="true" aria-labelledby="limitations-heading"><p class="eyebrow">04 · Scope</p><h2 id="limitations-heading">Limitations</h2><p>{esc(study.get('limitations', ''))}</p></section>
     </div>
-    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/research/">Research profile</a><a href="/skills/">Skills and tools</a></nav>
+    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>
   <script src="/animations.js" defer></script>

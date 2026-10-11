@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -90,11 +91,11 @@
 <body class="project-case-study">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="shell site-header">
-    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/research/">Research</a><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
+    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">Persian GPT — 110M Transformer From Scratch</span></nav>
   </header>
   <main id="main" class="shell">
-    <header class="hero"><p class="eyebrow">Project case study · Flagship model · Persian NLP · From-scratch training</p><h1>Persian GPT from scratch: a 110M parameter language model</h1><p class="lede">An end-to-end Persian language-modeling experiment, from preparing a cleaned Wikipedia corpus and building a tokenizer to training a decoder-only Transformer and comparing held-out perplexity against n-gram baselines.</p><div class="hero-actions"><a class="action primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">Read the model card and download details ↗</a><a class="action" href="/research/">Research profile</a></div></header>
+    <header class="hero"><p class="eyebrow">Project case study · Flagship model · Persian NLP · From-scratch training</p><h1>Persian GPT from scratch: a 110M parameter language model</h1><p class="lede">An end-to-end Persian language-modeling experiment, from preparing a cleaned Wikipedia corpus and building a tokenizer to training a decoder-only Transformer and comparing held-out perplexity against n-gram baselines.</p><div class="hero-actions"><a class="action primary" href="https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch" target="_blank" rel="noopener noreferrer">Read the model card and download details ↗</a><a class="action" href="/projects/#research-directions">Research directions</a></div></header>
     <section aria-label="Reported project metrics" class="metrics"><div class="metric"><strong>110.4M</strong><span>parameters</span></div><div class="metric"><strong>244M</strong><span>training tokens</span></div><div class="metric"><strong>14.52</strong><span>held-out perplexity</span></div></section>
     <div class="case-grid">
       <section class="case-section" data-reveal="true" aria-labelledby="challenge-heading"><p class="eyebrow">01 · Context</p><h2 id="challenge-heading">Research question</h2><p>Persian has fewer openly documented from-scratch training examples than high-resource languages. The goal here was to build a transparent, reproducible baseline workflow and document what the resulting language-model metric does and does not establish.</p></section>
@@ -102,7 +103,7 @@
       <section class="case-section" data-reveal="true" aria-labelledby="results-heading"><p class="eyebrow">03 · Evaluation</p><h2 id="results-heading">Reported results</h2><ul><li>Held-out test perplexity: 14.52; validation perplexity: 14.02.</li><li>The held-out interpolated 5-gram baseline perplexity was 171.60, and the unigram baseline was 1,590.26.</li><li>The reported language-model metrics apply only to the documented corpus split and tokenizer.</li></ul></section>
       <section class="case-section limitations" data-reveal="true" aria-labelledby="limitations-heading"><p class="eyebrow">04 · Scope</p><h2 id="limitations-heading">Limitations</h2><p>This is a small research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been evaluated for broad Persian fluency, safety, or downstream usefulness. Perplexity does not establish factuality or real-world performance.</p></section>
     </div>
-    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/research/">Research profile</a><a href="/skills/">Skills and tools</a></nav>
+    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>
   <script src="/animations.js" defer></script>

@@ -34,6 +34,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -90,11 +91,11 @@
 <body class="project-case-study">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="shell site-header">
-    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/research/">Research</a><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
+    <nav class="nav" aria-label="Primary navigation"><a class="brand" href="/">ARADMANAMNAOON</a><div class="nav-links"><a href="/projects/">Projects</a><a href="/skills/">Skills</a></div></nav>
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">3D Cardiac MRI Segmentation</span></nav>
   </header>
   <main id="main" class="shell">
-    <header class="hero"><p class="eyebrow">Project case study · Medical AI · 3D MRI · Deep learning</p><h1>3D cardiac MRI segmentation with MONAI and a 3D U-Net</h1><p class="lede">This project segments cardiac structures in volumetric MRI. It documents a complete research pipeline from NIfTI loading and preprocessing through mixed-precision training, sliding-window inference, and validation-set Dice evaluation.</p><div class="hero-actions"><a class="action primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View the source code and experiment notes ↗</a><a class="action" href="/research/">Research profile</a></div></header>
+    <header class="hero"><p class="eyebrow">Project case study · Medical AI · 3D MRI · Deep learning</p><h1>3D cardiac MRI segmentation with MONAI and a 3D U-Net</h1><p class="lede">This project segments cardiac structures in volumetric MRI. It documents a complete research pipeline from NIfTI loading and preprocessing through mixed-precision training, sliding-window inference, and validation-set Dice evaluation.</p><div class="hero-actions"><a class="action primary" href="https://github.com/aradmanamnaoon/medical-image-segmentation" target="_blank" rel="noopener noreferrer">View the source code and experiment notes ↗</a><a class="action" href="/projects/#research-directions">Research directions</a></div></header>
     <section aria-label="Reported project metrics" class="metrics"><div class="metric"><strong>0.8821</strong><span>best validation Dice</span></div><div class="metric"><strong>100</strong><span>training epochs</span></div><div class="metric"><strong>3D U-Net</strong><span>architecture</span></div></section>
     <div class="case-grid">
       <section class="case-section" data-reveal="true" aria-labelledby="challenge-heading"><p class="eyebrow">01 · Context</p><h2 id="challenge-heading">Research question</h2><p>Cardiac MRI volumes contain three-dimensional spatial context, so the workflow needs to preserve volumetric information through preprocessing, training, and inference. The project focuses on a public benchmark task and transparent reporting of its validation result.</p></section>
@@ -102,7 +103,7 @@
       <section class="case-section" data-reveal="true" aria-labelledby="results-heading"><p class="eyebrow">03 · Evaluation</p><h2 id="results-heading">Reported results</h2><ul><li>Best reported validation Dice: 0.8821 on the documented benchmark split.</li><li>Training configuration: 100 epochs, 3D U-Net, mixed-precision training.</li><li>The result is a project-reported benchmark validation metric, not a clinical performance estimate.</li></ul></section>
       <section class="case-section limitations" data-reveal="true" aria-labelledby="limitations-heading"><p class="eyebrow">04 · Scope</p><h2 id="limitations-heading">Limitations</h2><p>This work has not been clinically validated, prospectively tested, or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The validation score describes only the project’s benchmark split.</p></section>
     </div>
-    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/research/">Research profile</a><a href="/skills/">Skills and tools</a></nav>
+    <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>
   <script src="/animations.js" defer></script>

@@ -557,16 +557,22 @@ def validate_homepage_contract(
             "Restore the built stylesheet referenced by the site pages.",
             "dist/output.css",
         )
+    motion_stylesheet = root / "assets" / "css" / "motion.css"
+    if not motion_stylesheet.is_file():
+        report(
+            "High", "Homepage / visual design", "motion-css",
+            "The shared motion stylesheet is missing.",
+            "Restore assets/css/motion.css, which is linked from every site page.",
+            "assets/css/motion.css",
+        )
     else:
-        css = stylesheet.read_text(encoding="utf-8", errors="replace").lower()
+        css = motion_stylesheet.read_text(encoding="utf-8", errors="replace").lower()
         if not all(token in css for token in ('[data-reveal="true"]', "motion-enabled", "prefers-reduced-motion", "view-transition")):
             report(
-                "Medium",
-                "Homepage / visual design",
-                "motion-css",
-                "The compiled stylesheet is missing a scroll reveal, reduced-motion, or page-transition rule.",
-                "Keep progressive reveal styling, reduced-motion overrides, and the optional native view transition in src/input.css, then rebuild.",
-                "dist/output.css",
+                "Medium", "Homepage / visual design", "motion-css",
+                "The motion stylesheet lacks a scroll reveal, reduced-motion, or page-transition rule.",
+                "Keep these shared rules in assets/css/motion.css.",
+                "assets/css/motion.css",
             )
 
     animation_script = root / "animations.js"
@@ -1495,7 +1501,6 @@ def audit_repo(root: Path, check_external: bool = False) -> list[Finding]:
             }
             expected = {
                 f"{SITE_URL}/",
-                f"{SITE_URL}/research/",
                 f"{SITE_URL}/projects/",
                 f"{SITE_URL}/skills/",
             }
@@ -2270,13 +2275,24 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
       button.addEventListener('click', function() {
         var page = Number.parseInt(button.dataset.page, 10);
         if (page >= 1 && page <= totalPages && page !== currentPage) {
-          currentPage = page;
-          renderProjects(page);
-          renderPagination();
-          container.setAttribute('aria-label', 'Projects, page ' + page);
-          container.focus({ preventScroll: true });
-          var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+            document.documentElement.classList.contains('motion-off');
+          var update = function() {
+            currentPage = page;
+            renderProjects(page);
+            renderPagination();
+            container.setAttribute('aria-label', 'Projects, page ' + page);
+            container.focus({ preventScroll: true });
+          };
+          if (!reduceMotion && document.startViewTransition) {
+            var transition = document.startViewTransition(update);
+            transition.finished.then(function() {
+              container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }).catch(function() { container.scrollIntoView({ block: 'start' }); });
+          } else {
+            update();
+            container.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+          }
         }
       });
     });
@@ -2560,7 +2576,7 @@ def render_research_projects(projects: list[dict[str, Any]]) -> str:
             for action in project_actions(project)
         )
         cards.append(
-            '<article class="research-evidence-card" id="'
+            '<article class="research-evidence-card" id="evidence-'
             + escape_html(project["id"])
             + '" data-reveal="true"><p class="kicker">'
             + escape_html(project.get("type", "Project"))
@@ -2606,7 +2622,6 @@ def generate_sitemap(
 ) -> None:
     locations = [
         (f"{SITE_URL}/", "1.0"),
-        (f"{SITE_URL}/research/", "0.9"),
         (f"{SITE_URL}/projects/", "0.9"),
         (f"{SITE_URL}/skills/", "0.8"),
     ]
@@ -2654,8 +2669,7 @@ def generate_llms_txt(
 AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. This portfolio supports academic review and prospective graduate study with verifiable project evidence, methods, and limitations.
 
 ## Primary pages
-- [Research profile]({SITE_URL}/research/): Research interests, documented project evidence, methods, and limitations.
-- [Projects]({SITE_URL}/projects/): Public projects across medical AI, Persian language modeling, NLP, RAG, agentic AI, data work, and software.
+- [Projects and research directions]({SITE_URL}/projects/): Public projects, research interests, documented methods, metrics, and limitations across medical AI, Persian language modeling, NLP, RAG, agentic AI, humanities data, and software.
 - [Skills and tools]({SITE_URL}/skills/): Full categorized skills inventory based on the portfolio CV knowledge base.
 
 ## Flagship work
@@ -3196,22 +3210,15 @@ def build_site(root: Path, args: argparse.Namespace) -> int:
         if projects_page.exists():
             projects_source = projects_page.read_text(encoding="utf-8")
             updated_page = inject_projects_page(projects_source, projects)
-            atomic_write(projects_page, updated_page, args.dry_run)
-        else:
-            log("projects/index.html not found; skipping paginated project injection", "warn")
-
-        research_page = root / "research" / "index.html"
-        if research_page.exists():
-            source = research_page.read_text(encoding="utf-8")
-            updated = inject_generated_page(
-                source,
+            updated_page = inject_generated_page(
+                updated_page,
                 "<!-- AUTO:RESEARCH_PROJECTS:START -->",
                 "<!-- AUTO:RESEARCH_PROJECTS:END -->",
                 render_research_projects(projects),
             )
-            atomic_write(research_page, updated, args.dry_run)
+            atomic_write(projects_page, updated_page, args.dry_run)
         else:
-            log("research/index.html not found; skipping research evidence injection", "warn")
+            log("projects/index.html not found; skipping paginated project injection", "warn")
 
         skills_page = root / "skills" / "index.html"
         if skills_page.exists():

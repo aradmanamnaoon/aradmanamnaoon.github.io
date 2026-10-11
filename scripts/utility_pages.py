@@ -18,8 +18,7 @@ def esc(value: Any) -> str:
 def search_entries(projects: list[dict[str, Any]]) -> list[dict[str, str]]:
     entries = [
         {"title": "Home — Seyyed Arad Hosseini Moghaddam", "url": "/", "summary": "AI engineer and data scientist working in medical imaging, machine learning, Persian NLP, and quantitative humanities research.", "terms": "portfolio contact CV graduate research"},
-        {"title": "Research profile", "url": "/research/", "summary": "Medical AI and deep learning research, with statistics and data science for humanities datasets.", "terms": "research medical imaging statistics humanities graduate study"},
-        {"title": "Project archive", "url": "/projects/", "summary": "Medical imaging, language models, retrieval systems, and broader software and data projects.", "terms": "projects machine learning AI RAG Flutter"},
+        {"title": "Projects and research directions", "url": "/projects/", "summary": "Medical imaging, language models, humanities data science, research evidence, and broader software projects.", "terms": "projects research graduate machine learning AI RAG Flutter statistics humanities"},
         {"title": "Skills and tools", "url": "/skills/", "summary": "Full inventory of AI, medical imaging, statistics, data science, NLP, RAG, and software skills.", "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"},
     ]
     for project in projects:
@@ -39,7 +38,7 @@ def search_entries(projects: list[dict[str, Any]]) -> list[dict[str, str]]:
 def render(kind: str, projects: list[dict[str, Any]]) -> str:
     if kind == "404":
         title, eyebrow, heading = "Page not found | Arad", "404 · Page not found", "This route does not exist."
-        intro = "The link may have changed, or the address may contain a typo. Search the portfolio or go directly to the research and project pages."
+        intro = "The link may have changed, or the address may contain a typo. Search the portfolio or go directly to the projects and research directions."
         action = '<a class="utility-action primary" href="/">Back to home</a>'
         extra = ""
     elif kind == "offline":
@@ -74,6 +73,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css" />
 </head>
 <body class="utility-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -86,12 +86,13 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
       <label for="site-search">Search the portfolio</label>
       <div class="utility-search-row"><input id="site-search" type="search" name="q" maxlength="120" autocomplete="off" placeholder="Try cardiac MRI or Persian NLP" /><button type="submit">Search</button></div>
     </form>
-    <div class="utility-actions">{action}<a class="utility-action" href="/research/">Research profile</a><a class="utility-action" href="/skills/">All skills</a></div>
+    <div class="utility-actions">{action}<a class="utility-action" href="/projects/#research-directions">Research directions</a><a class="utility-action" href="/skills/">All skills</a></div>
     {extra}
     <section class="utility-directory" aria-labelledby="directory-title"><h2 id="directory-title">Explore the portfolio</h2><div>{links}</div></section>
   </main>
   <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and data science</footer>
   <script src="/assets/js/site-ui.js" defer></script>
+  <script src="/animations.js" defer></script>
   {search_script}
 </body>
 </html>'''

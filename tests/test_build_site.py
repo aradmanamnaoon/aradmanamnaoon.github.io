@@ -102,16 +102,17 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         entries = search_entries(projects)
         urls = [item["url"] for item in entries]
-        self.assertEqual(len(entries), 4 + len(projects))
+        self.assertEqual(len(entries), 3 + len(projects))
         self.assertIn("/projects/3d-cardiac-mri-segmentation/", urls)
         self.assertIn("/projects/#cohortseal", urls)
         self.assertIn("/skills/", urls)
+        self.assertNotIn("/research/", urls)
         self.assertNotIn("/404.html", urls)
         for kind in ("404", "offline", "search"):
             page = render(kind, projects)
             self.assertIn('name="robots" content="noindex, follow"', page)
             self.assertIn('action="/search/"', page)
-            self.assertIn('href="/research/"', page)
+            self.assertIn('href="/projects/#research-directions"', page)
             self.assertNotIn('rel="canonical"', page)
 
     def test_utility_routes_are_excluded_from_sitemap(self) -> None:
@@ -122,7 +123,20 @@ class PortfolioGeneratorTests(unittest.TestCase):
                     if node.tag.endswith("loc")]
         self.assertIn(build_site.SITE_URL + "/projects/test-case/", urls)
         self.assertTrue({build_site.SITE_URL + route for route in
-                         ("/404.html", "/offline.html", "/search/")}.isdisjoint(urls))
+                         ("/404.html", "/offline.html", "/search/", "/research/")}.isdisjoint(urls))
+
+    def test_research_evidence_and_motion_sources_survive_rebuilds(self) -> None:
+        projects_page = (ROOT / "projects" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="research-directions"', projects_page)
+        self.assertIn('<!-- AUTO:RESEARCH_PROJECTS:START -->', projects_page)
+        self.assertIn('id="evidence-medical-image-segmentation"', projects_page)
+        self.assertIn('href="/projects/3d-cardiac-mri-segmentation/"', projects_page)
+        self.assertIn('href="/assets/css/motion.css"', projects_page)
+        from project_pages import render
+        case_study = render(build_site.load_projects(ROOT)[0], build_site.SITE_URL)
+        assert case_study is not None
+        self.assertIn('href="/assets/css/motion.css"', case_study)
+        self.assertNotIn('href="/research/"', case_study)
 
 
 if __name__ == "__main__":

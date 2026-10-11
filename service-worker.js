@@ -1,9 +1,9 @@
 /* Network-first pages; a small cached fallback for offline navigation. */
-const CACHE = 'arad-portfolio-v1';
+const CACHE = 'arad-portfolio-v2';
 const CORE = [
-  '/', '/research/', '/projects/', '/skills/', '/search/',
-  '/offline.html', '/dist/output.css', '/assets/css/ux.css',
-  '/assets/js/site-ui.js', '/assets/js/search.js', '/search-index.json'
+  '/', '/projects/', '/skills/', '/search/',
+  '/offline.html', '/dist/output.css', '/assets/css/ux.css', '/assets/css/motion.css',
+  '/animations.js', '/assets/js/site-ui.js', '/assets/js/search.js', '/search-index.json'
 ];
 
 self.addEventListener('install', function (event) {

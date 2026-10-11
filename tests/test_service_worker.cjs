@@ -9,7 +9,8 @@ const origin = 'https://aradmanamnaoon.github.io';
 
 function workerWith(fetcher, cachedOffline) {
   const handlers = {};
-  const cache = { put: async () => {}, addAll: async () => {} };
+  let precached = [];
+  const cache = { put: async () => {}, addAll: async (items) => { precached = items; } };
   const context = {
     URL, Response, fetch: fetcher,
     caches: {
@@ -24,7 +25,7 @@ function workerWith(fetcher, cachedOffline) {
     },
   };
   vm.runInNewContext(source, context);
-  return handlers.fetch;
+  return { fetchEvent: handlers.fetch, installEvent: handlers.install, precached: () => precached };
 }
 
 function dispatch(handler, url, method = 'GET', mode = 'navigate') {
@@ -39,7 +40,7 @@ function dispatch(handler, url, method = 'GET', mode = 'navigate') {
 }
 
 test('offline navigation returns branded content with 503', async () => {
-  const fetchEvent = workerWith(
+  const { fetchEvent } = workerWith(
     async () => { throw new Error('offline'); },
     new Response('<h1>You are offline.</h1>', { status: 200 }),
   );
@@ -49,7 +50,7 @@ test('offline navigation returns branded content with 503', async () => {
 });
 
 test('server 404 is passed through and not replaced by offline content', async () => {
-  const fetchEvent = workerWith(
+  const { fetchEvent } = workerWith(
     async () => new Response('Not found', { status: 404 }),
     new Response('Offline', { status: 200 }),
   );
@@ -58,6 +59,17 @@ test('server 404 is passed through and not replaced by offline content', async (
 });
 
 test('cross-origin requests are not intercepted', () => {
-  const fetchEvent = workerWith(async () => new Response('ok'), undefined);
+  const { fetchEvent } = workerWith(async () => new Response('ok'), undefined);
   assert.equal(dispatch(fetchEvent, 'https://formspree.io/f/example', 'POST', 'cors'), undefined);
+});
+
+test('offline shell includes core motion and excludes the optional desktop scene', async () => {
+  const worker = workerWith(async () => new Response('ok'), undefined);
+  let installation;
+  worker.installEvent({ waitUntil(promise) { installation = promise; } });
+  await installation;
+  assert.ok(worker.precached().includes('/animations.js'));
+  assert.ok(worker.precached().includes('/assets/css/motion.css'));
+  assert.ok(!worker.precached().includes('/assets/vendor/gsap.min.js'));
+  assert.ok(!worker.precached().includes('/research/'));
 });

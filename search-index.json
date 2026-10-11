@@ -6,16 +6,10 @@
     "terms": "portfolio contact CV graduate research"
   },
   {
-    "title": "Research profile",
-    "url": "/research/",
-    "summary": "Medical AI and deep learning research, with statistics and data science for humanities datasets.",
-    "terms": "research medical imaging statistics humanities graduate study"
-  },
-  {
-    "title": "Project archive",
+    "title": "Projects and research directions",
     "url": "/projects/",
-    "summary": "Medical imaging, language models, retrieval systems, and broader software and data projects.",
-    "terms": "projects machine learning AI RAG Flutter"
+    "summary": "Medical imaging, language models, humanities data science, research evidence, and broader software projects.",
+    "terms": "projects research graduate machine learning AI RAG Flutter statistics humanities"
   },
   {
     "title": "Skills and tools",
