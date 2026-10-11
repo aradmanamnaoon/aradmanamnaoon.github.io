@@ -4,10 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>AI and Machine Learning Projects | ARADMANAMNAOON</title>
+  <title>AI Research Projects | Medical AI, Persian NLP &amp; Machine Learning</title>
   <meta
     name="description"
-    content="Selected AI and machine-learning projects by Seyyed Arad Hosseini Moghaddam: agentic AI, RAG, Persian NLP, medical AI, computer vision, model training, and QLoRA fine-tuning."
+    content="Evidence-led AI research projects by Seyyed Arad Hosseini Moghaddam: 3D cardiac MRI segmentation, Persian GPT trained from scratch, statistical data science, NLP, RAG, and agentic AI."
   />
   <meta name="author" content="Seyyed Arad Hosseini Moghaddam" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -19,10 +19,10 @@
 
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="ARADMANAMNAOON" />
-  <meta property="og:title" content="AI and Machine Learning Projects | ARADMANAMNAOON" />
+  <meta property="og:title" content="AI Research Projects | Medical AI, Persian NLP & Machine Learning" />
   <meta
     property="og:description"
-    content="An evidence-first archive of AI and machine-learning projects covering agentic AI, RAG, Persian NLP, medical AI, computer vision, and LLM fine-tuning."
+    content="Research-oriented AI projects with methods and reported results: medical image segmentation, Persian language-model training, machine-learning evaluation, RAG, and agentic systems."
   />
   <meta property="og:url" content="https://aradmanamnaoon.github.io/projects/" />
   <meta property="og:image" content="https://aradmanamnaoon.github.io/og-image.jpg" />
@@ -32,7 +32,7 @@
   <meta name="twitter:title" content="AI and Machine Learning Projects | ARADMANAMNAOON" />
   <meta
     name="twitter:description"
-    content="Selected AI and machine-learning projects, with technical details, metrics, models, datasets, and source code."
+    content="Explore reproducible AI projects with public methods, datasets, evaluation metrics, model artifacts, and source code."
   />
   <meta name="twitter:image" content="https://aradmanamnaoon.github.io/og-image.jpg" />
 
@@ -571,7 +571,7 @@
     "@type": "CollectionPage",
     "name": "AI and Machine Learning Projects | ARADMANAMNAOON",
     "url": "https://aradmanamnaoon.github.io/projects/",
-    "description": "An evidence-first archive of AI and machine-learning projects by Seyyed Arad Hosseini Moghaddam.",
+    "description": "Research-oriented projects in medical imaging, machine learning, Persian NLP, and AI engineering by Seyyed Arad Hosseini Moghaddam.",
     "author": {
       "@type": "Person",
       "name": "Seyyed Arad Hosseini Moghaddam",
@@ -592,8 +592,8 @@
   }
   </script>
   <meta name="twitter:image:alt" content="ARADMANAMNAOON portfolio graphic with Seyyed Arad Hosseini Moghaddam, Data Scientist and AI Engineer.">
-  <meta property="og:image:width" content="1890">
-  <meta property="og:image:height" content="848">
+  <meta property="og:image:width" content="853">
+  <meta property="og:image:height" content="1280">
 </head>
 
 <body class="relative bg-surface font-sans text-ink antialiased">
@@ -605,6 +605,8 @@
 
       <div class="nav-links">
         <a class="nav-secondary" href="../#about">About</a>
+        <a href="../research/">Research</a>
+        <a href="../skills/">Skills</a>
         <a href="./" aria-current="page">Projects</a>
         
         <a href="../#contact">Contact</a>
@@ -614,16 +616,16 @@
 
   <main id="main">
     <section class="hero shell" aria-labelledby="page-title">
-      <p class="eyebrow">Selected work · experiments · production systems</p>
+      <p class="eyebrow">Medical AI · machine learning · quantitative data science</p>
 
       <h1 class="title" id="page-title">
-        AI and machine learning <em>projects.</em>
+        Research in medical AI, <em>machine learning, and data science.</em>
       </h1>
 <p class="intro">
-        An evidence-first archive of systems I have built across agentic AI,
-        retrieval, Persian NLP, medical AI, computer vision, model training from
-        scratch, and parameter-efficient fine-tuning. Metrics are included where
-        the underlying project publishes them.
+        An evidence-led archive of my work in deep learning for medical imaging, statistics
+        and data science for humanities-related questions, Persian language-model training,
+        and broader AI engineering. Featured projects include reported metrics, methods,
+        and limitations where the source project documents them.
       </p>
 
       <div class="hero-links">
@@ -657,6 +659,36 @@
 <div class="projects-paginated" id="projects-paginated" aria-live="polite"></div>
 <nav class="projects-pagination" id="projects-pagination" role="navigation" aria-label="Project pages"></nav>
 <style>
+.project-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.project-metric {
+  min-width: 8rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0.75rem;
+}
+.project-metric strong,
+.project-metric span {
+  display: block;
+}
+.project-metric strong {
+  color: #7db4f0;
+  font-size: 1.1rem;
+}
+.project-metric span {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+}
+.project-note {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.9rem;
+  border-left: 2px solid #7db4f0;
+  padding-left: 0.8rem;
+}
 .projects-pagination {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -737,7 +769,7 @@
 </style>
 <script>
 (function() {
-  var projects = [{"id": "cohortseal", "title": "CohortSeal", "type": "github", "description": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MONAI", "DICOM", "Hugging Face", "Medical Imaging"], "actions": [{"url": "https://github.com/aradmanamnaoon/cohortseal", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "holdout-ledger", "title": "Holdout Ledger: Dataset Leakage Audit Workbench", "type": "github", "description": "A local workbench for inspecting text and entity overlap across train, validation, and test splits. Includes an evidence dashboard, offline reports, SQLite audit snapshots, and reviewed repair plans that preserve every test record. CI checks track newly exposed holdout IDs; lexical detection limits are documented.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MinHash", "Dataset Evaluation", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/Holdout-Ledger", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "agent-guardrails", "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents", "type": "github", "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.", "dateDisplay": "", "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"], "actions": [{"url": "https://github.com/aradmanamnaoon/agent-guardrails", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "persian-lm-from-scratch", "title": "Persian GPT — 110M Transformer From Scratch", "type": "hf_model", "description": "A decoder-only GPT-style language model built end to end for Persian: cleaned Wikipedia corpus, custom 32K BPE tokenizer, transformer training, n-gram baselines, and held-out evaluation.", "dateDisplay": "", "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "ai-research-assistant-platform", "title": "AI Research Assistant Platform", "type": "github", "description": "A production-style research assistant built around a LangGraph multi-agent workflow. Planning, retrieval, research, tool execution, synthesis, and bounded reflection work with ChromaDB RAG, persistent state, LangSmith observability, FastAPI, streaming responses, and Docker-ready deployment.", "dateDisplay": "", "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "medical-image-segmentation", "title": "3D Cardiac MRI Segmentation", "type": "github", "description": "A voxel-level cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net.", "dateDisplay": "", "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"], "actions": [{"url": "https://github.com/aradmanamnaoon/medical-image-segmentation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "jibay2-medical-v2", "title": "Jibay2 Medical — Clinical Note Summarization", "type": "hf_model", "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.", "dateDisplay": "", "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b", "title": "Messy2JSON — Lightweight Structured Extraction", "type": "hf_model", "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.", "dateDisplay": "", "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "persian-wikipedia-cleaned-for-persian-NLP", "title": "Persian Wikipedia Cleaned For Persian NLP", "type": "hf_dataset", "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.", "dateDisplay": "", "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"], "actions": [{"url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "nllb-en-fa-psych-translation", "title": "NLLB English-to-Persian Psychology Translation", "type": "hf_model", "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.", "dateDisplay": "", "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation", "label": "View project ↗", "primary": true}], "note": ""}, {"id": "messy2json-qwen-0.5b-lora", "title": "Messy2Json Qwen 0.5B Lora", "type": "hf_model", "description": "LoRA adapter for the Messy2JSON Qwen model.", "dateDisplay": "", "tags": ["text-generation", "peft", "lora", "sft", "trl"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora", "label": "View project ↗", "primary": true}], "note": ""}];
+  var projects = [{"id": "persian-lm-from-scratch", "title": "Persian GPT — 110M Transformer From Scratch", "type": "Flagship model · Persian NLP · From-scratch training", "description": "A 110.4M-parameter decoder-only transformer trained end to end for Persian. The project covers a cleaned Wikipedia corpus, custom 32K BPE tokenizer, training pipeline, n-gram baselines, and held-out evaluation.", "dateDisplay": "", "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch", "label": "View project ↗", "primary": true}], "metrics": [{"value": "110.4M", "label": "parameters"}, {"value": "244M", "label": "training tokens"}, {"value": "14.52", "label": "held-out perplexity"}], "note": "A research portfolio model; the held-out perplexity is a language-model metric, not an instruction-following benchmark."}, {"id": "medical-image-segmentation", "title": "3D Cardiac MRI Segmentation", "type": "Medical AI · 3D MRI · Deep learning", "description": "A complete 3D cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. It covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, and voxel-level evaluation on Medical Segmentation Decathlon Task02 Heart.", "dateDisplay": "", "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"], "actions": [{"url": "https://github.com/aradmanamnaoon/medical-image-segmentation", "label": "View project ↗", "primary": true}], "metrics": [{"value": "0.8821", "label": "best validation Dice"}, {"value": "100", "label": "training epochs"}, {"value": "3D U-Net", "label": "architecture"}], "note": "Research project on a public benchmark dataset; not clinically validated or deployed for clinical decision-making."}, {"id": "ai-research-assistant-platform", "title": "AI Research Assistant Platform", "type": "Agentic AI · RAG · Evaluated system", "description": "A multi-agent research assistant built with LangGraph, ChromaDB RAG, FastAPI, and LangSmith. Planning, retrieval, parallel research, tool execution, citation-grounded synthesis, bounded reflection, persistent state, and streaming are covered in the public implementation.", "dateDisplay": "", "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform", "label": "View project ↗", "primary": true}], "metrics": [{"value": "103", "label": "offline tests"}, {"value": "5", "label": "agent roles"}, {"value": "REST + SSE", "label": "API surface"}], "note": "Offline tests use a deterministic fake-LLM mode; the test count measures exercised software behavior, not answer quality."}, {"id": "cohortseal", "title": "CohortSeal", "type": "github", "description": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MONAI", "DICOM", "Hugging Face", "Medical Imaging"], "actions": [{"url": "https://github.com/aradmanamnaoon/cohortseal", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "holdout-ledger", "title": "Holdout Ledger: Dataset Leakage Audit Workbench", "type": "github", "description": "A local workbench for inspecting text and entity overlap across train, validation, and test splits. Includes an evidence dashboard, offline reports, SQLite audit snapshots, and reviewed repair plans that preserve every test record. CI checks track newly exposed holdout IDs; lexical detection limits are documented.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MinHash", "Dataset Evaluation", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/Holdout-Ledger", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "agent-guardrails", "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents", "type": "github", "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.", "dateDisplay": "", "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"], "actions": [{"url": "https://github.com/aradmanamnaoon/agent-guardrails", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "jibay2-medical-v2", "title": "Jibay2 Medical — Clinical Note Summarization", "type": "hf_model", "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.", "dateDisplay": "", "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "messy2json-qwen-0.5b", "title": "Messy2JSON — Lightweight Structured Extraction", "type": "hf_model", "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.", "dateDisplay": "", "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "persian-wikipedia-cleaned-for-persian-NLP", "title": "Persian Wikipedia Cleaned For Persian NLP", "type": "hf_dataset", "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.", "dateDisplay": "", "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"], "actions": [{"url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "nllb-en-fa-psych-translation", "title": "NLLB English-to-Persian Psychology Translation", "type": "hf_model", "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.", "dateDisplay": "", "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}, {"id": "messy2json-qwen-0.5b-lora", "title": "Messy2Json Qwen 0.5B Lora", "type": "hf_model", "description": "LoRA adapter for the Messy2JSON Qwen model.", "dateDisplay": "", "tags": ["text-generation", "peft", "lora", "sft", "trl"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora", "label": "View project ↗", "primary": true}], "metrics": [], "note": ""}];
   var perPage = 6;
   var currentPage = 1;
   var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
@@ -764,12 +796,20 @@
         return '<a class="' + cls + '" href="' + esc(a.url) + '" target="_blank" rel="noopener noreferrer">' + esc(a.label) + '</a>';
       }).join('');
       var note = p.note ? '<p class="note">' + esc(p.note) + '</p>' : '';
+      var metrics = (p.metrics || []).map(function(m) {
+        return '<div class="project-metric"><strong>' + esc(m.value) +
+          '</strong><span>' + esc(m.label) + '</span></div>';
+      }).join('');
+      var metricMarkup = metrics
+        ? '<div class="project-metrics" aria-label="Reported project metrics">' + metrics + '</div>'
+        : '';
       return '<article class="project" id="' + esc(p.id) + '">' +
         '<div class="num" aria-hidden="true">' + num + '</div>' +
         '<div>' +
           '<p class="type">' + esc(p.type) + '</p>' +
           '<h2>' + esc(p.title) + '</h2>' +
           '<p class="desc">' + esc(p.description) + '</p>' +
+          metricMarkup +
           '<div class="tags">' + tags + '</div>' +
           '<div class="actions">' + actions + '</div>' +
           note +
