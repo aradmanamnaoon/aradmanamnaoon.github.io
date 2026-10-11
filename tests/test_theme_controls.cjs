@@ -151,7 +151,7 @@ test('all content routes and generators have refreshed interaction assets',()=>{
     'projects/multi-agent-ai-research-assistant/index.html',
     'scripts/project_pages.py','scripts/utility_pages.py'
   ]) {
-    assert.match(read(route),/interaction-hub\.js\?v=20261011-theme-v5/,route);
+    assert.match(read(route),/interaction-hub\.js\?v=20261011-theme-v6/,route);
     assert.match(read(route),/interaction-hub\.css\?v=20261011-dotlight-v6/,route);
   }
 });
