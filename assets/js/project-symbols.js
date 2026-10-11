@@ -5,8 +5,10 @@
   const NS = 'http://www.w3.org/2000/svg';
   const paths = {
     'persian-lm-from-scratch': {
-      name: 'Language token lattice',
-      markup: '<g class="symbol-orbit"><circle cx="70" cy="70" r="51" stroke-dasharray="2 9"/><circle cx="70" cy="70" r="39" stroke-dasharray="20 10"/></g><g class="symbol-draw"><path d="M43 54h54M43 70h54M43 86h33"/><path d="M53 43v54M87 43v33"/></g><circle class="symbol-core" cx="88" cy="86" r="9"/>'
+      name: 'Persian letter Peh with Transformer tokens',
+      // Hand-drawn Persian «پ» below a three-token attention path.
+      // No circular lattice or distracting dotted ring.
+      markup: '<g class="symbol-draw" fill="none"><rect x="27" y="24" width="25" height="19" rx="5"/><rect x="58" y="18" width="24" height="19" rx="5"/><rect x="88" y="24" width="25" height="19" rx="5"/><path d="M39 43v9m31-15v17m31-11v9M39 52 70 59l31-7"/><path d="M37 66v9c0 14 15 24 33 24s33-10 33-24v-9" stroke-width="2.7"/><path d="M44 66c16 9 36 9 52 0" opacity=".4"/></g><g class="symbol-nodes"><circle cx="55" cy="112" r="3.5"/><circle cx="70" cy="114" r="3.5"/><circle cx="85" cy="112" r="3.5"/></g><circle class="symbol-core" cx="70" cy="27" r="3.4"/>'
     },
     'medical-image-segmentation': {
       name: 'Cardiac MRI slices',

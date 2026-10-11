@@ -58,6 +58,19 @@ test('every current project receives a visually distinct semantic symbol', () =>
   assert.equal(allProjects.length, 10);
 });
 
+test('Persian GPT uses a Persian-script token emblem instead of the old lattice', () => {
+  const {window} = testDocument();
+  const button = window.PortfolioProjectSymbols.create('persian-lm-from-scratch', 'Persian GPT', 'archive');
+  const picture = button.children[0].innerHTML;
+  assert.match(button.attributes['aria-label'], /Persian letter Peh with Transformer tokens/);
+  assert.match(picture, /cx="55" cy="112"/);
+  assert.match(picture, /cx="70" cy="114"/);
+  assert.match(picture, /cx="85" cy="112"/);
+  assert.match(picture, /x="27" y="24"/);
+  assert.doesNotMatch(picture, /stroke-dasharray="2 9"/);
+  assert.match(projectPage, /project-symbols\.js\?v=20261011-glyph-v8/);
+});
+
 test('new project IDs get stable automatic nonrepeating symbols', () => {
   const {window} = testDocument();
   const factory = window.PortfolioProjectSymbols;
