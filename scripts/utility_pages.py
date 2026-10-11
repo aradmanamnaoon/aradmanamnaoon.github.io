@@ -58,6 +58,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
         f'<a href="{esc(item["url"])}">{esc(item["title"])}</a>'
         for item in search_entries(projects)[1:] if "#" not in item["url"]
     )
+    search_current = ' aria-current="page"' if kind == "search" else ""
     search_script = '<script src="/assets/js/search.js?v=20261011-search-v2" defer></script>' if kind == "search" else ""
     page = f'''<!doctype html>
 <html lang="en">
@@ -80,7 +81,13 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
 </head>
 <body class="utility-page">
   <a class="skip-link" href="#main">Skip to content</a>
-  <header class="utility-header"><a class="utility-brand" href="/">ARADMANAMNAOON</a><a href="/projects/">Projects</a></header>
+  <header class="utility-header">
+    <a class="utility-brand" href="/">ARADMANAMNAOON</a>
+    <nav aria-label="Primary navigation">
+      <a href="/">Home</a><a href="/skills/">Skills</a><a href="/projects/">Projects</a>
+      <a href="/search/"{search_current}>Search</a><a href="/#contact">Contact</a>
+    </nav>
+  </header>
   <main id="main" class="utility-main">
     <p class="utility-eyebrow">{esc(eyebrow)}</p>
     <h1>{esc(heading)}</h1>

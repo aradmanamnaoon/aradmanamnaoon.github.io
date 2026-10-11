@@ -160,3 +160,15 @@ test('all patched local scripts parse and offline cache contains theme initializ
   assert.match(worker,/arad-portfolio-v15/);
   assert.match(worker,/\/assets\/js\/theme-init\.js/);
 });
+
+test('utility pages expose primary navigation on desktop', () => {
+  const generator = read('scripts/utility_pages.py');
+  assert.ok(generator.includes('nav aria-label="Primary navigation"'));
+  for (const route of ['search/index.html', '404.html', 'offline.html']) {
+    const html = read(route);
+    assert.ok(html.includes('nav aria-label="Primary navigation"'),route);
+    assert.ok(html.includes('href="/skills/"'),route);
+    assert.ok(html.includes('href="/projects/"'),route);
+  }
+  assert.ok(read('search/index.html').includes('href="/search/" aria-current="page"'));
+});
