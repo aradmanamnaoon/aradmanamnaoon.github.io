@@ -52,6 +52,16 @@ class PortfolioGeneratorTests(unittest.TestCase):
                       "k-means clustering", "Cross-validation", "scikit-learn"):
             self.assertIn(skill.lower(), rendered.lower())
 
+    def test_skills_progressive_explorer_is_preserved(self) -> None:
+        page = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="skills-explorer" class="skills-explorer" hidden', page)
+        self.assertIn('id="skills-query"', page)
+        self.assertIn('data-skill-area="humanities"', page)
+        self.assertIn('/assets/js/skills-experience.js', page)
+        self.assertIn('/assets/css/skills-experience.css', page)
+        self.assertIn('id="statistics_and_humanities_data"', page)
+        self.assertIn('id="medical_imaging"', page)
+
     def test_skills_page_is_readable_and_accessible(self) -> None:
         page = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")
         self.assertIn('class="breadcrumbs shell"', page)
@@ -74,6 +84,19 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn("visibleProjects.slice", page)
         self.assertIn("No projects match", page)
         self.assertIn("matchesTopic", page)
+
+    def test_homepage_focus_and_source_summaries(self) -> None:
+        projects = build_site.load_projects(ROOT)
+        rendered = build_site.render_home_projects(projects)
+        self.assertIn("3D cardiac MRI segmentation with PyTorch and MONAI", rendered)
+        self.assertIn("Perplexity evaluates language modeling", rendered)
+        self.assertIn("Offline tests verify software behavior", rendered)
+        self.assertNotIn("volumetric cardiac MRI segmentation pipeline using PyTorch", rendered)
+        home = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Statistics for Humanities", home)
+        self.assertIn("statistical programming for psychology", home)
+        self.assertIn("og-image.jpg", home)
+        self.assertNotIn("https://github.com/AradMn", home)
 
     def test_cv_knowledge_base_copies_remain_in_sync(self) -> None:
         self.assertEqual(
@@ -163,11 +186,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('<!-- AUTO:RESEARCH_PROJECTS:START -->', projects_page)
         self.assertIn('id="evidence-medical-image-segmentation"', projects_page)
         self.assertIn('href="/projects/3d-cardiac-mri-segmentation/"', projects_page)
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v5"', projects_page)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v6"', projects_page)
         from project_pages import render
         case_study = render(build_site.load_projects(ROOT)[0], build_site.SITE_URL)
         assert case_study is not None
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v5"', case_study)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v6"', case_study)
         self.assertNotIn('href="/research/"', case_study)
 
 

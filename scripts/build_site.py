@@ -1981,7 +1981,7 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
         )
         metrics = render_project_metrics(project, compact=True)
         note = (
-            f'<p class="project-note">{escape_html(project["note"])}</p>'
+            f'<p class="project-note">{escape_html(project.get("homepage_note") or project["note"])}</p>'
             if project.get("note")
             else ""
         )
@@ -2018,7 +2018,7 @@ def render_home_projects(projects: list[dict[str, Any]]) -> str:
             {alias_markup}<p class="project-number">{index:02} / {escape_html(type_label)}</p>
             <h3 class="card-title">{escape_html(project.get('title') or 'Untitled project')}</h3>
             <p class="card-copy">
-              {escape_html(project.get('description') or 'Project details and source repository.')}
+              {escape_html(project.get('homepage_description') or project.get('description') or 'Project details and source repository.')}
             </p>
             {metrics}
             {note}

@@ -60,7 +60,9 @@
       "limitations": "This is a small research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been evaluated for broad Persian fluency, safety, or downstream usefulness. Perplexity does not establish factuality or real-world performance.",
       "sourceLabel": "Read the model card and download details",
       "seoTitle": "Persian GPT From Scratch: 110M Model | Arad"
-    }
+    },
+    "homepage_description": "A 110.4M-parameter Persian Transformer trained from scratch, with a custom tokenizer, baselines, and held-out evaluation.",
+    "homepage_note": "Perplexity evaluates language modeling, not factual accuracy."
   },
   {
     "id": "medical-image-segmentation",
@@ -123,7 +125,9 @@
       "limitations": "This work has not been clinically validated, prospectively tested, or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The validation score describes only the project’s benchmark split.",
       "sourceLabel": "View the source code and experiment notes",
       "seoTitle": "3D Cardiac MRI Segmentation with MONAI | Arad"
-    }
+    },
+    "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI, from volumetric preprocessing to 3D U-Net training and benchmark evaluation.",
+    "homepage_note": "Benchmark validation only; not clinically validated."
   },
   {
     "id": "ai-research-assistant-platform",
@@ -187,7 +191,9 @@
       "limitations": "The deterministic fake-LLM test mode validates application behavior rather than live-model answer quality. The system has not been shown to outperform human research workflows or establish the correctness and completeness of generated research. Human verification of cited sources remains necessary.",
       "sourceLabel": "Inspect the repository and implementation",
       "seoTitle": "AI Research Assistant with LangGraph & RAG | Arad"
-    }
+    },
+    "homepage_description": "LangGraph agents for retrieval, cited research synthesis, and tool use, with FastAPI endpoints and reproducible offline tests.",
+    "homepage_note": "Offline tests verify software behavior, not answer quality."
   },
   {
     "id": "cohortseal",

@@ -7,7 +7,8 @@
 .archive-chapter::before { content: ""; display: inline-block; width: 34px; height: 1px; background: #87b9e7; }
 .archive .projects-paginated { display: grid; gap: clamp(1.15rem, 3vw, 2.25rem); }
 .archive .project { position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(128deg, rgb(141 191 240 / .09), transparent 43%), #191f28; box-shadow: inset 0 1px rgb(255 255 255 / .025); transition: border-color .38s ease, box-shadow .38s ease, transform .45s cubic-bezier(.22,1,.36,1); }
-.archive .project::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(470px circle at var(--archive-x, 78%) var(--archive-y, 20%), rgb(125 180 240 / .14), transparent 73%); opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+/* No diffuse pointer spotlight on cards; only the discrete dot grid reacts to the cursor. */
+.archive .project::before { content: none; }
 .archive .project::after { content: ""; position: absolute; inset: auto 0 0; height: 1px; background: linear-gradient(90deg, transparent, #79b8fa, transparent); opacity: 0; transform: scaleX(.38); transition: transform .65s cubic-bezier(.22,1,.36,1), opacity .45s ease; pointer-events: none; }
 .archive .project:hover::before, .archive .project:focus-within::before { opacity: 1; }
 .archive .project:hover::after, .archive .project:focus-within::after { transform: scaleX(1); opacity: .75; }
@@ -124,3 +125,4 @@
 }
 html.motion-off .archive-enhanced .project[data-archive-enter="pending"] { opacity: 1; transform: none; }
 html.motion-off .archive-orbit * { animation: none !important; }
+

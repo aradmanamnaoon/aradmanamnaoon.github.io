@@ -95,7 +95,7 @@ html.motion-off body::after { opacity: 0 !important; }
 
 @media (hover: hover) and (pointer: fine) {
   .motion-tilt { position: relative; overflow: hidden; transform: perspective(900px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateY(-3px) !important; transition: transform 320ms var(--motion-ease), border-color 220ms ease, box-shadow 220ms ease; }
-  .motion-tilt::before { content: ""; position: absolute; left: 0; top: 0; z-index: 0; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgb(125 180 240 / .19), transparent 70%); pointer-events: none; transform: translate3d(var(--spot-x, -300px), var(--spot-y, -300px), 0); }
+  .motion-tilt::before { content: none; }
   .motion-tilt > * { position: relative; z-index: 1; }
   .motion-magnetic { translate: var(--mag-x, 0px) var(--mag-y, 0px); transition: translate 280ms var(--motion-ease); }
 }
@@ -172,3 +172,39 @@ html.motion-off::view-transition-old(root), html.motion-off::view-transition-new
 .faq-item[open] .faq-answer { animation: faq-answer-enter .4s cubic-bezier(.22,1,.36,1) both; }
 @keyframes faq-answer-enter { from { opacity: .35; transform: translateY(-7px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) { .faq-item[open] .faq-answer { animation: none; } }
+
+/* Featured project symbols remain decorative in layout but interactive by mouse, touch and keyboard. */
+.project-card { position:relative; }
+.project-card > .home-project-symbol { position:absolute; top:clamp(.7rem,2vw,1.25rem); right:clamp(.7rem,2vw,1.25rem); width:clamp(48px,7vw,76px); height:clamp(48px,7vw,76px); z-index:3; opacity:.73; display:grid; place-items:center; border-radius:50%; transition:opacity .25s ease, transform .3s ease; }
+.project-card > .home-project-symbol:hover, .project-card > .home-project-symbol:focus-visible { opacity:1; transform:scale(1.04); }
+.project-card > .home-project-symbol:focus-visible { outline:2px solid #a9d3ff; }
+.project-card:has(.home-project-symbol) > .card-title { padding-right:clamp(2.2rem,8vw,5rem); }
+@media(max-width:480px){ .project-card > .home-project-symbol { width:44px; height:44px; } }
+@media(prefers-reduced-motion:reduce){ .home-project-symbol { transition:none!important; } }
+
+/* Distinct project glyphs: subtle orbital dynamics without halo lighting. */
+.project-symbol { appearance:none; border:0; padding:0; background:transparent; cursor:pointer; color:#aed5fa; outline-offset:4px; }
+.archive .project .project-symbol { pointer-events:auto; z-index:2; display:grid; place-items:center; }
+.archive .project .project-symbol:focus-visible { outline:2px solid #bce4ff; border-radius:50%; }
+.project-symbol svg { display:block; width:100%; height:100%; overflow:visible; }
+.project-symbol svg :is(path,rect,circle,ellipse,polygon) { vector-effect:non-scaling-stroke; }
+.project-symbol svg .symbol-draw { stroke:#a5cff8; stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.project-symbol svg .symbol-orbit { stroke:#74a9d8; stroke-width:1.1; }
+.project-symbol svg .symbol-nodes { stroke:#b5ddff; fill:#1f3247; stroke-width:1.5; }
+.project-symbol svg .symbol-core { stroke:#a5cff8; fill:#2e5a83; stroke-width:1.5; }
+.project-symbol svg .symbol-pulse { stroke:#a5cff8; stroke-width:2; }
+@media (prefers-reduced-motion: no-preference) {
+  @media (hover:hover) and (pointer:fine) {
+    .project-symbol:hover .symbol-orbit { animation:project-glyph-orbit 13s linear infinite; transform-origin:70px 70px; }
+    .project-symbol:hover .symbol-core { animation:project-glyph-heartbeat 1.6s ease-in-out infinite; transform-origin:70px 70px; }
+    .project-symbol:hover .symbol-draw { animation:project-glyph-sway 3.5s ease-in-out infinite alternate; transform-origin:70px 70px; }
+  }
+  .project-symbol.symbol-play svg { animation:project-glyph-pop .8s cubic-bezier(.2,.9,.2,1) both; }
+  .project-symbol.symbol-play .symbol-orbit { animation:project-glyph-orbit 1s cubic-bezier(.2,.9,.2,1) both; transform-origin:70px 70px; }
+  .project-symbol.symbol-play .symbol-core { animation:project-glyph-heartbeat .55s ease-in-out 2; transform-origin:70px 70px; }
+}
+@keyframes project-glyph-orbit { to { transform:rotate(360deg); } }
+@keyframes project-glyph-heartbeat { 50% { transform:scale(1.3); opacity:.7; } }
+@keyframes project-glyph-sway { to { transform:rotate(7deg); } }
+@keyframes project-glyph-pop { 0% { transform:scale(.84); opacity:.6; } 55% { transform:scale(1.06); } 100% { transform:scale(1); opacity:1; } }
+@media (prefers-reduced-motion: reduce) { .project-symbol svg *, .project-symbol svg { animation:none!important; transition:none!important; } }

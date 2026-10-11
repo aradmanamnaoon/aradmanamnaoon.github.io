@@ -140,7 +140,12 @@
     if (!container) return;
     archive.classList.add('archive-enhanced');
     container.querySelectorAll('.project').forEach((card, i) => {
-      if (!card.querySelector('.archive-sigil')) card.appendChild(signature(card.id));
+      if (!card.querySelector('.archive-sigil')) {
+        const heading = card.querySelector('h2')?.textContent || 'project';
+        card.appendChild(window.PortfolioProjectSymbols
+          ? window.PortfolioProjectSymbols.create(card.id, heading, 'archive')
+          : signature(card.id));
+      }
       if (!card.querySelector('.archive-copy')) card.appendChild(copyButton(card));
       card.querySelectorAll('.tag:not(.archive-tag)').forEach(tag => {
         const button = document.createElement('button');
@@ -180,7 +185,7 @@
   }
 
   // One delegated pointer handler continues working after pagination and filtering.
-  archive.addEventListener('pointermove', pointerGlow, { passive: true });
+  // Do not paint broad pointer glows; the independent dot background still brightens.
   search.addEventListener('input', () => {
     clearTimeout(debounce);
     debounce = setTimeout(applyFilters, 120);

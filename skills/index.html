@@ -102,7 +102,8 @@
   <meta property="og:image:height" content="848">
   <!-- AUTO:BREADCRUMB:SCHEMA:START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Skills", "item": "https://aradmanamnaoon.github.io/skills/"}]}</script><!-- AUTO:BREADCRUMB:SCHEMA:END -->
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v5" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v6" />
+  <link rel="stylesheet" href="/assets/css/skills-experience.css?v=20261011-skills-v6" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -130,6 +131,24 @@
     <section class="content" aria-labelledby="skills-title">
       <p class="kicker">Skills and tools</p>
       <h2 id="skills-title">The full inventory</h2>
+      <div id="skills-explorer" class="skills-explorer" hidden aria-label="Explore skill groups">
+        <div class="skills-explorer-head">
+          <h3>Explore skills by focus</h3>
+          <p id="skills-count" role="status" aria-live="polite">Loading skills</p>
+        </div>
+        <div class="skills-explorer-search">
+          <input id="skills-query" type="search" autocomplete="off"
+                 aria-label="Search skills" placeholder="Search skills, frameworks, or methods…" />
+          <button id="skills-clear" type="button">Reset filters</button>
+        </div>
+        <div class="skills-areas" role="group" aria-label="Skill disciplines">
+          <button type="button" data-skill-area="all" aria-pressed="true">All skills</button>
+          <button type="button" data-skill-area="medical" aria-pressed="false">Medical AI &amp; ML</button>
+          <button type="button" data-skill-area="humanities" aria-pressed="false">Statistics &amp; humanities</button>
+          <button type="button" data-skill-area="language" aria-pressed="false">NLP &amp; agents</button>
+          <button type="button" data-skill-area="engineering" aria-pressed="false">Engineering</button>
+        </div>
+      </div>
       <div class="skill-directory-grid" id="skills-directory">
         <!-- AUTO:SKILLS:START -->
 <article class="inventory-card" id="programming" data-reveal="true"><h3>Programming and Data Handling</h3><p>Programming skills used for artificial intelligence, data science, and machine learning development.</p><ul class="skill-list"><li>Python</li><li>SQL</li><li>Object-oriented programming</li><li>Data processing</li><li>Scientific computing</li><li>Automation scripts</li></ul></article>
@@ -151,7 +170,8 @@
     </section>
   </main>
   <footer class="shell">© 2026 Seyyed Arad Hosseini Moghaddam</footer>
-  <script src="../animations.js?v=20261011-motion-exp-v5" defer></script>
+  <script src="../animations.js?v=20261011-motion-exp-v6" defer></script>
+  <script src="/assets/js/skills-experience.js?v=20261011-skills-v6" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
 </body>
 </html>
