@@ -598,7 +598,8 @@
   <meta property="og:image:height" content="848">
   <!-- AUTO:BREADCRUMB:SCHEMA:START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Projects", "item": "https://aradmanamnaoon.github.io/projects/"}]}</script><!-- AUTO:BREADCRUMB:SCHEMA:END -->
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-nav-v4" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v5" />
+  <link rel="stylesheet" href="/assets/css/projects-experience.css?v=20261011-projects-experience-v5" />
 </head>
 
 <body class="relative bg-surface font-sans text-ink antialiased">
@@ -619,7 +620,27 @@
   </header>
 
   <main id="main">
-    <section class="hero shell" aria-labelledby="page-title">
+    <section class="hero shell archive-hero" aria-labelledby="page-title">
+      <div class="archive-orbit" aria-hidden="true">
+        <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#8cc5fb" stroke-width="1">
+            <circle cx="210" cy="210" r="156" opacity=".19"/>
+            <circle cx="210" cy="210" r="111" opacity=".35" stroke-dasharray="3 9"/>
+            <circle cx="210" cy="210" r="66" opacity=".29"/>
+            <g class="orbit-a" opacity=".68">
+              <ellipse cx="210" cy="210" rx="191" ry="78" transform="rotate(-31 210 210)" opacity=".46"/>
+              <circle class="orbit-node" cx="63" cy="125" r="5" fill="#7db4f0"/>
+            </g>
+            <g class="orbit-b">
+              <ellipse cx="210" cy="210" rx="184" ry="106" transform="rotate(39 210 210)" opacity=".35"/>
+              <circle cx="356" cy="319" r="4" fill="#d5ecff"/>
+            </g>
+            <path d="M210 54V366M54 210H366" opacity=".14"/>
+            <path d="M210 144l66 66-66 66-66-66z" opacity=".38"/>
+          </g>
+        </svg>
+      </div>
+
       <p class="eyebrow">Medical AI · machine learning · quantitative data science</p>
 
       <h1 class="title" id="page-title">
@@ -631,6 +652,8 @@
         and broader AI engineering. Featured projects include reported metrics, methods,
         and limitations where the source project documents them.
       </p>
+
+      <div class="archive-meta"><span>Open technical work</span><span>Browse by discipline</span></div>
 
       <div class="hero-links">
         <a class="pill-link primary" href="#selected-projects">Explore projects ↓</a>
@@ -679,7 +702,30 @@
     >
       <div class="section-head">
         <div class="section-no">01 / Selected work</div>
-        <h2 class="section-title" id="projects-title">Built, tested, published.</h2>
+        <div><h2 class="section-title" id="projects-title">Built, tested, published.</h2><p class="archive-chapter" id="archive-chapter" aria-hidden="true">01 / 10</p></div>
+      </div>
+
+      <div class="archive-explorer" id="archive-explorer" hidden aria-label="Explore projects">
+        <div class="archive-explorer-head">
+          <h3>Explore the archive</h3>
+          <p class="archive-count" id="archive-count" role="status" aria-live="polite">Loading projects</p>
+        </div>
+        <div class="archive-form">
+          <div class="archive-field"><label for="archive-search">Search projects</label>
+            <input id="archive-search" type="search" placeholder="Search models, methods, tools…" autocomplete="off" spellcheck="false" />
+          </div>
+          <div class="archive-field"><label for="archive-source">Published on</label>
+            <select id="archive-source"><option value="all">All platforms</option><option value="github">GitHub</option><option value="huggingface">Hugging Face</option></select>
+          </div>
+          <button class="archive-clear" id="archive-clear" type="button">Clear filters</button>
+        </div>
+        <div class="archive-topics" aria-label="Filter by research area" role="group">
+          <button type="button" class="archive-topic" data-archive-topic="all" aria-pressed="true">All work</button>
+          <button type="button" class="archive-topic" data-archive-topic="medical" aria-pressed="false">Medical AI</button>
+          <button type="button" class="archive-topic" data-archive-topic="language" aria-pressed="false">Language &amp; LLMs</button>
+          <button type="button" class="archive-topic" data-archive-topic="agents" aria-pressed="false">Agents &amp; RAG</button>
+          <button type="button" class="archive-topic" data-archive-topic="data" aria-pressed="false">Data &amp; tooling</button>
+        </div>
       </div>
 
       <div class="projects" id="project-list">
@@ -798,6 +844,7 @@
 (function() {
   var projects = [{"id": "persian-lm-from-scratch", "title": "Persian GPT — 110M Transformer From Scratch", "type": "Flagship model · Persian NLP · From-scratch training", "description": "A 110.4M-parameter decoder-only transformer trained end to end for Persian. The project covers a cleaned Wikipedia corpus, custom 32K BPE tokenizer, training pipeline, n-gram baselines, and held-out evaluation.", "dateDisplay": "", "tags": ["PyTorch", "Transformers", "Causal LM", "BPE", "Persian NLP"], "actions": [{"url": "/projects/persian-gpt-from-scratch/", "label": "Read case study", "primary": true, "external": false}, {"url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch", "label": "View source ↗", "primary": false, "external": true}], "metrics": [{"value": "110.4M", "label": "parameters"}, {"value": "244M", "label": "training tokens"}, {"value": "14.52", "label": "held-out perplexity"}], "note": "A research portfolio model; the held-out perplexity is a language-model metric, not an instruction-following benchmark."}, {"id": "medical-image-segmentation", "title": "3D Cardiac MRI Segmentation", "type": "Medical AI · 3D MRI · Deep learning", "description": "A complete 3D cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. It covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, and voxel-level evaluation on Medical Segmentation Decathlon Task02 Heart.", "dateDisplay": "", "tags": ["PyTorch", "MONAI", "3D U-Net", "Medical Imaging", "DiceCELoss"], "actions": [{"url": "/projects/3d-cardiac-mri-segmentation/", "label": "Read case study", "primary": true, "external": false}, {"url": "https://github.com/aradmanamnaoon/medical-image-segmentation", "label": "View source ↗", "primary": false, "external": true}], "metrics": [{"value": "0.8821", "label": "best validation Dice"}, {"value": "100", "label": "training epochs"}, {"value": "3D U-Net", "label": "architecture"}], "note": "Research project on a public benchmark dataset; not clinically validated or deployed for clinical decision-making."}, {"id": "ai-research-assistant-platform", "title": "AI Research Assistant Platform", "type": "Agentic AI · RAG · Evaluated system", "description": "A multi-agent research assistant built with LangGraph, ChromaDB RAG, FastAPI, and LangSmith. Planning, retrieval, parallel research, tool execution, citation-grounded synthesis, bounded reflection, persistent state, and streaming are covered in the public implementation.", "dateDisplay": "", "tags": ["LangGraph", "LangChain", "LangSmith", "ChromaDB", "FastAPI", "Docker"], "actions": [{"url": "/projects/multi-agent-ai-research-assistant/", "label": "Read case study", "primary": true, "external": false}, {"url": "https://github.com/aradmanamnaoon/ai-research-assistant-platform", "label": "View source ↗", "primary": false, "external": true}], "metrics": [{"value": "103", "label": "offline tests"}, {"value": "5", "label": "agent roles"}, {"value": "REST + SSE", "label": "API surface"}], "note": "Offline tests use a deterministic fake-LLM mode; the test count measures exercised software behavior, not answer quality."}, {"id": "cohortseal", "title": "CohortSeal", "type": "github", "description": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MONAI", "DICOM", "Hugging Face", "Medical Imaging"], "actions": [{"url": "https://github.com/aradmanamnaoon/cohortseal", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "holdout-ledger", "title": "Holdout Ledger: Dataset Leakage Audit Workbench", "type": "github", "description": "A local workbench for inspecting text and entity overlap across train, validation, and test splits. Includes an evidence dashboard, offline reports, SQLite audit snapshots, and reviewed repair plans that preserve every test record. CI checks track newly exposed holdout IDs; lexical detection limits are documented.", "dateDisplay": "", "tags": ["Python", "FastAPI", "SQLite", "MinHash", "Dataset Evaluation", "Docker"], "actions": [{"url": "https://github.com/aradmanamnaoon/Holdout-Ledger", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "agent-guardrails", "title": "Agent Guardrails — Five Composable Skills for AI Coding Agents", "type": "github", "description": "A lifecycle of five Agent Skills that gate AI coding agents before expensive mistakes happen. recon researches the task and proposes self-rules; preflight runs the cheapest version first and estimates cost as a range; hold stops on unhandled failures and offers three recovery options; scope catches drift outside agreed boundaries; budget enforces the preflight estimate. Portable across Claude Code, Cursor, Codex, and Copilot via the open Agent Skills standard.", "dateDisplay": "", "tags": ["Agent Skills", "AI Safety", "Claude Code", "Cursor", "Codex", "SKILL.md", "Open Source", "Guardrails"], "actions": [{"url": "https://github.com/aradmanamnaoon/agent-guardrails", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "jibay2-medical-v2", "title": "Jibay2 Medical — Clinical Note Summarization", "type": "hf_model", "description": "A QLoRA fine-tune of JibayAi/Jibay_2 for converting fragmented clinical shorthand into structured patient summaries.", "dateDisplay": "", "tags": ["QLoRA", "Unsloth", "TRL", "PEFT", "Clinical NLP"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/jibay2-medical-v2", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "messy2json-qwen-0.5b", "title": "Messy2JSON — Lightweight Structured Extraction", "type": "hf_model", "description": "Qwen2.5-0.5B fine-tuned with QLoRA to convert messy English text into structured JSON.", "dateDisplay": "", "tags": ["Qwen2.5", "QLoRA", "PEFT", "4-bit NF4", "Structured Output"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "persian-wikipedia-cleaned-for-persian-NLP", "title": "Persian Wikipedia Cleaned For Persian NLP", "type": "hf_dataset", "description": "A cleaned Persian Wikipedia dataset with 855,724 documents used for Persian language-model training.", "dateDisplay": "", "tags": ["size_categories:100K<n<1M", "format:json", "modality:text", "library:datasets", "library:pandas", "library:polars"], "actions": [{"url": "https://huggingface.co/datasets/aradmanamnaoon/persian-wikipedia-cleaned-for-persian-NLP", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}, {"id": "nllb-en-fa-psych-translation", "title": "NLLB English-to-Persian Psychology Translation", "type": "hf_model", "description": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.", "dateDisplay": "", "tags": ["NLLB-200", "Transformers", "Machine Translation", "Persian", "Psychology"], "actions": [{"url": "https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation", "label": "View project ↗", "primary": true, "external": true}], "metrics": [], "note": ""}];
   var perPage = 6;
+  var visibleProjects = projects.slice();
   function hashProjectId() {
     try { return decodeURIComponent(window.location.hash.slice(1)); }
     catch (_) { return ''; }
@@ -805,7 +852,7 @@
   var hashId = hashProjectId();
   var hashIndex = projects.findIndex(function(project) { return project.id === hashId; });
   var currentPage = hashIndex >= 0 ? Math.floor(hashIndex / perPage) + 1 : 1;
-  var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
+  var totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
   var container = document.getElementById('projects-paginated');
   var pagination = document.getElementById('projects-pagination');
   if (!container || !pagination) return;
@@ -819,7 +866,11 @@
 
   function renderProjects(page) {
     var start = (page - 1) * perPage;
-    var items = projects.slice(start, start + perPage);
+    var items = visibleProjects.slice(start, start + perPage);
+    if (!items.length) {
+      container.innerHTML = '<div class="archive-empty" role="status"><h3>No projects match.</h3><p>Try a broader search or clear the filters.</p></div>';
+      return;
+    }
     var html = items.map(function(p, i) {
       var num = String(start + i + 1).padStart(2, '0');
       var tags = (p.tags || []).map(function(t) {
@@ -852,6 +903,7 @@
       '</article>';
     }).join('');
     container.innerHTML = html;
+    window.dispatchEvent(new CustomEvent('portfolio:archive-rendered'));
   }
 
   function pageNumbers(current, total) {
@@ -871,6 +923,10 @@
   }
 
   function renderPagination() {
+    if (!visibleProjects.length) {
+      pagination.innerHTML = '<p class="pag-status" role="status">No matching projects</p>';
+      return;
+    }
     var parts = [];
 
     parts.push(
@@ -901,10 +957,10 @@
     );
 
     var startItem = (currentPage - 1) * perPage + 1;
-    var endItem = Math.min(currentPage * perPage, projects.length);
+    var endItem = Math.min(currentPage * perPage, visibleProjects.length);
 
     pagination.innerHTML =
-      '<p class="pag-status" role="status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
+      '<p class="pag-status" role="status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + visibleProjects.length + '</strong> projects</p>' +
       '<div class="pag-controls">' + parts.join('') + '</div>';
 
     pagination.querySelectorAll('button[data-page]:not([disabled])').forEach(function(button) {
@@ -934,6 +990,47 @@
     });
   }
 
+  function matchesTopic(project, topic) {
+    if (topic === 'all') return true;
+    const content = [project.id, project.title, project.type, project.description]
+      .concat(project.tags || []).join(' ').toLowerCase();
+    if (topic === 'medical') return /medical|clinical|cardiac|mri|cohort|healthcare/.test(content);
+    if (topic === 'language') return /persian|language|nlp|llm|qwen|json|translation|wikipedia|transformer|text/.test(content);
+    if (topic === 'agents') return /agent|rag|assistant|langgraph|guardrail|tool/.test(content);
+    if (topic === 'data') return /data|dataset|audit|leakage|split|statistics|cohort|holdout/.test(content);
+    return true;
+  }
+
+  window.portfolioArchive = {
+    setFilters: function(filters) {
+      const query = String(filters.query || '').toLowerCase().trim();
+      const source = filters.source || 'all';
+      const topic = filters.topic || 'all';
+      visibleProjects = projects.filter(function(project) {
+        const text = [project.title, project.type, project.description, project.note]
+          .concat(project.tags || []).join(' ').toLowerCase();
+        if (query && !text.includes(query)) return false;
+        if (!matchesTopic(project, topic)) return false;
+        if (source !== 'all') {
+          const links = (project.actions || []).map(function(action) { return action.url || ''; }).join(' ').toLowerCase();
+          if (source === 'github' && !links.includes('github.com/')) return false;
+          if (source === 'huggingface' && !links.includes('huggingface.co/')) return false;
+        }
+        return true;
+      });
+      totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
+      currentPage = 1;
+      renderProjects(currentPage);
+      renderPagination();
+      container.setAttribute('aria-label', 'Projects, page 1');
+      return visibleProjects.length;
+    },
+    count: function() { return visibleProjects.length; },
+    total: function() { return projects.length; },
+    currentPage: function() { return currentPage; },
+    perPage: function() { return perPage; }
+  };
+
   renderProjects(currentPage);
   renderPagination();
   if (hashIndex >= 0) {
@@ -945,6 +1042,9 @@
     var id = hashProjectId();
     var index = projects.findIndex(function(project) { return project.id === id; });
     if (index < 0) return;
+    visibleProjects = projects.slice();
+    totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
+    window.dispatchEvent(new CustomEvent('portfolio:archive-reset'));
     currentPage = Math.floor(index / perPage) + 1;
     renderProjects(currentPage);
     renderPagination();
@@ -966,7 +1066,8 @@
     </nav>
   </footer>
 
-  <script src="../animations.js?v=20261011-motion-nav-v4" defer></script>
+  <script src="../animations.js?v=20261011-motion-exp-v5" defer></script>
+  <script src="/assets/js/projects-experience.js?v=20261011-projects-experience-v5" defer></script>
   
   <script src="/assets/js/site-ui.js" defer></script>
 </body>

@@ -163,3 +163,12 @@ html.motion-off::view-transition-old(root), html.motion-off::view-transition-new
 
 /* Compatibility with a previously cached JS bundle that still creates the retired control. */
 .motion-toggle { display: none !important; }
+
+/* Section-aware navigation and restrained FAQ disclosure choreography. */
+.site-nav-links a[aria-current="location"] { color: #d5ebff; }
+.site-nav-links a[aria-current="location"]::after { transform: scaleX(1); transform-origin: left; }
+.faq-item { transition: border-color .3s ease, background .3s ease; }
+.faq-item[open] { border-color: rgb(125 180 240 / .37); background: rgb(125 180 240 / .035); }
+.faq-item[open] .faq-answer { animation: faq-answer-enter .4s cubic-bezier(.22,1,.36,1) both; }
+@keyframes faq-answer-enter { from { opacity: .35; transform: translateY(-7px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .faq-item[open] .faq-answer { animation: none; } }

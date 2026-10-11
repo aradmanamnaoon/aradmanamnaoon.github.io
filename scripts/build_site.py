@@ -2162,6 +2162,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
 (function() {
   var projects = __DATA__;
   var perPage = __PER_PAGE__;
+  var visibleProjects = projects.slice();
   function hashProjectId() {
     try { return decodeURIComponent(window.location.hash.slice(1)); }
     catch (_) { return ''; }
@@ -2169,7 +2170,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
   var hashId = hashProjectId();
   var hashIndex = projects.findIndex(function(project) { return project.id === hashId; });
   var currentPage = hashIndex >= 0 ? Math.floor(hashIndex / perPage) + 1 : 1;
-  var totalPages = Math.max(1, Math.ceil(projects.length / perPage));
+  var totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
   var container = document.getElementById('projects-paginated');
   var pagination = document.getElementById('projects-pagination');
   if (!container || !pagination) return;
@@ -2183,7 +2184,11 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
 
   function renderProjects(page) {
     var start = (page - 1) * perPage;
-    var items = projects.slice(start, start + perPage);
+    var items = visibleProjects.slice(start, start + perPage);
+    if (!items.length) {
+      container.innerHTML = '<div class="archive-empty" role="status"><h3>No projects match.</h3><p>Try a broader search or clear the filters.</p></div>';
+      return;
+    }
     var html = items.map(function(p, i) {
       var num = String(start + i + 1).padStart(2, '0');
       var tags = (p.tags || []).map(function(t) {
@@ -2216,6 +2221,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
       '</article>';
     }).join('');
     container.innerHTML = html;
+    window.dispatchEvent(new CustomEvent('portfolio:archive-rendered'));
   }
 
   function pageNumbers(current, total) {
@@ -2235,6 +2241,10 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
   }
 
   function renderPagination() {
+    if (!visibleProjects.length) {
+      pagination.innerHTML = '<p class="pag-status" role="status">No matching projects</p>';
+      return;
+    }
     var parts = [];
 
     parts.push(
@@ -2265,10 +2275,10 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     );
 
     var startItem = (currentPage - 1) * perPage + 1;
-    var endItem = Math.min(currentPage * perPage, projects.length);
+    var endItem = Math.min(currentPage * perPage, visibleProjects.length);
 
     pagination.innerHTML =
-      '<p class="pag-status" role="status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + projects.length + '</strong> projects</p>' +
+      '<p class="pag-status" role="status">Showing <strong>' + startItem + '&ndash;' + endItem + '</strong> of <strong>' + visibleProjects.length + '</strong> projects</p>' +
       '<div class="pag-controls">' + parts.join('') + '</div>';
 
     pagination.querySelectorAll('button[data-page]:not([disabled])').forEach(function(button) {
@@ -2298,6 +2308,47 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     });
   }
 
+  function matchesTopic(project, topic) {
+    if (topic === 'all') return true;
+    const content = [project.id, project.title, project.type, project.description]
+      .concat(project.tags || []).join(' ').toLowerCase();
+    if (topic === 'medical') return /medical|clinical|cardiac|mri|cohort|healthcare/.test(content);
+    if (topic === 'language') return /persian|language|nlp|llm|qwen|json|translation|wikipedia|transformer|text/.test(content);
+    if (topic === 'agents') return /agent|rag|assistant|langgraph|guardrail|tool/.test(content);
+    if (topic === 'data') return /data|dataset|audit|leakage|split|statistics|cohort|holdout/.test(content);
+    return true;
+  }
+
+  window.portfolioArchive = {
+    setFilters: function(filters) {
+      const query = String(filters.query || '').toLowerCase().trim();
+      const source = filters.source || 'all';
+      const topic = filters.topic || 'all';
+      visibleProjects = projects.filter(function(project) {
+        const text = [project.title, project.type, project.description, project.note]
+          .concat(project.tags || []).join(' ').toLowerCase();
+        if (query && !text.includes(query)) return false;
+        if (!matchesTopic(project, topic)) return false;
+        if (source !== 'all') {
+          const links = (project.actions || []).map(function(action) { return action.url || ''; }).join(' ').toLowerCase();
+          if (source === 'github' && !links.includes('github.com/')) return false;
+          if (source === 'huggingface' && !links.includes('huggingface.co/')) return false;
+        }
+        return true;
+      });
+      totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
+      currentPage = 1;
+      renderProjects(currentPage);
+      renderPagination();
+      container.setAttribute('aria-label', 'Projects, page 1');
+      return visibleProjects.length;
+    },
+    count: function() { return visibleProjects.length; },
+    total: function() { return projects.length; },
+    currentPage: function() { return currentPage; },
+    perPage: function() { return perPage; }
+  };
+
   renderProjects(currentPage);
   renderPagination();
   if (hashIndex >= 0) {
@@ -2309,6 +2360,9 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
     var id = hashProjectId();
     var index = projects.findIndex(function(project) { return project.id === id; });
     if (index < 0) return;
+    visibleProjects = projects.slice();
+    totalPages = Math.max(1, Math.ceil(visibleProjects.length / perPage));
+    window.dispatchEvent(new CustomEvent('portfolio:archive-reset'));
     currentPage = Math.floor(index / perPage) + 1;
     renderProjects(currentPage);
     renderPagination();

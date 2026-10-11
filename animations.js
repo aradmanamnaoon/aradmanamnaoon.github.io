@@ -252,6 +252,30 @@
     }, { rootMargin: '450px' });
     storyObserver.observe(section);
   }
+  function activeSections() {
+    // Scroll-linked section feedback, without another scroll polling loop.
+    if (!('IntersectionObserver' in window)) return;
+    const links = [...document.querySelectorAll('.site-nav-links a[href^="#"]')];
+    if (!links.length) return;
+    const targets = links.map(link => {
+      const section = document.getElementById(link.getAttribute('href').slice(1));
+      return section ? { section, link } : null;
+    }).filter(Boolean);
+    if (!targets.length) return;
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(entry => entry.isIntersecting);
+      if (!visible.length) return;
+      // Closest visible section to the top-third of the viewport.
+      visible.sort((a, b) => Math.abs(a.boundingClientRect.top - innerHeight * .3) -
+                             Math.abs(b.boundingClientRect.top - innerHeight * .3));
+      const id = visible[0].target.id;
+      targets.forEach(({ section, link }) => {
+        if (section.id === id) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
+    targets.forEach(({ section }) => observer.observe(section));
+  }
   function sectionNavigation() {
     // Explicitly animate same-page anchors; browser defaults may jump instantly
     // when a section changes its layout during a scroll-driven story.
@@ -329,7 +353,7 @@
   }
   function init() {
     reduced.addEventListener?.('change', preference);
-    preference(); progress(); dots(); intro(); story(); sectionNavigation(); routes();
+    preference(); progress(); dots(); intro(); story(); activeSections(); sectionNavigation(); routes();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();

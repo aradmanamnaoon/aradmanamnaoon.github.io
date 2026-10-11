@@ -100,6 +100,12 @@ test('pause control and legacy CSS are removed while reduced motion remains', ()
   assert.ok(source.includes("const enabled = () => !reduced.matches"));
 });
 
+test('active nav tracks visible homepage sections', () => {
+  assert.ok(source.includes('function activeSections()'));
+  assert.ok(source.includes("link.setAttribute('aria-current', 'location')"));
+  assert.ok(source.includes('rootMargin'));
+});
+
 test('same-page section links use eased scrolling with native reduced-motion fallback', () => {
   assert.ok(source.includes('function sectionNavigation()'));
   assert.ok(source.includes('history.pushState(null'));

@@ -62,7 +62,18 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('LLM Tools:', page)
         self.assertIn('inventory-card inventory-tools', page)
         self.assertIn('grid-column:1 / -1', page)
-        self.assertIn('overflow-wrap:normal', page)
+        self.assertIn('overflow-wrap:break-word', page)
+        self.assertIn('grid-template-columns:repeat(6,minmax(0,1fr))', page)
+        self.assertIn('grid-column:span 3', page)
+        self.assertIn('#software_and_delivery { grid-column:1 / -1; }', page)
+
+    def test_projects_experience_stays_in_generated_archive(self) -> None:
+        page = build_site.render_paginated_projects(build_site.load_projects(ROOT))
+        self.assertIn("window.portfolioArchive", page)
+        self.assertIn("portfolio:archive-rendered", page)
+        self.assertIn("visibleProjects.slice", page)
+        self.assertIn("No projects match", page)
+        self.assertIn("matchesTopic", page)
 
     def test_cv_knowledge_base_copies_remain_in_sync(self) -> None:
         self.assertEqual(
@@ -152,11 +163,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('<!-- AUTO:RESEARCH_PROJECTS:START -->', projects_page)
         self.assertIn('id="evidence-medical-image-segmentation"', projects_page)
         self.assertIn('href="/projects/3d-cardiac-mri-segmentation/"', projects_page)
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-nav-v4"', projects_page)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v5"', projects_page)
         from project_pages import render
         case_study = render(build_site.load_projects(ROOT)[0], build_site.SITE_URL)
         assert case_study is not None
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-nav-v4"', case_study)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v5"', case_study)
         self.assertNotIn('href="/research/"', case_study)
 
 
