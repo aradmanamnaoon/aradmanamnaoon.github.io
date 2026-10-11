@@ -2,6 +2,7 @@
 
 @source "../index.html";
 @source "../animations.js";
+@source "../scripts/build_site.py";
 
 @theme {
   --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", serif;
@@ -881,4 +882,35 @@ bottom:16px;
   }
 
 
+}
+/* Report project results as readable evidence, not decorative badges. */
+.project-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 1rem 0;
+}
+.project-metric {
+  min-width: 8rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid rgba(237, 237, 237, 0.13);
+  border-radius: 0.75rem;
+}
+.project-metric strong,
+.project-metric span {
+  display: block;
+}
+.project-metric strong {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+}
+.project-metric span {
+  color: rgba(237, 237, 237, 0.68);
+  font-size: 0.78rem;
+}
+.project-note {
+  color: rgba(237, 237, 237, 0.68);
+  font-size: 0.9rem;
+  border-left: 2px solid var(--color-accent);
+  padding-left: 0.8rem;
 }
