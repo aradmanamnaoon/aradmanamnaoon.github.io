@@ -69,7 +69,7 @@ test('portfolio selection and Skills pinning work atop existing filters and pagi
  const extras=read('assets/js/page-extras.js');
  for(const name of ['Saved projects','Compare:','project-compare-grid','localStorage',
   'Pin','Copy skills','case-interactive-toc','case-collapse','Print case study',
-  'Research','Psychology & statistics','aria-expanded','offline-status'])
+  'research','Psychology & statistics','aria-expanded','offline-status'])
    assert.ok(extras.includes(name),name);
  assert.match(read('scripts/build_site.py'),/all: function\(\) \{ return projects\.slice\(\); \}/);
 });
