@@ -146,70 +146,6 @@
    refresh();
  }
 
- function skills() {
-   const container=document.getElementById('skills-directory');
-   const cards=[...container?.querySelectorAll('.inventory-card')||[]];
-   if(!cards.length)return;
-   const key='arad-pinned-skills-v1';
-   const validIds=new Set(cards.map(card=>card.id||'libraries_and_tools'));
-   const selected=new Set(store(key,[]).filter(id=>validIds.has(id)));
-   const toolbar=document.createElement('div');toolbar.className='skill-compare-toolbar';
-   const show=button('Pinned skills: 0','hub-secondary-button','Show pinned skills');
-   const clear=button('Unpin all','hub-secondary-button','Clear pinned skills');
-   toolbar.append(show,clear);
-   container.before(toolbar);
-   const panel=document.createElement('dialog');panel.className='hub-dialog skill-pin-dialog';
-   panel.setAttribute('aria-label','Pinned skill groups');
-   panel.innerHTML='<div class="hub-dialog-head"><h2>Pinned skill groups</h2><button type="button" class="hub-close" aria-label="Close pinned skills">×</button></div><div class="pinned-skill-content"></div>';
-   document.body.append(panel);
-   panel.querySelector('.hub-close').addEventListener('click',()=>panel.close());
-   panel.addEventListener('click',e=>{if(e.target===panel)panel.close();});
-   function refresh() {
-     show.textContent='Pinned skills: '+selected.size;
-     save(key,[...selected]);
-     cards.forEach(card=>{
-       const id=card.id||'libraries_and_tools';
-       if(!card.querySelector('.pin-skill')) {
-         const row=document.createElement('div');row.className='skill-controls';
-         const pin=button('Pin','pin-skill','Pin this skill group');
-         const copy=button('Copy skills','copy-skill','Copy skill group');
-         pin.addEventListener('click',()=>{
-           if(selected.has(id))selected.delete(id);else selected.add(id);
-           refresh();toast(selected.has(id)?'Skill group pinned':'Skill group unpinned');
-         });
-         copy.addEventListener('click',()=>share(card.querySelector('h3')?.textContent+'\n'+[...card.querySelectorAll('.skill-list li')].map(x=>x.textContent).join(' · ')));
-         row.append(pin,copy);card.append(row);
-       }
-       const pin=card.querySelector('.pin-skill');
-       pin.setAttribute('aria-pressed',String(selected.has(id)));
-       pin.textContent=selected.has(id)?'★ Pinned':'☆ Pin';
-     });
-   }
-   function display() {
-     const target=panel.querySelector('.pinned-skill-content');target.replaceChildren();
-     if(!selected.size){const p=document.createElement('p');p.textContent='Pin skill groups to build a quick reference. Selections stay on this device.';target.append(p);}
-     cards.filter(c=>selected.has(c.id||'libraries_and_tools')).forEach(card=>{
-       const link=document.createElement('a');const id=card.id;
-       link.href='#'+id;
-       link.textContent=card.querySelector('h3')?.textContent||'Skill group';
-       link.addEventListener('click',event=>{
-         panel.close();
-         document.getElementById('skills-clear')?.click();
-         event.preventDefault();
-         history.replaceState(null,'','#'+encodeURIComponent(id));
-         requestAnimationFrame(()=>document.getElementById(id)?.scrollIntoView({
-           behavior:animate()?'smooth':'auto',block:'start'
-         }));
-       });
-       target.append(link);
-     });
-     panel.showModal?.();
-   }
-   show.addEventListener('click',display);
-   clear.addEventListener('click',()=>{selected.clear();refresh();toast('Skills unpinned');});
-   refresh();
- }
-
  function caseStudy() {
    const sections=[...document.querySelectorAll('.case-grid .case-section')];
    if(!sections.length)return;
@@ -279,7 +215,7 @@
 
  if(path==='/'||path==='/index.html')home();
  else if(path==='/projects/'||path==='/projects')projects();
- else if(path==='/skills/'||path==='/skills')skills();
+
  else if(path.startsWith('/projects/')&&document.body.classList.contains('project-case-study'))caseStudy();
  else if(path.includes('search')||path.includes('404')||path.includes('offline'))utility();
 })();

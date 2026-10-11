@@ -34,8 +34,9 @@ test('every route has one H1, unique IDs, and shared accessible controls', () =>
     assert.match(html, /<title>[\s\S]*?<\/title>/, file);
     assert.match(html, /class="skip-link"/, file);
     assert.match(html, /assets\/js\/interaction-hub\.js\?v=/, file);
-    assert.match(html, /assets\/js\/page-extras\.js\?v=20261011-audit-v2/, file);
-    assert.match(html, /assets\/css\/page-extras\.css\?v=20261011-audit-v2/, file);
+    const extrasVersion = file === 'skills/index.html' ? 'v3' : 'v2';
+    assert.ok(html.includes('/assets/js/page-extras.js?v=20261011-audit-' + extrasVersion), file);
+    assert.ok(html.includes('/assets/css/page-extras.css?v=20261011-audit-' + extrasVersion), file);
   }
 });
 
@@ -104,16 +105,17 @@ test('interactive project links recover pagination even for identical URL hashes
   assert.match(read('assets/js/interaction-hub.js'),/className = 'hub-back-top'/);
 });
 
-test('Skills pinned links resolve to their real card after clearing filters', () => {
-  const page=read('skills/index.html');
-  const extras=read('assets/js/page-extras.js');
-  assert.match(page,/id="libraries_and_tools"/);
-  assert.ok(read('scripts/build_site.py').includes('id="libraries_and_tools"'));
-  assert.match(extras,/document\.getElementById\('skills-clear'\)\?\.click\(\)/);
-  assert.match(read('assets/js/skills-experience.js'),/searchCorpus\.get\(card\)\.includes\(query\)/);
-  assert.match(extras,/validIds\.has\(id\)/);
-  assert.match(extras,/getElementById\(id\)\?\.scrollIntoView/);
-  assert.match(read('assets/css/page-extras.css'),/scroll-margin-top/);
+test('Skills retains its searchable inventory but no pin/copy controls', () => {
+  const page = read('skills/index.html');
+  const extras = read('assets/js/page-extras.js');
+  const skillsEngine = read('assets/js/skills-experience.js');
+  const styles = read('assets/css/page-extras.css');
+  assert.match(page, /id="skills-explorer"/);
+  assert.match(page, /id="libraries_and_tools"/);
+  assert.match(skillsEngine, /searchCorpus\.get\(card\)\.includes\(query\)/);
+  assert.match(styles, /scroll-margin-top/);
+  assert.doesNotMatch(extras, /function skills\(\)|pin-skill|copy-skill|skill-pin-dialog|skill-compare-toolbar/);
+  assert.doesNotMatch(styles, /\.skill-controls|\.skill-compare-toolbar|\.pinned-skill-content/);
 });
 
 test('saved selections and recent searches resist malformed localStorage', () => {

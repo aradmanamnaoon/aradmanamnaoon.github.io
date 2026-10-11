@@ -64,16 +64,21 @@ test('mobile and accessibility fallbacks are intentional',()=>{
  assert.match(extras,/prefers-reduced-motion:reduce/);
 });
 
-test('portfolio selection and Skills pinning work atop existing filters and pagination',()=>{
+test('portfolio selection remains without Skills pin and copy controls',()=>{
  const projects=read('projects/index.html');
  assert.match(projects,/all: function\(\) \{ return projects\.slice\(\); \}/);
  assert.match(projects,/portfolio:archive-rendered/);
  assert.match(projects,/window\.portfolioArchive/);
  const extras=read('assets/js/page-extras.js');
  for(const name of ['Saved projects','Compare:','project-compare-grid','localStorage',
-  'Pin','Copy skills','case-interactive-toc','case-collapse','Print case study',
+  'case-interactive-toc','case-collapse','Print case study',
   'research','Psychology & statistics','aria-expanded','offline-status'])
    assert.ok(extras.includes(name),name);
+ for (const retired of ['function skills()', 'pin-skill', 'copy-skill', 'skill-compare-toolbar', 'skill-pin-dialog', 'arad-pinned-skills-v1'])
+   assert.ok(!extras.includes(retired), 'Retired Skills control: ' + retired);
+ const css = read('assets/css/page-extras.css');
+ for (const retired of ['.skill-controls', '.skill-compare-toolbar', '.pinned-skill-content'])
+   assert.ok(!css.includes(retired), 'Retired Skills CSS: ' + retired);
  assert.match(read('scripts/build_site.py'),/all: function\(\) \{ return projects\.slice\(\); \}/);
 });
 
