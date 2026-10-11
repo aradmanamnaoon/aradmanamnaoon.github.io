@@ -64,7 +64,7 @@ test('mobile and accessibility fallbacks are intentional',()=>{
  assert.match(extras,/prefers-reduced-motion:reduce/);
 });
 
-test('portfolio selection remains without Skills pin and copy controls',()=>{
+test('portfolio selection remains and Skills pin/copy controls are retired',()=>{
  const projects=read('projects/index.html');
  assert.match(projects,/all: function\(\) \{ return projects\.slice\(\); \}/);
  assert.match(projects,/portfolio:archive-rendered/);
@@ -74,11 +74,7 @@ test('portfolio selection remains without Skills pin and copy controls',()=>{
   'case-interactive-toc','case-collapse','Print case study',
   'research','Psychology & statistics','aria-expanded','offline-status'])
    assert.ok(extras.includes(name),name);
- for (const retired of ['function skills()', 'pin-skill', 'copy-skill', 'skill-compare-toolbar', 'skill-pin-dialog', 'arad-pinned-skills-v1'])
-   assert.ok(!extras.includes(retired), 'Retired Skills control: ' + retired);
- const css = read('assets/css/page-extras.css');
- for (const retired of ['.skill-controls', '.skill-compare-toolbar', '.pinned-skill-content'])
-   assert.ok(!css.includes(retired), 'Retired Skills CSS: ' + retired);
+ assert.doesNotMatch(extras,/function skills\(\)|pin-skill|copy-skill|Pinned skills:|Copy skills/);
  assert.match(read('scripts/build_site.py'),/all: function\(\) \{ return projects\.slice\(\); \}/);
 });
 

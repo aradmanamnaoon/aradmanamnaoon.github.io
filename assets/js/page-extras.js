@@ -215,7 +215,6 @@
 
  if(path==='/'||path==='/index.html')home();
  else if(path==='/projects/'||path==='/projects')projects();
-
  else if(path.startsWith('/projects/')&&document.body.classList.contains('project-case-study'))caseStudy();
  else if(path.includes('search')||path.includes('404')||path.includes('offline'))utility();
 })();

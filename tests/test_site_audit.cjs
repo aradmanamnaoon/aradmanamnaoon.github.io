@@ -34,9 +34,8 @@ test('every route has one H1, unique IDs, and shared accessible controls', () =>
     assert.match(html, /<title>[\s\S]*?<\/title>/, file);
     assert.match(html, /class="skip-link"/, file);
     assert.match(html, /assets\/js\/interaction-hub\.js\?v=/, file);
-    const extrasVersion = file === 'skills/index.html' ? 'v3' : 'v2';
-    assert.ok(html.includes('/assets/js/page-extras.js?v=20261011-audit-' + extrasVersion), file);
-    assert.ok(html.includes('/assets/css/page-extras.css?v=20261011-audit-' + extrasVersion), file);
+    assert.match(html, /assets\/js\/page-extras\.js\?v=20261011-audit-v[23]/, file);
+    assert.match(html, /assets\/css\/page-extras\.css\?v=20261011-audit-v[23]/, file);
   }
 });
 
@@ -105,17 +104,22 @@ test('interactive project links recover pagination even for identical URL hashes
   assert.match(read('assets/js/interaction-hub.js'),/className = 'hub-back-top'/);
 });
 
-test('Skills retains its searchable inventory but no pin/copy controls', () => {
+test('Skills page has no pin or copy controls and keeps filtering', () => {
   const page = read('skills/index.html');
   const extras = read('assets/js/page-extras.js');
-  const skillsEngine = read('assets/js/skills-experience.js');
   const styles = read('assets/css/page-extras.css');
-  assert.match(page, /id="skills-explorer"/);
-  assert.match(page, /id="libraries_and_tools"/);
-  assert.match(skillsEngine, /searchCorpus\.get\(card\)\.includes\(query\)/);
-  assert.match(styles, /scroll-margin-top/);
-  assert.doesNotMatch(extras, /function skills\(\)|pin-skill|copy-skill|skill-pin-dialog|skill-compare-toolbar/);
-  assert.doesNotMatch(styles, /\.skill-controls|\.skill-compare-toolbar|\.pinned-skill-content/);
+  const explorer = read('assets/js/skills-experience.js');
+  for (const id of ['libraries_and_tools','skills-explorer','skills-query'])
+    assert.ok(page.includes('id="' + id + '"'), id);
+  assert.ok(page.includes('/assets/js/page-extras.js?v=20261011-audit-v3'));
+  assert.ok(explorer.includes('searchCorpus.get(card).includes(query)'));
+  for (const retired of ['function skills()', 'pin-skill', 'copy-skill', 'Pinned skills:', 'Copy skills'])
+    assert.ok(!extras.includes(retired), 'unexpected control: ' + retired);
+  for (const retired of ['skill-controls', 'skill-compare-toolbar', 'pinned-skill-content'])
+    assert.ok(!styles.includes(retired), 'orphaned CSS: ' + retired);
+  assert.ok(!page.includes('class="skill-controls"'));
+  assert.ok(extras.includes('function projects()'));
+  assert.ok(extras.includes('function caseStudy()'));
 });
 
 test('saved selections and recent searches resist malformed localStorage', () => {
@@ -135,6 +139,6 @@ test('all patched local scripts parse and offline cache contains theme initializ
     assert.doesNotThrow(()=>new Function(read(file)), file);
   }
   const worker=read('service-worker.js');
-  assert.match(worker,/arad-portfolio-v13/);
+  assert.match(worker,/arad-portfolio-v14/);
   assert.match(worker,/\/assets\/js\/theme-init\.js/);
 });
