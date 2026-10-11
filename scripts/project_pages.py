@@ -111,9 +111,9 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v7" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v8" />
   {schema}
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-sound-v3" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-sound-v4" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="project-case-study">
@@ -137,7 +137,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <script src="/animations.js?v=20261011-motion-exp-v7" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
-  <script src="/assets/js/interaction-hub.js?v=20261011-sound-v3" defer></script>
+  <script src="/assets/js/interaction-hub.js?v=20261011-sound-v4" defer></script>
   <script src="/assets/js/page-extras.js?v=20261011-interactive-v1" defer></script>
 </body>
 </html>'''

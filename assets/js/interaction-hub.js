@@ -281,26 +281,7 @@
   addEventListener('scroll',queue,{passive:true});
   addEventListener('resize',queue,{passive:true}); queue();
 
-  // Keep normal pointer and click affordances. The tiny offset follower never
-  // replaces the native cursor and is disabled for touch/reduced motion.
-  if (fine.matches && !reduced()) {
-    const follower = document.createElement('span'); follower.className = 'hub-cursor';
-    follower.setAttribute('aria-hidden','true'); document.body.append(follower);
-    let px=-50,py=-50,curX=-50,curY=-50,id=0;
-    function step() {
-      curX+=(px-curX)*.38;curY+=(py-curY)*.38;
-      follower.style.transform='translate3d('+curX+'px,'+curY+'px,0)';
-      if (Math.abs(px-curX)+Math.abs(py-curY)>.4) id=requestAnimationFrame(step); else id=0;
-    }
-    addEventListener('pointermove', e => {
-      if (e.pointerType==='touch') return;
-      px=e.clientX+15;py=e.clientY+15;
-      follower.classList.add('visible'); if(!id)id=requestAnimationFrame(step);
-    },{passive:true});
-    document.addEventListener('pointerleave',()=>follower.classList.remove('visible'));
-    document.addEventListener('visibilitychange',()=>{if(document.hidden)follower.classList.remove('visible')});
-    prefersReduced.addEventListener?.('change',()=>{ if(prefersReduced.matches) follower.remove(); });
-  }
+  // Use the browser's native cursor, without any extra circle or follower.
   const targets = document.querySelectorAll('.case-section, .utility-directory, .utility-result, .research-direction, .contact-form, img:not([loading])');
   targets.forEach(el=>{if(el.tagName==='IMG') { if(!el.closest('.hero,.hero-media')) { el.loading='lazy';el.decoding='async'; } }});
   if ('IntersectionObserver' in window && !reduced()) {

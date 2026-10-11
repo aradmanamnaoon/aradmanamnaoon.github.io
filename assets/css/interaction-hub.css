@@ -30,8 +30,6 @@
 .hub-ring-track {stroke:#455d73;stroke-width:2;fill:none;}
 .hub-ring-progress {stroke:#9fceff;stroke-width:2.7;fill:none;stroke-dasharray:125.66;stroke-dashoffset:calc(125.66 * (1 - var(--progress,0)));transform-origin:center;transform:rotate(-90deg);}
 .hub-ring-arrow {stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;fill:none;}
-.hub-cursor {position:fixed;z-index:1100;left:0;top:0;width:5px;height:5px;opacity:0;background:#d1e7ff;border-radius:50%;pointer-events:none;transform:translate3d(-50px,-50px,0);transition:opacity .2s ease;}
-.hub-cursor.visible {opacity:.6;}
 .hub-reveal-ready {opacity:.92;transform:translateY(8px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
 .hub-reveal-ready.hub-revealed {opacity:1;transform:none;}
 .hub-celebration {position:fixed;inset:48% 40% auto;z-index:2100;pointer-events:none;}
@@ -295,9 +293,7 @@ html[data-theme="light"] .interaction-rail button[aria-pressed="true"] {
   background: #245f96; color: #fff;
 }
 /* Explicit reduced-motion and coarse-pointer fallbacks. */
-@media (hover:none),(pointer:coarse) {.hub-cursor{display:none!important;}}
 @media (prefers-reduced-motion:reduce) {
-  .hub-cursor{display:none!important;}
   .hub-reveal-ready{opacity:1;transform:none;transition:none;}
   .hub-back-top,.hub-command,.site-toast,.hub-celebration span{animation:none!important;transition:none!important;}
   .hub-celebration{display:none;}

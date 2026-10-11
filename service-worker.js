@@ -1,5 +1,5 @@
 /* Network-first pages; a small cached fallback for offline navigation. */
-const CACHE = 'arad-portfolio-v9';
+const CACHE = 'arad-portfolio-v10';
 const CORE = [
   '/', '/projects/', '/skills/', '/search/',
   '/offline.html', '/dist/output.css', '/assets/css/ux.css', '/assets/css/motion.css',

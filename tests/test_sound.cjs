@@ -124,8 +124,8 @@ test('all pages and page generators receive the new sound assets',()=>{
     'scripts/project_pages.py','scripts/utility_pages.py'];
   for(const file of files){
     const content=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
-    assert.match(content,/interaction-hub\.js\?v=20261011-sound-v3/,file);
-    assert.match(content,/interaction-hub\.css\?v=20261011-sound-v3/,file);
+    assert.match(content,/interaction-hub\.js\?v=20261011-sound-v4/,file);
+    assert.match(content,/interaction-hub\.css\?v=20261011-sound-v4/,file);
   }
   assert.match(source,/hub-test-sound/);
   assert.match(source,/Test sound/);

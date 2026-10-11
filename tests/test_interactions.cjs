@@ -38,19 +38,19 @@ test('global interaction hub supports modal navigation, themes, preference persi
   'Command palette','Keyboard shortcuts','hub-command-search','prefers-reduced-motion',
   'localStorage','dark', 'light','system','aria-selected','aria-live',
   'requestAnimationFrame','audioContext','visibilitychange','navigator.clipboard',
-  'site-toasts','hub-back-top','hub-cursor','contact-form-status','celebrate()'
+  'site-toasts','hub-back-top','contact-form-status','celebrate()'
  ]) assert.ok(hub.includes(feature),feature);
  assert.match(hub,/e\.metaKey \|\| e\.ctrlKey/);
  assert.match(hub,/palette\.showModal/);
  assert.match(hub,/beforeDialog.*focus/);
  assert.match(hub,/navigator\.clipboard\.writeText/);
- assert.match(hub,/pointerType==='touch'/);
+ assert.doesNotMatch(hub,/hub-cursor|follower\.style\.transform/);
 });
 
 test('mobile and accessibility fallbacks are intentional',()=>{
  const css=read('assets/css/interaction-hub.css');
  assert.match(css,/@media\(max-width:760px\)/);
- assert.match(css,/@media\s*\(hover:none\),\(pointer:coarse\)/);
+ assert.match(css,/@media \(max-width:760px\), \(pointer:coarse\)/);
  assert.match(css,/@media\s*\(prefers-reduced-motion:reduce\)/);
  assert.match(css,/data-theme="light"/);
  assert.match(css,/\.hub-dialog::backdrop/);
@@ -117,7 +117,7 @@ test('light theme tokens, legible surfaces and cache versions cover every route'
     'scripts/project_pages.py','scripts/utility_pages.py'
   ];
   for(const route of routes) {
-    assert.match(read(route), /interaction-hub\.css\?v=20261011-sound-v3/, route);
+    assert.match(read(route), /interaction-hub\.css\?v=20261011-sound-v4/, route);
   }
 });
 test('light palette reaches WCAG AA contrast for regular text and controls', () => {
@@ -139,4 +139,16 @@ test('light palette reaches WCAG AA contrast for regular text and controls', () 
     ['#ffffff','#245f96']
   ]) assert.ok(contrast(foreground,background)>=4.5,
     'Contrast must be >= 4.5:1 for '+foreground+' on '+background);
+});
+
+test('only native cursor and smoothly fading dot illumination remain', () => {
+  const css = read('assets/css/interaction-hub.css');
+  const hub = read('assets/js/interaction-hub.js');
+  const motion = read('assets/css/motion.css');
+  assert.doesNotMatch(css,/\.hub-cursor\s*\{/);
+  assert.doesNotMatch(hub,/createElement\('span'\); follower\.className/);
+  assert.doesNotMatch(motion,/circle 230px at var\(--dot-pointer-x/);
+  assert.match(motion,/circle 520px at var\(--dot-pointer-x/);
+  assert.match(motion,/background-size: 30px 30px/);
+  assert.match(motion,/transparent 100%/);
 });

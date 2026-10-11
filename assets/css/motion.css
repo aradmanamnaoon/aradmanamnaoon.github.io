@@ -25,7 +25,7 @@ body::after {
   background-size: 30px 30px;
   opacity: 0;
   transition: opacity 220ms ease;
-  mask-image: radial-gradient(circle 230px at var(--dot-pointer-x, -1000px) var(--dot-pointer-y, -1000px), #000 0%, rgb(0 0 0 / .85) 22%, transparent 100%);
+  mask-image: radial-gradient(circle 520px at var(--dot-pointer-x, -1000px) var(--dot-pointer-y, -1000px), rgb(0 0 0 / .33) 0%, rgb(0 0 0 / .22) 16%, rgb(0 0 0 / .09) 40%, transparent 100%);
 }
 @media (hover: hover) and (pointer: fine) {
   body.dots-active:not(.motion-disabled)::after { opacity: 1; }

@@ -201,11 +201,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('<!-- AUTO:RESEARCH_PROJECTS:START -->', projects_page)
         self.assertIn('id="evidence-medical-image-segmentation"', projects_page)
         self.assertIn('href="/projects/3d-cardiac-mri-segmentation/"', projects_page)
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v7"', projects_page)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v8"', projects_page)
         from project_pages import render
         case_study = render(build_site.load_projects(ROOT)[0], build_site.SITE_URL)
         assert case_study is not None
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v7"', case_study)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v8"', case_study)
         self.assertNotIn('href="/research/"', case_study)
 
 
