@@ -38,22 +38,262 @@
 .hub-celebration span {position:absolute;width:6px;height:10px;left:50%;top:0;background:hsl(calc(190 + var(--i)*10) 66% 75%);animation:hub-celebrate .95s ease-out both;}
 @keyframes hub-celebrate {to{opacity:0;transform:translate(calc((var(--i) - 9)*15px),calc((var(--i) - 9)*7px)) rotate(200deg)}}
 
-/* Full-theme choices. Light controls change the page surfaces while retaining the
-   site's typography, layout, identity and blue accent color. */
-html[data-theme="light"] {color-scheme:light;--ux-bg:#edf2f7;--ux-ink:#172738;--ux-muted:#4c6277;--ux-line:rgba(34,61,87,.23);}
-html[data-theme="light"] body {background:#edf2f7!important;color:#1b2d40!important;}
-html[data-theme="light"] :is(header.site-header,header.nav-wrap,.nav-wrap,.site-nav,.utility-header,footer,.footer-nav,.site-header) {background-color:#e6edf5!important;color:#1b2d40!important;}
-html[data-theme="light"] :is(main,.shell,.utility-main,.utility-page,.project-case-study) {color:#1b2d40;}
-html[data-theme="light"] :is(.inventory-card,.inventory-tools,.tools-grid > p,.case-section,.metric,.project-card,.research-direction,.research-evidence-card,.faq-item,.surface-card,.project,.archive .project,.story-panel,.story-section,.archive-explorer,.skills-explorer,.utility-result,.utility-directory,.contact-card,.card) {background:#fff!important;color:#1c3045!important;border-color:#b5c7d8!important;}
-html[data-theme="light"] :is(h1,h2,h3,h4,p,li,strong,.title,.hero-bio,.desc,.lede,.context,.section-heading,.card-title,.project-note,.project-metric strong,.metric strong,.nav a,.site-nav-links a,.nav-links a,.brand) {color:inherit;}
-html[data-theme="light"] :is(.project-actions a,.pill-link,.project-link,.action,.utility-action,.nav-toggle,.archive-topic,.skills-areas button) {border-color:#8eaec9;}
-html[data-theme="light"] :is(.project-metric,.case-section .metric) {background:#eaf1f8!important;border-color:#b5c7d8!important;}
-html[data-theme="light"] :is(input,textarea,select) {background:#f8fbff!important;color:#1a2f43!important;border-color:#9fb7cd!important;}
-html[data-theme="light"] :is(.archive .project .type,.archive .project .desc,.archive .project .note,.project-note,.project-number,.eyebrow,.kicker,.muted) {color:#465e75!important;}
-html[data-theme="light"] :is(.contact-form-status,.footer-copyright) {color:#3e5368!important;}
-html[data-theme="light"] .site-toast {background:#dcecf8;color:#172a3a;}
-html[data-theme="light"] body::before {opacity:.35;}
-html[data-theme="light"] body::after {opacity:.8;}
+/* Light theme v2 — coherent design tokens shared by the homepage, project
+   archive, Skills, standalone case studies, and utility routes.
+   Keep the existing dark palette untouched. */
+html[data-theme="light"] {
+  color-scheme: light;
+  --ux-bg: #f3f6fa;
+  --ux-ink: #192c40;
+  --ux-muted: #465d74;
+  --ux-accent: #245f96;
+  --ux-line: rgba(38, 70, 103, .22);
+  --color-bg: #f3f6fa;
+  --color-bg-raised: #fff;
+  --color-bg-soft: #e8f0f8;
+  --color-text: #192c40;
+  --color-muted: #435c73;
+  --color-accent: #245f96;
+  --color-accent-soft: rgba(36, 95, 150, .1);
+  --color-border: rgba(38, 70, 103, .17);
+  --color-border-strong: rgba(38, 70, 103, .29);
+  --shadow-soft: 0 16px 45px rgba(32, 63, 90, .12);
+  --surface: #f3f6fa;
+  --surface-raised: #fff;
+  --ink: #192c40;
+  --muted: #465d74;
+  --accent: #245f96;
+  --line: rgba(38, 70, 103, .2);
+  --soft-line: rgba(38, 70, 103, .15);
+  --archive-ice: #245f96;
+  --archive-line: rgba(38, 70, 103, .3);
+  background-color: #f3f6fa;
+}
+/* Foundation: override hard-coded backgrounds, without changing geometry. */
+html[data-theme="light"] body,
+html[data-theme="light"] body.utility-page,
+html[data-theme="light"] body.project-case-study {
+  background: #f3f6fa !important;
+  color: #192c40 !important;
+}
+html[data-theme="light"] :is(main, section, article, aside, footer, nav) { color: inherit; }
+html[data-theme="light"] :is(.site-nav-wrap, .nav-wrap, .site-header, body.is-scrolled .site-nav, body.is-scrolled .nav) {
+  background: rgba(248, 251, 255, .96) !important;
+  border-color: rgba(38, 70, 103, .18) !important;
+  box-shadow: 0 7px 24px rgba(34, 64, 96, .06);
+}
+html[data-theme="light"] :is(.site-nav, .nav, .nav-links, .site-nav-links, .utility-header, .utility-footer, .breadcrumbs) {
+  color: #243d55;
+  border-color: rgba(38, 70, 103, .18);
+}
+html[data-theme="light"] :is(.site-nav-links a, .nav-links a, .breadcrumbs, .utility-header a) { color: #344c63; }
+html[data-theme="light"] :is(.site-nav-links a:hover, .nav-links a:hover, .site-nav-links a[aria-current], .nav-links a[aria-current], .site-nav-links a:focus-visible) { color: #144d7d; }
+html[data-theme="light"] :is(.section-kicker, .eyebrow, .hero-eyebrow, .kicker, .card-kicker, .story-kicker, .research-direction .eyebrow, .type, .num, .project-number, .section-no, .utility-eyebrow) { color: #255f95; }
+html[data-theme="light"] :is(.hero-bio, .hero-bio strong, .hero-image-caption, .section-intro, .card-copy, .about-copy p, .intro, .lede, .research-lede, .project-note, .note, .desc, .limitations, .context, .faq-answer, .inventory-card p, .utility-intro, .card-copy, .contact-copy p) { color: #435c73; }
+/* Cards and content shells. Both simple and gradient dark surfaces are converted. */
+html[data-theme="light"] :is(.surface-card, .project-card, .project-card-featured, .inventory-card,
+  .inventory-tools, .tools-grid > p, .case-section, .metric, .project-metric,
+  .research-direction, .research-evidence-card, .faq-item, .project, .archive .project,
+  .archive-explorer, .skills-explorer, .utility-search, .utility-result, .utility-directory a,
+  .contact-form, .story-panel, .story-section .story-panel, .contact-card, .card,
+  .writing-card, .public-proof, .project-compare-card, .skills-no-results) {
+  background: #fff !important;
+  color: #192c40;
+  border-color: rgba(44, 82, 116, .21) !important;
+  box-shadow: 0 8px 30px rgba(38, 66, 98, .045);
+}
+html[data-theme="light"] :is(.project-metric, .research-evidence-card .project-metric,
+  .project-card .project-tag, .project-tag, .tag, .skill-list li,
+  .research-evidence-card .research-methods li) {
+  background: #f1f6fb !important;
+  border-color: #c2d2e1 !important;
+  color: #36526e;
+}
+html[data-theme="light"] :is(.project-metric strong, .research-evidence-card .project-metric strong,
+  .metric strong, .num, .project-number, .section-no) { color: #245f96; }
+html[data-theme="light"] :is(.project-metric span, .research-evidence-card .project-metric span,
+  .metric span, .tag, .archive .project .tag, .project-note,
+  .archive .project .type, .archive .project .desc, .archive .project .note,
+  .archive .project .project-note, .note, .research-direction p,
+  .research-evidence-card :is(.context, .limitations, li),
+  .tools-grid > p, .inventory-tools .tools-grid strong,
+  .archive-meta, .archive-chapter, .archive-count, .archive-field label,
+  .skills-explorer-head p, .archive-empty, .archive-empty p) {
+  color: #435b72 !important;
+}
+html[data-theme="light"] :is(.tools-grid strong, .inventory-card h3, .research-evidence-card h3, .archive .project h2,
+  .archive-empty h3, .skill-card h3, .case-section h2, .story-panel h3) {
+  color: #192c40 !important;
+}
+html[data-theme="light"] :is(.story-head p:last-child, .story-panel p, .story-panel .story-kicker) {
+  color: #425d77;
+}
+html[data-theme="light"] .story-visual {
+  background: radial-gradient(circle, rgba(36, 95, 150, .1), transparent 68%);
+}
+html[data-theme="light"] .story-visual :is(path,circle,rect) { stroke: #326e9f; }
+html[data-theme="light"] .story-visual svg { filter: none; }
+/* Links, selected tabs, buttons and cards: dark text on pale surfaces. */
+html[data-theme="light"] :is(a:not(.hero-button-primary):not(.button-primary), .research-direction a,
+  .research-evidence-card a, .research-approach a, .story-panel a, .faq-answer a) {
+  text-decoration-color: rgba(36, 95, 150, .5);
+}
+html[data-theme="light"] :is(.story-controls button, .nav-toggle, .archive-clear,
+  .archive-copy, .archive-top, .archive .project .archive-tag,
+  .archive .project .archive-copy, .skills-explorer-search button,
+  .hub-secondary-button, .project-choice-row button, .skill-controls button,
+  .utility-action:not(.primary), .utility-search button:not(:hover),
+  .project-link, .pill-link:not(.primary), .action:not(.primary),
+  .contact-links .text-link, .hub-close, .case-collapse) {
+  background: #eaf2fa !important;
+  color: #234a71 !important;
+  border-color: #b8cce0 !important;
+}
+html[data-theme="light"] :is(.story-controls button:hover, .archive-clear:hover, .archive-topic:hover,
+  .skills-explorer-search button:hover, .hub-secondary-button:hover, .utility-action:not(.primary):hover,
+  .project-link:hover, .archive .project .archive-tag:hover) {
+  background: #dceaf7 !important;
+  color: #163e66 !important;
+}
+html[data-theme="light"] :is(.archive-topic, .skills-areas button, .archive .project .archive-tag) {
+  background: #f1f6fb;
+  color: #31516f;
+  border-color: #b8cce0;
+}
+html[data-theme="light"] :is(.archive-topic[aria-pressed="true"], .skills-areas button[aria-pressed="true"],
+  .hub-secondary-button[aria-pressed="true"], .project-choice-row button[aria-pressed="true"],
+  .skill-controls button[aria-pressed="true"]) {
+  background: #245f96 !important;
+  color: #fff !important;
+  border-color: #245f96 !important;
+}
+html[data-theme="light"] :is(.pill-link.primary, .action.primary, .hero-button-primary,
+  .contact-form button.button-primary, .utility-action.primary,
+  .utility-search button[type="submit"], .contact-form-submit, .button-primary) {
+  background: #245f96 !important;
+  color: #fff !important;
+  border-color: #245f96 !important;
+}
+html[data-theme="light"] :is(.pill-link.primary:hover, .action.primary:hover,
+  .contact-form button.button-primary:hover, .utility-action.primary:hover) {
+  background: #194e7e !important;
+}
+html[data-theme="light"] :is(.contact-form-field label, .contact-form-field, .archive-field label,
+  .skills-explorer-search label, .utility-search label, .hub-label) { color: #304d68; }
+html[data-theme="light"] :is(input, textarea, select, .archive-field input,
+  .archive-field select, .skills-explorer-search input,
+  .contact-form .contact-form-field input,
+  .contact-form .contact-form-field textarea,
+  .utility-search input) {
+  background: #f9fbfe !important;
+  color: #1b3046 !important;
+  border-color: #9fb8ce !important;
+}
+html[data-theme="light"] :is(input, textarea)::placeholder { color: #536d84 !important; }
+html[data-theme="light"] :is(.contact-form-status, .footer-copyright) { color: #405b73; }
+html[data-theme="light"] .contact-form-status[data-state="success"] { color: #206246; }
+html[data-theme="light"] .contact-form-status[data-state="error"] { color: #9b352b; }
+html[data-theme="light"] :is(.faq-item summary, .faq-item summary::after, .faq-answer a) { color: #244e75; }
+html[data-theme="light"] .faq-item[open] { background: #edf4fb !important; }
+/* The new fixed widgets and native dialog controls must match the selected theme. */
+html[data-theme="light"] .interaction-rail {
+  background: rgba(251, 253, 255, .97);
+  color: #203b55;
+  border-color: #adc5da;
+}
+html[data-theme="light"] .interaction-rail button { color: #244b6f; }
+html[data-theme="light"] .interaction-rail button:hover,
+html[data-theme="light"] .interaction-rail button:focus-visible {
+  background: #dceaf7; color: #143c63;
+}
+html[data-theme="light"] .hub-dialog {
+  background: #fff; color: #1b3046; border-color: #9db9d1;
+}
+html[data-theme="light"] .hub-close { background: #eaf2fa; color: #234a71; border-color: #b7cde0; }
+html[data-theme="light"] .hub-command { color: #1b3046; }
+html[data-theme="light"] .hub-command small,
+html[data-theme="light"] .hub-hint, html[data-theme="light"] .hub-shortcuts dd { color: #49627a; }
+html[data-theme="light"] .hub-shortcuts dt { color: #235d92; }
+html[data-theme="light"] .hub-command:hover,
+html[data-theme="light"] .hub-command[aria-selected="true"] {
+  background: #e7f1fa; border-color: #91b7d5; color: #163a5b;
+}
+html[data-theme="light"] .hub-back-top,
+html[data-theme="light"] .archive-top {
+  background: #fff !important; color: #1d527f !important; border-color: #a5bfd6 !important;
+}
+html[data-theme="light"] .hub-ring-track { stroke: #b4c9dc; }
+html[data-theme="light"] .hub-ring-progress { stroke: #245f96; }
+html[data-theme="light"] .site-toast { background: #eff6fd; color: #213a53; border-color: #9fbcd7; }
+/* Project glyphs and technical diagrams are intentionally colorful, not inverted. */
+html[data-theme="light"] .project-symbol {
+  background: #e7f0f9; border-color: #acc7dd;
+  --symbol-ink: #255f92; --symbol-highlight: #19476e;
+}
+html[data-theme="light"] .archive .project .archive-sigil.project-symbol {
+  background: #e7f0f9; border-color: #acc7dd;
+}
+html[data-theme="light"] #skills-directory .inventory-card .skills-visual {
+  background: #eaf2f9; border-color: #aac7dd; color: #285e90;
+}
+html[data-theme="light"] .skills-visual .skill-trace { stroke: #285e90; }
+html[data-theme="light"] .skills-visual .skill-accent { stroke: #194e80; fill: rgba(36, 95, 150, .12); }
+html[data-theme="light"] .archive-orbit { opacity: .35; }
+/* Keep the one small-dot pattern, but tint it darker against light paper. */
+html[data-theme="light"] body::before {
+  background-image: radial-gradient(circle, rgba(60, 110, 155, .47) 1px, transparent 1.5px);
+  opacity: .32;
+}
+html[data-theme="light"] body::after {
+  background-image: radial-gradient(circle, rgba(35, 85, 130, .75) 1px, transparent 1.5px);
+  opacity: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="light"] body.dots-active:not(.motion-disabled)::after { opacity: .6; }
+}
+/* Standalone case-study stylesheet includes higher-specificity dark text rules. */
+html[data-theme="light"] .project-case-study .case-section :is(p,li),
+html[data-theme="light"] .project-case-study .lede,
+html[data-theme="light"] .project-case-study .metric span,
+html[data-theme="light"] .project-case-study footer,
+html[data-theme="light"] .project-case-study .breadcrumbs,
+html[data-theme="light"] .project-case-study .eyebrow {
+  color: #435c73 !important;
+}
+html[data-theme="light"] .project-case-study :is(.metric strong,.case-section strong) {
+  color: #225b90;
+}
+html[data-theme="light"] .project-case-study .case-section h2 { color: #192c40; }
+html[data-theme="light"] .project-case-study .related { border-color: #bed0df; }
+/* Additional route-specific widgets and live-search components. */
+html[data-theme="light"] :is(.project-selection-tools, .skill-compare-toolbar,
+  .case-actions, .case-interactive-toc, .utility-hints) { color: #314b65; }
+html[data-theme="light"] :is(.project-compare-card, .project-compare-grid,
+  .pinned-skill-content a, .case-fold-body, .project-compare-card p,
+  .project-compare-card small, .case-interactive-toc a) {
+  color: #36536b;
+}
+html[data-theme="light"] .project-compare-card { background: #f9fcff !important; }
+html[data-theme="light"] .project-compare-card h3 { color: #192c40; }
+html[data-theme="light"] .project-compare-card a { color: #1b5b91; }
+html[data-theme="light"] :is(.pinned-skill-content a,.case-interactive-toc) { border-color: #bbcfdf; }
+html[data-theme="light"] :is(.skill-controls button,.project-choice-row button) { color: #234a71; }
+html[data-theme="light"] :is(.skills-visual,.hub-ring-arrow) { color: #245f96; }
+html[data-theme="light"] .skills-explorer .skills-areas button[aria-pressed="true"] { color: #fff !important; }
+html[data-theme="light"] .utility-result strong { color: #245f96; }
+html[data-theme="light"] .utility-result span { color: #465d74; }
+/* Existing homepage pill links and public-proof bands have dark assumptions. */
+html[data-theme="light"] :is(.public-proof, .public-proof-link, .writing-card,
+  .contact-links .text-link, .about-fact) { border-color: rgba(38,70,103,.24); }
+html[data-theme="light"] :is(.public-proof a, .public-proof p, .writing-card p,
+  .writing-card small, .about-fact-label, .footer-links a) { color: #425b73; }
+html[data-theme="light"] .hero-image-caption {
+  background: rgba(255,255,255,.96); color: #34526f; border-color: #b9cde0;
+}
+html[data-theme="light"] .faq-item summary { color: #1d3750; }
+html[data-theme="light"] .interaction-rail button[aria-pressed="true"] {
+  background: #245f96; color: #fff;
+}
 /* Explicit reduced-motion and coarse-pointer fallbacks. */
 @media (hover:none),(pointer:coarse) {.hub-cursor{display:none!important;}}
 @media (prefers-reduced-motion:reduce) {

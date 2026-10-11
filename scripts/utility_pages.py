@@ -74,7 +74,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v7" />
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-interactive-v1" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-light-v2" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="utility-page">

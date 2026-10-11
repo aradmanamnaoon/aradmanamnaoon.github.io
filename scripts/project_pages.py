@@ -113,7 +113,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link rel="stylesheet" href="/assets/css/ux.css" />
   <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v7" />
   {schema}
-  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-interactive-v1" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-light-v2" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-interactive-v1" />
 </head>
 <body class="project-case-study">

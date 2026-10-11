@@ -95,3 +95,48 @@ test('live portfolio search debounces input, updates history and never injects r
  assert.match(source,/recent\.splice\(0\)/);
  assert.match(read('search/index.html'),/assets\/js\/search\.js/);
 });
+
+
+test('light theme tokens, legible surfaces and cache versions cover every route', () => {
+  const css = read('assets/css/interaction-hub.css');
+  for (const name of [
+    '--color-text: #192c40', '--color-muted: #435c73',
+    '--ink: #192c40', '--ux-ink: #192c40', '--surface: #f3f6fa',
+    '--color-bg-raised: #fff', 'color-scheme: light',
+    '.project-case-study .case-section :is(p,li)',
+    '.hub-dialog', '.archive .project', '.skills-explorer',
+    '.interaction-rail', 'body::before'
+  ]) assert.ok(css.includes(name), name);
+  assert.doesNotMatch(css, /html\[data-theme="light"\] :is\(h1,h2,h3,h4,p,li,strong/);
+  const routes = [
+    'index.html','projects/index.html','skills/index.html',
+    'search/index.html','404.html','offline.html','research/index.html',
+    'projects/3d-cardiac-mri-segmentation/index.html',
+    'projects/multi-agent-ai-research-assistant/index.html',
+    'projects/persian-gpt-from-scratch/index.html',
+    'scripts/project_pages.py','scripts/utility_pages.py'
+  ];
+  for(const route of routes) {
+    assert.match(read(route), /interaction-hub\.css\?v=20261011-light-v2/, route);
+  }
+});
+test('light palette reaches WCAG AA contrast for regular text and controls', () => {
+  const rgb = hex => (hex.match(/[0-9a-f]{2}/gi) || []).map(part => {
+    const channel = parseInt(part,16) / 255;
+    return channel <= .04045 ? channel / 12.92 : Math.pow((channel + .055) / 1.055, 2.4);
+  });
+  const lum = hex => {
+    const [r,g,b] = rgb(hex);
+    return .2126 * r + .7152 * g + .0722 * b;
+  };
+  const contrast=(a,b)=>{
+    const x=lum(a), y=lum(b);
+    return (Math.max(x,y)+.05) / (Math.min(x,y)+.05);
+  };
+  for (const [foreground,background] of [
+    ['#192c40','#f3f6fa'],['#192c40','#ffffff'],
+    ['#435c73','#ffffff'],['#245f96','#ffffff'],
+    ['#ffffff','#245f96']
+  ]) assert.ok(contrast(foreground,background)>=4.5,
+    'Contrast must be >= 4.5:1 for '+foreground+' on '+background);
+});
