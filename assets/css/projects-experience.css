@@ -126,3 +126,15 @@
 html.motion-off .archive-enhanced .project[data-archive-enter="pending"] { opacity: 1; transform: none; }
 html.motion-off .archive-orbit * { animation: none !important; }
 
+
+/* Reserve title space for the identity glyph without squeezing descriptions. */
+.archive .project h2 { padding-right:clamp(84px,12vw,140px); }
+.archive .project .archive-sigil.project-symbol { width:clamp(84px,11vw,135px); height:clamp(84px,11vw,135px); }
+@media(max-width:700px){
+  .archive .project h2 { padding-right:64px; }
+  .archive .project .archive-sigil.project-symbol { width:66px;height:66px; }
+}
+@media(max-width:420px){
+  .archive .project h2 { padding-right:52px; }
+  .archive .project .archive-sigil.project-symbol { width:54px;height:54px; }
+}

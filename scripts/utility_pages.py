@@ -73,7 +73,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v6" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v7" />
 </head>
 <body class="utility-page">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -92,7 +92,8 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   </main>
   <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and data science</footer>
   <script src="/assets/js/site-ui.js" defer></script>
-  <script src="/animations.js?v=20261011-motion-exp-v6" defer></script>
+  <script src="/animations.js?v=20261011-motion-exp-v7" defer></script>
+  <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   {search_script}
 </body>
 </html>'''

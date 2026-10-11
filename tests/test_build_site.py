@@ -62,6 +62,21 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('id="statistics_and_humanities_data"', page)
         self.assertIn('id="medical_imaging"', page)
 
+    def test_homepage_skills_navigation_uses_full_directory(self) -> None:
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn('href="#skills"', page)
+        self.assertIn('href="/skills/"', page)
+        self.assertIn("/assets/js/brand-icons.js", page)
+
+    def test_all_skill_icons_are_available(self) -> None:
+        source = (ROOT / "assets" / "js" / "skills-experience.js").read_text(encoding="utf-8")
+        inventory = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")
+        for key in ("medical_imaging", "deep_learning", "classical_machine_learning",
+                    "statistics_and_humanities_data", "programming", "rag",
+                    "mobile_development", "software_and_delivery", "libraries_and_tools"):
+            self.assertIn(key + ":", source)
+        self.assertIn('inventory-card inventory-tools', inventory)
+
     def test_skills_page_is_readable_and_accessible(self) -> None:
         page = (ROOT / "skills" / "index.html").read_text(encoding="utf-8")
         self.assertIn('class="breadcrumbs shell"', page)
@@ -186,11 +201,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('<!-- AUTO:RESEARCH_PROJECTS:START -->', projects_page)
         self.assertIn('id="evidence-medical-image-segmentation"', projects_page)
         self.assertIn('href="/projects/3d-cardiac-mri-segmentation/"', projects_page)
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v6"', projects_page)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v7"', projects_page)
         from project_pages import render
         case_study = render(build_site.load_projects(ROOT)[0], build_site.SITE_URL)
         assert case_study is not None
-        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v6"', case_study)
+        self.assertIn('href="/assets/css/motion.css?v=20261011-motion-exp-v7"', case_study)
         self.assertNotIn('href="/research/"', case_study)
 
 

@@ -111,7 +111,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/dist/output.css" />
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v6" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v7" />
   {schema}
 </head>
 <body class="project-case-study">
@@ -132,7 +132,8 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>
-  <script src="/animations.js?v=20261011-motion-exp-v6" defer></script>
+  <script src="/animations.js?v=20261011-motion-exp-v7" defer></script>
+  <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
 </body>
 </html>'''

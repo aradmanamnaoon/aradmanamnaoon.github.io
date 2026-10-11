@@ -208,3 +208,30 @@ html.motion-off::view-transition-old(root), html.motion-off::view-transition-new
 @keyframes project-glyph-sway { to { transform:rotate(7deg); } }
 @keyframes project-glyph-pop { 0% { transform:scale(.84); opacity:.6; } 55% { transform:scale(1.06); } 100% { transform:scale(1); opacity:1; } }
 @media (prefers-reduced-motion: reduce) { .project-symbol svg *, .project-symbol svg { animation:none!important; transition:none!important; } }
+
+/* Brand identity for verified GitHub and Hugging Face external links. */
+.brand-link-icon { display:inline-block; flex:none; width:1.14em; height:1.14em; vertical-align:-.18em; margin-right:.38em; color:inherit; }
+.brand-link-icon.brand-hf { width:auto; height:auto; font-family:"Apple Color Emoji","Segoe UI Emoji",sans-serif; font-size:1.09em; line-height:1; vertical-align:-.08em; }
+a[data-platform] { text-decoration-thickness:from-font; }
+a[data-platform] .brand-link-icon { transition:transform .24s ease; }
+a[data-platform]:hover .brand-link-icon { transform:translateY(-2px) scale(1.04); }
+a[data-platform]:focus-visible .brand-link-icon { transform:translateY(-2px); }
+a.surface-card[data-platform] .card-title .brand-link-icon { width:.94em; height:.94em; margin-right:.48em; }
+a.surface-card[data-platform] .card-title .brand-hf { width:auto; height:auto; }
+@media(prefers-reduced-motion:reduce){a[data-platform] .brand-link-icon{transition:none!important;transform:none!important;}}
+/* Polished project tiles. No cursor halo: only borders and crisp, meaningful line-work. */
+.project-symbol { --symbol-ink:#afdaff; --symbol-highlight:#e1f3ff; background:#253749; border:1px solid rgba(159,210,255,.28); border-radius:22%; color:var(--symbol-ink); box-shadow:inset 0 1px rgba(255,255,255,.04); }
+.project-symbol svg { padding:10%; }
+.project-symbol svg .symbol-draw { stroke:var(--symbol-ink); stroke-width:1.85; }
+.project-symbol svg .symbol-orbit { stroke:#7aaedc; stroke-width:1.3; }
+.project-symbol svg .symbol-core { fill:#487ba9; stroke:var(--symbol-highlight); stroke-width:1.7; }
+.project-symbol svg .symbol-nodes { stroke:var(--symbol-highlight); }
+.project-symbol[data-project-symbol="medical-image-segmentation"],.project-symbol[data-project-symbol="cohortseal"],.project-symbol[data-project-symbol="jibay2-medical-v2"] { --symbol-ink:#9edfd8; --symbol-highlight:#cefff1; background:#223e45; }
+.project-symbol[data-project-symbol="persian-lm-from-scratch"],.project-symbol[data-project-symbol="persian-wikipedia-cleaned-for-persian-NLP"],.project-symbol[data-project-symbol="nllb-en-fa-psych-translation"] { --symbol-ink:#c3ccff; --symbol-highlight:#edf0ff; background:#303550; }
+.project-symbol[data-project-symbol="ai-research-assistant-platform"],.project-symbol[data-project-symbol="agent-guardrails"] { --symbol-ink:#e0c2ff; --symbol-highlight:#f2dfff; background:#393049; }
+.archive .project .archive-sigil.project-symbol { opacity:1; border:1px solid rgba(157,210,255,.31); border-radius:20%; pointer-events:auto; background:#253749; }
+.archive .project:hover .archive-sigil.project-symbol { transform:translateY(-3px) scale(1.035); opacity:1; }
+.archive .project .archive-sigil.project-symbol svg { width:100%;height:100%;padding:9%; }
+@media(hover:hover) and (pointer:fine){.project-symbol:hover{border-color:rgba(177,221,255,.65);}}
+@media(max-width:700px){.archive .project .archive-sigil.project-symbol{width:68px;height:68px;top:1rem;right:1rem;}}
+@media(prefers-reduced-motion:reduce){.archive .project .archive-sigil.project-symbol{transform:none!important;}}
