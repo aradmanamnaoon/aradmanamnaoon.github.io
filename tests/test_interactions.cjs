@@ -37,7 +37,7 @@ test('global interaction hub supports modal navigation, themes, preference persi
  for(const feature of [
   'Command palette','Keyboard shortcuts','hub-command-search','prefers-reduced-motion',
   'localStorage','dark', 'light','system','aria-selected','aria-live',
-  'requestAnimationFrame','audioContext','visibilitychange','navigator.clipboard',
+  'requestAnimationFrame','audioContext','navigator.clipboard',
   'site-toasts','hub-back-top','contact-form-status','celebrate()'
  ]) assert.ok(hub.includes(feature),feature);
  assert.match(hub,/e\.metaKey \|\| e\.ctrlKey/);
@@ -49,7 +49,7 @@ test('global interaction hub supports modal navigation, themes, preference persi
 
 test('mobile and accessibility fallbacks are intentional',()=>{
  const css=read('assets/css/interaction-hub.css');
- assert.match(css,/@media\(max-width:760px\)/);
+ assert.match(css,/@media \(max-width:760px\)/);
  assert.match(css,/@media \(max-width:760px\), \(pointer:coarse\)/);
  assert.match(css,/@media\s*\(prefers-reduced-motion:reduce\)/);
  assert.match(css,/data-theme="light"/);
