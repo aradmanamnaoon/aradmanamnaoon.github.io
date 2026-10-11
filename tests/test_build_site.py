@@ -27,7 +27,8 @@ class PortfolioGeneratorTests(unittest.TestCase):
                 "ai-research-assistant-platform",
             ],
         )
-        self.assertEqual(len(ids), 11)
+        self.assertEqual(len(ids), 10)
+        self.assertNotIn('messy2json-qwen-0.5b-lora', ids)
 
     def test_metric_renderer_escapes_untrusted_text(self) -> None:
         result = build_site.render_project_metrics(
@@ -59,6 +60,9 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn('grid-template-columns:1fr', page)
         self.assertIn('id="classical_machine_learning"', page)
         self.assertIn('LLM Tools:', page)
+        self.assertIn('inventory-card inventory-tools', page)
+        self.assertIn('grid-column:1 / -1', page)
+        self.assertIn('overflow-wrap:normal', page)
 
     def test_cv_knowledge_base_copies_remain_in_sync(self) -> None:
         self.assertEqual(

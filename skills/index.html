@@ -68,10 +68,11 @@
     .inventory-card p { color:var(--muted); }
     .skill-list { display:flex; flex-wrap:wrap; gap:.45rem; padding:0; margin:1rem 0 0; list-style:none; }
     .skill-list li { border:1px solid var(--line); border-radius:999px; padding:.27rem .65rem; font-size:.82rem; }
-    .tools-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.1rem 1.5rem; }
-    .tools-grid strong { display:block; margin-bottom:.15rem; color:#ededed; font-size:.92rem; line-height:1.5; }
-    .tools-grid p { min-width:0; overflow-wrap:anywhere; }
-    .tools-grid p { margin:0; color:var(--ink); }
+    /* Full-width card gives tool names room; responsive columns avoid narrow, broken labels. */
+    .inventory-tools { grid-column:1 / -1; }
+    .tools-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap:.8rem; }
+    .tools-grid p { min-width:0; margin:0; padding:1rem 1.1rem; border:1px solid var(--line); border-radius:.85rem; background:#222c38; color:var(--ink); overflow-wrap:normal; word-break:normal; line-height:1.6; }
+    .tools-grid strong { display:block; margin-bottom:.4rem; color:#ededed; font-size:.94rem; line-height:1.4; }
     footer { margin-top:2rem; padding:2rem 0; border-top:1px solid var(--line); color:var(--muted); font-size:.85rem; }
     @media(max-width:700px) { .shell { width:min(100% - 32px,1120px); } .skill-directory-grid,.tools-grid { grid-template-columns:1fr; } .nav { align-items:flex-start; padding:.9rem 0; gap:1rem; } .nav-links { gap:.8rem; justify-content:flex-end; } }
       .breadcrumbs { display:flex; gap:.55rem; flex-wrap:wrap; padding:1.2rem 0 0; color:var(--muted); font-size:.84rem; }
@@ -90,7 +91,7 @@
   <meta property="og:image:height" content="848">
   <!-- AUTO:BREADCRUMB:SCHEMA:START --><script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://aradmanamnaoon.github.io/"}, {"@type": "ListItem", "position": 2, "name": "Skills", "item": "https://aradmanamnaoon.github.io/skills/"}]}</script><!-- AUTO:BREADCRUMB:SCHEMA:END -->
   <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-nav-v4" />
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -133,13 +134,13 @@
 <article class="inventory-card" id="fine_tuning" data-reveal="true"><h3>Model Fine-Tuning</h3><p>Parameter-efficient adaptation of foundation models.</p><ul class="skill-list"><li>LoRA</li><li>QLoRA</li><li>PEFT</li><li>4-bit quantization</li></ul></article>
 <article class="inventory-card" id="statistics_and_humanities_data" data-reveal="true"><h3>Statistics and Humanities Data Science</h3><p>Statistical and data-science methods for analyzing humanities-related datasets.</p><ul class="skill-list"><li>Applied statistics</li><li>Statistical analysis</li><li>Exploratory data analysis</li><li>Humanities data analysis</li><li>Quantitative research</li><li>Data cleaning and preparation</li><li>Interpretation of data-driven findings</li></ul></article>
 <article class="inventory-card" id="software_and_delivery" data-reveal="true"><h3>Software Engineering and Delivery</h3><p>Software, deployment, and delivery skills used to publish and run machine-learning projects.</p><ul class="skill-list"><li>Git</li><li>FastAPI</li><li>Docker</li><li>MLflow</li><li>GitHub Actions</li><li>CI/CD</li><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Tailwind CSS</li><li>Django</li><li>PyQt6</li></ul></article>
-<article class="inventory-card" data-reveal="true"><h3>Libraries and tools</h3><div class="tools-grid"><p><strong>Machine Learning Frameworks:</strong> PyTorch, TensorFlow, scikit-learn</p><p><strong>Computer Vision Tools:</strong> MONAI, OpenCV</p><p><strong>LLM Tools:</strong> Hugging Face, PEFT, Transformers</p><p><strong>Mobile Development Frameworks:</strong> Flutter</p><p><strong>Agent Tools:</strong> LangGraph, LangSmith, MCP</p></div></article>
+<article class="inventory-card inventory-tools" data-reveal="true"><h3>Libraries and tools</h3><div class="tools-grid"><p><strong>Machine Learning Frameworks:</strong> PyTorch, TensorFlow, scikit-learn</p><p><strong>Computer Vision Tools:</strong> MONAI, OpenCV</p><p><strong>LLM Tools:</strong> Hugging Face, PEFT, Transformers</p><p><strong>Mobile Development Frameworks:</strong> Flutter</p><p><strong>Agent Tools:</strong> LangGraph, LangSmith, MCP</p></div></article>
         <!-- AUTO:SKILLS:END -->
       </div>
     </section>
   </main>
   <footer class="shell">© 2026 Seyyed Arad Hosseini Moghaddam</footer>
-  <script src="../animations.js" defer></script>
+  <script src="../animations.js?v=20261011-motion-nav-v4" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* Network-first pages; a small cached fallback for offline navigation. */
-const CACHE = 'arad-portfolio-v2';
+const CACHE = 'arad-portfolio-v4';
 const CORE = [
   '/', '/projects/', '/skills/', '/search/',
   '/offline.html', '/dist/output.css', '/assets/css/ux.css', '/assets/css/motion.css',
@@ -49,7 +49,7 @@ self.addEventListener('fetch', function (event) {
 
   if (CORE.includes(url.pathname)) {
     event.respondWith(fetch(request).catch(function () {
-      return caches.match(request);
+      return caches.match(url.pathname);
     }));
   }
 });

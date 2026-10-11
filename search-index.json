@@ -76,11 +76,5 @@
     "url": "/projects/#nllb-en-fa-psych-translation",
     "summary": "A domain adaptation of NLLB-200-distilled-600M for English-to-Persian psychology translation.",
     "terms": "NLLB-200 Transformers Machine Translation Persian Psychology"
-  },
-  {
-    "title": "Messy2Json Qwen 0.5B Lora",
-    "url": "/projects/#messy2json-qwen-0.5b-lora",
-    "summary": "LoRA adapter for the Messy2JSON Qwen model.",
-    "terms": "text-generation peft lora sft trl"
   }
 ]

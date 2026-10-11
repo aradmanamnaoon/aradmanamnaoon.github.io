@@ -94,7 +94,15 @@ test('pause control and legacy CSS are removed while reduced motion remains', ()
   assert.ok(!source.includes('function control()'));
   assert.ok(!source.includes('arad-motion-paused'));
   assert.ok(!source.includes('Pause motion'));
-  assert.ok(!css.includes('.motion-toggle'));
+  assert.match(css, /\.motion-toggle\s*\{\s*display:\s*none\s*!important/);
   assert.ok(source.includes("reduced.addEventListener?.('change', preference)"));
   assert.ok(source.includes("const enabled = () => !reduced.matches"));
+});
+
+test('same-page section links use eased scrolling with native reduced-motion fallback', () => {
+  assert.ok(source.includes('function sectionNavigation()'));
+  assert.ok(source.includes('history.pushState(null'));
+  assert.ok(source.includes('window.scrollTo(0, start + distance * ease)'));
+  assert.ok(source.includes('if (!enabled() || event.defaultPrevented'));
+  assert.ok(source.includes('document.addEventListener(\'wheel\', stop'));
 });

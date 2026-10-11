@@ -160,3 +160,6 @@ html.motion-off::view-transition-old(root), html.motion-off::view-transition-new
   .motion-split span[data-word] { opacity: 1 !important; transform: none !important; }
   ::view-transition-old(root), ::view-transition-new(root), ::view-transition-old(projects), ::view-transition-new(projects) { animation: none !important; }
 }
+
+/* Compatibility with a previously cached JS bundle that still creates the retired control. */
+.motion-toggle { display: none !important; }

@@ -73,3 +73,11 @@ test('offline shell includes core motion and excludes the optional desktop scene
   assert.ok(!worker.precached().includes('/assets/vendor/gsap.min.js'));
   assert.ok(!worker.precached().includes('/research/'));
 });
+
+test('updated worker cache supports versioned motion assets offline', () => {
+  assert.match(source, /arad-portfolio-v4/);
+  assert.ok(source.includes('caches.match(url.pathname)'));
+  const home = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+  assert.ok(home.includes('animations.js?v=20261011-motion-nav-v4'));
+  assert.ok(home.includes('motion.css?v=20261011-motion-nav-v4'));
+});

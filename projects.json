@@ -293,19 +293,5 @@
       "Persian",
       "Psychology"
     ]
-  },
-  {
-    "id": "messy2json-qwen-0.5b-lora",
-    "source": "hf_model",
-    "url": "https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b-lora",
-    "title": "Messy2Json Qwen 0.5B Lora",
-    "description": "LoRA adapter for the Messy2JSON Qwen model.",
-    "tags": [
-      "text-generation",
-      "peft",
-      "lora",
-      "sft",
-      "trl"
-    ]
   }
 ]

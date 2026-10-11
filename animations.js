@@ -252,6 +252,54 @@
     }, { rootMargin: '450px' });
     storyObserver.observe(section);
   }
+  function sectionNavigation() {
+    // Explicitly animate same-page anchors; browser defaults may jump instantly
+    // when a section changes its layout during a scroll-driven story.
+    let frame = 0;
+    const stop = () => { if (frame) cancelAnimationFrame(frame); frame = 0; };
+    document.addEventListener('click', event => {
+      if (!enabled() || event.defaultPrevented || event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target.closest?.('a[href]');
+      if (!link || link.target || link.hasAttribute('download')) return;
+      const url = new URL(link.href, location.href);
+      if (url.origin !== location.origin || url.pathname !== location.pathname ||
+          url.search !== location.search || !url.hash) return;
+      let id;
+      try { id = decodeURIComponent(url.hash.slice(1)); }
+      catch (_) { return; }
+      const target = document.getElementById(id);
+      if (!target) return;
+      event.preventDefault();
+      stop();
+      const nav = document.querySelector('.site-nav-wrap, .site-nav, .nav');
+      const navHeight = nav?.getBoundingClientRect().height || 76;
+      const start = window.scrollY;
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+      const destination = Math.min(maxScroll, Math.max(0, start + target.getBoundingClientRect().top - navHeight - 20));
+      const distance = destination - start;
+      history.pushState(null, '', url.hash);
+      if (Math.abs(distance) < 2) return;
+      const duration = Math.min(1250, Math.max(500, 440 + Math.abs(distance) * .22));
+      let started = null;
+      function step(now) {
+        if (!enabled()) { stop(); window.scrollTo(0, destination); return; }
+        if (started === null) started = now;
+        const t = Math.min(1, (now - started) / duration);
+        const ease = 1 - Math.pow(1 - t, 3);
+        window.scrollTo(0, start + distance * ease);
+        if (t < 1) frame = requestAnimationFrame(step);
+        else frame = 0;
+      }
+      frame = requestAnimationFrame(step);
+    });
+    // Allow visitors to interrupt the animation with touch, wheel, or keyboard.
+    document.addEventListener('wheel', stop, { passive: true });
+    document.addEventListener('touchstart', stop, { passive: true });
+    document.addEventListener('keydown', event => {
+      if (['PageDown', 'PageUp', 'Home', 'End', 'ArrowDown', 'ArrowUp', ' '].includes(event.key)) stop();
+    });
+  }
   function routes() {
     if ('onpageswap' in window) return; // Native cross-document View Transitions.
     document.addEventListener('click', event => {
@@ -281,7 +329,7 @@
   }
   function init() {
     reduced.addEventListener?.('change', preference);
-    preference(); progress(); dots(); intro(); story(); routes();
+    preference(); progress(); dots(); intro(); story(); sectionNavigation(); routes();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
   else init();
