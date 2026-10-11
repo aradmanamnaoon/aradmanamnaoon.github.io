@@ -49,3 +49,7 @@ desktop.ini
 .tmp/
 dist/*.map
 *.build-backup
+
+# Python build and test artifacts
+__pycache__/
+*.py[cod]
