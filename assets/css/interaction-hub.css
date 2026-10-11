@@ -348,3 +348,10 @@ html[data-theme="light"] .hub-help-links a {background:#e8f2fb;color:#1d517e;bor
     opacity: 0; visibility: hidden; pointer-events: none;
   }
 }
+
+
+/* Desktop floating controls occupy distinct regions. The CV assistant lives
+   bottom-right; Back to top sits above the left-side navigation dock. */
+@media (min-width:761px) and (hover:hover) and (pointer:fine) {
+  .hub-back-top { left:18px; right:auto; bottom:84px; }
+}
