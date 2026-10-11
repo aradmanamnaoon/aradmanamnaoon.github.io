@@ -72,10 +72,18 @@
   document.body.append(palette);
   const search = palette.querySelector('input');
   const resultBox = palette.querySelector('.hub-command-results');
+  // The input owns selection; arrow keys update one announced listbox option.
+  resultBox.id = 'hub-command-results';
+  search.setAttribute('role', 'combobox');
+  search.setAttribute('aria-autocomplete', 'list');
+  search.setAttribute('aria-haspopup', 'listbox');
+  search.setAttribute('aria-controls', resultBox.id);
+  search.setAttribute('aria-expanded', 'false');
   let resultIndex = 0, matches = [];
   let beforeDialog = null;
   function close(dialog) {
     if (dialog.open) dialog.close();
+    if (dialog === palette) search.setAttribute('aria-expanded', 'false');
     beforeDialog?.focus?.({preventScroll: true});
     beforeDialog = null;
   }
@@ -92,10 +100,12 @@
     matches = commands().filter(a => (a.title + ' ' + a.subtitle).toLocaleLowerCase().includes(query)).slice(0, 12);
     resultIndex = Math.min(resultIndex, Math.max(0, matches.length - 1));
     resultBox.replaceChildren();
+    search.setAttribute('aria-expanded', String(palette.open));
     for (let i = 0; i < matches.length; i++) {
       const a = matches[i];
       const btn = document.createElement('button');
       btn.type = 'button'; btn.className = 'hub-command';
+      btn.id = 'hub-command-option-' + i; btn.tabIndex = -1;
       btn.setAttribute('role','option'); btn.setAttribute('aria-selected',String(i === resultIndex));
       const title = document.createElement('strong'); title.textContent = a.title;
       const sub = document.createElement('small'); sub.textContent = a.subtitle;
@@ -103,6 +113,7 @@
       btn.addEventListener('click', () => activate(i));
       resultBox.append(btn);
     }
+    selectCommand();
     if (!matches.length) {
       const link = document.createElement('button'); link.className = 'hub-command'; link.type = 'button';
       link.textContent = 'Search the portfolio for “' + search.value.trim().slice(0, 80) + '”';
@@ -112,6 +123,8 @@
   }
   function selectCommand() {
     [...resultBox.querySelectorAll('[role="option"]')].forEach((node,i) => node.setAttribute('aria-selected',String(i===resultIndex)));
+    if (matches.length) search.setAttribute('aria-activedescendant', 'hub-command-option-' + resultIndex);
+    else search.removeAttribute('aria-activedescendant');
   }
   function activate(i) {
     const command = matches[i];
@@ -123,7 +136,7 @@
   function openPalette() {
     if (!palette.showModal) return;
     beforeDialog = document.activeElement;
-    search.value = ''; resultIndex = 0; renderCommands(); palette.showModal(); search.focus();
+    search.value = ''; resultIndex = 0; palette.showModal(); renderCommands(); search.focus();
   }
   search.addEventListener('input', () => { resultIndex=0; renderCommands(); });
   search.addEventListener('keydown', e => {

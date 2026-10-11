@@ -44,6 +44,10 @@ test('global interaction hub supports modal navigation, themes, preference persi
  assert.match(hub,/palette\.showModal/);
  assert.match(hub,/beforeDialog.*focus/);
  assert.match(hub,/navigator\.clipboard\.writeText/);
+ assert.match(hub,/aria-activedescendant/);
+ assert.match(hub,/aria-autocomplete/);
+ assert.match(hub,/aria-controls/);
+ assert.match(hub,/palette\.showModal\(\); renderCommands\(\); search\.focus\(\)/);
  assert.doesNotMatch(hub,/hub-cursor|follower\.style\.transform/);
  assert.doesNotMatch(hub,/AudioContext|oscillator|soundCycle|testSound|hub-sound|hub-test-sound/);
  assert.match(hub,/Cycle theme/);

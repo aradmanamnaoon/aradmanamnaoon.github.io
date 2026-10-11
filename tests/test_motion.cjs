@@ -109,7 +109,8 @@ test('active nav tracks visible homepage sections', () => {
 test('same-page section links use eased scrolling with native reduced-motion fallback', () => {
   assert.ok(source.includes('function sectionNavigation()'));
   assert.ok(source.includes('history.pushState(null'));
-  assert.ok(source.includes('window.scrollTo(0, start + distance * ease)'));
-  assert.ok(source.includes('if (!enabled() || event.defaultPrevented'));
+  assert.ok(source.includes("window.scrollTo({ top: start + distance * ease, behavior: 'instant' })"));
+  assert.ok(source.includes('if (!enabled() || event.defaultPrevented')); 
+  assert.ok(source.includes("window.scrollTo({ top: destination, behavior: 'instant' })"));
   assert.ok(source.includes('document.addEventListener(\'wheel\', stop'));
 });

@@ -307,11 +307,11 @@
       const duration = Math.min(1250, Math.max(500, 440 + Math.abs(distance) * .22));
       let started = null;
       function step(now) {
-        if (!enabled()) { stop(); window.scrollTo(0, destination); return; }
+        if (!enabled()) { stop(); window.scrollTo({ top: destination, behavior: 'instant' }); return; }
         if (started === null) started = now;
         const t = Math.min(1, (now - started) / duration);
         const ease = 1 - Math.pow(1 - t, 3);
-        window.scrollTo(0, start + distance * ease);
+        window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
         if (t < 1) frame = requestAnimationFrame(step);
         else frame = 0;
       }

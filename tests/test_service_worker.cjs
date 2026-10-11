@@ -86,9 +86,9 @@ test('offline shell includes core motion and excludes the optional desktop scene
 });
 
 test('updated worker cache supports versioned motion assets offline', () => {
-  assert.match(source, /arad-portfolio-v14/);
+  assert.match(source, /arad-portfolio-v15/);
   assert.ok(source.includes('caches.match(url.pathname)'));
   const home = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.ok(home.includes('animations.js?v=20261011-motion-exp-v7'));
+  assert.ok(home.includes('animations.js?v=20261011-motion-exp-v8'));
   assert.ok(home.includes('motion.css?v=20261011-motion-exp-v9'));
 });

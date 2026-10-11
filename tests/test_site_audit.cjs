@@ -133,12 +133,30 @@ test('saved selections and recent searches resist malformed localStorage', () =>
   assert.match(search,/textContent=item\.entry\.summary/);
 });
 
+test('desktop main navigation is consistent on Skills and case studies', () => {
+  const skills = read('skills/index.html');
+  assert.ok(skills.includes('href="/skills/" aria-current="page"'));
+  for (const page of ['skills/index.html',
+    'projects/3d-cardiac-mri-segmentation/index.html',
+    'projects/persian-gpt-from-scratch/index.html',
+    'projects/multi-agent-ai-research-assistant/index.html']) {
+    const pageText = read(page);
+    const start = pageText.indexOf('<nav class="nav" aria-label="Primary navigation">');
+    assert.ok(start >= 0, page + ' has a primary nav');
+    const end = pageText.indexOf('</nav>', start);
+    assert.ok(end > start);
+    const nav = pageText.slice(start, end);
+    for (const href of ['/skills/', '/projects/', '/#about', '/#contact'])
+      assert.ok(nav.includes('href="' + href + '"'), page + ': ' + href);
+  }
+});
+
 test('all patched local scripts parse and offline cache contains theme initializer', () => {
   for(const file of ['assets/js/page-extras.js','assets/js/search.js',
     'assets/js/projects-experience.js','assets/js/theme-init.js']){
     assert.doesNotThrow(()=>new Function(read(file)), file);
   }
   const worker=read('service-worker.js');
-  assert.match(worker,/arad-portfolio-v14/);
+  assert.match(worker,/arad-portfolio-v15/);
   assert.match(worker,/\/assets\/js\/theme-init\.js/);
 });

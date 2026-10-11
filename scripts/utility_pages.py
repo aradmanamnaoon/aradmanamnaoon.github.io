@@ -95,10 +95,10 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
   </main>
   <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and data science</footer>
   <script src="/assets/js/site-ui.js" defer></script>
-  <script src="/animations.js?v=20261011-motion-exp-v7" defer></script>
+  <script src="/animations.js?v=20261011-motion-exp-v8" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   {search_script}
-  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v5" defer></script>
+  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v6" defer></script>
   <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
 </body>
 </html>'''
