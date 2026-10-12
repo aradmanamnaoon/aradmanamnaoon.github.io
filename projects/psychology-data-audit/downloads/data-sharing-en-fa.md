@@ -1,5 +1,0 @@
-# Data availability / دسترسی به داده‌ها
-
-**English:** The public candidate provides only derived aggregate tables (demographics, questionnaire scores, and data-quality statistics) and a bilingual 89-variable codebook. The unchanged SPSS source and 240-row individual-level data are held in the separately marked private-review archive. Public release of individual questionnaires is **not authorized by the information currently available** and requires independent consent, ethics, custodianship, and disclosure-risk review. Requests for access should be directed to the lawful study custodian, whose identity has not been established.
-
-**فارسی:** این نسخهٔ عمومی فقط جدول‌های تجمیعی (جمعیت‌شناختی، نمره‌های پرسشنامه و کیفیت داده) و فرهنگ ۸۹ متغیر را ارائه می‌کند. فایل اصلی SPSS و داده‌های ۲۴۰ ردیف در بستهٔ خصوصی بررسی قرار دارند. اطلاعات موجود، مجوز انتشار عمومی پاسخ‌های فردی را اثبات نمی‌کند. هر نوع دسترسی به دادهٔ فردی باید با تأیید رضایت، اخلاق پژوهش، مالکیت داده و خطر شناسایی مجدد انجام شود.

@@ -1,4 +1,0 @@
-variable,chi2,p,dof,cramers_v,v_ci_low,v_ci_high,min_expected,note
-AGE,0.0,1.0,3,0.0,0.025147089057851582,0.19378186094735222,7.0,DESCRIPTIVE diagnostic only: near-identical group records violate independence.
-MARRIAGE,0.024898848428260192,0.8746193714546374,1,0.010185538855869014,0.0014652798276699078,0.1479295585992765,25.5,DESCRIPTIVE diagnostic only: near-identical group records violate independence.
-EDUCATIO,0.0,1.0,4,0.0,0.05691584880658673,0.20811578975030157,1.0,DESCRIPTIVE diagnostic only: near-identical group records violate independence.
