@@ -27,7 +27,8 @@ class PortfolioGeneratorTests(unittest.TestCase):
                 "ai-research-assistant-platform",
             ],
         )
-        self.assertEqual(len(ids), 11)
+        self.assertEqual(len(ids), 12)
+        self.assertIn('psychology-research-atlas', ids)
         self.assertIn("psylex-studio", ids)
         self.assertNotIn('messy2json-qwen-0.5b-lora', ids)
 
@@ -131,8 +132,9 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         studies = [project for project in projects if project.get("caseStudy")]
         slugs = [project["slug"] for project in studies]
-        self.assertEqual(len(studies), 4)
+        self.assertEqual(len(studies), 5)
         self.assertEqual(len(slugs), len(set(slugs)))
+        self.assertTrue((ROOT / "projects" / "psychology-data-audit" / "index.html").is_file())
         for project in studies:
             study = project["caseStudy"]
             self.assertRegex(project["slug"], r"^[a-z0-9]+(?:-[a-z0-9]+)*$")

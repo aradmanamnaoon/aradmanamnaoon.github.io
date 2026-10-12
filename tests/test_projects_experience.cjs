@@ -47,8 +47,8 @@ function archiveHarness() {
 test('projects still have pagination and all project links', () => {
   assert.ok(match, 'generated project renderer is present');
   const { api, element } = archiveHarness();
-  assert.equal(api.total(), 11);
-  assert.equal(api.count(), 11);
+  assert.equal(api.total(), 12);
+  assert.equal(api.count(), 12);
   assert.equal(api.perPage(), 6);
   assert.match(element('projects-paginated').innerHTML, /Persian GPT/);
   assert.match(element('projects-pagination').innerHTML, /Previous page/);
@@ -61,11 +61,11 @@ test('search, research area, source filters and zero state are functional', () =
   assert.match(element('projects-paginated').innerHTML, /CohortSeal/);
   assert.equal(api.setFilters({ query: '', source: 'all', topic: 'medical' }), 3);
   assert.equal(api.setFilters({ query: '', source: 'huggingface', topic: 'all' }), 5);
-  assert.equal(api.setFilters({ query: '', source: 'github', topic: 'all' }), 6);
+  assert.equal(api.setFilters({ query: '', source: 'github', topic: 'all' }), 7);
   assert.equal(api.setFilters({ query: 'not-in-archive-100934', source: 'all', topic: 'all' }), 0);
   assert.match(element('projects-paginated').innerHTML, /No projects match/);
   assert.match(element('projects-pagination').innerHTML, /No matching projects/);
-  assert.equal(api.setFilters({ query: '', source: 'all', topic: 'all' }), 11);
+  assert.equal(api.setFilters({ query: '', source: 'all', topic: 'all' }), 12);
 });
 
 test('deep links restore complete archive even after filtering', () => {
