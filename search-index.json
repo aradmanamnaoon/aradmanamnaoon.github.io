@@ -42,6 +42,12 @@
     "terms": "Python PySide6 Persian NLP LLMs OCR RAG Desktop AI"
   },
   {
+    "title": "Psychology Research Atlas — Bilingual Statistical Audit",
+    "url": "/projects/psychology-data-audit/",
+    "summary": "Explore a complete English/Persian statistical audit of psychological questionnaire data with interactive charts, integrity checks, methods, tables and public research downloads.",
+    "terms": "Statistics Psychology R Python Power BI Persian Data Quality"
+  },
+  {
     "title": "CohortSeal",
     "url": "/projects/#cohortseal",
     "summary": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.",
