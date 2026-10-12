@@ -265,17 +265,16 @@
     "id": "psychology-research-atlas",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/projects/psychology-data-audit",
-    "title": "Psychology Research Atlas — Bilingual Statistical Audit",
-    "description": "A bilingual, interactive analysis of 240 psychology questionnaire records, including demographics, scale summaries, reliability checks, associations, and a rigorous investigation of repeated response patterns and scoring discrepancies.",
-    "type": "Quantitative humanities · Statistical analysis · Data integrity",
+    "title": "From Messy Data to Meaningful Insight — Psychology Research Atlas",
+    "description": "A bilingual, interactive data-science case study: I audited 240 psychological questionnaire records, discovered only 86 distinct answer patterns, and showed how an apparent group difference nearly vanishes when the original item answers are checked.",
+    "type": "Applied data science · Psychology · Data integrity",
     "tags": [
-      "Statistics",
+      "Data Science",
+      "Statistical Analysis",
+      "Data Quality",
       "Psychology",
       "R",
-      "Python",
-      "Power BI",
-      "Persian",
-      "Data Quality"
+      "Persian"
     ],
     "homepage_featured": false,
     "slug": "psychology-data-audit",
@@ -294,34 +293,34 @@
         "label": "matching cross-group pairs"
       }
     ],
-    "note": "Exploratory and data-quality focused. The independence of questionnaire responses and official scoring keys have not been verified; inferential p-values are diagnostic only. Original participant-level raw.sav is withheld from public release.",
+    "note": "The interactive page prioritizes clear insight storytelling; the complete bilingual reports and R script are available as downloads. The raw participant responses are withheld.",
     "research": {
-      "context": "An English/Persian statistical atlas of questionnaire data that emphasizes measurement and provenance audits before inferential interpretation.",
+      "context": "A public-friendly story about moving from seemingly straightforward group statistics to responsible insight by checking the underlying SPSS data and score construction.",
       "methods": [
-        "SPSS variable dictionary and response-profile audit",
-        "Demographic and score descriptives",
-        "Nonparametric correlations and diagnostic models",
-        "Bilingual visualizations and file downloads"
+        "Audited 240 rows and 89 original variables",
+        "Identified 86 distinct response patterns and matching cross-group answers",
+        "Compared stored scale totals with direct item-sum diagnostics",
+        "Communicated findings through bilingual interactive explanation and full report downloads"
       ],
-      "limitations": "Participant-level data are not distributed. Questionnaire response duplication, unverified reverse scoring and out-of-range values invalidate independent-group inference until verified."
+      "limitations": "Exploratory audit, not a validated between-group effect. Original group meaning, source integrity, and official questionnaire scoring rules remain unverified. Participant-level raw.sav is not public."
     },
     "caseStudy": {
-      "title": "Psychology Research Atlas: Interactive Bilingual Statistical Audit",
-      "seoTitle": "Psychology Research Atlas | Bilingual Statistics & Data Audit",
-      "description": "Explore a complete English/Persian statistical audit of psychological questionnaire data with interactive charts, integrity checks, methods, tables and public research downloads.",
-      "lede": "An interactive, bilingual statistical investigation of psychological questionnaires and why validating response patterns matters before interpreting inferential results.",
-      "challenge": "Repeated response profiles and inconsistent stored totals may make standard group comparisons misleading.",
+      "title": "From messy psychology data to meaningful, defensible insight",
+      "seoTitle": "From Messy Data to Meaningful Insight | Psychology Research Atlas",
+      "description": "An interactive bilingual case study demonstrating data cleaning, data-integrity investigation, and responsible statistical storytelling for psychology questionnaire data.",
+      "lede": "How checking questionnaire response patterns changed a seemingly obvious group comparison and made the real finding understandable.",
+      "challenge": "Stored scores appeared to show a group difference, but repeated response patterns and uncertain scoring threatened the validity of that claim.",
       "approach": [
-        "Audited the original SPSS variable definitions and item response patterns.",
-        "Produced bilingual descriptive data, data-integrity diagnostics and interactive charts.",
-        "Published reproducibility code, results, methods and bilingual reports as individually downloadable files."
+        "Examined response patterns and score construction before interpreting results.",
+        "Compared stored ambiguity totals against direct sums of item answers.",
+        "Explained the evidence, its limitations, and the practical takeaway in English and Persian."
       ],
       "results": [
-        "240 records, 89 original variables, 86 unique item-response profiles.",
-        "119 of 120 aligned cross-group pairs share the same 76 item answers.",
-        "Potential scoring discrepancies and 31 out-of-range item responses require source verification."
+        "240 recorded rows but 86 distinct 76-item answer patterns.",
+        "119 of 120 aligned cross-group record pairs have matching item responses.",
+        "The stored ambiguity-score gap of approximately 4.63 contrasts with a direct item-sum gap of only 0.08; neither comparison establishes a validated independent-group effect."
       ],
-      "limitations": "Not confirmatory or causal evidence. Response independence, study group labels and official questionnaire scoring keys remain unverified; raw participant-level data are not publicly shared.",
+      "limitations": "Direct item sums are diagnostic and not official validated scores; study design, independence, and scoring keys remain unverified. Complete reports and an untested R source script are downloadable; individual raw responses are withheld.",
       "sourceLabel": "Explore source files"
     }
   },
