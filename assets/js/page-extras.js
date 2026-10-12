@@ -24,32 +24,6 @@
  };
  const esc=s=>String(s).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
 
- function home() {
-   // Explore the two documented research directions, not unverified projects.
-   const section=document.getElementById('about')||document.querySelector('#main');
-   const destination=document.getElementById('projects');
-   const hero=document.querySelector('.hero-bio,.hero-copy,.hero-content');
-   if (!hero || !section) return;
-   const bar=document.createElement('nav');bar.className='focus-explorer';
-   bar.setAttribute('aria-label','Explore professional focus');
-   const label=document.createElement('span');label.textContent='Explore focus';
-   bar.append(label);
-   const links=[
-     ['Medical AI','/projects/3d-cardiac-mri-segmentation/'],
-     ['Psychology & statistics','/skills/#statistics_and_humanities_data'],
-     ['All research','/projects/#research-directions']
-   ];
-   links.forEach(([title,url])=>{
-     const a=document.createElement('a');a.href=url;a.textContent=title;bar.append(a);
-   });
-   hero.insertAdjacentElement('afterend',bar);
-   const socials=document.querySelectorAll('.public-proof a, .surface-card[href^="https://"]');
-   socials.forEach(el=>{el.classList.add('hub-hover-float');});
-   const copy=button('Copy portfolio link','hub-secondary-button','Copy current portfolio URL');
-   copy.addEventListener('click',()=>share(location.origin+'/'));
-   bar.append(copy);
- }
-
  function projects() {
    const root=document.getElementById('selected-projects');
    const container=document.getElementById('projects-paginated');
@@ -213,8 +187,7 @@
    }
  }
 
- if(path==='/'||path==='/index.html')home();
- else if(path==='/projects/'||path==='/projects')projects();
+ if(path==='/projects/'||path==='/projects')projects();
  else if(path.startsWith('/projects/')&&document.body.classList.contains('project-case-study'))caseStudy();
  else if(path.includes('search')||path.includes('404')||path.includes('offline'))utility();
 })();

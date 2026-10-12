@@ -72,10 +72,23 @@ test('portfolio selection remains and Skills pin/copy controls are retired',()=>
  const extras=read('assets/js/page-extras.js');
  for(const name of ['Saved projects','Compare:','project-compare-grid','localStorage',
   'case-interactive-toc','case-collapse','Print case study',
-  'research','Psychology & statistics','aria-expanded','offline-status'])
+  'aria-expanded','offline-status'])
    assert.ok(extras.includes(name),name);
  assert.doesNotMatch(extras,/function skills\(\)|pin-skill|copy-skill|Pinned skills:|Copy skills/);
  assert.match(read('scripts/build_site.py'),/all: function\(\) \{ return projects\.slice\(\); \}/);
+});
+
+test('no redundant focus shortcut bar and intermediate desktop grid is constrained',()=>{
+ const extras=read('assets/js/page-extras.js');
+ const css=read('assets/css/page-extras.css');
+ const home=read('index.html');
+ const motion=read('assets/css/motion.css');
+ assert.doesNotMatch(extras,/focus-explorer|Explore focus|Copy portfolio link|function home\(/);
+ assert.doesNotMatch(css,/focus-explorer/);
+ assert.match(home,/max-width: 1250px/);
+ assert.match(home,/grid-template-columns: minmax\(0, 1\.3fr\) minmax\(220px, \.7fr\)/);
+ assert.match(motion,/\.story-section\.story-pinned \.story-viewport \{ min-height: 0; flex: 1 1 0; \}/);
+ assert.match(motion,/\.story-section\.story-pinned \.story-panel \{ height: 100%; min-height: 0; \}/);
 });
 
 test('case-study and utility generators retain new scripts across future builds',()=>{

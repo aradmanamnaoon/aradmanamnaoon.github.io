@@ -1662,13 +1662,29 @@
     <style id="homepage-refinement-layout">
       .hero-title { text-wrap: balance; }
       .hero-title-line { overflow-wrap: normal; hyphens: none; }
+      /* Balanced desktop/tablet split: keep headings and portrait inside the
+         content grid at intermediate desktop widths. */
+      @media (min-width: 768px) and (max-width: 1250px) {
+        .hero-grid {
+          grid-template-columns: minmax(0, 1.3fr) minmax(220px, .7fr);
+          gap: clamp(1.25rem, 3vw, 2.5rem);
+        }
+        .hero-copy { max-width: 100%; }
+        .hero-title {
+          max-width: 100%;
+          font-size: clamp(2.8rem, 5.3vw, 4.8rem);
+          line-height: 1.04;
+          letter-spacing: -.045em;
+        }
+        .hero-portrait-frame { width: min(100%, 300px); }
+      }
       @media (max-width: 600px) {
         .hero-title { max-width: 100%; font-size: clamp(2.2rem, 10vw, 3.7rem); line-height: 1.07; }
         .hero-bio { max-width: 58ch; }
       }
     </style>
   <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
-  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-audit-v2" />
+  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261012-layout-v1" />
 </head>
 
   <body>
@@ -2499,6 +2515,6 @@
     </section>
     <script src="/assets/js/site-ui.js" defer></script>
   <script src="/assets/js/interaction-hub.js?v=20261011-theme-v6" defer></script>
-  <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
+  <script src="/assets/js/page-extras.js?v=20261012-layout-v1" defer></script>
 </body>
 </html>

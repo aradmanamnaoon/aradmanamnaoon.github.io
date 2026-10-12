@@ -34,8 +34,8 @@ test('every route has one H1, unique IDs, and shared accessible controls', () =>
     assert.match(html, /<title>[\s\S]*?<\/title>/, file);
     assert.match(html, /class="skip-link"/, file);
     assert.match(html, /assets\/js\/interaction-hub\.js\?v=/, file);
-    assert.match(html, /assets\/js\/page-extras\.js\?v=20261011-audit-v[23]/, file);
-    assert.match(html, /assets\/css\/page-extras\.css\?v=20261011-audit-v[23]/, file);
+    assert.match(html, /assets\/js\/page-extras\.js\?v=(?:20261011-audit-v[23]|20261012-layout-v1)/, file);
+    assert.match(html, /assets\/css\/page-extras\.css\?v=(?:20261011-audit-v[23]|20261012-layout-v1)/, file);
   }
 });
 
@@ -157,7 +157,7 @@ test('all patched local scripts parse and offline cache contains theme initializ
     assert.doesNotThrow(()=>new Function(read(file)), file);
   }
   const worker=read('service-worker.js');
-  assert.match(worker,/arad-portfolio-v15/);
+  assert.match(worker,/arad-portfolio-v16/);
   assert.match(worker,/\/assets\/js\/theme-init\.js/);
 });
 
