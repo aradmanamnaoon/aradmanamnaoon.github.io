@@ -1,0 +1,11 @@
+-- Import results/demographics_bilingual_aggregated.csv as Demographics.
+-- Import results/score_summary_bilingual_aggregated.csv as ScoreSummary.
+-- Import results/quality_metrics_bilingual.csv as Quality.
+-- Measures are independent of the participant-level CSV.
+Total Aggregate Count = SUM('Demographics'[n])
+Mean Score = AVERAGE('ScoreSummary'[mean])
+Group Score Mean = DIVIDE(SUMX('ScoreSummary', 'ScoreSummary'[mean] * 'ScoreSummary'[n]), SUM('ScoreSummary'[n]))
+Quality Metric Value = SUM('Quality'[value])
+-- IMPORTANT: Total Aggregate Count double-counts if more than ONE demographic dimension is selected.
+-- Use dimension_en = "Age group" or another single demographic dimension to count records.
+-- Do NOT average different scale codes together: each scale has a different range.

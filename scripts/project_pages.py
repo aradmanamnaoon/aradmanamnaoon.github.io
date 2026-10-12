@@ -156,6 +156,12 @@ def generate(root: Path, projects: list[dict[str, Any]], site_url: str,
              dry_run: bool, atomic_write: Callable[[Path, str, bool], bool]) -> list[str]:
     routes: list[str] = []
     for project in projects:
+        # Preserve bespoke interactive project reports during site regeneration.
+        if project.get('customPage'):
+            slug = str(project.get('slug') or '').strip('/')
+            if slug:
+                routes.append(f'/projects/{slug}/')
+            continue
         page = render(project, site_url)
         slug = str(project.get("slug") or "").strip("/")
         if not page or not slug:

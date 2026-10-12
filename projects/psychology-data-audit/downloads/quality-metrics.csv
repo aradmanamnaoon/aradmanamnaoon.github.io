@@ -1,0 +1,16 @@
+﻿metric,label_en,label_fa,value,evidence
+record_count,Recorded rows,تعداد ردیف‌ها,240,file-level diagnostic; does not establish participant independence
+original_variable_count,Original variables,تعداد متغیرهای اصلی,89,file-level diagnostic; does not establish participant independence
+group_fire,Rows in fire,تعداد ردیف‌های گروه fire,120,file-level diagnostic; does not establish participant independence
+group_non,Rows in non,تعداد ردیف‌های گروه non,120,file-level diagnostic; does not establish participant independence
+questionnaire_item_count,Questionnaire items,تعداد سؤال‌های پرسشنامه,76,file-level diagnostic; does not establish participant independence
+unique_questionnaire_patterns,Unique complete item response patterns,الگوهای متمایز پاسخ به سؤال‌ها,86,file-level diagnostic; does not establish participant independence
+records_in_repeated_patterns,Records belonging to repeated response patterns,رکوردهای دارای الگوی پاسخ تکراری,239,file-level diagnostic; does not establish participant independence
+excess_pattern_instances,Additional occurrences beyond unique patterns,تکرارهای مازاد بر الگوهای متمایز,154,file-level diagnostic; does not establish participant independence
+matched_item_profiles_across_aligned_groups,Aligned cross-group complete item matches,تطابق کامل سؤال‌های جفت‌های متناظر دو گروه,119,file-level diagnostic; does not establish participant independence
+invalid_death_anxiety_item_cells,Invalid D-item answer cells,تعداد پاسخ‌های نامعتبر پرسشنامه اضطراب مرگ,31,file-level diagnostic; does not establish participant independence
+records_with_invalid_death_items,Records with invalid D answers,رکوردهای دارای پاسخ نامعتبر اضطراب مرگ,5,file-level diagnostic; does not establish participant independence
+records_with_any_arithmetic_disagreement,Recorded totals disagreeing with direct sums (any construct),رکوردهای دارای مغایرت با جمع خام سؤال‌ها,108,file-level diagnostic; does not establish participant independence
+mismatch_TOTALA,A-total disagreement,مغایرت مجموع تحمل ابهام,84,unvalidated direct item sums; reverse scoring unknown
+mismatch_TOTALEM,EM-total disagreement,مغایرت مجموع تنظیم هیجان,32,unvalidated direct item sums; reverse scoring unknown
+mismatch_MZQ,H-total disagreement,مغایرت مجموع ذهنی‌سازی,26,unvalidated direct item sums; reverse scoring unknown

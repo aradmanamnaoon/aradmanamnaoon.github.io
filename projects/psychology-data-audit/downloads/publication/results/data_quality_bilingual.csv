@@ -1,0 +1,14 @@
+check,variable,affected,description,check_fa
+missing cells,all variables,0,No system missing cells detected; user-defined missing codes absent,خانه‌های خالی سیستم
+constant variables,all variables,0,Count of variables with no variability,متغیرهای بدون تغییر
+duplicated questionnaire rows,76 questionnaire items,239,"Rows sharing a complete 76-item response pattern, including all repetitions",ردیف‌های دارای الگوی پاسخ تکراری
+unique questionnaire patterns,76 questionnaire items,86,Not independent participant count; distinct vectors only,الگوهای پاسخ متمایز
+"duplicate (GROUP, NUMBER) pairs","GROUP, NUMBER",0,Unique within group; NUMBER recurs across groups and is not globally unique,تکرار شناسهٔ ترکیبی گروه و شماره
+invalid death anxiety responses,D1:D15,31,Cells outside documented binary codes 1 or 2,پاسخ‌های خارج از دامنه اضطراب مرگ
+records with invalid death responses,D1:D15,5,Affected rows; do not construct a death-anxiety total,رکوردهای دارای پاسخ اضطراب مرگ نامعتبر
+stored-versus-arithmetic mismatches,TOTALA,84,Not proof of wrong score: reverse coding/manual corrections unknown,اختلاف نمره ثبت‌شده و جمع حسابی آیتم‌ها
+stored-versus-arithmetic mismatches,TOTALEM,32,Not proof of wrong score: reverse coding/manual corrections unknown,اختلاف نمره ثبت‌شده و جمع حسابی آیتم‌ها
+stored-versus-arithmetic mismatches,MZQ,26,Not proof of wrong score: reverse coding/manual corrections unknown,اختلاف نمره ثبت‌شده و جمع حسابی آیتم‌ها
+inconsistent age bands,AGE versus AGEE,0,"Assuming boundaries [30,40,50] change bins at the new decade",ناهماهنگی بازه سنی و سن واقعی
+aligned across-group complete questionnaire matches,GROUP,119,Matching all 76 items at the same within-group row offset; not evidence of independent people,انطباق تمام آیتم‌ها در ردیف‌های متناظر دو گروه
+matching questionnaire profiles at same NUMBER in groups,"GROUP,NUMBER",119,119 shared NUMBER values across both groups,پروفایل یکسان با شمارهٔ یکسان در دو گروه

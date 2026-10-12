@@ -262,6 +262,70 @@
     }
   },
   {
+    "id": "psychology-research-atlas",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/projects/psychology-data-audit",
+    "title": "Psychology Research Atlas — Bilingual Statistical Audit",
+    "description": "A bilingual, interactive analysis of 240 psychology questionnaire records, including demographics, scale summaries, reliability checks, associations, and a rigorous investigation of repeated response patterns and scoring discrepancies.",
+    "type": "Quantitative humanities · Statistical analysis · Data integrity",
+    "tags": [
+      "Statistics",
+      "Psychology",
+      "R",
+      "Python",
+      "Power BI",
+      "Persian",
+      "Data Quality"
+    ],
+    "homepage_featured": false,
+    "slug": "psychology-data-audit",
+    "customPage": true,
+    "metrics": [
+      {
+        "value": "240",
+        "label": "questionnaire records"
+      },
+      {
+        "value": "86",
+        "label": "distinct answer patterns"
+      },
+      {
+        "value": "119/120",
+        "label": "matching cross-group pairs"
+      }
+    ],
+    "note": "Exploratory and data-quality focused. The independence of questionnaire responses and official scoring keys have not been verified; inferential p-values are diagnostic only. Original participant-level raw.sav is withheld from public release.",
+    "research": {
+      "context": "An English/Persian statistical atlas of questionnaire data that emphasizes measurement and provenance audits before inferential interpretation.",
+      "methods": [
+        "SPSS variable dictionary and response-profile audit",
+        "Demographic and score descriptives",
+        "Nonparametric correlations and diagnostic models",
+        "Bilingual visualizations and file downloads"
+      ],
+      "limitations": "Participant-level data are not distributed. Questionnaire response duplication, unverified reverse scoring and out-of-range values invalidate independent-group inference until verified."
+    },
+    "caseStudy": {
+      "title": "Psychology Research Atlas: Interactive Bilingual Statistical Audit",
+      "seoTitle": "Psychology Research Atlas | Bilingual Statistics & Data Audit",
+      "description": "Explore a complete English/Persian statistical audit of psychological questionnaire data with interactive charts, integrity checks, methods, tables and public research downloads.",
+      "lede": "An interactive, bilingual statistical investigation of psychological questionnaires and why validating response patterns matters before interpreting inferential results.",
+      "challenge": "Repeated response profiles and inconsistent stored totals may make standard group comparisons misleading.",
+      "approach": [
+        "Audited the original SPSS variable definitions and item response patterns.",
+        "Produced bilingual descriptive data, data-integrity diagnostics and interactive charts.",
+        "Published reproducibility code, results, methods and bilingual reports as individually downloadable files."
+      ],
+      "results": [
+        "240 records, 89 original variables, 86 unique item-response profiles.",
+        "119 of 120 aligned cross-group pairs share the same 76 item answers.",
+        "Potential scoring discrepancies and 31 out-of-range item responses require source verification."
+      ],
+      "limitations": "Not confirmatory or causal evidence. Response independence, study group labels and official questionnaire scoring keys remain unverified; raw participant-level data are not publicly shared.",
+      "sourceLabel": "Explore source files"
+    }
+  },
+  {
     "id": "cohortseal",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/cohortseal",

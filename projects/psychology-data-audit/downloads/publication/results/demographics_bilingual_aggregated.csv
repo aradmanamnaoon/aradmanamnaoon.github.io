@@ -1,0 +1,31 @@
+group_en,group_fa,dimension_en,dimension_fa,category_en,category_fa,n,percent
+all,همه,Age group,گروه سنی,30–39,۳۰ تا ۳۹,124,51.67
+all,همه,Age group,گروه سنی,40–49,۴۰ تا ۴۹,82,34.17
+all,همه,Age group,گروه سنی,Under 30,کمتر از ۳۰,20,8.33
+all,همه,Age group,گروه سنی,50–60,۵۰ تا ۶۰,14,5.83
+all,همه,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Bachelor,کارشناسی,126,52.5
+all,همه,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Associate,کاردانی,52,21.67
+all,همه,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Postgraduate,تحصیلات تکمیلی,32,13.33
+all,همه,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Diploma,دیپلم,30,12.5
+all,همه,Marital status,وضعیت تأهل,Married,متأهل,189,78.75
+all,همه,Marital status,وضعیت تأهل,Single,مجرد,51,21.25
+fire,گروه fire,Age group,گروه سنی,30–39,۳۰ تا ۳۹,62,51.67
+fire,گروه fire,Age group,گروه سنی,40–49,۴۰ تا ۴۹,41,34.17
+fire,گروه fire,Age group,گروه سنی,Under 30,کمتر از ۳۰,10,8.33
+fire,گروه fire,Age group,گروه سنی,50–60,۵۰ تا ۶۰,7,5.83
+fire,گروه fire,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Bachelor,کارشناسی,63,52.5
+fire,گروه fire,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Associate,کاردانی,26,21.67
+fire,گروه fire,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Postgraduate,تحصیلات تکمیلی,16,13.33
+fire,گروه fire,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Diploma,دیپلم,15,12.5
+fire,گروه fire,Marital status,وضعیت تأهل,Married,متأهل,94,78.33
+fire,گروه fire,Marital status,وضعیت تأهل,Single,مجرد,26,21.67
+non,گروه non,Age group,گروه سنی,30–39,۳۰ تا ۳۹,62,51.67
+non,گروه non,Age group,گروه سنی,40–49,۴۰ تا ۴۹,41,34.17
+non,گروه non,Age group,گروه سنی,Under 30,کمتر از ۳۰,10,8.33
+non,گروه non,Age group,گروه سنی,50–60,۵۰ تا ۶۰,7,5.83
+non,گروه non,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Bachelor,کارشناسی,63,52.5
+non,گروه non,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Associate,کاردانی,26,21.67
+non,گروه non,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Postgraduate,تحصیلات تکمیلی,16,13.33
+non,گروه non,Education (postgraduate combined),تحصیلات (تجمیع تحصیلات تکمیلی),Diploma,دیپلم,15,12.5
+non,گروه non,Marital status,وضعیت تأهل,Married,متأهل,95,79.17
+non,گروه non,Marital status,وضعیت تأهل,Single,مجرد,25,20.83

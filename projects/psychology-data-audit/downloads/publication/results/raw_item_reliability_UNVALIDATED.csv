@@ -1,0 +1,4 @@
+construct,n_items,alpha_raw,bootstrap_ci_low,bootstrap_ci_high,note
+Ambiguity tolerance,13,0.32766629124134977,0.15229766717825227,0.4551522200988945,Raw-item alpha only; no authorized reverse-coding/scoring key. Pseudoreplicated records.
+Emotional self-regulation,33,0.9258348035745769,0.9142616002943731,0.9350394072614364,Raw-item alpha only; no authorized reverse-coding/scoring key. Pseudoreplicated records.
+Mentalization,15,0.6604985919246219,0.5733037117427023,0.7284435513903826,Raw-item alpha only; no authorized reverse-coding/scoring key. Pseudoreplicated records.

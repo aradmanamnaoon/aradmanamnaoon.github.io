@@ -1,0 +1,14 @@
+test,variable,effect,effect_estimate,bootstrap_ci_low,bootstrap_ci_high,interval_coverage_warning
+Mann–Whitney,TOTALA,Rank-biserial,0.3872916666666666,0.23908680555555564,0.5213020833333333,Nominal diagnostic only: independence not verified
+Mann–Whitney,TOTALEM,Rank-biserial,0.08062499999999995,-0.05261458333333332,0.21290972222222204,Nominal diagnostic only: independence not verified
+Mann–Whitney,OPTIMISM,Rank-biserial,0.020069444444444473,-0.12167187500000003,0.16057291666666665,Nominal diagnostic only: independence not verified
+Mann–Whitney,EVALUATI,Rank-biserial,0.021041666666666625,-0.10919791666666663,0.15727256944444434,Nominal diagnostic only: independence not verified
+Mann–Whitney,SOCIALSK,Rank-biserial,0.019027777777777866,-0.12556944444444443,0.15925868055555556,Nominal diagnostic only: independence not verified
+Mann–Whitney,EMOTIONA,Rank-biserial,0.03256944444444443,-0.1115625,0.1901458333333333,Nominal diagnostic only: independence not verified
+Mann–Whitney,MZQ,Rank-biserial,0.08819444444444446,-0.04639236111111114,0.22635590277777776,Nominal diagnostic only: independence not verified
+Mann–Whitney,A_RAW_SUM,Rank-biserial,0.002361111111111036,-0.14578298611111112,0.13717013888888877,Nominal diagnostic only: independence not verified
+Mann–Whitney,EM_RAW_SUM,Rank-biserial,0.00374999999999992,-0.1402256944444445,0.15997395833333314,Nominal diagnostic only: independence not verified
+Mann–Whitney,H_RAW_SUM,Rank-biserial,0.0,-0.1502604166666667,0.14518055555555556,Nominal diagnostic only: independence not verified
+Chi-square / Monte Carlo diagnostic,AGE,Cramér V,0.0,0.028495078191449124,0.18932126472651342,Nominal diagnostic only: independence not verified; bootstrap V upward-biased near 0
+Chi-square / Monte Carlo diagnostic,MARRIAGE,Cramér V,0.010185538855869014,0.0,0.14821262902273982,Nominal diagnostic only: independence not verified; bootstrap V upward-biased near 0
+Chi-square / Monte Carlo diagnostic,EDUCATIO,Cramér V,0.0,0.04287450306949257,0.20887341077194443,Nominal diagnostic only: independence not verified; bootstrap V upward-biased near 0

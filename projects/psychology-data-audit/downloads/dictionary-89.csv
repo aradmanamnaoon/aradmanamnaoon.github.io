@@ -1,0 +1,90 @@
+﻿variable,label_fa,spss_measurement_level,n_missing,n_unique,observed_min,observed_max,value_labels,notes_en
+GROUP,گروه,nominal,0,2,1,2,1.0=fire; 2.0=non,Original SPSS metadata. Questionnaire reverse scoring unverified.
+NUMBER,شماره افراد,scale,0,121,1,240,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+AGE,سن افراد,ordinal,0,4,1,4,1.0=زیر 30 سال; 2.0=30-40; 3.0=40-50; 4.0=50-60,Original SPSS metadata. Questionnaire reverse scoring unverified.
+MARRIAGE,تأهل,nominal,0,2,1,2,1.0=mojarad; 2.0=motahel; 3.0=motalagh,Original SPSS metadata. Questionnaire reverse scoring unverified.
+AGEE,سن افراد,scale,0,30,22,58,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EDUCATIO,میزان تحصیلات,ordinal,0,5,1,5,1.0=دیپلم; 2.0=فوق دیپلم; 3.0=لیسانس; 4.0=ارشد; 5.0=دکتری,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A1,تحمل ابهام,scale,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A2,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A3,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A4,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A5,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A6,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A7,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A8,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A9,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A10,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A11,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A12,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+A13,تحمل ابهام,ordinal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM1,خودگردانی هیجانی,ordinal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM2,خودگردانی هیجانی,ordinal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM3,خودگردانی هیجانی,ordinal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM4,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM5,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM6,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM7,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM8,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM9,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM10,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM11,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM12,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM13,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM14,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM15,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM16,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM17,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM18,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM19,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM20,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM21,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM22,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM23,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM24,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM25,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM26,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM27,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM28,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM29,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM30,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM31,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM32,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EM33,خودگردانی هیجانی,nominal,0,5,1,5,1.0=کاملا نادرست; 2.0=نادرست; 3.0=تا حدی درست; 4.0=درست; 5.0=کاملا درست,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H1,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H2,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H3,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H4,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H5,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H6,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H7,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H8,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H9,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H10,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H11,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H12,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H13,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H14,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+H15,ذهنی سازی,nominal,0,5,1,5,1.0=بسیار مخالفم; 2.0=تا حدی مخالفم; 3.0=نظری ندارم; 4.0=تا حدودی موافقم; 5.0=بسیار موافقم,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D1,اضطراب مرگ,nominal,0,4,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D2,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D3,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D4,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D5,اضطراب مرگ,nominal,0,2,1,2,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D6,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D7,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D8,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D9,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D10,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D11,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D12,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D13,اضطراب مرگ,nominal,0,3,1,4,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D14,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+D15,اضطراب مرگ,nominal,0,3,1,5,1.0=صحیح; 2.0=غلط,Original SPSS metadata. Questionnaire reverse scoring unverified.
+TOTALA,نمره کلی تحمل ابهام,scale,0,35,19,57,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+TOTALEM,نمره کل خودگردانی,scale,0,54,71,156,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+OPTIMISM,خوشبینی,scale,0,36,22,64,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EVALUATI,ارزیابی هیجانات,scale,0,22,19,45,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+SOCIALSK,مهارت اجتماعی,scale,0,32,18,52,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+EMOTIONA,کاربرد هیجانات,scale,0,21,10,30,,Original SPSS metadata. Questionnaire reverse scoring unverified.
+MZQ,ذهنی سازی,scale,0,35,22,62,,Original SPSS metadata. Questionnaire reverse scoring unverified.
