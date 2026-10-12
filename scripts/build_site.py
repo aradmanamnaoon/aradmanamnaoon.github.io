@@ -1911,7 +1911,7 @@ def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
         actions.append(
             {
                 "url": homepage,
-                "label": "Live demo ↗",
+                "label": str(project.get("homepageLabel") or "Live demo ↗"),
                 "primary": False,
                 "external": True,
             }

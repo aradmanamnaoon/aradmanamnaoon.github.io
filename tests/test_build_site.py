@@ -27,7 +27,8 @@ class PortfolioGeneratorTests(unittest.TestCase):
                 "ai-research-assistant-platform",
             ],
         )
-        self.assertEqual(len(ids), 10)
+        self.assertEqual(len(ids), 11)
+        self.assertIn("psylex-studio", ids)
         self.assertNotIn('messy2json-qwen-0.5b-lora', ids)
 
     def test_metric_renderer_escapes_untrusted_text(self) -> None:

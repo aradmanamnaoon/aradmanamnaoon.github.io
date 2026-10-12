@@ -35,16 +35,13 @@ jobs:
       - name: Install CSS build dependencies
         run: npm ci
 
-      - name: Build stylesheet
-        run: npm run build:css
-
-      - name: Run generator tests
-        run: npm test
-
-      - name: Build site
+      - name: Build site and stylesheet
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
+
+      - name: Run generator and site tests
+        run: npm test
 
       - name: Commit and Push Changes
         run: |

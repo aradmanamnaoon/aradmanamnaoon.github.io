@@ -26,6 +26,14 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     lede = str(study.get("lede") or project.get("description") or "")
     source_url = str(project.get("url") or "")
     source_label = str(study.get("sourceLabel") or "View the source project")
+    # Some software case studies include a versioned downloadable release.
+    # Keep this link explicit rather than describing an installer as a live demo.
+    download_link = (
+        f'<a class="action" href="{esc(project["homepage"])}" '
+        f'target="_blank" rel="noopener noreferrer">{esc(project["homepageLabel"])}</a>'
+        if project.get("homepage") and project.get("homepageLabel")
+        else ""
+    )
     metrics = project.get("metrics", [])
     metric_html = "".join(
         f'<div class="metric"><strong>{esc(metric.get("value"))}</strong>'
@@ -124,7 +132,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">{esc(project.get('title') or title)}</span></nav>
   </header>
   <main id="main" class="shell">
-    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a><a class="action" href="/projects/#research-directions">Research directions</a></div></header>
+    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a>{download_link}<a class="action" href="/projects/#research-directions">Research directions</a></div></header>
     <section aria-label="Reported project metrics" class="metrics">{metric_html}</section>
     <div class="case-grid">
       <section class="case-section" data-reveal="true" aria-labelledby="challenge-heading"><p class="eyebrow">01 · Context</p><h2 id="challenge-heading">Research question</h2><p>{esc(study.get('challenge', ''))}</p></section>

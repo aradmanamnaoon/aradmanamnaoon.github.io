@@ -55,7 +55,7 @@ test('every current project receives a visually distinct semantic symbol', () =>
   });
   assert.equal(actual.length, allProjects.length);
   assert.equal(new Set(actual).size, actual.length, 'No project symbol may repeat');
-  assert.equal(allProjects.length, 10);
+  assert.equal(allProjects.length, 11);
 });
 
 test('Persian GPT uses a Persian-script token emblem instead of the old lattice', () => {

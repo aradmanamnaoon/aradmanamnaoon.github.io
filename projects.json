@@ -196,6 +196,72 @@
     "homepage_note": "Offline tests verify software behavior, not answer quality."
   },
   {
+    "id": "psylex-studio",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/PsyLex-Studio",
+    "homepage": "https://github.com/aradmanamnaoon/PsyLex-Studio/releases/tag/v0.6.5",
+    "homepageLabel": "Download Windows app ↗",
+    "title": "PsyLex Studio — English–Persian Psychology Translator",
+    "description": "A local-first Windows desktop application for psychology terminology and English-to-Iranian-Persian translation. Built with Python and PySide6, it combines an offline bilingual dictionary, user-imported DOCX terminology, optional Ollama/LM Studio or cloud LLMs, OCR, document review, secure API-key storage, and a packaged Windows installer.",
+    "tags": [
+      "Python",
+      "PySide6",
+      "Persian NLP",
+      "LLMs",
+      "OCR",
+      "RAG",
+      "Desktop AI"
+    ],
+    "type": "Applied NLP · Windows Desktop · Psychology",
+    "metrics": [
+      {
+        "value": "8",
+        "label": "OCR provider adapters"
+      },
+      {
+        "value": "4",
+        "label": "local server families scanned"
+      },
+      {
+        "value": "v0.6.5",
+        "label": "Windows installer release"
+      }
+    ],
+    "note": "Public edition includes a 16-term original starter glossary. Users import their own authorized dictionaries; the two reference books and their extracted lexicon are not redistributed. AI output and OCR require human verification.",
+    "research": {
+      "context": "Psychology translation requires careful handling of established terminology, research statistics, and contextual differences between English and Iranian Persian. PsyLex is a working desktop software project, not a claim of evaluated model superiority.",
+      "methods": [
+        "PySide6 Windows application with offline SQLite dictionary and terminology evidence",
+        "Optional local inference through running Ollama, LM Studio, llama.cpp, or vLLM servers; cloud APIs including OpenRouter",
+        "RapidOCR-based local recognition plus optional cloud OCR adapters and document review workflow",
+        "OS-backed provider credentials, first-launch model discovery, Windows PyInstaller/Inno Setup distribution"
+      ],
+      "limitations": "The public edition has only a 16-term sample glossary rather than a comprehensive psychology dictionary. Model servers and cloud services are external dependencies. Recognition and generated translations need human review. It is not a clinical assessment or decision-support system."
+    },
+    "slug": "psylex-studio",
+    "caseStudy": {
+      "title": "PsyLex Studio: a local-first psychology translation workbench",
+      "description": "PsyLex Studio is a PySide6 Windows application combining English-to-Persian psychology terminology search, optional local/cloud LLM translation, OCR, editable document workflows, and a downloadable installer.",
+      "lede": "An installable bilingual psychology desktop workbench: search local terminology, connect an optional language model, extract scanned documents, review Persian results, and export work—all with a clear boundary between the open-source app and privately imported dictionaries.",
+      "challenge": "General-purpose translation can miss domain-specific psychology vocabulary, distort statistical statements, or ignore whether a phrase is a verified term or generated text. This project focuses on a usable English-to-Iranian-Persian workflow that keeps local reference evidence distinct from LLM output and offers a practical Windows release.",
+      "approach": [
+        "Developed a Python/PySide6 desktop UI with Dictionary, Translation, Documents, Batch, History, Favorites, and Dictionary & Data workspaces.",
+        "Implemented SQLite-backed glossary search and DOCX terminology imports, keeping user-imported data local and avoiding redistribution of third-party reference books.",
+        "Connected optional local inference servers (Ollama, LM Studio, llama.cpp, vLLM) and supported online providers, with first-launch discovery and Windows Credential Manager-backed API keys.",
+        "Added RapidOCR-based recognition, optional OCR provider integrations, segment-by-segment editing, export, and review signals for psychology terminology.",
+        "Built Windows packaging using PyInstaller and Inno Setup, with Python regression tests, GUI smoke tests, and a packaged executable self-test."
+      ],
+      "results": [
+        "PsyLex Studio v0.6.5 source code and a downloadable Windows installer are published on GitHub Releases.",
+        "The available OCR catalog includes two local options and six online adapters; local model discovery supports four running server families.",
+        "The public-source edition ships a 16-term original starter glossary and can import user-authorized bilingual DOCX terminology."
+      ],
+      "limitations": "This is applied desktop software, not a validated clinical translation system or a benchmark showing improved translation accuracy. The sample glossary is intentionally limited; local models require separate runtimes, cloud services may charge, and OCR/LLM output needs expert review. Dependency redistribution licenses are handled separately from the MIT license for original code.",
+      "sourceLabel": "View source code and documentation",
+      "seoTitle": "PsyLex Studio: Psychology EN–FA Translator for Windows | Arad"
+    }
+  },
+  {
     "id": "cohortseal",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/cohortseal",
