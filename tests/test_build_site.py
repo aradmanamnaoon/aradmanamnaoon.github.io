@@ -131,7 +131,7 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         studies = [project for project in projects if project.get("caseStudy")]
         slugs = [project["slug"] for project in studies]
-        self.assertEqual(len(studies), 3)
+        self.assertEqual(len(studies), 4)
         self.assertEqual(len(slugs), len(set(slugs)))
         for project in studies:
             study = project["caseStudy"]
