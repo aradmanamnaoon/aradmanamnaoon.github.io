@@ -124,12 +124,24 @@ async function run() {
       for (const route of ['/', '/projects/', '/skills/']) await visit(route, width, height);
     }
     await visit('/');
+    assert.ok(await js('!document.querySelector(".focus-explorer")'),
+      'Redundant Explore focus toolbar must not appear on desktop');
     assert.ok(await js('(() => { document.querySelector("#hub-commands").click(); return document.querySelector(".hub-dialog").open && document.activeElement.id==="hub-command-search" })()'),
       'Desktop command palette must open and focus search');
     assert.ok(await js('(() => {const dialog=document.querySelector(".hub-dialog"); dialog.querySelector(".hub-close").click(); return !dialog.open})()'),
       'Desktop command palette must close');
     assert.ok(await js('(() => {const old=document.documentElement.dataset.themeSetting;document.querySelector("#hub-theme").click();const changed=document.documentElement.dataset.themeSetting!==old;document.querySelector("#hub-theme").click();document.querySelector("#hub-theme").click();return changed && document.documentElement.dataset.themeSetting===old;})()'),
       'Theme button must cycle through modes');
+    // Reproduce the desktop footer screenshot: the utility bar must retreat
+    // before it can cover copyright text or footer navigation.
+    await js('window.scrollTo({top:document.documentElement.scrollHeight,behavior:"instant"})');
+    await delay(350);
+    assert.ok(await js('(() => {const footer=document.querySelector("footer"),dock=document.querySelector(".interaction-rail");if(!footer||!dock)return false;const r=footer.getBoundingClientRect();return r.top<innerHeight && r.bottom>0 && dock.classList.contains("is-footer-visible") && dock.inert && getComputedStyle(dock).visibility==="hidden";})()'),
+      'Floating desktop controls must not overlap the footer');
+    await js('window.scrollTo({top:0,behavior:"instant"})');
+    await delay(150);
+    assert.ok(await js('!document.querySelector(".interaction-rail").classList.contains("is-footer-visible")'),
+      'Desktop controls should reappear away from the footer');
     await js('window.scrollTo(0,650)');
     await delay(250);
     assert.ok(await js('(() => {const a=document.querySelector("#cv-chat-floating"),b=document.querySelector(".hub-back-top"); if(getComputedStyle(b).visibility!=="visible")return true;const x=a.getBoundingClientRect(),y=b.getBoundingClientRect();return x.right<y.left || y.right<x.left || x.bottom<y.top || y.bottom<x.top;})()'),
