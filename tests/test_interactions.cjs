@@ -202,3 +202,13 @@ test('desktop CV assistant supports keyboard control and clear Back-to-top place
   assert.ok(css.includes('body:has(#cv-chat-floating) .hub-back-top'));
   assert.ok(css.includes('body:has(#cv-chat-window[aria-hidden="false"]) .hub-back-top'));
 });
+
+test('desktop navigation and redundant focus block are corrected', () => {
+ const skills = read('skills/index.html');
+ const extras = read('assets/js/page-extras.js');
+ const css = read('assets/css/page-extras.css');
+ assert.ok(skills.includes('href="/skills/" aria-current="page"'));
+ assert.ok(skills.includes('href="/projects/"'));
+ assert.ok(!extras.includes('focus-explorer'));
+ assert.ok(!css.includes('.focus-explorer'));
+});

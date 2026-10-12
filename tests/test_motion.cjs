@@ -114,3 +114,11 @@ test('same-page section links use eased scrolling with native reduced-motion fal
   assert.ok(source.includes("window.scrollTo({ top: destination, behavior: 'instant' })"));
   assert.ok(source.includes('document.addEventListener(\'wheel\', stop'));
 });
+
+test('script-driven anchor scrolling disables competing CSS smooth scrolling', () => {
+  const style = fs.readFileSync(path.join(__dirname, '..', 'assets/css/motion.css'), 'utf8');
+  assert.ok(style.includes('html.motion-manual-scroll'));
+  assert.match(style, /scroll-behavior: auto !important/);
+  assert.ok(source.includes("root.classList.add('motion-manual-scroll')"));
+  assert.ok(source.includes("root.classList.remove('motion-manual-scroll')"));
+});

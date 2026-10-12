@@ -251,3 +251,8 @@ a.surface-card[data-platform] .card-title .brand-hf { width:auto; height:auto; }
 @media(hover:hover) and (pointer:fine){.project-symbol:hover{border-color:rgba(177,221,255,.65);}}
 @media(max-width:700px){.archive .project .archive-sigil.project-symbol{width:68px;height:68px;top:1rem;right:1rem;}}
 @media(prefers-reduced-motion:reduce){.archive .project .archive-sigil.project-symbol{transform:none!important;}}
+
+/* JavaScript owns the animation while scrolling same-page anchors. */
+html.motion-manual-scroll {
+  scroll-behavior: auto !important;
+}

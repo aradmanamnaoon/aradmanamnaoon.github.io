@@ -280,7 +280,11 @@
     // Explicitly animate same-page anchors; browser defaults may jump instantly
     // when a section changes its layout during a scroll-driven story.
     let frame = 0;
-    const stop = () => { if (frame) cancelAnimationFrame(frame); frame = 0; };
+    const stop = () => {
+      if (frame) cancelAnimationFrame(frame);
+      frame = 0;
+      root.classList.remove('motion-manual-scroll');
+    };
     document.addEventListener('click', event => {
       if (!enabled() || event.defaultPrevented || event.button !== 0 ||
           event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -304,6 +308,8 @@
       const distance = destination - start;
       history.pushState(null, '', url.hash);
       if (Math.abs(distance) < 2) return;
+      // The requestAnimationFrame easing must not compete with CSS smooth scroll.
+      root.classList.add('motion-manual-scroll');
       const duration = Math.min(1250, Math.max(500, 440 + Math.abs(distance) * .22));
       let started = null;
       function step(now) {
@@ -313,7 +319,10 @@
         const ease = 1 - Math.pow(1 - t, 3);
         window.scrollTo({ top: start + distance * ease, behavior: 'instant' });
         if (t < 1) frame = requestAnimationFrame(step);
-        else frame = 0;
+        else {
+          frame = 0;
+          root.classList.remove('motion-manual-scroll');
+        }
       }
       frame = requestAnimationFrame(step);
     });

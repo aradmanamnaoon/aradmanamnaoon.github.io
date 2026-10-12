@@ -140,7 +140,7 @@
   }
   search.addEventListener('input', () => { resultIndex=0; renderCommands(); });
   search.addEventListener('keydown', e => {
-    if (e.key === 'ArrowDown') { e.preventDefault(); resultIndex = Math.min(matches.length-1, resultIndex+1); selectCommand(); }
+    if (e.key === 'ArrowDown') { e.preventDefault(); resultIndex = Math.min(Math.max(0, matches.length-1), resultIndex+1); selectCommand(); }
     if (e.key === 'ArrowUp') { e.preventDefault(); resultIndex = Math.max(0, resultIndex-1); selectCommand(); }
     if (e.key === 'Enter') { e.preventDefault(); if (matches.length) activate(resultIndex); else location.assign('/search/?q='+encodeURIComponent(search.value.trim())); }
   });
@@ -210,9 +210,27 @@
     back.style.setProperty('--progress',String(value));
     back.classList.toggle('is-visible',scrollY > Math.max(450,innerHeight*.6));
   };
-  const queue = () => { if (!queued) { queued=true; requestAnimationFrame(tick); } };
+  // Do not cover footer text or links with the floating desktop dock.
+  // Keep the mobile bottom dock available, including near the footer.
+  const footer = document.querySelector('footer');
+  const desktopDock = matchMedia('(min-width: 761px)');
+  const positionDock = () => {
+    const blocked = Boolean(desktopDock.matches && footer &&
+      footer.getBoundingClientRect().top < innerHeight &&
+      footer.getBoundingClientRect().bottom > 0);
+    rail.classList.toggle('is-footer-visible', blocked);
+    rail.inert = blocked;
+  };
+  const queue = () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(() => { tick(); positionDock(); });
+    }
+  };
   addEventListener('scroll',queue,{passive:true});
-  addEventListener('resize',queue,{passive:true}); queue();
+  addEventListener('resize',queue,{passive:true});
+  desktopDock.addEventListener?.('change', positionDock);
+  positionDock(); queue();
 
   // Use the browser's native cursor, without any extra circle or follower.
   const targets = document.querySelectorAll('.case-section, .utility-directory, .utility-result, .research-direction, .contact-form, img:not([loading])');

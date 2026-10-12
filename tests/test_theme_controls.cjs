@@ -155,3 +155,13 @@ test('all content routes and generators have refreshed interaction assets',()=>{
     assert.match(read(route),/interaction-hub\.css\?v=20261011-dotlight-v6/,route);
   }
 });
+
+test('floating desktop controls retreat instead of covering footer links', () => {
+  const css = read('assets/css/interaction-hub.css');
+  assert.ok(css.includes('.interaction-rail.is-footer-visible'));
+  assert.ok(css.includes('pointer-events: none'));
+  assert.ok(source.includes("document.querySelector('footer')"));
+  assert.ok(source.includes('footer.getBoundingClientRect().top < innerHeight'));
+  assert.ok(source.includes('rail.inert = blocked'));
+  assert.ok(source.includes("desktopDock.addEventListener?.('change', positionDock)"));
+});

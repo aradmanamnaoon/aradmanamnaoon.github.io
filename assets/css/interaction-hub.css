@@ -355,3 +355,20 @@ html[data-theme="light"] .hub-help-links a {background:#e8f2fb;color:#1d517e;bor
 @media (min-width:761px) and (hover:hover) and (pointer:fine) {
   .hub-back-top { left:18px; right:auto; bottom:84px; }
 }
+
+/* Desktop footer protection: prevent controls covering copyright/navigation.
+   The mobile bottom dock stays visible at every scroll position. */
+@media (min-width: 761px) {
+  .interaction-rail {
+    transition: opacity .2s ease, visibility .2s ease, transform .2s ease;
+  }
+  .interaction-rail.is-footer-visible {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(10px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .interaction-rail.is-footer-visible { transition: none; }
+}
