@@ -36,6 +36,12 @@
     "terms": "LangGraph LangChain LangSmith ChromaDB FastAPI Docker"
   },
   {
+    "title": "PsyLex Studio — English–Persian Psychology Translator",
+    "url": "/projects/psylex-studio/",
+    "summary": "PsyLex Studio is a PySide6 Windows application combining English-to-Persian psychology terminology search, optional local/cloud LLM translation, OCR, editable document workflows, and a downloadable installer.",
+    "terms": "Python PySide6 Persian NLP LLMs OCR RAG Desktop AI"
+  },
+  {
     "title": "CohortSeal",
     "url": "/projects/#cohortseal",
     "summary": "Patient-level split audits catch patient and exact-duplicate leakage before model evaluation. CohortSeal creates reproducible group splits and stores findings in SQLite, with CLI and FastAPI workflows plus MONAI, DICOM, and Hugging Face adapters.",
