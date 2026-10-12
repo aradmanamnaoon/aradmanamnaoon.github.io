@@ -42,10 +42,10 @@
     "terms": "Python PySide6 Persian NLP LLMs OCR RAG Desktop AI"
   },
   {
-    "title": "Psychology Research Atlas — Bilingual Statistical Audit",
+    "title": "From Messy Data to Meaningful Insight — Psychology Research Atlas",
     "url": "/projects/psychology-data-audit/",
-    "summary": "Explore a complete English/Persian statistical audit of psychological questionnaire data with interactive charts, integrity checks, methods, tables and public research downloads.",
-    "terms": "Statistics Psychology R Python Power BI Persian Data Quality"
+    "summary": "An interactive bilingual case study demonstrating data cleaning, data-integrity investigation, and responsible statistical storytelling for psychology questionnaire data.",
+    "terms": "Data Science Statistical Analysis Data Quality Psychology R Persian"
   },
   {
     "title": "CohortSeal",
