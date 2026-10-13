@@ -1871,6 +1871,10 @@ def load_projects(root: Path) -> list[dict[str, Any]]:
             for key in ("title", "description", "lede", "challenge", "limitations")
         ):
             raise SiteError(f"Project {item['id']} caseStudy needs complete page copy")
+    categories = {"models", "software", "analysis", "datasets"}
+    for item in data:
+        if item.get("category") not in categories:
+            raise SiteError(f"Project {item['id']} needs a valid category")
     featured = [item for item in data if item.get("homepage_featured")]
     if len(featured) > MAX_PROJECTS_HOMEPAGE:
         raise SiteError(
@@ -2035,6 +2039,7 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
         payload.append(
             {
                 "id": project["id"],
+                "category": project["category"],
                 "title": project["title"],
                 "type": project.get("type", project["source"]),
                 "description": project.get("description") or "",
@@ -2324,11 +2329,13 @@ def render_paginated_projects(projects: list[dict[str, Any]]) -> str:
       const query = String(filters.query || '').toLowerCase().trim();
       const source = filters.source || 'all';
       const topic = filters.topic || 'all';
+      const category = filters.category || 'all';
       visibleProjects = projects.filter(function(project) {
         const text = [project.title, project.type, project.description, project.note]
           .concat(project.tags || []).join(' ').toLowerCase();
         if (query && !text.includes(query)) return false;
         if (!matchesTopic(project, topic)) return false;
+        if (category !== 'all' && project.category !== category) return false;
         if (source !== 'all') {
           const links = (project.actions || []).map(function(action) { return action.url || ''; }).join(' ').toLowerCase();
           if (source === 'github' && !links.includes('github.com/')) return false;
