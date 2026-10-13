@@ -102,7 +102,7 @@
     "terms": "Data Science Statistics Research Data Data Quality"
   },
   {
-    "title": "0 CSV Nulls. 50 Recorded −9 Codes. — Psoriasis & Wellbeing Study",
+    "title": "20 Records. 50 Values Coded −9. — Psoriasis & Wellbeing Study",
     "url": "/projects/psoriasis-wellbeing-audit/",
     "summary": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
     "terms": "Data Science Statistics Research Data Data Quality"
