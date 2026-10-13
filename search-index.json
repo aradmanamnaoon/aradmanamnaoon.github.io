@@ -90,19 +90,19 @@
     "terms": "NLLB-200 Transformers Machine Translation Persian Psychology"
   },
   {
-    "title": "13,264 Rows. 434 Worker IDs. — Emotion & Appraisal Video Study",
+    "title": "Emotion & Appraisal Repeated-Measures Analysis",
     "url": "/projects/emotion-appraisal-video-audit/",
     "summary": "13,264 recorded observations map to 434 worker IDs and 3,316 HITs. Explore why row counts, quality criteria, and worker-level inference must be distinguished.",
     "terms": "Data Science Statistics Research Data Data Quality"
   },
   {
-    "title": "0 CSV Nulls. 395,994 Negative Codes. — Digital Survey Response Integrity",
+    "title": "Digital Survey Response Quality Analysis",
     "url": "/projects/survey-response-integrity/",
     "summary": "The survey export contains 0 literal CSV-null cells but 395,994 negative-coded numeric entries and 14,793 blank-string cells. Inspect the recorded codes and their limits.",
     "terms": "Data Science Statistics Research Data Data Quality"
   },
   {
-    "title": "20 Records. 50 Values Coded −9. — Psoriasis & Wellbeing Study",
+    "title": "Psoriasis & Wellbeing Survey Analysis",
     "url": "/projects/psoriasis-wellbeing-audit/",
     "summary": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
     "terms": "Data Science Statistics Research Data Data Quality"
