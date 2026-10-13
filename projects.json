@@ -505,7 +505,7 @@
     "id": "psoriasis-wellbeing-audit",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io",
-    "title": "0 CSV Nulls. 50 Recorded −9 Codes. — Psoriasis & Wellbeing Study",
+    "title": "20 Records. 50 Values Coded −9. — Psoriasis & Wellbeing Study",
     "description": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
     "type": "Data science · Psychology · Data integrity",
     "tags": [
@@ -528,7 +528,7 @@
         "Age spans 12 to 85 and a raw HA03 item mean differs modestly across an explicitly chosen age-40 split."
       ],
       "limitations": "Published as Schuster et al. (2021), PsychArchives CC BY 4.0, DOI 10.23668/psycharchives.4451. Only aggregate derivatives are included in this local review ZIP.",
-      "seoTitle": "0 CSV Nulls. 50 Recorded −9 Codes. | Psoriasis Survey Audit",
+      "seoTitle": "20 Records. 50 Values Coded −9. | Psoriasis & Wellbeing Audit",
       "approach": [
         "Parsed semicolon-separated records and decimal commas; checked 722 rows and 36 fields against the source format.",
         "Counted literal null cells separately from recorded -9 values, leaving the original responses unchanged.",

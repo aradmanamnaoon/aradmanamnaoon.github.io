@@ -127,3 +127,37 @@ html.motion-ready .reveal-stagger.visible>*{opacity:1;transform:none}
 @media(max-width:740px){.hero h1{font-size:clamp(3rem,10.3vw,4.1rem)}.hero-lede{font-size:15px}.hero-ring-core strong{font-size:clamp(2.45rem,10.5vw,3.9rem)!important}.trace-head{align-items:flex-start;flex-wrap:wrap}.trace-grid{grid-template-columns:1fr;gap:0}.trace-card{border-right:0;border-bottom:1px solid var(--line);padding:17px 8px 19px 0}.trace-card:last-child{border-bottom:0}.trace-card:after{content:'↓';right:14px;top:auto;bottom:5px}.trace-card .trace-number{font-size:clamp(3.3rem,12vw,4.2rem);margin:4px 0}.trace-card p{max-width:100%}.audit-trail{padding:17px 19px}.impact-proof{padding:18px;margin-bottom:30px}.impact-grid{grid-template-columns:1fr}.impact-column{padding:16px 20px}.impact-column strong{font-size:clamp(3.1rem,12vw,4.5rem)}.lab-reading{padding:17px 20px}}
 @media(max-width:390px){.hero h1{font-size:clamp(2.8rem,10vw,3.5rem)}.trace-card .trace-number{font-size:3.1rem}}
 @media(prefers-reduced-motion:reduce){.audit-trail,.trace-card,.impact-proof,.impact-column,.lab-reading{animation:none!important;transition:none!important}}
+
+
+/* Post-launch fixes: prevent clipped interaction controls and overlarge proof numbers. */
+.switches{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;padding:27px 30px 8px}
+.switch{width:100%;min-height:56px;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35;padding:12px 18px;white-space:normal}
+.lab-content{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:28px;align-items:start}
+.lab-main,.lab-bars,.bar-row,.bar-title{min-width:0}
+.difference{font-size:clamp(3.4rem,8vw,7.2rem);line-height:.96;letter-spacing:-.075em;white-space:normal;overflow-wrap:anywhere;max-width:100%}
+.difference-caption{min-height:0;max-width:22ch}
+.bar-title span{min-width:0;max-width:calc(100% - 72px);overflow-wrap:anywhere}
+.hero-metric-rail{position:absolute;left:6%;right:6%;bottom:5%;display:flex;flex-wrap:wrap;justify-content:center;gap:10px;z-index:3}
+.hero-metric-rail span{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(20,24,31,.74);backdrop-filter:blur(6px);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--sky)}
+@media(max-width:900px){.lab-content{grid-template-columns:1fr;padding:20px 22px 28px}.lab-main{border-right:0;border-bottom:1px solid var(--line);padding:0 0 15px}.lab-bars{padding-top:10px}}
+@media(max-width:740px){.switches{padding:18px;grid-template-columns:1fr}.switch{min-height:52px;font-size:11px}.difference{font-size:clamp(2.9rem,13vw,4.7rem);margin:6px 0 4px}.lab-reading{min-height:0}.hero-metric-rail{position:static;margin-top:16px;justify-content:flex-start}.hero-metric-rail span{font-size:9px;min-height:32px}}
+
+
+/* Psoriasis page identity: clinical record / coded-value check */
+body.psoriasis-page{--accent:#91b6ff;--sky:#e4edff}
+body.psoriasis-page .discovery-wrap{background:radial-gradient(circle at top left,rgba(145,182,255,.06),transparent 32%),linear-gradient(145deg,rgba(214,186,136,.03),transparent 40%)}
+body.psoriasis-page .hero-visual{max-width:520px;border:1px solid rgba(145,182,255,.12);border-radius:28px;background:linear-gradient(180deg,rgba(145,182,255,.05),rgba(20,24,31,.1)),radial-gradient(circle at 15% 15%,rgba(214,186,136,.06),transparent 24%);padding:18px 18px 22px;overflow:hidden}
+body.psoriasis-page .hero-visual .orbital{opacity:.5}
+body.psoriasis-page .hero-visual .hero-ring-core{width:min(66%,300px);min-height:225px;aspect-ratio:auto;border-radius:24px;background:linear-gradient(180deg,rgba(88,112,163,.16),rgba(20,24,31,.82) 82%);padding:18px 16px}
+body.psoriasis-page .hero-visual .hero-ring-core strong{font-size:clamp(3rem,5vw,4.7rem)!important}
+body.psoriasis-page .record-grid{position:absolute;left:8%;right:8%;bottom:14%;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;z-index:2}
+body.psoriasis-page .record-chip{display:block;height:10px;border-radius:999px;background:rgba(237,237,237,.12)}
+body.psoriasis-page .record-chip.affected{background:linear-gradient(90deg,rgba(145,182,255,.95),rgba(214,186,136,.65));box-shadow:0 0 12px rgba(145,182,255,.2)}
+body.psoriasis-page .hero-metric-rail span:nth-child(1){border-color:rgba(145,182,255,.42);color:var(--accent)}
+body.psoriasis-page .hero-metric-rail span:nth-child(2){border-color:rgba(214,186,136,.28);color:#d8c08e}
+@media(max-width:740px){body.psoriasis-page .hero-visual{max-width:100%;padding:14px} body.psoriasis-page .hero-visual .hero-ring-core{width:100%;min-height:180px} body.psoriasis-page .record-grid{position:static;order:4;margin-top:14px;left:auto;right:auto;bottom:auto}}
+
+/* The diagram annotations are replaced by the project-specific evidence rail. */
+body.psoriasis-page .hero-visual .hero-annotation{display:none}
+body.psoriasis-page .record-grid{grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;bottom:23%}
+@media(max-width:740px){body.psoriasis-page .record-grid{grid-template-columns:repeat(10,minmax(0,1fr));margin:18px 0 4px}}
