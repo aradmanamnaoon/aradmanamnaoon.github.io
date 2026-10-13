@@ -62,7 +62,8 @@
       "seoTitle": "Persian GPT From Scratch: 110M Model | Arad"
     },
     "homepage_description": "A 110.4M-parameter Persian Transformer trained from scratch, with a custom tokenizer, baselines, and held-out evaluation.",
-    "homepage_note": "Perplexity evaluates language modeling, not factual accuracy."
+    "homepage_note": "Perplexity evaluates language modeling, not factual accuracy.",
+    "category": "models"
   },
   {
     "id": "medical-image-segmentation",
@@ -127,7 +128,8 @@
       "seoTitle": "3D Cardiac MRI Segmentation with MONAI | Arad"
     },
     "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI, from volumetric preprocessing to 3D U-Net training and benchmark evaluation.",
-    "homepage_note": "Benchmark validation only; not clinically validated."
+    "homepage_note": "Benchmark validation only; not clinically validated.",
+    "category": "models"
   },
   {
     "id": "ai-research-assistant-platform",
@@ -193,7 +195,8 @@
       "seoTitle": "AI Research Assistant with LangGraph & RAG | Arad"
     },
     "homepage_description": "LangGraph agents for retrieval, cited research synthesis, and tool use, with FastAPI endpoints and reproducible offline tests.",
-    "homepage_note": "Offline tests verify software behavior, not answer quality."
+    "homepage_note": "Offline tests verify software behavior, not answer quality.",
+    "category": "software"
   },
   {
     "id": "psylex-studio",
@@ -259,7 +262,8 @@
       "limitations": "This is applied desktop software, not a validated clinical translation system or a benchmark showing improved translation accuracy. The sample glossary is intentionally limited; local models require separate runtimes, cloud services may charge, and OCR/LLM output needs expert review. Dependency redistribution licenses are handled separately from the MIT license for original code.",
       "sourceLabel": "View source code and documentation",
       "seoTitle": "PsyLex Studio: Psychology EN–FA Translator for Windows | Arad"
-    }
+    },
+    "category": "software"
   },
   {
     "id": "psychology-research-atlas",
@@ -322,7 +326,8 @@
       ],
       "limitations": "Direct item sums are diagnostic and not official validated scores; study design, independence, and scoring keys remain unverified. Complete reports and an untested R source script are downloadable; individual raw responses are withheld.",
       "sourceLabel": "Explore source files"
-    }
+    },
+    "category": "analysis"
   },
   {
     "id": "cohortseal",
@@ -338,7 +343,8 @@
       "DICOM",
       "Hugging Face",
       "Medical Imaging"
-    ]
+    ],
+    "category": "software"
   },
   {
     "id": "holdout-ledger",
@@ -353,7 +359,8 @@
       "MinHash",
       "Dataset Evaluation",
       "Docker"
-    ]
+    ],
+    "category": "software"
   },
   {
     "id": "agent-guardrails",
@@ -370,7 +377,8 @@
       "SKILL.md",
       "Open Source",
       "Guardrails"
-    ]
+    ],
+    "category": "software"
   },
   {
     "id": "jibay2-medical-v2",
@@ -384,7 +392,8 @@
       "TRL",
       "PEFT",
       "Clinical NLP"
-    ]
+    ],
+    "category": "models"
   },
   {
     "id": "messy2json-qwen-0.5b",
@@ -398,7 +407,8 @@
       "PEFT",
       "4-bit NF4",
       "Structured Output"
-    ]
+    ],
+    "category": "models"
   },
   {
     "id": "persian-wikipedia-cleaned-for-persian-NLP",
@@ -413,7 +423,8 @@
       "library:datasets",
       "library:pandas",
       "library:polars"
-    ]
+    ],
+    "category": "datasets"
   },
   {
     "id": "nllb-en-fa-psych-translation",
@@ -427,7 +438,8 @@
       "Machine Translation",
       "Persian",
       "Psychology"
-    ]
+    ],
+    "category": "models"
   },
   {
     "id": "emotion-appraisal-video-audit",
@@ -463,7 +475,8 @@
         "Compared worker-aggregated associations, a worker-intercept mixed model, and worker-cluster-robust estimates while disclosing singular-fit limitations."
       ]
     },
-    "customPage": true
+    "customPage": true,
+    "category": "analysis"
   },
   {
     "id": "survey-response-integrity",
@@ -499,7 +512,8 @@
         "Marked coded values and device labels as unresolved pending codebook and sampling-weight verification; reported exploratory group comparisons only."
       ]
     },
-    "customPage": true
+    "customPage": true,
+    "category": "analysis"
   },
   {
     "id": "psoriasis-wellbeing-audit",
@@ -535,6 +549,7 @@
         "Computed explicitly qualified -9-unavailable sensitivity results and raw-direction reliability diagnostics without claiming validated clinical scores."
       ]
     },
-    "customPage": true
+    "customPage": true,
+    "category": "analysis"
   }
 ]
