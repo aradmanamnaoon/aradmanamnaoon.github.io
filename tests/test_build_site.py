@@ -27,7 +27,17 @@ class PortfolioGeneratorTests(unittest.TestCase):
                 "ai-research-assistant-platform",
             ],
         )
-        self.assertEqual(len(ids), 12)
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertTrue({
+            "persian-lm-from-scratch",
+            "medical-image-segmentation",
+            "ai-research-assistant-platform",
+            "psychology-research-atlas",
+            "psylex-studio",
+            "emotion-appraisal-video-audit",
+            "survey-response-integrity",
+            "psoriasis-wellbeing-audit",
+        }.issubset(set(ids)))
         self.assertIn('psychology-research-atlas', ids)
         self.assertIn("psylex-studio", ids)
         self.assertNotIn('messy2json-qwen-0.5b-lora', ids)
@@ -132,7 +142,12 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         studies = [project for project in projects if project.get("caseStudy")]
         slugs = [project["slug"] for project in studies]
-        self.assertEqual(len(studies), 5)
+        expected_custom_slugs = {
+            "emotion-appraisal-video-audit",
+            "survey-response-integrity",
+            "psoriasis-wellbeing-audit",
+        }
+        self.assertTrue(expected_custom_slugs.issubset(set(slugs)))
         self.assertEqual(len(slugs), len(set(slugs)))
         self.assertTrue((ROOT / "projects" / "psychology-data-audit" / "index.html").is_file())
         for project in studies:
@@ -142,6 +157,57 @@ class PortfolioGeneratorTests(unittest.TestCase):
             self.assertGreaterEqual(len(study["approach"]), 3)
             self.assertGreaterEqual(len(study["results"]), 2)
             self.assertGreaterEqual(len(study["limitations"]), 50)
+
+    def test_approved_custom_pages_survive_site_generation(self) -> None:
+        from project_pages import generate
+
+        projects = build_site.load_projects(ROOT)
+        slugs = {
+            "emotion-appraisal-video-audit",
+            "survey-response-integrity",
+            "psoriasis-wellbeing-audit",
+        }
+        bespoke = [project for project in projects if project.get("slug") in slugs]
+        self.assertEqual({project["slug"] for project in bespoke}, slugs)
+        self.assertTrue(all(project.get("customPage") is True for project in bespoke))
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            for project in bespoke:
+                target = root / "projects" / project["slug"] / "index.html"
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_text("ORIGINAL BESPOKE PROJECT PAGE", encoding="utf-8")
+
+            routes = generate(root, bespoke, build_site.SITE_URL, False, build_site.atomic_write)
+            self.assertEqual(set(routes), {f"/projects/{slug}/" for slug in slugs})
+            for slug in slugs:
+                page = root / "projects" / slug / "index.html"
+                self.assertEqual(page.read_text(encoding="utf-8"), "ORIGINAL BESPOKE PROJECT PAGE")
+
+    def test_approved_custom_pages_and_public_downloads_exist(self) -> None:
+        slugs = (
+            "emotion-appraisal-video-audit",
+            "survey-response-integrity",
+            "psoriasis-wellbeing-audit",
+        )
+        required_downloads = (
+            "report-en.pdf", "report-en.docx", "aggregate-results.csv",
+            "variable-dictionary.csv", "analysis.py", "requirements.txt",
+            "REPRODUCIBILITY.md", "references.bib",
+        )
+        for slug in slugs:
+            base = ROOT / "projects" / slug
+            for path in (
+                base / "index.html",
+                base / "assets" / "insights.css",
+                base / "assets" / "insights.js",
+                base / "assets" / "project-data.js",
+                *(base / "downloads" / name for name in required_downloads),
+            ):
+                with self.subTest(slug=slug, file=str(path.relative_to(ROOT))):
+                    self.assertTrue(path.is_file(), f"Required project asset missing: {path}")
+            for filename in ("raw.csv", "raw.sav", "full_data.csv", "datafile.csv"):
+                self.assertFalse((base / "downloads" / filename).exists())
 
     def test_project_detail_template_contains_unique_metadata_and_breadcrumbs(self) -> None:
         from project_pages import render
