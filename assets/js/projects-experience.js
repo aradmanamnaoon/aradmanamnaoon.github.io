@@ -13,9 +13,10 @@
   const count = document.getElementById('archive-count');
   const chapter = document.getElementById('archive-chapter');
   const topicButtons = [...explorer.querySelectorAll('[data-archive-topic]')];
+  const categoryButtons = [...explorer.querySelectorAll('[data-archive-category]')];
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const state = { query: '', source: 'all', topic: 'all' };
+  const state = { query: '', source: 'all', topic: 'all', category: 'all' };
   let debounce = 0;
   let paintQueued = false;
   let copyMessage = '';
@@ -127,6 +128,9 @@
       const selected = button.dataset.archiveTopic === state.topic;
       button.setAttribute('aria-pressed', String(selected));
     });
+    categoryButtons.forEach(button => {
+      button.setAttribute('aria-pressed', String(button.dataset.archiveCategory === state.category));
+    });
     updateCount();
   }
 
@@ -156,6 +160,7 @@
         button.setAttribute('aria-label', 'Filter projects by ' + tag.textContent);
         button.addEventListener('click', () => {
           state.topic = 'all';
+          state.category = 'all';
           state.source = 'all';
           source.value = 'all';
           search.value = button.textContent.trim();
@@ -195,6 +200,10 @@
     applyFilters();
   });
   source.addEventListener('change', applyFilters);
+  categoryButtons.forEach(button => button.addEventListener('click', () => {
+    state.category = button.dataset.archiveCategory;
+    applyFilters();
+  }));
   topicButtons.forEach(button => button.addEventListener('click', () => {
     state.topic = button.dataset.archiveTopic;
     applyFilters();
@@ -204,6 +213,7 @@
     search.value = '';
     source.value = 'all';
     state.topic = 'all';
+    state.category = 'all';
     applyFilters();
     search.focus({ preventScroll: true });
   });
@@ -254,7 +264,9 @@
     state.query = '';
     state.source = 'all';
     state.topic = 'all';
+    state.category = 'all';
     topicButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.archiveTopic === 'all')));
+    categoryButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.archiveCategory === 'all')));
     updateCount();
   });
   reduced.addEventListener?.('change', () => {
