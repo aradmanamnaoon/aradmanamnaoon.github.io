@@ -209,6 +209,23 @@ class PortfolioGeneratorTests(unittest.TestCase):
             for filename in ("raw.csv", "raw.sav", "full_data.csv", "datafile.csv"):
                 self.assertFalse((base / "downloads" / filename).exists())
 
+    def test_published_custom_page_metadata_is_search_indexable(self) -> None:
+        slugs = (
+            "emotion-appraisal-video-audit",
+            "survey-response-integrity",
+            "psoriasis-wellbeing-audit",
+        )
+        for slug in slugs:
+            source = (ROOT / "projects" / slug / "index.html").read_text(encoding="utf-8")
+            url = f"https://aradmanamnaoon.github.io/projects/{slug}/"
+            with self.subTest(slug=slug):
+                self.assertIn('lang="en"', source)
+                self.assertIn('name="robots"', source)
+                self.assertNotIn("noindex,nofollow", source)
+                self.assertIn(f'rel="canonical" href="{url}"', source)
+                self.assertIn(f'property="og:url" content="{url}"', source)
+                self.assertIn("og:image", source)
+
     def test_project_detail_template_contains_unique_metadata_and_breadcrumbs(self) -> None:
         from project_pages import render
 
