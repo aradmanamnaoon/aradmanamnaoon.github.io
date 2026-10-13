@@ -1,0 +1,37 @@
+section,measure,value,note
+audit,Records,722,Dataset-level aggregate
+audit,Variables,36,Dataset-level aggregate
+audit,Literal missing (%),0.0,Dataset-level aggregate
+audit,Whole-row duplicates,0,Dataset-level aggregate
+integrity,minus9_cells,50,Dataset-level aggregate; no personal records
+integrity,minus9_rows,20,Dataset-level aggregate; no personal records
+integrity,ha03_minus9_cells,37,Dataset-level aggregate; no personal records
+integrity,ha03_minus9_rows,11,Dataset-level aggregate; no personal records
+integrity,age_min,12,Dataset-level aggregate; no personal records
+integrity,age_max,85,Dataset-level aggregate; no personal records
+correlation,Age (AL06_01) versus HA03 unkeyed item mean — n,722,Exploratory; consult report
+correlation,Age (AL06_01) versus HA03 unkeyed item mean — rho,-0.1554,Exploratory; consult report
+correlation,Age (AL06_01) versus HA03 unkeyed item mean — p,2.743410610084762e-05,Exploratory; consult report
+correlation,Age (AL06_01) versus HA04 — n,720,Exploratory; consult report
+correlation,Age (AL06_01) versus HA04 — rho,-0.0199,Exploratory; consult report
+correlation,Age (AL06_01) versus HA04 — p,0.594142165662099,Exploratory; consult report
+correlation,AL09_01 versus HA04 — n,720,Exploratory; consult report
+correlation,AL09_01 versus HA04 — rho,0.1502,Exploratory; consult report
+correlation,AL09_01 versus HA04 — p,5.2132331115828625e-05,Exploratory; consult report
+correlation,HA02_01 versus HA03 unkeyed item mean — n,721,Exploratory; consult report
+correlation,HA02_01 versus HA03 unkeyed item mean — rho,0.0625,Exploratory; consult report
+correlation,HA02_01 versus HA03 unkeyed item mean — p,0.09333066913217603,Exploratory; consult report
+statistical,ha03_raw_item_alpha_diagnostic : alpha,0.2481,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_item_alpha_diagnostic : n,711,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_item_alpha_diagnostic : items,12,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_item_omega_diagnostic : omega_one_factor_approx,0.1812,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_item_omega_diagnostic : n,711,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_composite : n,711,"Exploratory, model/scoring assumptions in report"
+statistical,ha03_raw_composite : mean,2.89,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : n1,268,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : n2,454,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : mean1,2.968,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : mean2,2.848,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : cohen_d,0.334,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : p,1.400592316880116e-05,"Exploratory, model/scoring assumptions in report"
+statistical,age_group_raw_HA03 : exploratory,True,"Exploratory, model/scoring assumptions in report"

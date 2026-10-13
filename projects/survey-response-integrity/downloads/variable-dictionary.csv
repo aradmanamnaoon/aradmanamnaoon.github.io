@@ -1,0 +1,290 @@
+variable,type,description,coded_values,null_count,blank_text_count,negative_values,non_missing_n
+case_num,"identifier (private, excluded from public exports)",case num,not supplied; original variable name retained,0,0,,4771
+weight_raking,numeric,weight raking,not supplied; original variable name retained,0,0,,4771
+status,integer/coded,status,6; 5; 3; 4,0,0,,4771
+device_type,integer/coded,device type,0; 1; 2,0,0,,4771
+device_type_dich,text/category,device type dich,0; 1;  ,0,127,,4771
+OS_Apple,integer/coded,OS Apple,0; 1,0,0,,4771
+expcell,integer/coded,expcell,1; 5; 2; 3; 4,0,0,,4771
+date_time,text/category,date time,not supplied; original variable name retained,0,0,,4771
+O1,integer/coded,Coded question; official wording not included in upload,1; 2; -5; 3; 4; -1; 5; 6,0,0,"-5,-3,-1",4771
+O1_R,integer/coded,Coded question; official wording not included in upload,6; 5; -5; 4; 3; -1; 2; 1,0,0,"-5,-3,-1",4771
+O2a,integer/coded,Coded question; official wording not included in upload,1; 0; -5; -3; -1,0,0,"-5,-3,-1",4771
+O2b,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -1,0,0,"-5,-3,-1",4771
+O2c,integer/coded,Coded question; official wording not included in upload,1; 0; -5; -3; -1,0,0,"-5,-3,-1",4771
+O2d,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -1,0,0,"-5,-3,-1",4771
+O2e,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -1,0,0,"-5,-3,-1",4771
+O3,integer/coded,Coded question; official wording not included in upload,1; -5; 2; -3; -1,0,0,"-5,-3,-1",4771
+O3_R,integer/coded,Coded question; official wording not included in upload,1; -5; 0; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3a,integer/coded,SIdevice3a,3; 2; 1; -5; -3; 4; -1,0,0,"-5,-3,-1",4771
+SIdevice3b,integer/coded,SIdevice3b,2; 3; 1; 4; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3c,integer/coded,SIdevice3c,3; 2; 1; -5; -3; 4; -1,0,0,"-5,-3,-1",4771
+SIdevice3d,integer/coded,SIdevice3d,3; 2; 1; 4; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3e,integer/coded,SIdevice3e,1; 4; 3; 2; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3f,integer/coded,SIdevice3f,1; 3; 4; 2; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3g,integer/coded,SIdevice3g,4; 2; 3; 1; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3h,integer/coded,SIdevice3h,3; 2; 1; 4; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3i,integer/coded,SIdevice3i,3; 1; 4; 2; -5; -3; -1,0,0,"-5,-3,-1",4771
+SIdevice3j,integer/coded,SIdevice3j,3; 2; 1; 4; -5; -3; -1,0,0,"-5,-3,-1",4771
+O4a,integer/coded,Coded question; official wording not included in upload,4; 5; 3; 2; 1; -5; -3; -97,0,0,"-97,-5,-3,-1",4771
+O4b,integer/coded,Coded question; official wording not included in upload,1; -97; 2; 3; 4; 5; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4c,integer/coded,Coded question; official wording not included in upload,2; 3; 5; 4; 1; -5; -3; -97,0,0,"-97,-5,-3,-1",4771
+O4d,integer/coded,Coded question; official wording not included in upload,4; 3; 5; 2; 1; -97; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4e,integer/coded,Coded question; official wording not included in upload,4; 5; 3; 2; 1; -5; -3; -97,0,0,"-97,-5,-3,-1",4771
+O4f,integer/coded,Coded question; official wording not included in upload,3; 5; 4; 2; 1; -97; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4g,integer/coded,Coded question; official wording not included in upload,1; 2; 3; 4; 5; -97; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4h,integer/coded,Coded question; official wording not included in upload,3; 4; 2; 5; 1; -5; -3; -97,0,0,"-97,-5,-3,-1",4771
+O4i,integer/coded,Coded question; official wording not included in upload,3; 1; 2; 4; -97; 5; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4j,integer/coded,Coded question; official wording not included in upload,1; 2; 3; 4; -97; 5; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4k,integer/coded,Coded question; official wording not included in upload,1; -97; 2; 3; 4; 5; -5; -3,0,0,"-97,-5,-3,-1",4771
+O4l,integer/coded,Coded question; official wording not included in upload,1; -97; 2; 3; -5; -3; 4; 5,0,0,"-97,-5,-3,-1",4771
+O4m,integer/coded,Coded question; official wording not included in upload,1; -97; 2; 3; 4; -5; -3; 5,0,0,"-97,-5,-3,-1",4771
+O5a,integer/coded,Coded question; official wording not included in upload,1; 0; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5b,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5c,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5d,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5e,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5f,integer/coded,Coded question; official wording not included in upload,1; 0; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5g,integer/coded,Coded question; official wording not included in upload,0; -5; -3; 1; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5h,integer/coded,Coded question; official wording not included in upload,0; -5; -3; -96; 1; -1,0,0,"-96,-5,-3,-1",4771
+O5i,integer/coded,Coded question; official wording not included in upload,0; -5; -3; -96; 1; -1,0,0,"-96,-5,-3,-1",4771
+O5j,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5k,integer/coded,Coded question; official wording not included in upload,0; 1; -5; -3; -96; -1,0,0,"-96,-5,-3,-1",4771
+O5l,integer/coded,Coded question; official wording not included in upload,0; -5; -3; -96; 1; -1,0,0,"-96,-5,-3,-1",4771
+O5l_text,text/category,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,,4771
+SIfreqSNSa,integer/coded,SIfreqSNSa,5; 4; -2; 3; -5; -3; 2; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSb,integer/coded,SIfreqSNSb,-2; 3; -5; -3; 4; 2; 1; 5,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSc,integer/coded,SIfreqSNSc,-2; 3; 2; -5; -3; 1; 4; 5,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSd,integer/coded,SIfreqSNSd,-2; 5; 4; 3; -5; -3; 2; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSe,integer/coded,SIfreqSNSe,-2; 5; 4; 3; -5; -3; 2; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSf,integer/coded,SIfreqSNSf,4; 3; 5; -2; 2; -5; -3; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSg,integer/coded,SIfreqSNSg,-2; -5; -3; 3; 4; 5; 2; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSh,integer/coded,SIfreqSNSh,-2; -5; -3; 2; 1; 3; 4; 5,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSi,integer/coded,SIfreqSNSi,-2; -5; -3; 1; 2; 3; 5; 4,0,0,"-5,-3,-2",4771
+SIfreqSNSj,integer/coded,SIfreqSNSj,-2; 3; 2; -5; 4; -3; 1; 5,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSk,integer/coded,SIfreqSNSk,-2; -5; -3; 3; 2; 5; 4; 1,0,0,"-5,-3,-2,-1",4771
+SIfreqSNSl,integer/coded,SIfreqSNSl,-2; -5; -3; 4; 5; 3; 2; 1,0,0,"-5,-3,-2,-1",4771
+O6a,integer/coded,Coded question; official wording not included in upload,1; 0; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6b,integer/coded,Coded question; official wording not included in upload,1; 0; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6c,integer/coded,Coded question; official wording not included in upload,1; 0; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6d,integer/coded,Coded question; official wording not included in upload,0; 1; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6e,integer/coded,Coded question; official wording not included in upload,0; -96; -5; -3; 1; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6f,integer/coded,Coded question; official wording not included in upload,0; -96; 1; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6g,integer/coded,Coded question; official wording not included in upload,0; -96; 1; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6h,integer/coded,Coded question; official wording not included in upload,0; 1; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6i,integer/coded,Coded question; official wording not included in upload,0; 1; -96; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6j,integer/coded,Coded question; official wording not included in upload,0; -96; 1; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6k,integer/coded,Coded question; official wording not included in upload,0; -96; 1; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6l,integer/coded,Coded question; official wording not included in upload,0; -96; -5; -3; -2; 1; -1,0,0,"-96,-5,-3,-2,-1",4771
+O6m,integer/coded,Coded question; official wording not included in upload,0; -96; 1; -5; -3; -2; -1,0,0,"-96,-5,-3,-2,-1",4771
+O7,integer/coded,Coded question; official wording not included in upload,2; 1; 3; 4; 6; 5; -5; -3,0,0,"-5,-3",4771
+O8,integer/coded,Coded question; official wording not included in upload,2; 3; -2; 4; 1; -3; -5; 5,0,0,"-5,-3,-2,-1",4771
+O9a,integer/coded,Coded question; official wording not included in upload,1; 2; -2; 3; -3; -5; 4; 5,0,0,"-5,-3,-2,-1",4771
+O9b,integer/coded,Coded question; official wording not included in upload,1; 2; -2; 3; 4; -3; -5; 5,0,0,"-5,-3,-2,-1",4771
+O9c,integer/coded,Coded question; official wording not included in upload,1; 2; -2; 3; 4; -3; -5; 5,0,0,"-5,-3,-2,-1",4771
+O9d,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O9e,integer/coded,Coded question; official wording not included in upload,1; -2; -3; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9f,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O9g,integer/coded,Coded question; official wording not included in upload,1; -2; -3; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9h,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9i,integer/coded,Coded question; official wording not included in upload,1; -2; -3; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9j,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9k,integer/coded,Coded question; official wording not included in upload,1; -2; -3; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9l,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O9m,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O9n,integer/coded,Coded question; official wording not included in upload,1; 2; -2; 3; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O9o,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O10a,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10b,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; 3; -3; -5; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10c,integer/coded,Coded question; official wording not included in upload,-2; 2; 3; 1; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O10d,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 2; 1; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10e,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 1; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10f,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 2; 1; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10g,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 2; 1; -1; 3; 5,0,0,"-5,-3,-2,-1",4771
+O10h,integer/coded,Coded question; official wording not included in upload,-2; -3; 1; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10i,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 1; 2; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O10j,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 2; 1; -1; 3; 4,0,0,"-5,-3,-2,-1",4771
+O10k,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 1; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10l,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10m,integer/coded,Coded question; official wording not included in upload,-2; -3; 1; -5; 2; 3; -1; 5,0,0,"-5,-3,-2,-1",4771
+O10n,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O10o,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O11a,integer/coded,Coded question; official wording not included in upload,2; 1; -2; -3; 3; -5; 4; 5,0,0,"-5,-3,-2,-1",4771
+O11b,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O11c,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O11d,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O11e,integer/coded,Coded question; official wording not included in upload,1; -2; -3; 2; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O11f,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; 4; 5,0,0,"-5,-3,-2,-1",4771
+O11g,integer/coded,Coded question; official wording not included in upload,2; 1; -2; -3; -5; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O11h,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O11i,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; 3; -5; 5; 4,0,0,"-5,-3,-2,-1",4771
+O11j,integer/coded,Coded question; official wording not included in upload,1; -2; 2; -3; -5; 3; 4; 5,0,0,"-5,-3,-2,-1",4771
+O11k,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; 4; 5,0,0,"-5,-3,-2,-1",4771
+O11l,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -5; 3; 4; 5,0,0,"-5,-3,-2,-1",4771
+O11m,integer/coded,Coded question; official wording not included in upload,2; 1; -2; 3; -3; -5; 4; 5,0,0,"-5,-3,-2,-1",4771
+O12a,integer/coded,Coded question; official wording not included in upload,-2; 2; 3; 1; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12b,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12c,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; 3; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12d,integer/coded,Coded question; official wording not included in upload,-2; -3; 1; -5; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12e,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 1; 2; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12f,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12g,integer/coded,Coded question; official wording not included in upload,-2; 3; 2; 1; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12h,integer/coded,Coded question; official wording not included in upload,-2; 3; 2; -3; 1; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12i,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12j,integer/coded,Coded question; official wording not included in upload,-2; -3; -5; 2; 1; 3; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12k,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; -5; 3; -1; 4,0,0,"-5,-3,-2,-1",4771
+O12l,integer/coded,Coded question; official wording not included in upload,-2; 2; 1; -3; 3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O12m,integer/coded,Coded question; official wording not included in upload,-2; 2; 3; 1; -3; -5; 4; -1,0,0,"-5,-3,-2,-1",4771
+O13a,integer/coded,Coded question; official wording not included in upload,4; -2; 3; 5; 1; -3; 2; -5,0,0,"-5,-3,-2,-1",4771
+O13b,integer/coded,Coded question; official wording not included in upload,4; 5; -2; 3; -3; -5; 2; 1,0,0,"-5,-3,-2,-1",4771
+O13c,integer/coded,Coded question; official wording not included in upload,4; 5; 3; -2; -3; -5; 2; 1,0,0,"-5,-3,-2,-1",4771
+O13d,integer/coded,Coded question; official wording not included in upload,4; 3; 5; -2; -3; 2; -5; 1,0,0,"-5,-3,-2,-1",4771
+O13e,integer/coded,Coded question; official wording not included in upload,4; 3; -2; 2; 5; -3; -5; 1,0,0,"-5,-3,-2,-1",4771
+O13f,integer/coded,Coded question; official wording not included in upload,4; 3; -2; 5; -3; 2; -5; 1,0,0,"-5,-3,-2,-1",4771
+O13g,integer/coded,Coded question; official wording not included in upload,4; 3; -2; 5; -3; 2; -5; 1,0,0,"-5,-3,-2,-1",4771
+O13h,integer/coded,Coded question; official wording not included in upload,4; 5; -2; 3; -3; -5; 2; 1,0,0,"-5,-3,-2,-1",4771
+O13i,integer/coded,Coded question; official wording not included in upload,3; 1; -2; 2; 4; -3; 5; -5,0,0,"-5,-3,-2,-1",4771
+O13j,integer/coded,Coded question; official wording not included in upload,4; 3; -2; 5; 2; -3; -5; 1,0,0,"-5,-3,-2,-1",4771
+O14a,integer/coded,Coded question; official wording not included in upload,5; 4; -2; 3; -3; -5; 2; 1,0,0,"-5,-3,-2,-1",4771
+O14b,integer/coded,Coded question; official wording not included in upload,3; 4; -2; 2; 1; -3; 5; -5,0,0,"-5,-3,-2,-1",4771
+O14c,integer/coded,Coded question; official wording not included in upload,3; 4; 1; 2; -2; -3; 5; -5,0,0,"-5,-3,-2,-1",4771
+O14d,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -2; 1; -3; -5; 5,0,0,"-5,-3,-2,-1",4771
+O14e,integer/coded,Coded question; official wording not included in upload,2; 1; 3; -2; -3; 4; -5; 5,0,0,"-5,-3,-2,-1",4771
+O14f,integer/coded,Coded question; official wording not included in upload,2; 3; 1; -2; -3; 4; -5; 5,0,0,"-5,-3,-2,-1",4771
+O14g,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -2; -3; 1; -5; 5,0,0,"-5,-3,-2,-1",4771
+O15a,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -3; -97; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15b,integer/coded,Coded question; official wording not included in upload,1; 2; -2; -97; -3; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15c,integer/coded,Coded question; official wording not included in upload,1; -97; -2; 2; -3; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15d,integer/coded,Coded question; official wording not included in upload,-97; 1; -2; 2; -3; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15e,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -3; -97; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15f,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -97; -3; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15g,integer/coded,Coded question; official wording not included in upload,-2; 1; -97; -3; 2; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15h,integer/coded,Coded question; official wording not included in upload,-2; 1; 2; -3; -97; -5; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15i,integer/coded,Coded question; official wording not included in upload,-2; 2; -3; 1; -5; -97; -1,0,0,"-97,-5,-3,-2,-1",4771
+O15j,integer/coded,Coded question; official wording not included in upload,-2; 1; -97; -3; -5; 2; -1,0,0,"-97,-5,-3,-2,-1",4771
+O16a,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -2; 1; -3; -5; 5,0,0,"-5,-3,-2,-1",4771
+O16b,integer/coded,Coded question; official wording not included in upload,3; 4; -2; 2; -3; -5; 1; 5,0,0,"-5,-3,-2,-1",4771
+O17,integer/coded,Coded question; official wording not included in upload,1; 2; 3; -2; 4; -3; 5; -5,0,0,"-5,-3,-2,-1",4771
+O18a,integer/coded,Coded question; official wording not included in upload,3; 4; 5; 2; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O18b,integer/coded,Coded question; official wording not included in upload,3; 4; 2; 5; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O18c,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 5; -5; 1; -1,0,0,"-5,-3,-1",4771
+O18d,integer/coded,Coded question; official wording not included in upload,1; 2; 3; -3; 4; 5; -5; -1,0,0,"-5,-3,-1",4771
+O18e,integer/coded,Coded question; official wording not included in upload,3; 4; 2; 5; -3; 1; -5; -1,0,0,"-5,-3,-1",4771
+O18f,integer/coded,Coded question; official wording not included in upload,4; 3; 2; 5; -3; 1; -5; -1,0,0,"-5,-3,-1",4771
+O18g,integer/coded,Coded question; official wording not included in upload,1; 2; 3; 4; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O19,integer/coded,Coded question; official wording not included in upload,1; 2; 3; -3; -5; 4; 5; -1,0,0,"-5,-3,-1",4771
+O20,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 5; 1; -5; -1,0,0,"-5,-3,-1",4771
+O21a,integer/coded,Coded question; official wording not included in upload,3; 2; 4; 1; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O21b,integer/coded,Coded question; official wording not included in upload,4; 3; 2; -3; 5; 1; -5; -1,0,0,"-5,-3,-1",4771
+O21c,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O21d,integer/coded,Coded question; official wording not included in upload,4; 3; -3; 5; 2; -5; 1; -1,0,0,"-5,-3,-1",4771
+O21e,integer/coded,Coded question; official wording not included in upload,3; 2; 1; 4; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O21f,integer/coded,Coded question; official wording not included in upload,2; 3; 1; -3; 4; -5; 5; -1,0,0,"-5,-3,-1",4771
+O22a,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 1; 5; -5; -1,0,0,"-5,-3,-1",4771
+O22b,integer/coded,Coded question; official wording not included in upload,5; 4; -3; 3; -5; 2; 1; -1,0,0,"-5,-3,-1",4771
+O22c,integer/coded,Coded question; official wording not included in upload,4; 3; 5; 2; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O22d,integer/coded,Coded question; official wording not included in upload,4; 3; 2; 5; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+O22e,integer/coded,Coded question; official wording not included in upload,3; 2; 4; 1; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23a,integer/coded,Coded question; official wording not included in upload,3; 2; 1; 4; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23b,integer/coded,Coded question; official wording not included in upload,4; 5; 3; -3; -5; 2; 1; -1,0,0,"-5,-3,-1",4771
+O23c,integer/coded,Coded question; official wording not included in upload,4; 3; 5; -3; 2; -5; 1; -1,0,0,"-5,-3,-1",4771
+O23d,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; -5; 5; 1; -1,0,0,"-5,-3,-1",4771
+O23e,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 5; -5; 1; -1,0,0,"-5,-3,-1",4771
+O23f,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23g,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23h,integer/coded,Coded question; official wording not included in upload,2; 3; 1; 4; -3; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23i,integer/coded,Coded question; official wording not included in upload,4; 3; 2; -3; 5; -5; 1; -1,0,0,"-5,-3,-1",4771
+O23j,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23k,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; -5; 5; 1; -1,0,0,"-5,-3,-1",4771
+O23l,integer/coded,Coded question; official wording not included in upload,4; 3; -3; 2; 5; -5; 1; -1,0,0,"-5,-3,-1",4771
+O23m,integer/coded,Coded question; official wording not included in upload,4; 5; 3; -3; -5; 2; 1; -1,0,0,"-5,-3,-1",4771
+O23n,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; 5; -5; 1; -1,0,0,"-5,-3,-1",4771
+O23o,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23p,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23q,integer/coded,Coded question; official wording not included in upload,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O23r,integer/coded,Coded question; official wording not included in upload,2; 1; 3; -3; -5; 4; 5; -1,0,0,"-5,-3,-1",4771
+O23s,integer/coded,Coded question; official wording not included in upload,3; 4; 2; -3; -5; 5; 1; -1,0,0,"-5,-3,-1",4771
+O23t,integer/coded,Coded question; official wording not included in upload,2; 3; 1; -3; 4; -5; 5; -1,0,0,"-5,-3,-1",4771
+Extraversion_mean,text/category,Extraversion mean,not supplied; original variable name retained,0,710,,4771
+Agreeableness_mean,text/category,Agreeableness mean,not supplied; original variable name retained,0,710,,4771
+Conscientionusness_mean,text/category,Conscientionusness mean,not supplied; original variable name retained,0,718,,4771
+Neuroticism_mean,text/category,Neuroticism mean,not supplied; original variable name retained,0,718,,4771
+Imagination_mean,text/category,Imagination mean,not supplied; original variable name retained,0,716,,4771
+O24,integer/coded,Coded question; official wording not included in upload,2; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+O25,integer/coded,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,"-5,-3,-1",4771
+O26,integer/coded,Coded question; official wording not included in upload,1; -3; -5; 5; 3; 2; 4; -1,0,0,"-5,-3,-1",4771
+O26_5_text,text/category,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,,4771
+O27,integer/coded,Coded question; official wording not included in upload,2; 1; -3; 3; -5; 4; -1,0,0,"-5,-3,-1",4771
+O28,integer/coded,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,"-5,-3,-1",4771
+O29,integer/coded,Coded question; official wording not included in upload,1; 2; 3; -3; -5; 4; -1,0,0,"-5,-3,-1",4771
+O30,integer/coded,Coded question; official wording not included in upload,10; 13; 12; 11; -3; 9; 14; -5,0,0,"-5,-3,-1",4771
+O30_dich,text/category,Coded question; official wording not included in upload,1; 0;  ,0,693,,4771
+O31,integer/coded,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,"-5,-3,-1",4771
+O32,text/category,Coded question; official wording not included in upload,not supplied; original variable name retained,0,2,,4771
+O33,integer/coded,Coded question; official wording not included in upload,2; 1; 3; -3; 0; 4; -5; 5,0,0,"-5,-3,-1",4771
+O34,integer/coded,Coded question; official wording not included in upload,6; -98; 5; 4; -3; 7; 3; -5,0,0,"-98,-5,-3,-1",4771
+SIincome1,integer/coded,SIincome1,2; 3; 1; 4; -3; -5; -1; 5,0,0,"-5,-3,-1",4771
+O35,integer/coded,Coded question; official wording not included in upload,-98; 4; 3; 2; -3; 1; 5; -5,0,0,"-98,-5,-3,-1",4771
+SIincome2,integer/coded,SIincome2,3; 2; 4; -3; 1; -5; 5; -1,0,0,"-5,-3,-1",4771
+O38a,integer/coded,Coded question; official wording not included in upload,1; 0; -3; -5; -1,0,0,"-5,-3,-1",4771
+O38b,integer/coded,Coded question; official wording not included in upload,0; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+O38c,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38d,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38e,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38f,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38g,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38h,integer/coded,Coded question; official wording not included in upload,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+O38h_text,text/category,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,,4771
+O39,integer/coded,Coded question; official wording not included in upload,2; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+O40,integer/coded,Coded question; official wording not included in upload,-2; 1; -3; -5; 2; 3,0,0,"-5,-3,-2",4771
+O41,integer/coded,Coded question; official wording not included in upload,-2; 2; -3; 1; -5; -1,0,0,"-5,-3,-2,-1",4771
+O42a,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42b,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42c,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42d,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42e,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42f,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42g,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42h,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; 1; -5; -1,0,0,"-97,-5,-3,-1",4771
+O42i,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; 1; -5; -1,0,0,"-97,-5,-3,-1",4771
+O42j,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42k,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; 1; -5; -1,0,0,"-97,-5,-3,-1",4771
+O42l,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42m,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42n,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42o,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; -1; 1,0,0,"-97,-5,-3,-1",4771
+O42p,integer/coded,Coded question; official wording not included in upload,-97; 0; -3; -5; 1; -1,0,0,"-97,-5,-3,-1",4771
+O42p_text,text/category,Coded question; official wording not included in upload,not supplied; original variable name retained,0,0,,4771
+SIdevice1a,integer/coded,SIdevice1a,1; 0; -3; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice1b,integer/coded,SIdevice1b,0; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice1c,integer/coded,SIdevice1c,1; 0; -3; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice1d,integer/coded,SIdevice1d,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+SIdevice1e,integer/coded,SIdevice1e,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+SIdevice2a,integer/coded,SIdevice2a,1; 0; -3; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice2b,integer/coded,SIdevice2b,0; -3; 1; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice2c,integer/coded,SIdevice2c,0; 1; -3; -5; -1,0,0,"-5,-3,-1",4771
+SIdevice2d,integer/coded,SIdevice2d,0; -3; -5; 1; -1,0,0,"-5,-3,-1",4771
+SIdevice2d_text,text/category,SIdevice2d text,not supplied; original variable name retained,0,0,,4771
+RQI_breakoff,quality / audit flag,RQI breakoff,0; 1,0,0,,4771
+RQI_item_nonresponse,quality / audit flag,RQI item nonresponse,not supplied; original variable name retained,0,225,,4771
+RQI_multitasking_concurrent,quality / audit flag,RQI multitasking concurrent,0;  ; 1; 2; 3; 4,0,714,,4771
+RQI_multitasking_sequential,quality / audit flag,RQI multitasking sequential,0;  ; 1; 2; 3; 5; 4,0,714,,4771
+RQI_IMC,quality / audit flag,RQI IMC,0;  ; 1; 2,0,1169,,4771
+RQI_midpoint,quality / audit flag,RQI midpoint,not supplied; original variable name retained,0,574,,4771
+RQI_extreme_positive,quality / audit flag,RQI extreme positive,not supplied; original variable name retained,0,574,,4771
+RQI_extreme_negative,quality / audit flag,RQI extreme negative,not supplied; original variable name retained,0,574,,4771
+RQI_straightlining_sd0,quality / audit flag,RQI straightlining sd0,0; 1;  ; 2; 3; 4,0,578,,4771
+RQI_outliers,quality / audit flag,RQI outliers,0;  ; 1,0,1575,,4771
+RQI_grid_duration,quality / audit flag,RQI grid duration,not supplied; original variable name retained,0,713,,4771
+RQI_O36,quality / audit flag,RQI O36,3; 4; -3; 5; 2; -5; 1; -1,0,0,"-5,-3,-1",4771
+RQI_O37,quality / audit flag,RQI O37,1; 2; 3; -3; -5; 4; 5; -1,0,0,"-5,-3,-1",4771
+move_distance_total,text/category,move distance total,not supplied; original variable name retained,0,2331,,4771
+n_focus_out_5s,text/category,n focus out 5s,not supplied; original variable name retained,0,5,,4771
+focus_out_duration_ln,text/category,focus out duration ln,not supplied; original variable name retained,0,5,,4771
+dur_tot_ln,text/category,dur tot ln,not supplied; original variable name retained,0,198,,4771
+n_inr_messages_0,integer/coded,n inr messages 0,not supplied; original variable name retained,0,0,,4771
+n_clicks_excess,text/category,n clicks excess,not supplied; original variable name retained,0,220,,4771
+u_minus2_f,integer/coded,u minus2 f,not supplied; original variable name retained,0,0,,4771
+n_visited_pages,text/category,n visited pages,not supplied; original variable name retained,0,5,,4771
+n_mult_vis_p,text/category,n mult vis p,not supplied; original variable name retained,0,5,,4771
+n_response_changes,text/category,n response changes,not supplied; original variable name retained,0,220,,4771

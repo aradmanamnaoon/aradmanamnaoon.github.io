@@ -1,0 +1,49 @@
+section,measure,value,note
+audit,Records,13264,Dataset-level aggregate
+audit,Variables,127,Dataset-level aggregate
+audit,Literal missing (%),8.348,Dataset-level aggregate
+audit,Whole-row duplicates,0,Dataset-level aggregate
+integrity,quality_flagged,4,Dataset-level aggregate; no personal records
+integrity,all_fail,1226,Dataset-level aggregate; no personal records
+integrity,time_fail,352,Dataset-level aggregate; no personal records
+integrity,duration_over_24h,24,Dataset-level aggregate; no personal records
+integrity,max_duration_hours,312.24,Dataset-level aggregate; no personal records
+integrity,task_repeats,9948,Dataset-level aggregate; no personal records
+integrity,workers,434,Dataset-level aggregate; no personal records
+correlation,Appraisal pleasantness versus Reported intensity — n,12315,Exploratory; consult report
+correlation,Appraisal pleasantness versus Reported intensity — rho,-0.1272,Exploratory; consult report
+correlation,Appraisal pleasantness versus Reported intensity — p,1.4426548648622065e-45,Exploratory; consult report
+correlation,Age versus Reported intensity — n,12315,Exploratory; consult report
+correlation,Age versus Reported intensity — rho,0.0022,Exploratory; consult report
+correlation,Age versus Reported intensity — p,0.8073355744834568,Exploratory; consult report
+correlation,Appraisal pleasantness versus Immersion — n,13182,Exploratory; consult report
+correlation,Appraisal pleasantness versus Immersion — rho,0.0423,Exploratory; consult report
+correlation,Appraisal pleasantness versus Immersion — p,1.1696541481738619e-06,Exploratory; consult report
+correlation,Fear motive versus Reported intensity — n,12311,Exploratory; consult report
+correlation,Fear motive versus Reported intensity — rho,-0.0775,Exploratory; consult report
+correlation,Fear motive versus Reported intensity — p,6.969760404065799e-18,Exploratory; consult report
+statistical,aggregated_worker_spearman : n,432,"Exploratory, model/scoring assumptions in report"
+statistical,aggregated_worker_spearman : rho,0.0346,"Exploratory, model/scoring assumptions in report"
+statistical,aggregated_worker_spearman : p,0.47342210637198157,"Exploratory, model/scoring assumptions in report"
+statistical,all_rows_spearman_diagnostic : n,12315,"Exploratory, model/scoring assumptions in report"
+statistical,all_rows_spearman_diagnostic : rho,-0.1272,"Exploratory, model/scoring assumptions in report"
+statistical,all_rows_spearman_diagnostic : p,1.4426548648622065e-45,"Exploratory, model/scoring assumptions in report"
+statistical,mixed_worker_intercept : n_rows,12315,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : n_workers,432,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : slope,-2.377,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : p,4.5269538337640236e-51,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : ci_low,-2.686,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : ci_high,-2.067,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : converged,True,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,mixed_worker_intercept : random_intercept_variance,0.0,SINGULAR FIT (random intercept variance=0); model-based inferential p and CI unreliable; exploratory model diagnostic only
+statistical,worker_cluster_robust_ols : slope,-2.238,"Exploratory, model/scoring assumptions in report"
+statistical,worker_cluster_robust_ols : p,1.1227190859932084e-16,"Exploratory, model/scoring assumptions in report"
+statistical,worker_cluster_robust_ols : ci_low,-2.767,"Exploratory, model/scoring assumptions in report"
+statistical,worker_cluster_robust_ols : ci_high,-1.709,"Exploratory, model/scoring assumptions in report"
+statistical,worker_cluster_robust_ols : n_rows,12315,"Exploratory, model/scoring assumptions in report"
+statistical,worker_cluster_robust_ols : n_workers,432,"Exploratory, model/scoring assumptions in report"
+statistical,fear_items_alpha_diagnostic : alpha,0.8442,"Exploratory, model/scoring assumptions in report"
+statistical,fear_items_alpha_diagnostic : n,13260,"Exploratory, model/scoring assumptions in report"
+statistical,fear_items_alpha_diagnostic : items,3,"Exploratory, model/scoring assumptions in report"
+statistical,fear_items_omega_diagnostic : omega_one_factor_approx,0.8536,"Exploratory, model/scoring assumptions in report"
+statistical,fear_items_omega_diagnostic : n,13260,"Exploratory, model/scoring assumptions in report"

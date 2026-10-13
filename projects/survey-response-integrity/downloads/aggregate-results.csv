@@ -1,0 +1,34 @@
+section,measure,value,note
+audit,Records,4771,Dataset-level aggregate
+audit,Variables,289,Dataset-level aggregate
+audit,Literal missing (%),0.0,Dataset-level aggregate
+audit,Whole-row duplicates,0,Dataset-level aggregate
+integrity,breakoff_flagged,713,Dataset-level aggregate; no personal records
+integrity,status_not6,713,Dataset-level aggregate; no personal records
+integrity,blank_personality_scores,710,Dataset-level aggregate; no personal records
+integrity,blank_device_dich,127,Dataset-level aggregate; no personal records
+integrity,negative_code_cells,395994,Dataset-level aggregate; no personal records
+integrity,negative_code_rows,4771,Dataset-level aggregate; no personal records
+integrity,n_negative_columns,248,Dataset-level aggregate; no personal records
+correlation,Extraversion versus Neuroticism — n,4035,Exploratory; consult report
+correlation,Extraversion versus Neuroticism — rho,-0.2069,Exploratory; consult report
+correlation,Extraversion versus Neuroticism — p,2.946223411248042e-40,Exploratory; consult report
+correlation,Agreeableness versus Conscientionusness — n,4036,Exploratory; consult report
+correlation,Agreeableness versus Conscientionusness — rho,0.1516,Exploratory; consult report
+correlation,Agreeableness versus Conscientionusness — p,3.6288588475101448e-22,Exploratory; consult report
+correlation,Neuroticism versus Conscientionusness — n,4027,Exploratory; consult report
+correlation,Neuroticism versus Conscientionusness — rho,-0.2024,Exploratory; consult report
+correlation,Neuroticism versus Conscientionusness — p,1.7650038191010965e-38,Exploratory; consult report
+correlation,Extraversion versus Imagination — n,4034,Exploratory; consult report
+correlation,Extraversion versus Imagination — rho,0.182,Exploratory; consult report
+correlation,Extraversion versus Imagination — p,2.1889545979314725e-31,Exploratory; consult report
+statistical,device_group_extraversion : n0,2238,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : n1,1716,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : mean0,2.962,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : mean1,3.038,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : difference,-0.077,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : cohen_d,-0.103,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : p,0.0013496314956990886,"Exploratory, model/scoring assumptions in report"
+statistical,device_group_extraversion : exploratory,True,"Exploratory, model/scoring assumptions in report"
+statistical,reverse_code_diagnostic : n,4533,"Exploratory, model/scoring assumptions in report"
+statistical,reverse_code_diagnostic : matches_7_minus_O1,4533,"Exploratory, model/scoring assumptions in report"

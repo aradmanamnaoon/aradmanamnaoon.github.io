@@ -428,5 +428,98 @@
       "Persian",
       "Psychology"
     ]
+  },
+  {
+    "id": "emotion-appraisal-video-audit",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io",
+    "title": "13,264 Rows. 434 Worker IDs. — Emotion & Appraisal Video Study",
+    "description": "13,264 recorded observations map to 434 worker IDs and 3,316 HITs. Explore why row counts, quality criteria, and worker-level inference must be distinguished.",
+    "type": "Data science · Psychology · Data integrity",
+    "tags": [
+      "Data Science",
+      "Statistics",
+      "Research Data",
+      "Data Quality"
+    ],
+    "homepage_featured": false,
+    "slug": "emotion-appraisal-video-audit",
+    "caseStudy": {
+      "title": "Emotion & Appraisal Video Study",
+      "description": "13,264 recorded observations map to 434 worker IDs and 3,316 HITs. Explore why row counts, quality criteria, and worker-level inference must be distinguished.",
+      "lede": "The dataset appeared ready for a quick emotional-intensity analysis. Instead, I audited its row structure, quality flags, durations, and scoring formulas before interpreting any association.",
+      "challenge": "Two quality flags tell very different stories. That does not automatically mean either is incorrect; they may implement distinct criteria. The difference is a prompt to audit the definitions.",
+      "results": [
+        "13,264 rows arise from 434 worker IDs, with four entries per HIT.",
+        "Only 4 rows fail QUALITY_CRITERION, while 1,226 fail ALL_CRITERIA.",
+        "The worker-aggregated Spearman rho is +0.035 (n=432), while a singular worker-intercept model returns -2.377, a numerically unstable estimate requiring caution.",
+        "24 rows have dur_in_sec above 24 hours; the recorded maximum is 312.24 hours."
+      ],
+      "limitations": "The mixed model accounts for worker intercepts, not crossed HIT or video dependence. Neither the row-level nor worker-level result demonstrates causation.",
+      "seoTitle": "13,264 Rows. 434 Worker IDs. | Emotion & Appraisal Audit"
+    },
+    "customPage": true
+  },
+  {
+    "id": "survey-response-integrity",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io",
+    "title": "0 CSV Nulls. 395,994 Negative Codes. — Digital Survey Response Integrity",
+    "description": "The survey export contains 0 literal CSV-null cells but 395,994 negative-coded numeric entries and 14,793 blank-string cells. Inspect the recorded codes and their limits.",
+    "type": "Data science · Psychology · Data integrity",
+    "tags": [
+      "Data Science",
+      "Statistics",
+      "Research Data",
+      "Data Quality"
+    ],
+    "homepage_featured": false,
+    "slug": "survey-response-integrity",
+    "caseStudy": {
+      "title": "Digital Survey Response Integrity",
+      "description": "The survey export contains 0 literal CSV-null cells but 395,994 negative-coded numeric entries and 14,793 blank-string cells. Inspect the recorded codes and their limits.",
+      "lede": "There are 4,771 unique case numbers and 289 fields. Literal-null checks alone would call the export complete, but its negative codes and blank strings tell a more complicated story.",
+      "challenge": "The visible comparison switches between CSV-null cells and negative-coded numeric entries. The latter are observed codes, not assumed missingness, until the original instrument defines them.",
+      "results": [
+        "The table has no literal CSV null cells, while 395,994 numeric cells carry one of the observed negative codes.",
+        "RQI_breakoff is 1 for 713 records, the same number as cases whose status differs from 6.",
+        "710 Extraversion_mean entries are blank strings even though the CSV has zero nulls.",
+        "The reported device-code group comparison needs a codebook to interpret groups 0 and 1 correctly."
+      ],
+      "limitations": "The exact meanings of -1, -2, -3, -5, -96, -97, and -98 are not supplied. The published sample frame, raking calibration and codebook need verification.",
+      "seoTitle": "0 CSV Nulls. 395,994 Negative Codes. | Survey Integrity Audit"
+    },
+    "customPage": true
+  },
+  {
+    "id": "psoriasis-wellbeing-audit",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io",
+    "title": "0 CSV Nulls. 50 Recorded −9 Codes. — Psoriasis & Wellbeing Study",
+    "description": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
+    "type": "Data science · Psychology · Data integrity",
+    "tags": [
+      "Data Science",
+      "Statistics",
+      "Research Data",
+      "Data Quality"
+    ],
+    "homepage_featured": false,
+    "slug": "psoriasis-wellbeing-audit",
+    "caseStudy": {
+      "title": "Psoriasis & Wellbeing Study",
+      "description": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
+      "lede": "The 36-field file is semicolon-delimited with comma decimals. Without parsing it correctly and inspecting -9 response codes, a simple spreadsheet analysis could misrepresent missingness.",
+      "challenge": "The interactive reveal contrasts zero literal CSV nulls with 50 observed -9 cells. The values remain unchanged; only a separately labeled sensitivity check treats -9 as unavailable.",
+      "results": [
+        "722 records and 36 variables parse correctly only with semicolon delimiters; comma decimals require a separate option.",
+        "The file contains zero literal nulls but 50 -9 cells spread across 20 records.",
+        "The raw-direction 12-item HA03 coefficient alpha is 0.248 for 711 complete cases under a -9-unavailable sensitivity assumption.",
+        "Age spans 12 to 85 and a raw HA03 item mean differs modestly across an explicitly chosen age-40 split."
+      ],
+      "limitations": "Published as Schuster et al. (2021), PsychArchives CC BY 4.0, DOI 10.23668/psycharchives.4451. Only aggregate derivatives are included in this local review ZIP.",
+      "seoTitle": "0 CSV Nulls. 50 Recorded −9 Codes. | Psoriasis Survey Audit"
+    },
+    "customPage": true
   }
 ]
