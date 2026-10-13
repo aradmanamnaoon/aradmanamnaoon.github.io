@@ -6,6 +6,8 @@ const vm = require('node:vm');
 
 const ROOT = path.join(__dirname, '..');
 const page = fs.readFileSync(path.join(ROOT, 'projects', 'index.html'), 'utf8');
+const projectRegistry = JSON.parse(fs.readFileSync(path.join(ROOT, 'projects.json'), 'utf8'));
+const githubProjectCount = projectRegistry.filter(project => String(project.url || '').includes('github.com/')).length;
 const generator = fs.readFileSync(path.join(ROOT, 'scripts', 'build_site.py'), 'utf8');
 const css = fs.readFileSync(path.join(ROOT, 'assets', 'css', 'projects-experience.css'), 'utf8');
 const visual = fs.readFileSync(path.join(ROOT, 'assets', 'js', 'projects-experience.js'), 'utf8');
@@ -47,8 +49,8 @@ function archiveHarness() {
 test('projects still have pagination and all project links', () => {
   assert.ok(match, 'generated project renderer is present');
   const { api, element } = archiveHarness();
-  assert.equal(api.total(), 12);
-  assert.equal(api.count(), 12);
+  assert.equal(api.total(), projectRegistry.length);
+  assert.equal(api.count(), projectRegistry.length);
   assert.equal(api.perPage(), 6);
   assert.match(element('projects-paginated').innerHTML, /Persian GPT/);
   assert.match(element('projects-pagination').innerHTML, /Previous page/);
@@ -61,11 +63,11 @@ test('search, research area, source filters and zero state are functional', () =
   assert.match(element('projects-paginated').innerHTML, /CohortSeal/);
   assert.equal(api.setFilters({ query: '', source: 'all', topic: 'medical' }), 3);
   assert.equal(api.setFilters({ query: '', source: 'huggingface', topic: 'all' }), 5);
-  assert.equal(api.setFilters({ query: '', source: 'github', topic: 'all' }), 7);
+  assert.equal(api.setFilters({ query: '', source: 'github', topic: 'all' }), githubProjectCount);
   assert.equal(api.setFilters({ query: 'not-in-archive-100934', source: 'all', topic: 'all' }), 0);
   assert.match(element('projects-paginated').innerHTML, /No projects match/);
   assert.match(element('projects-pagination').innerHTML, /No matching projects/);
-  assert.equal(api.setFilters({ query: '', source: 'all', topic: 'all' }), 12);
+  assert.equal(api.setFilters({ query: '', source: 'all', topic: 'all' }), projectRegistry.length);
 });
 
 test('deep links restore complete archive even after filtering', () => {
