@@ -4,7 +4,7 @@
     "source": "hf_model",
     "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
     "title": "Persian GPT — Transformer From Scratch",
-    "description": "A decoder-only Persian transformer documented as a from-scratch language-modeling experiment. Exported checkpoint parameter count remains under review; corpus, tokenizer, training and reported held-out metrics are described in the linked model card.",
+    "description": "Public from-scratch Persian language-model artifact. A pinned metadata-only check counted 134,994,432 stored tensor elements in the exported safetensors file; the model card states a 110.4M architecture. Runtime tying and the reported evaluation have not been independently reproduced.",
     "tags": [
       "PyTorch",
       "Transformers",
@@ -17,8 +17,8 @@
     "type": "Flagship model · Persian NLP · From-scratch training",
     "metrics": [
       {
-        "value": "Under review",
-        "label": "export parameter count"
+        "value": "134.994M",
+        "label": "stored checkpoint elements"
       },
       {
         "value": "244M",
@@ -29,7 +29,7 @@
         "label": "held-out perplexity"
       }
     ],
-    "note": "The reported held-out perplexity is an author metric, not independent replication; the exported parameter count remains under review.",
+    "note": "Independent safetensors-header count of published checkpoint, not an independently reproduced training or performance result.",
     "research": {
       "context": "This project demonstrates an end-to-end low-resource language-model workflow for Persian, from corpus preparation through tokenizer design, training, and held-out evaluation.",
       "methods": [
@@ -38,31 +38,31 @@
         "PyTorch decoder-only Transformer",
         "N-gram baselines and held-out perplexity"
       ],
-      "limitations": "The reported perplexity is specific to the held-out corpus and tokenizer, has not been independently replicated, and does not establish factuality, instruction following or downstream task performance. A community report raises an unresolved discrepancy between the intended tied-weight parameter count and the exported checkpoint."
+      "limitations": "Public safetensors revision b443d45edab7a464edb25f49d0c4b44f05f4a739 stores 134,994,432 tensor elements (149 tensors, all F16), including an explicit 24,576,000-element lm_head.weight. The 110.4M claimed architecture count is therefore different from the file's stored count. Runtime weight sharing, training and perplexity 14.52 remain unverified."
     },
     "slug": "persian-gpt-from-scratch",
     "caseStudy": {
       "title": "Persian GPT from scratch: a Persian language model",
-      "description": "A Persian GPT documented as trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and author-reported held-out perplexity evaluation. Exported parameter count remains under review.",
+      "description": "A Persian language-modeling experiment using a 32K BPE tokenizer, PyTorch and author-reported held-out perplexity. A pinned header-only check counted 134,994,432 stored tensor elements in the public safetensors checkpoint.",
       "lede": "An end-to-end Persian language-modeling experiment, from preparing a cleaned Wikipedia corpus and building a tokenizer to training a decoder-only Transformer and comparing held-out perplexity against n-gram baselines.",
       "challenge": "Persian has fewer openly documented from-scratch training examples than high-resource languages. The goal here was to build a transparent, reproducible baseline workflow and document what the resulting language-model metric does and does not establish.",
       "approach": [
         "Cleaned and prepared 855,724 Persian Wikipedia documents, totaling about 244 million training tokens.",
         "Trained a custom 32,000-token byte-pair encoding tokenizer on the prepared corpus.",
-        "The public model card describes a decoder-only Transformer trained in PyTorch for two epochs (7,450 optimizer steps); the exported checkpoint's parameter count remains under review.",
+        "The model card describes a 12-layer decoder-only Transformer trained in PyTorch for two epochs; a separate public safetensors-header audit found 134,994,432 stored tensor elements versus the card's intended 110.4M design.",
         "Evaluated the held-out split with loss and perplexity, then compared perplexity with unigram and interpolated 5-gram baselines."
       ],
       "results": [
         "Held-out test perplexity: 14.52; validation perplexity: 14.02.",
         "The held-out interpolated 5-gram baseline perplexity was 171.60, and the unigram baseline was 1,590.26.",
-        "The author-reported language-model metrics apply only to the documented corpus split and tokenizer; independent reproduction remains pending."
+        "At published revision b443d45edab7a464edb25f49d0c4b44f05f4a739, the public checkpoint stores 134,994,432 tensor elements, independently enumerated from its safetensors header; this does not resolve runtime tying."
       ],
-      "limitations": "This is an experimental research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been independently evaluated for broad Persian fluency, safety or downstream usefulness. Perplexity does not establish factual accuracy or real-world performance. The checkpoint parameter count and output-head weight tying are unresolved pending a reproducible artifact audit.",
+      "limitations": "This small research portfolio model is trained on Wikipedia rather than a broad conversational distribution. The independently inspected file stores 134,994,432 tensor elements; the model card states 110.4M, and the output head is explicitly stored. Weight equality and runtime tying have NOT been checked, and the author-reported perplexity 14.52 is not independently reproduced. No factuality, safety or downstream usefulness has been established.",
       "sourceLabel": "Read the model card and download details",
       "seoTitle": "Persian GPT From Scratch: Language Model | Arad"
     },
-    "homepage_description": "A Persian Transformer described as trained from scratch, with a custom tokenizer, baselines and author-reported held-out evaluation; exported parameter count pending verification.",
-    "homepage_note": "Model-card metrics are author-reported; exported checkpoint parameter count remains under review.",
+    "homepage_description": "A Persian GPT from-scratch research artifact. Audited public safetensors header: 134,994,432 stored tensor elements; original training and perplexity remain author-reported.",
+    "homepage_note": "Independent file-metadata check only; published count differs from the model card's 110.4M architecture claim, and runtime tying remains unverified.",
     "category": "models"
   },
   {
