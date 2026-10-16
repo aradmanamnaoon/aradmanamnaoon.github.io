@@ -12,7 +12,7 @@
       "BPE",
       "Persian NLP"
     ],
-    "homepage_featured": false,
+    "homepage_featured": true,
     "type": "Flagship model · Persian NLP · From-scratch training",
     "metrics": [
       {
@@ -62,7 +62,8 @@
     },
     "homepage_description": "A Persian GPT from-scratch research artifact. Audited public safetensors header: 134,994,432 stored tensor elements; original training and perplexity remain author-reported.",
     "homepage_note": "Independent file-metadata check only; published count differs from the model card's 110.4M architecture claim, and runtime tying remains unverified.",
-    "category": "models"
+    "category": "models",
+    "homepage_order": 1
   },
   {
     "id": "medical-image-segmentation",
@@ -144,7 +145,7 @@
       "FastAPI",
       "Docker"
     ],
-    "homepage_featured": false,
+    "homepage_featured": true,
     "type": "Agentic AI · RAG · Evaluated system",
     "metrics": [
       {
@@ -194,7 +195,8 @@
     },
     "homepage_description": "LangGraph agents for retrieval, cited research synthesis, and tool use, with FastAPI endpoints and reproducible offline tests.",
     "homepage_note": "Offline tests verify software behavior, not answer quality.",
-    "category": "software"
+    "category": "software",
+    "homepage_order": 3
   },
   {
     "id": "psylex-studio",
@@ -262,8 +264,7 @@
       "seoTitle": "PsyLex Studio: Psychology EN–FA Translator for Windows | Arad"
     },
     "category": "software",
-    "homepage_featured": true,
-    "homepage_order": 3,
+    "homepage_featured": false,
     "homepage_description": "Local-first English–Persian psychology translation and terminology desktop app, with an installable Windows release and reviewable evidence.",
     "homepage_note": "v0.6.5 Windows installer is published; glossary starts with 16 public terms, generated text needs human checking, and Python 3.13 source installs remain unsupported."
   },
@@ -414,8 +415,7 @@
     },
     "homepage_description": "Local Python research software for text and declared-group evaluation split auditing, with transparent witness evidence, a synthetic demo, and reviewed repairs.",
     "homepage_note": "Evidence and synthetic checks are documented; no universal detection recall, independent adoption, or clinical validation is claimed.",
-    "homepage_featured": true,
-    "homepage_order": 1
+    "homepage_featured": false
   },
   {
     "id": "agent-guardrails",
