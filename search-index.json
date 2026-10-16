@@ -26,7 +26,7 @@
   {
     "title": "3D Cardiac MRI Segmentation",
     "url": "/projects/3d-cardiac-mri-segmentation/",
-    "summary": "A cardiac MRI segmentation pipeline built with PyTorch, MONAI, the Task02 Heart benchmark, a 3D U-Net, and sliding-window inference.",
+    "summary": "A two-class background/left-atrium cardiac MRI segmentation experiment built with PyTorch, MONAI, MSD Task02 Heart data, a 3D U-Net and sliding-window inference.",
     "terms": "PyTorch MONAI 3D U-Net Medical Imaging DiceCELoss"
   },
   {
