@@ -56,8 +56,10 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn("author-reported validation Dice", rendered)
         self.assertIn("No external clinical validation is claimed", rendered)
         self.assertIn("14.52", rendered)
-        self.assertIn("Under review", rendered)
-        self.assertNotIn("110.4M", rendered)
+        self.assertIn("134.994M", rendered)
+        self.assertIn("stored checkpoint elements", rendered)
+        self.assertIn("134,994,432 tensor elements", rendered)
+        self.assertIn("Runtime weight sharing", rendered)
         self.assertIn("103", rendered)
 
     def test_skills_page_comes_from_cv_knowledge_base(self) -> None:
