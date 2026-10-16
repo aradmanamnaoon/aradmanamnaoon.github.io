@@ -55,8 +55,8 @@
   },
   {
     "title": "Holdout Ledger: Dataset Leakage Audit Workbench",
-    "url": "/projects/#holdout-ledger",
-    "summary": "A local workbench for inspecting text and entity overlap across train, validation, and test splits. Includes an evidence dashboard, offline reports, SQLite audit snapshots, and reviewed repair plans that preserve every test record. CI checks track newly exposed holdout IDs; lexical detection limits are documented.",
+    "url": "/projects/holdout-ledger/",
+    "summary": "A local MIT-licensed Python workbench for normalized-exact, lexical near-copy and declared entity-group split audits with source-bound repair plans and a self-contained synthetic demo.",
     "terms": "Python FastAPI SQLite MinHash Dataset Evaluation Docker"
   },
   {
