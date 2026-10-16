@@ -1,0 +1,76 @@
+name: Build evidence-based CV PDF
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'cv/generate_cv.py'
+      - 'cv/.cv_generator_bootstrap.txt'
+      - '.github/workflows/build-cv.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cv-generator-main
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install renderer and document fonts
+        run: |
+          python -m pip install --disable-pip-version-check 'reportlab>=4.2,<5' 'brotli>=1.1,<2'
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-lato >/dev/null
+      - name: Restore readable source on first build
+        run: |
+          if [ ! -f cv/generate_cv.py ]; then
+            python - <<'PY'
+          import base64, brotli, hashlib
+          from pathlib import Path
+          path = Path('cv/.cv_generator_bootstrap.txt')
+          if not path.exists():
+              raise RuntimeError('CV generator and bootstrap both missing')
+          data = brotli.decompress(base64.b64decode(path.read_text().strip()))
+          expected = '33e6127f229e889136be200124ce3dfd7932a369fc9e4aea8c44920c5804152a'
+          if hashlib.sha256(data).hexdigest() != expected:
+              raise RuntimeError('Bootstrap integrity digest mismatch')
+          Path('cv/generate_cv.py').write_bytes(data)
+          PY
+          fi
+      - name: Produce website downloadable PDF
+        run: |
+          python cv/generate_cv.py --output Profile.pdf
+          cp Profile.pdf assets/cv/Seyyed_Arad_Hosseini_Moghaddam_Knowledge_CV_EN.pdf
+          python - <<'PY'
+          from pathlib import Path
+          contents = Path('Profile.pdf').read_bytes()
+          assert contents.startswith(b'%PDF-') and len(contents) > 10000
+          assert Path('assets/cv/Seyyed_Arad_Hosseini_Moghaddam_Knowledge_CV_EN.pdf').read_bytes() == contents
+          print('Current CV PDF generated and mirrored; bytes:',len(contents))
+          PY
+      - name: Commit generated CV and readable generator
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add Profile.pdf assets/cv/Seyyed_Arad_Hosseini_Moghaddam_Knowledge_CV_EN.pdf cv/generate_cv.py
+          if [ -f cv/.cv_generator_bootstrap.txt ]; then
+            git rm cv/.cv_generator_bootstrap.txt
+          fi
+          if git diff --cached --quiet; then
+            echo 'CV already up to date'
+            exit 0
+          fi
+          git commit -m 'docs(cv): publish polished source-backed PDF and generator'
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
