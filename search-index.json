@@ -20,7 +20,7 @@
   {
     "title": "Persian GPT — Transformer From Scratch",
     "url": "/projects/persian-gpt-from-scratch/",
-    "summary": "A Persian GPT documented as trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and author-reported held-out perplexity evaluation. Exported parameter count remains under review.",
+    "summary": "A Persian language-modeling experiment using a 32K BPE tokenizer, PyTorch and author-reported held-out perplexity. A pinned header-only check counted 134,994,432 stored tensor elements in the public safetensors checkpoint.",
     "terms": "PyTorch Transformers Causal LM BPE Persian NLP"
   },
   {
