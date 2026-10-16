@@ -18,9 +18,9 @@
     "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"
   },
   {
-    "title": "Persian GPT — 110M Transformer From Scratch",
+    "title": "Persian GPT — Transformer From Scratch",
     "url": "/projects/persian-gpt-from-scratch/",
-    "summary": "A 110.4M-parameter Persian GPT trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and held-out perplexity evaluation.",
+    "summary": "A Persian GPT documented as trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and author-reported held-out perplexity evaluation. Exported parameter count remains under review.",
     "terms": "PyTorch Transformers Causal LM BPE Persian NLP"
   },
   {
