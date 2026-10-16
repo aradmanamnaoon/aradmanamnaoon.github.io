@@ -360,7 +360,58 @@
       "Dataset Evaluation",
       "Docker"
     ],
-    "category": "software"
+    "category": "software",
+    "slug": "holdout-ledger",
+    "type": "Research software · Split integrity · Reproducibility",
+    "note": "Local synthetic demonstration and hosted CI do not establish detection performance on naturally occurring datasets; third-party adoption is not verified.",
+    "metrics": [
+      {
+        "value": "3",
+        "label": "documented overlap classes"
+      },
+      {
+        "value": "Local",
+        "label": "reproducible synthetic demo"
+      },
+      {
+        "value": "MIT",
+        "label": "original-code license"
+      }
+    ],
+    "research": {
+      "context": "Unrecognized overlap between training and holdout records can undermine evaluation, even when explicit record identifiers are unique. This project is a text and declared-entity-group audit workbench, not a medical image similarity tool.",
+      "methods": [
+        "Normalized-exact text witnesses and verified lexical near-copy matches",
+        "Declared group IDs for known subjects, sessions, or document families",
+        "Connected-component evidence, offline HTML review, and SQLite audit history",
+        "Source-fingerprint-bound review plans and separate repaired outputs that preserve held-out test records",
+        "Seeded synthetic regression and same-input baseline checks on GitHub Actions"
+      ],
+      "limitations": "Only text and declared entity group boundaries are checked. It cannot discover unknown participant identity, semantic paraphrases, hidden data provenance, or prove that an evaluation is leakage-free. Benchmark control outcomes do not generalize to naturally occurring datasets. No external user adoption or independent study validation is verified."
+    },
+    "caseStudy": {
+      "title": "Holdout Ledger: inspect train/test overlap with reviewable evidence",
+      "description": "A local MIT-licensed Python workbench for normalized-exact, lexical near-copy and declared entity-group split audits with source-bound repair plans and a self-contained synthetic demo.",
+      "lede": "Data leakage can conceal itself behind apparently distinct record IDs. Holdout Ledger lets an engineer open a small local example, inspect the witnesses behind cross-split matches, review a proposed repair, and save a separate provenance-bearing result.",
+      "challenge": "An aggregate duplicate count does not explain which exact records cross the evaluation boundary, how near-copies or groups connect, or whether a repair safely preserves held-out examples.",
+      "approach": [
+        "Builds bounded, explainable normalized-exact and lexical near-copy evidence, along with group-ID overlap checks.",
+        "Represents connected components with source-split membership and individual match witnesses.",
+        "Provides local CLI, a FastAPI-backed evidence explorer, offline HTML reports, and persisted SQLite audits.",
+        "Generates source-fingerprint-bound plans that require human review, preserve test records, and write repaired data separately.",
+        "Runs seeded synthetic controls and reproducibility-related CI checks; feedback is voluntary and must not include patient or proprietary data."
+      ],
+      "results": [
+        "The documented invented-records demo runs locally without a GPU, remote model API, account, or dataset download.",
+        "GitHub Actions passed on the main branch on 2026-10-16; this verifies the configured checks, not field performance.",
+        "Public onboarding includes a first-run walkthrough and optional privacy-safe tester feedback form."
+      ],
+      "limitations": "Detection is restricted to normalized-exact text, lexical near matches, and declared entity groups. A cluster may be transitive; pairs within it need not directly match. Semantic paraphrases, missing group identity, unseen sources, and real-world leakage can escape the audit. No independent real-world sensitivity, clinical utility, or user-adoption figures are established.",
+      "sourceLabel": "View repository, synthetic demo and first-run guide",
+      "seoTitle": "Holdout Ledger — Explainable Train/Test Leakage Audits | Arad"
+    },
+    "homepage_description": "Local Python research software for text and declared-group evaluation split auditing, with transparent witness evidence, a synthetic demo, and reviewed repairs.",
+    "homepage_note": "Evidence and synthetic checks are documented; no universal detection recall, independent adoption, or clinical validation is claimed."
   },
   {
     "id": "agent-guardrails",
