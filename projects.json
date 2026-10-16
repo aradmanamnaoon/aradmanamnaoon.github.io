@@ -70,7 +70,7 @@
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/medical-image-segmentation",
     "title": "3D Cardiac MRI Segmentation",
-    "description": "A complete 3D cardiac MRI segmentation pipeline using PyTorch, MONAI, and a 3D U-Net. It covers NIfTI loading, preprocessing, mixed-precision training, sliding-window inference, and voxel-level evaluation on Medical Segmentation Decathlon Task02 Heart.",
+    "description": "A research-oriented 3D left-atrium segmentation experiment using PyTorch, MONAI, and a two-class U-Net. It documents NIfTI loading, case-level splitting, mixed-precision training, sliding-window inference and an author-reported MSD Task02 Heart validation metric.",
     "tags": [
       "PyTorch",
       "MONAI",
@@ -97,38 +97,38 @@
     ],
     "note": "Research project on a public benchmark dataset; best validation Dice of 0.8821 is author-reported, exact split/reproduction not independently established, and no clinical validation.",
     "research": {
-      "context": "The project investigates voxel-level cardiac structure segmentation from volumetric MRI, a setting where models must use three-dimensional spatial context.",
+      "context": "The documented model predicts left atrium versus background in volumetric cardiac MRI. Split independence and external validation must be established before interpreting the score as a comparative scientific benchmark.",
       "methods": [
-        "Medical Segmentation Decathlon Task02 Heart",
-        "PyTorch and MONAI preprocessing",
-        "3D U-Net with DiceCELoss and AdamW",
-        "Mixed precision and sliding-window inference"
+        "MSD Task02 Heart; NIfTI images and corresponding left-atrium labels",
+        "Filename-matched case-level randomized split: 16 train, remaining validation, seed 42",
+        "PyTorch/MONAI two-class 3D U-Net with DiceCELoss and AdamW",
+        "Mixed-precision training, patch sampling and sliding-window inference"
       ],
       "limitations": "The 0.8821 validation Dice is author-reported; dataset split provenance, checkpoint and independent evaluation remain unverified. No external clinical validation is claimed."
     },
     "slug": "3d-cardiac-mri-segmentation",
     "caseStudy": {
       "title": "3D cardiac MRI segmentation with MONAI and a 3D U-Net",
-      "description": "A cardiac MRI segmentation pipeline built with PyTorch, MONAI, the Task02 Heart benchmark, a 3D U-Net, and sliding-window inference.",
-      "lede": "This project segments cardiac structures in volumetric MRI. It documents a complete research pipeline from NIfTI loading and preprocessing through mixed-precision training, sliding-window inference, and validation-set Dice evaluation.",
-      "challenge": "Cardiac MRI volumes contain three-dimensional spatial context, so the workflow needs to preserve volumetric information through preprocessing, training, and inference. The project focuses on a public benchmark task and transparent reporting of its validation result.",
+      "description": "A two-class background/left-atrium cardiac MRI segmentation experiment built with PyTorch, MONAI, MSD Task02 Heart data, a 3D U-Net and sliding-window inference.",
+      "lede": "A documented research workflow for segmenting the left atrium in cardiac MRI. The code covers NIfTI loading, case splitting, volumetric preprocessing, 3D U-Net training, sliding-window inference and author-reported validation Dice.",
+      "challenge": "The goal is left-atrium segmentation in 3D cardiac MRI volumes, where spatial context, image/label alignment, split provenance and reliable validation matter. The current case-level split is reproducible in code, but patient-level group independence has not been independently demonstrated.",
       "approach": [
-        "Used the Medical Segmentation Decathlon Task02 Heart dataset and NIfTI volumes.",
-        "Built preprocessing and data-loading steps with PyTorch and MONAI.",
-        "Trained a 3D U-Net with DiceCELoss and AdamW for 100 epochs, using mixed precision (FP16).",
-        "Applied sliding-window inference to full 3D volumes and evaluated voxel-level overlap with Dice."
+        "Used the MSD Task02 Heart dataset, with expected matching NIfTI image and left-atrium label filenames.",
+        "Shuffled image/label pairs deterministically with seed 42, taking 16 for training and the remainder for validation.",
+        "Defined a MONAI/PyTorch 3D U-Net with two output classes, AdamW and DiceCELoss; nominal 100 epochs.",
+        "Used patch-based training and sliding-window validation inference; the original checkpoint and independent reproduction are not included."
       ],
       "results": [
         "Best author-reported validation Dice: 0.8821; the exact validation split and reproduction artifacts are not established in the public README.",
         "Training configuration: 100 epochs, 3D U-Net, mixed-precision training.",
-        "The result is a project-reported benchmark validation metric, not a clinical performance estimate."
+        "The figure and 0.8821 Dice are author-provided; this is not a patient-level audited split, third-party benchmark, external-site result, or clinical performance estimate."
       ],
       "limitations": "This work has not been clinically validated, prospectively tested or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The author-reported validation result cannot be independently reproduced from the currently described split and run artifacts.",
       "sourceLabel": "View the source code and experiment notes",
       "seoTitle": "3D Cardiac MRI Segmentation with MONAI | Arad"
     },
-    "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI, reporting an unreplicated validation Dice of 0.8821 alongside methodological limitations.",
-    "homepage_note": "Author-reported validation only; split provenance not independently verified; not clinically validated.",
+    "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI for left-atrium labels, including a two-class U-Net and an author-reported validation Dice.",
+    "homepage_note": "Two-class left-atrium task; reported validation only, patient-level independence not verified, no clinical validation.",
     "category": "models"
   },
   {
