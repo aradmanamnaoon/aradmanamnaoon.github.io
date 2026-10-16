@@ -53,8 +53,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         rendered = build_site.render_research_projects(projects)
         self.assertIn("0.8821", rendered)
-        self.assertIn("not been clinically validated", rendered)
+        self.assertIn("author-reported validation Dice", rendered)
+        self.assertIn("No external clinical validation is claimed", rendered)
         self.assertIn("14.52", rendered)
+        self.assertIn("Under review", rendered)
+        self.assertNotIn("110.4M", rendered)
         self.assertIn("103", rendered)
 
     def test_skills_page_comes_from_cv_knowledge_base(self) -> None:
@@ -116,7 +119,8 @@ class PortfolioGeneratorTests(unittest.TestCase):
         projects = build_site.load_projects(ROOT)
         rendered = build_site.render_home_projects(projects)
         self.assertIn("3D cardiac MRI segmentation with PyTorch and MONAI", rendered)
-        self.assertIn("Perplexity evaluates language modeling", rendered)
+        self.assertIn("Model-card metrics are author-reported", rendered)
+        self.assertIn("exported checkpoint parameter count remains under review", rendered)
         self.assertIn("Offline tests verify software behavior", rendered)
         self.assertNotIn("volumetric cardiac MRI segmentation pipeline using PyTorch", rendered)
         home = (ROOT / "index.html").read_text(encoding="utf-8")
