@@ -12,8 +12,7 @@
       "BPE",
       "Persian NLP"
     ],
-    "homepage_featured": true,
-    "homepage_order": 1,
+    "homepage_featured": false,
     "type": "Flagship model · Persian NLP · From-scratch training",
     "metrics": [
       {
@@ -145,8 +144,7 @@
       "FastAPI",
       "Docker"
     ],
-    "homepage_featured": true,
-    "homepage_order": 3,
+    "homepage_featured": false,
     "type": "Agentic AI · RAG · Evaluated system",
     "metrics": [
       {
@@ -263,7 +261,11 @@
       "sourceLabel": "View source code and documentation",
       "seoTitle": "PsyLex Studio: Psychology EN–FA Translator for Windows | Arad"
     },
-    "category": "software"
+    "category": "software",
+    "homepage_featured": true,
+    "homepage_order": 3,
+    "homepage_description": "Local-first English–Persian psychology translation and terminology desktop app, with an installable Windows release and reviewable evidence.",
+    "homepage_note": "v0.6.5 Windows installer is published; glossary starts with 16 public terms, generated text needs human checking, and Python 3.13 source installs remain unsupported."
   },
   {
     "id": "psychology-research-atlas",
@@ -411,7 +413,9 @@
       "seoTitle": "Holdout Ledger — Explainable Train/Test Leakage Audits | Arad"
     },
     "homepage_description": "Local Python research software for text and declared-group evaluation split auditing, with transparent witness evidence, a synthetic demo, and reviewed repairs.",
-    "homepage_note": "Evidence and synthetic checks are documented; no universal detection recall, independent adoption, or clinical validation is claimed."
+    "homepage_note": "Evidence and synthetic checks are documented; no universal detection recall, independent adoption, or clinical validation is claimed.",
+    "homepage_featured": true,
+    "homepage_order": 1
   },
   {
     "id": "agent-guardrails",
