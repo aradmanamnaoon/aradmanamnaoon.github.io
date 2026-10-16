@@ -3,8 +3,8 @@
     "id": "persian-lm-from-scratch",
     "source": "hf_model",
     "url": "https://huggingface.co/aradmanamnaoon/persian-lm-from-scratch",
-    "title": "Persian GPT — 110M Transformer From Scratch",
-    "description": "A 110.4M-parameter decoder-only transformer trained end to end for Persian. The project covers a cleaned Wikipedia corpus, custom 32K BPE tokenizer, training pipeline, n-gram baselines, and held-out evaluation.",
+    "title": "Persian GPT — Transformer From Scratch",
+    "description": "A decoder-only Persian transformer documented as a from-scratch language-modeling experiment. Exported checkpoint parameter count remains under review; corpus, tokenizer, training and reported held-out metrics are described in the linked model card.",
     "tags": [
       "PyTorch",
       "Transformers",
@@ -17,8 +17,8 @@
     "type": "Flagship model · Persian NLP · From-scratch training",
     "metrics": [
       {
-        "value": "110.4M",
-        "label": "parameters"
+        "value": "Under review",
+        "label": "export parameter count"
       },
       {
         "value": "244M",
@@ -29,7 +29,7 @@
         "label": "held-out perplexity"
       }
     ],
-    "note": "A research portfolio model; the held-out perplexity is a language-model metric, not an instruction-following benchmark.",
+    "note": "The reported held-out perplexity is an author metric, not independent replication; the exported parameter count remains under review.",
     "research": {
       "context": "This project demonstrates an end-to-end low-resource language-model workflow for Persian, from corpus preparation through tokenizer design, training, and held-out evaluation.",
       "methods": [
@@ -38,31 +38,31 @@
         "PyTorch decoder-only Transformer",
         "N-gram baselines and held-out perplexity"
       ],
-      "limitations": "The reported perplexity is specific to the held-out corpus and tokenizer. It is not a measure of factuality, instruction following, or downstream task performance."
+      "limitations": "The reported perplexity is specific to the held-out corpus and tokenizer, has not been independently replicated, and does not establish factuality, instruction following or downstream task performance. A community report raises an unresolved discrepancy between the intended tied-weight parameter count and the exported checkpoint."
     },
     "slug": "persian-gpt-from-scratch",
     "caseStudy": {
-      "title": "Persian GPT from scratch: a 110M parameter language model",
-      "description": "A 110.4M-parameter Persian GPT trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and held-out perplexity evaluation.",
+      "title": "Persian GPT from scratch: a Persian language model",
+      "description": "A Persian GPT documented as trained from scratch on cleaned Wikipedia text with a 32K BPE tokenizer, PyTorch, and author-reported held-out perplexity evaluation. Exported parameter count remains under review.",
       "lede": "An end-to-end Persian language-modeling experiment, from preparing a cleaned Wikipedia corpus and building a tokenizer to training a decoder-only Transformer and comparing held-out perplexity against n-gram baselines.",
       "challenge": "Persian has fewer openly documented from-scratch training examples than high-resource languages. The goal here was to build a transparent, reproducible baseline workflow and document what the resulting language-model metric does and does not establish.",
       "approach": [
         "Cleaned and prepared 855,724 Persian Wikipedia documents, totaling about 244 million training tokens.",
         "Trained a custom 32,000-token byte-pair encoding tokenizer on the prepared corpus.",
-        "Implemented and trained a 110.4M-parameter decoder-only Transformer in PyTorch for two epochs (7,450 training steps).",
+        "The public model card describes a decoder-only Transformer trained in PyTorch for two epochs (7,450 optimizer steps); the exported checkpoint's parameter count remains under review.",
         "Evaluated the held-out split with loss and perplexity, then compared perplexity with unigram and interpolated 5-gram baselines."
       ],
       "results": [
         "Held-out test perplexity: 14.52; validation perplexity: 14.02.",
         "The held-out interpolated 5-gram baseline perplexity was 171.60, and the unigram baseline was 1,590.26.",
-        "The reported language-model metrics apply only to the documented corpus split and tokenizer."
+        "The author-reported language-model metrics apply only to the documented corpus split and tokenizer; independent reproduction remains pending."
       ],
-      "limitations": "This is a small research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been evaluated for broad Persian fluency, safety, or downstream usefulness. Perplexity does not establish factuality or real-world performance.",
+      "limitations": "This is an experimental research portfolio model trained on Wikipedia text. It is not an instruction-following or factual question-answering system, has no retrieval grounding, and has not been independently evaluated for broad Persian fluency, safety or downstream usefulness. Perplexity does not establish factual accuracy or real-world performance. The checkpoint parameter count and output-head weight tying are unresolved pending a reproducible artifact audit.",
       "sourceLabel": "Read the model card and download details",
-      "seoTitle": "Persian GPT From Scratch: 110M Model | Arad"
+      "seoTitle": "Persian GPT From Scratch: Language Model | Arad"
     },
-    "homepage_description": "A 110.4M-parameter Persian Transformer trained from scratch, with a custom tokenizer, baselines, and held-out evaluation.",
-    "homepage_note": "Perplexity evaluates language modeling, not factual accuracy.",
+    "homepage_description": "A Persian Transformer described as trained from scratch, with a custom tokenizer, baselines and author-reported held-out evaluation; exported parameter count pending verification.",
+    "homepage_note": "Model-card metrics are author-reported; exported checkpoint parameter count remains under review.",
     "category": "models"
   },
   {
@@ -84,7 +84,7 @@
     "metrics": [
       {
         "value": "0.8821",
-        "label": "best validation Dice"
+        "label": "author-reported validation Dice"
       },
       {
         "value": "100",
@@ -95,7 +95,7 @@
         "label": "architecture"
       }
     ],
-    "note": "Research project on a public benchmark dataset; not clinically validated or deployed for clinical decision-making.",
+    "note": "Research project on a public benchmark dataset; best validation Dice of 0.8821 is author-reported, exact split/reproduction not independently established, and no clinical validation.",
     "research": {
       "context": "The project investigates voxel-level cardiac structure segmentation from volumetric MRI, a setting where models must use three-dimensional spatial context.",
       "methods": [
@@ -104,7 +104,7 @@
         "3D U-Net with DiceCELoss and AdamW",
         "Mixed precision and sliding-window inference"
       ],
-      "limitations": "The reported validation Dice is from this project’s benchmark split. The system has not been clinically validated and is not a clinical decision-support tool."
+      "limitations": "The 0.8821 validation Dice is author-reported; dataset split provenance, checkpoint and independent evaluation remain unverified. No external clinical validation is claimed."
     },
     "slug": "3d-cardiac-mri-segmentation",
     "caseStudy": {
@@ -119,16 +119,16 @@
         "Applied sliding-window inference to full 3D volumes and evaluated voxel-level overlap with Dice."
       ],
       "results": [
-        "Best reported validation Dice: 0.8821 on the documented benchmark split.",
+        "Best author-reported validation Dice: 0.8821; the exact validation split and reproduction artifacts are not established in the public README.",
         "Training configuration: 100 epochs, 3D U-Net, mixed-precision training.",
         "The result is a project-reported benchmark validation metric, not a clinical performance estimate."
       ],
-      "limitations": "This work has not been clinically validated, prospectively tested, or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The validation score describes only the project’s benchmark split.",
+      "limitations": "This work has not been clinically validated, prospectively tested or evaluated across external institutions and scanner settings. It is not a diagnostic device or clinical decision-support system. The author-reported validation result cannot be independently reproduced from the currently described split and run artifacts.",
       "sourceLabel": "View the source code and experiment notes",
       "seoTitle": "3D Cardiac MRI Segmentation with MONAI | Arad"
     },
-    "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI, from volumetric preprocessing to 3D U-Net training and benchmark evaluation.",
-    "homepage_note": "Benchmark validation only; not clinically validated.",
+    "homepage_description": "3D cardiac MRI segmentation with PyTorch and MONAI, reporting an unreplicated validation Dice of 0.8821 alongside methodological limitations.",
+    "homepage_note": "Author-reported validation only; split provenance not independently verified; not clinically validated.",
     "category": "models"
   },
   {
