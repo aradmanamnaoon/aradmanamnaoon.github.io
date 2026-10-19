@@ -606,5 +606,60 @@
     },
     "customPage": true,
     "category": "analysis"
+  },
+  {
+    "id": "eu-loneliness-social-support-analysis",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/eu-loneliness-social-support-analysis",
+    "title": "EU Loneliness & Social Support Analysis",
+    "description": "Reproducible analysis of the 2022 EU Loneliness Survey across EU4 and EU27 samples, investigating associations of social support and face-to-face contact with loneliness using Python statistical modeling and an R replication script.",
+    "tags": [
+      "Python",
+      "R",
+      "Survey Research",
+      "Psychology",
+      "Statistics",
+      "Reproducibility"
+    ],
+    "category": "analysis",
+    "type": "Behavioral science · Survey analysis",
+    "homepage_featured": false,
+    "note": "Observational survey associations; no causal interpretation. See repository for population and weighting details."
+  },
+  {
+    "id": "study-sentinel",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/study-sentinel",
+    "title": "Study Sentinel — Behavioral Research Audit",
+    "description": "Offline-first prototype for study-manifest validation, missingness auditing, scale scoring and reliability, statistical association checks, and provenance-hashed analysis reports. Synthetic demonstration data are provided; the public repository is an early-stage implementation.",
+    "tags": [
+      "Python",
+      "Psychometrics",
+      "Open Science",
+      "Data Validation",
+      "Statistics",
+      "Reproducibility"
+    ],
+    "category": "software",
+    "type": "Research software · Behavioral science",
+    "homepage_featured": false,
+    "note": "Prototype under active development; synthetic outputs are illustrative and not clinical findings."
+  },
+  {
+    "id": "jspsych-fork",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/jsPsych",
+    "title": "jsPsych — Upstream Framework Fork",
+    "description": "A public fork of the jsPsych browser-based behavioral experiment framework. Listed separately as a fork, not an original project or an accepted upstream contribution.",
+    "tags": [
+      "JavaScript",
+      "Behavioral Experiments",
+      "Open Source",
+      "Fork"
+    ],
+    "category": "software",
+    "type": "Open-source exploration · Fork",
+    "homepage_featured": false,
+    "note": "Fork of third-party project. No original authorship or merged contribution is implied."
   }
 ]
