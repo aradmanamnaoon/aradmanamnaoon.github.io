@@ -106,5 +106,23 @@
     "url": "/projects/psoriasis-wellbeing-audit/",
     "summary": "In a published 722-record psoriasis survey, no CSV-null cells appear, but 50 values are coded -9 across 20 records. Explore the effect of coded responses and scoring assumptions.",
     "terms": "Data Science Statistics Research Data Data Quality"
+  },
+  {
+    "title": "EU Loneliness & Social Support Analysis",
+    "url": "/projects/#eu-loneliness-social-support-analysis",
+    "summary": "Reproducible analysis of the 2022 EU Loneliness Survey across EU4 and EU27 samples, investigating associations of social support and face-to-face contact with loneliness using Python statistical modeling and an R replication script.",
+    "terms": "Python R Survey Research Psychology Statistics Reproducibility"
+  },
+  {
+    "title": "Study Sentinel — Behavioral Research Audit",
+    "url": "/projects/#study-sentinel",
+    "summary": "Offline-first prototype for study-manifest validation, missingness auditing, scale scoring and reliability, statistical association checks, and provenance-hashed analysis reports. Synthetic demonstration data are provided; the public repository is an early-stage implementation.",
+    "terms": "Python Psychometrics Open Science Data Validation Statistics Reproducibility"
+  },
+  {
+    "title": "jsPsych — Upstream Framework Fork",
+    "url": "/projects/#jspsych-fork",
+    "summary": "A public fork of the jsPsych browser-based behavioral experiment framework. Listed separately as a fork, not an original project or an accepted upstream contribution.",
+    "terms": "JavaScript Behavioral Experiments Open Source Fork"
   }
 ]
