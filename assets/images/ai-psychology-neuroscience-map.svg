@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<title id="title">From AI engineering to human behavior and brain research</title><desc id="desc">Conceptual map showing AI techniques through reproducible evaluation to psychology and neuroscience questions.</desc>
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1725"/><stop offset="1" stop-color="#233144"/></linearGradient><linearGradient id="ln"><stop stop-color="#5be3c8"/><stop offset="1" stop-color="#bc9bff"/></linearGradient></defs>
+<rect width="1200" height="360" rx="24" fill="url(#bg)"/>
+<g opacity=".12" stroke="#72c7d5"><path d="M0 75H1200M0 150H1200M0 225H1200M0 300H1200M150 0V360M300 0V360M450 0V360M600 0V360M750 0V360M900 0V360M1050 0V360"/></g>
+<g font-family="Arial,Helvetica,sans-serif">
+<text x="55" y="55" font-size="17" letter-spacing="2" font-weight="700" fill="#e7f6ff">INTERDISCIPLINARY RESEARCH DIRECTION</text>
+<rect x="47" y="101" width="305" height="189" rx="20" fill="#193746" stroke="#5be3c8" stroke-width="2"/>
+<text x="69" y="143" font-size="23" font-weight="700" fill="#7bf0e1">AI engineering</text>
+<text x="69" y="183" font-size="17" fill="#e7f3fc">ML · DL · Computer vision</text><text x="69" y="215" font-size="17" fill="#e7f3fc">NLP · LLMs · Data science</text><text x="69" y="264" font-size="15" fill="#a6c9d7">Documented technical work</text>
+<path d="M361 193h50m-12-11 13 11-13 11" stroke="url(#ln)" fill="none" stroke-width="4"/>
+<rect x="422" y="101" width="354" height="189" rx="20" fill="#203445" stroke="#88b8f8" stroke-width="2"/>
+<text x="445" y="143" font-size="23" font-weight="700" fill="#bdd9ff">Reproducible methods</text>
+<text x="445" y="183" font-size="17" fill="#e7f3fc">Careful splits · Baselines</text><text x="445" y="215" font-size="17" fill="#e7f3fc">Transparent model evaluation</text><text x="445" y="264" font-size="15" fill="#a6c9d7">Together with domain experts</text>
+<path d="M787 193h49m-12-11 13 11-13 11" stroke="url(#ln)" fill="none" stroke-width="4"/>
+<rect x="847" y="101" width="308" height="189" rx="20" fill="#332946" stroke="#bc9bff" stroke-width="2"/>
+<text x="869" y="143" font-size="23" font-weight="700" fill="#edd8ff">Human questions</text>
+<text x="869" y="183" font-size="17" fill="#f0eafa">Psychology · Behavior</text><text x="869" y="215" font-size="17" fill="#f0eafa">Neuroscience · Cognition</text><text x="869" y="264" font-size="15" fill="#bdb0d4">Developing research focus</text>
+<text x="55" y="332" font-size="14" fill="#a4bdc9">CONCEPTUAL FRAMEWORK · NOT EXPERIMENTAL EVIDENCE</text>
+</g></svg>
