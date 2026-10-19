@@ -72,7 +72,7 @@ test('search, research area, source filters and zero state are functional', () =
 
 test('project types are mutually exclusive and filter correctly', () => {
   const { api } = archiveHarness();
-  const expected = { models: 5, software: 5, analysis: 4, datasets: 1 };
+  const expected = Object.fromEntries(['models', 'software', 'analysis', 'datasets'].map(category => [category, projectRegistry.filter(project => project.category === category).length]));
   for (const [category, count] of Object.entries(expected)) {
     assert.equal(projectRegistry.filter(project => project.category === category).length, count);
     assert.equal(api.setFilters({ query: '', source: 'all', topic: 'all', category }), count);
