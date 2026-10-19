@@ -138,16 +138,16 @@ test('Skills page progressively enhances searchable, mobile-safe content', () =>
 });
 
 test('Homepage SEO scope, descriptions, and structured data remain accurate', () => {
-  assert.match(home,/Medical AI &amp; Statistical Data Science/);
-  assert.match(home,/statistics for humanities|Statistics for Humanities/);
+  assert.match(home,/AI Engineering for Psychology &amp; Neuroscience/);
+  assert.match(home,/AI for Human Behavior/);
   assert.match(home,/psychology/);
   const match = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
   assert.ok(match);
   const graph = JSON.parse(match[1])['@graph'];
   const person = graph.find(e=>e['@type']==='Person');
   const featured = graph.find(e=>e['@type']==='ItemList');
-  assert.match(person.description,/medical imaging/i);
-  assert.match(person.description,/psychology/i);
+  assert.match(person.description,/AI engineer/i);
+  assert.match(person.description,/psychology and neuroscience/i);
   assert.equal(featured.numberOfItems,featured.itemListElement.length);
   assert.equal(featured.numberOfItems,3);
   assert.ok(featured.itemListElement.every(item=>item.url.startsWith('https://aradmanamnaoon.github.io/projects/')));
