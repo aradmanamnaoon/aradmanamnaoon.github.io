@@ -126,8 +126,11 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertIn("Offline tests verify software behavior", rendered)
         self.assertNotIn("volumetric cardiac MRI segmentation pipeline using PyTorch", rendered)
         home = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("Statistics for Humanities", home)
-        self.assertIn("statistical programming for psychology", home)
+        self.assertIn("AI for Human Behavior", home)
+        self.assertIn("Psychology &amp; Neuroscience", home)
+        self.assertIn("research-collaboration", home)
+        self.assertIn("ai-psychology-neuroscience-map.svg", home)
+        self.assertIn("not claims of completed neuroscience research", home)
         self.assertIn("og-image.jpg", home)
         self.assertNotIn("https://github.com/AradMn", home)
 
