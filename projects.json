@@ -722,7 +722,14 @@
       ],
       "limitations": "The reported estimate and SE were obtained from an observed R run, but have not been independently replicated; NHANES nonresponse, single-cycle design and complete-item exclusion constrain generalization.",
       "sourceLabel": "Browse methods and R research files"
-    }
+    },
+    "figures": [
+      {
+        "src": "/projects/mindhealth-observatory/assets/figures/mindhealth-survey-prevalence.svg",
+        "alt": "Survey-weighted PHQ-9 threshold prevalence for coded male and female categories with normal-approximation error bars",
+        "caption": "R-generated plot of NHANES 2017–18 PHQ-9 ≥10 weighted estimates; uncertainty bars are approximate, and screening is not diagnosis."
+      }
+    ]
   },
   {
     "id": "psychemetrics-atlas",
@@ -784,7 +791,14 @@
       ],
       "limitations": "The matrix-sampled volunteer data, item selection by coverage, missing-by-design mechanism, scaling and factor rotation require sensitivity and substantive item-codebook review. This is not a validated personality instrument.",
       "sourceLabel": "Browse methods and R research files"
-    }
+    },
+    "figures": [
+      {
+        "src": "/projects/psychemetrics-atlas/assets/figures/psychemetrics-loadings.svg",
+        "alt": "Exploratory three-factor oblimin loading heatmap for twelve SAPA item identifiers",
+        "caption": "Exploratory factor loadings from 2,039,803 SAPA responses via IRW v71; factor axes are not named traits."
+      }
+    ]
   },
   {
     "id": "schoolmind-global",
@@ -908,7 +922,14 @@
       ],
       "limitations": "Effect-definition alignment, source-specific dependence and transformed variance semantics have not been independently verified. Estimates derive from upstream processed summaries rather than reproducing every raw experiment.",
       "sourceLabel": "Browse methods and R research files"
-    }
+    },
+    "figures": [
+      {
+        "src": "/projects/replicationscope/assets/figures/replicationscope-forest.svg",
+        "alt": "Forest plot of 26 contrast-specific replication effect estimates with confidence intervals",
+        "caption": "REML pooled effect estimates from upstream Many Labs 2 processed laboratory summaries; full effect-coding audit pending."
+      }
+    ]
   },
   {
     "id": "neurobehavior-inference-lab",
@@ -970,6 +991,13 @@
       ],
       "limitations": "An 80-participant convenience subset of 268 available task-event files was analyzed; the full cohort, RT thresholds, nuisance effects, hierarchical dependence and group representativeness need additional review. No fMRI or diagnostic conclusions are supported.",
       "sourceLabel": "Browse methods and R research files"
-    }
+    },
+    "figures": [
+      {
+        "src": "/projects/neurobehavior-inference-lab/assets/figures/neurobehavior-rt-density.svg",
+        "alt": "Observed distributions of correct SCAP trial reaction times grouped by encoded working-memory load",
+        "caption": "80-participant subsample from OpenNeuro ds000030; density curves describe selected valid reaction-time trials."
+      }
+    ]
   }
 ]
