@@ -66,7 +66,7 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 for child in ("README.md", "docs/protocol.md", "R/analysis.R"):
                     self.assertTrue((p / child).is_file(), str(p / child))
                 self.assertIn(
-                    "NOT EXECUTED",
+                    "NOT EXECUTED" if slug == "schoolmind-global" else "PARTIALLY EXECUTED",
                     (p / "README.md").read_text("utf-8").upper(),
                 )
 
