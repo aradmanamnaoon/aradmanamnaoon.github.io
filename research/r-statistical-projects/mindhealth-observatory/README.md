@@ -5,7 +5,7 @@
 
 **Depression screening, population inequality and survey-weighted inference**
 
-> **Research in progress — NOT EXECUTED.** No numerical findings, statistical figures, sample sizes or validated model diagnostics are available for this project. Do not cite it as a completed study.
+> **Research in progress — PARTIALLY EXECUTED.** Authentic data were used for an initial exploratory R run. The observations, figures, output tables and provenance are documented, but models require independent reproduction and further scientific checks; do not cite this as a completed peer-reviewed study.
 
 **Question.** How does the prevalence of elevated depressive symptoms differ across socioeconomic and demographic strata once the NHANES sample design is respected?
 
@@ -26,3 +26,11 @@ Cross-sectional survey estimates are associations, not evidence of causality. PH
 This directory contains the public methods and a bounded initial R analysis implementation for scientific review. The complete five-project staging archive was produced separately; no R execution, R unit test, Quarto build or resolved renv dependency snapshot has been observed. Run scientific quality gates before publication of results.
 
 [Research case study](https://aradmanamnaoon.github.io/projects/mindhealth-observatory/) · [Data source](https://wwwn.cdc.gov/nchs/nhanes/) · [Protocol](./docs/protocol.md)
+
+## Observed execution artifacts
+
+- [Run ledger and SHA-256 checksums](../EXECUTION_EVIDENCE.md)
+- [Aggregate CSV outputs](./results/)
+- [Exploratory project case study](https://aradmanamnaoon.github.io/projects/mindhealth-observatory/)
+
+The original 109-file research staging archive is available separately and is **not** yet completely integrated into this repository. The scientific release gate remains open.

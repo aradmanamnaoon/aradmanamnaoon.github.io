@@ -5,7 +5,7 @@
 
 **Latent dimensions, item coverage and the limits of personality measurement**
 
-> **Research in progress — NOT EXECUTED.** No numerical findings, statistical figures, sample sizes or validated model diagnostics are available for this project. Do not cite it as a completed study.
+> **Research in progress — PARTIALLY EXECUTED.** Authentic data were used for an initial exploratory R run. The observations, figures, output tables and provenance are documented, but models require independent reproduction and further scientific checks; do not cite this as a completed peer-reviewed study.
 
 **Question.** How stable are exploratory personality item dimensions when respondents encounter only subsets of a large questionnaire?
 
@@ -26,3 +26,11 @@ SAPA is a volunteer, nonprobability sample with matrix-sampled items. The scorin
 This directory contains the public methods and a bounded initial R analysis implementation for scientific review. The complete five-project staging archive was produced separately; no R execution, R unit test, Quarto build or resolved renv dependency snapshot has been observed. Run scientific quality gates before publication of results.
 
 [Research case study](https://aradmanamnaoon.github.io/projects/psychemetrics-atlas/) · [Data source](https://doi.org/10.7910/DVN/SD7SVE) · [Protocol](./docs/protocol.md)
+
+## Observed execution artifacts
+
+- [Run ledger and SHA-256 checksums](../EXECUTION_EVIDENCE.md)
+- [Aggregate CSV outputs](./results/)
+- [Exploratory project case study](https://aradmanamnaoon.github.io/projects/psychemetrics-atlas/)
+
+The original 109-file research staging archive is available separately and is **not** yet completely integrated into this repository. The scientific release gate remains open.

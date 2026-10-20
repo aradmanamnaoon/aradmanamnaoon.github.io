@@ -57,3 +57,7 @@ The official OECD PISA 2022 student-questionnaire SPSS ZIP was identified at `ht
 - `survey` 4.4.2, `haven` 2.5.4, `metafor` 4.8.0, `psych` 2.4.12, `lme4` 1.1.37, `data.table` 1.17.0, `ggplot2` 3.5.1, `GPArotation` 2024.3.1.
 - Executed the published preliminary `R/analysis.R` scripts for NHANES, Many Labs 2 and OpenNeuro; SAPA used a documented long-to-wide IRW adapter now saved as `psychemetrics-atlas/R/run_irw.R`.
 - Full original 109-file research archive, dependency lockfile, Quarto report rendering, independent validation and all sensitivity analyses remain release gates.
+
+## R-generated figures and aggregate outputs
+
+Four exploratory visualizations are linked from the standard case-study renderer under `projects/<slug>/assets/figures/`. Ten aggregate CSV files are versioned under the corresponding `research/r-statistical-projects/<slug>/results/` directories. They contain no respondent-level records. These figures and summaries are reproducible from the documented public data and initial scripts, subject to the stated limitations.
