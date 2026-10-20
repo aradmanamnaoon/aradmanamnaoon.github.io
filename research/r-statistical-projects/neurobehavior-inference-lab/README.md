@@ -1,5 +1,8 @@
 # Neurobehavior Inference Lab
 
+> **Execution update (2026-10-20):** An initial authentic-data R run has been observed. Scientific interpretation remains preliminary and independently unvalidated. See [execution evidence](../EXECUTION_EVIDENCE.md). Full study/reports and original 109-file staging archive are not yet integrated.
+
+
 **Working-memory load, reaction time and trial-level behavioral statistics**
 
 > **Research in progress — NOT EXECUTED.** No numerical findings, statistical figures, sample sizes or validated model diagnostics are available for this project. Do not cite it as a completed study.

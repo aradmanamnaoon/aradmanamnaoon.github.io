@@ -47,12 +47,12 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 self.assertEqual(p["category"], "analysis")
                 self.assertEqual(p["source"], "github")
                 self.assertIsNone(p.get("customPage"))
-                self.assertIn("Not run", {m["value"] for m in p["metrics"]})
+                self.assertTrue(any(m["label"] in {"empirical analysis", "R result status"} for m in p["metrics"]))
                 html = render(p, "https://aradmanamnaoon.github.io")
                 self.assertIn("/assets/css/interaction-hub.css", html)
                 self.assertIn('class="case-grid"', html)
                 self.assertIn(f"/projects/{slug}/", html)
-                self.assertIn("No verified sample sizes", html)
+                self.assertIn("No verified sample sizes" if slug == "schoolmind-global" else "Interpretation remains exploratory", html)
 
     def test_sources_protocols_and_analysis_are_present(self) -> None:
         root = ROOT / "research" / "r-statistical-projects"
