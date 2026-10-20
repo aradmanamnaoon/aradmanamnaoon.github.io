@@ -41,6 +41,30 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
         for metric in metrics if isinstance(metric, dict)
     )
 
+
+    # Optional research figures: use the existing case-study visual system, not new templates.
+    figure_nodes = []
+    for figure in project.get("figures", []):
+        if not isinstance(figure, dict):
+            continue
+        src = figure.get("src", "")
+        alt = figure.get("alt", "")
+        caption = figure.get("caption", "")
+        if not isinstance(src, str) or not src.startswith("/projects/") or not isinstance(alt, str) or not alt.strip():
+            continue
+        figure_nodes.append(
+            f'<figure class="case-figure">'
+            f'<img src="{esc(src)}" alt="{esc(alt)}" loading="lazy" decoding="async" />'
+            f'<figcaption>{esc(caption)}</figcaption></figure>'
+        )
+    figure_gallery = (
+        '<section class="case-figures" aria-labelledby="figures-heading">'
+        '<p class="eyebrow">05 · Observations</p>'
+        '<h2 id="figures-heading">Exploratory figures</h2>'
+        '<div class="case-figure-grid">' + "".join(figure_nodes) + '</div>'
+        '</section>'
+    ) if figure_nodes else ""
+
     def list_items(name: str) -> str:
         values = study.get(name, [])
         if not isinstance(values, list):
@@ -140,6 +164,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
       <section class="case-section" data-reveal="true" aria-labelledby="results-heading"><p class="eyebrow">03 · Evaluation</p><h2 id="results-heading">Reported results</h2><ul>{list_items('results')}</ul></section>
       <section class="case-section limitations" data-reveal="true" aria-labelledby="limitations-heading"><p class="eyebrow">04 · Scope</p><h2 id="limitations-heading">Limitations</h2><p>{esc(study.get('limitations', ''))}</p></section>
     </div>
+    {figure_gallery}
     <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>

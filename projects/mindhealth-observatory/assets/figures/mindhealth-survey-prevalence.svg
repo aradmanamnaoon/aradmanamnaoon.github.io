@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' class='svglite' width='648.00pt' height='360.00pt' viewBox='0 0 648.00 360.00'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #14181F;'/>
+<defs>
+  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA='>
+    <rect x='0.00' y='0.00' width='648.00' height='360.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>
+<rect x='0.00' y='0.00' width='648.00' height='360.00' style='stroke-width: 1.16; stroke: none; fill: #14181F;' />
+</g>
+<defs>
+  <clipPath id='cpNDYuOTN8NjQyLjAyfDQyLjY2fDMyNC42OQ=='>
+    <rect x='46.93' y='42.66' width='595.09' height='282.03' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNDYuOTN8NjQyLjAyfDQyLjY2fDMyNC42OQ==)'>
+<rect x='46.93' y='42.66' width='595.09' height='282.03' style='stroke-width: 1.16; stroke: none; fill: #14181F;' />
+<polyline points='46.93,311.87 642.02,311.87 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='46.93,258.14 642.02,258.14 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='46.93,204.40 642.02,204.40 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='46.93,150.67 642.02,150.67 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='46.93,96.93 642.02,96.93 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='46.93,43.20 642.02,43.20 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='209.23,324.69 209.23,42.66 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<polyline points='479.73,324.69 479.73,42.66 ' style='stroke-width: 0.53; stroke: #334455; stroke-linecap: butt;' />
+<rect x='134.84' y='163.09' width='148.77' height='148.79' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #7DB4F0;' />
+<rect x='405.34' y='95.86' width='148.77' height='216.02' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #7DB4F0;' />
+<polyline points='190.30,138.23 228.17,138.23 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+<polyline points='209.23,138.23 209.23,187.95 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+<polyline points='190.30,187.95 228.17,187.95 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+<polyline points='460.79,55.48 498.66,55.48 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+<polyline points='479.73,55.48 479.73,136.23 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+<polyline points='460.79,136.23 498.66,136.23 ' style='stroke-width: 1.60; stroke: #EDEDED; stroke-linecap: butt;' />
+</g>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNjAuMDA=)'>
+<text x='41.55' y='315.37' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='15.24px' lengthAdjust='spacingAndGlyphs'>0.0</text>
+<text x='41.55' y='261.63' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='15.24px' lengthAdjust='spacingAndGlyphs'>2.5</text>
+<text x='41.55' y='207.90' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='15.24px' lengthAdjust='spacingAndGlyphs'>5.0</text>
+<text x='41.55' y='154.16' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='15.24px' lengthAdjust='spacingAndGlyphs'>7.5</text>
+<text x='41.55' y='100.43' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='21.34px' lengthAdjust='spacingAndGlyphs'>10.0</text>
+<text x='41.55' y='46.70' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='21.34px' lengthAdjust='spacingAndGlyphs'>12.5</text>
+<text x='209.23' y='337.06' text-anchor='middle' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='72.04px' lengthAdjust='spacingAndGlyphs'>Male-coded (1)</text>
+<text x='479.73' y='337.06' text-anchor='middle' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='84.00px' lengthAdjust='spacingAndGlyphs'>Female-coded (2)</text>
+<text transform='translate(14.73,183.68) rotate(-90)' text-anchor='middle' style='font-size: 12.00px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='93.14px' lengthAdjust='spacingAndGlyphs'>PHQ-9 ...10 (%)</text>
+<text x='46.93' y='34.19' style='font-size: 12.00px;fill: #ADC0D1; font-family: "Nimbus Sans";' textLength='422.09px' lengthAdjust='spacingAndGlyphs'>NHANES 2017...18 .. weighted estimate .. approximate 95% normal CI</text>
+<text x='46.93' y='16.47' style='font-size: 14.40px; font-weight: bold;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='341.17px' lengthAdjust='spacingAndGlyphs'>PHQ-9 screening prevalence by coded sex</text>
+<text x='642.02' y='352.03' text-anchor='end' style='font-size: 9.60px;fill: #EDEDED; font-family: "Nimbus Sans";' textLength='312.41px' lengthAdjust='spacingAndGlyphs'>Screening is not a clinical diagnosis; adult complete-item sample</text>
+</g>
+</svg>

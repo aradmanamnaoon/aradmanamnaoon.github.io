@@ -47,12 +47,16 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 self.assertEqual(p["category"], "analysis")
                 self.assertEqual(p["source"], "github")
                 self.assertIsNone(p.get("customPage"))
-                self.assertIn("Not run", {m["value"] for m in p["metrics"]})
+                self.assertTrue(any(m["label"] in {"empirical analysis", "R result status"} for m in p["metrics"]))
                 html = render(p, "https://aradmanamnaoon.github.io")
                 self.assertIn("/assets/css/interaction-hub.css", html)
                 self.assertIn('class="case-grid"', html)
                 self.assertIn(f"/projects/{slug}/", html)
-                self.assertIn("No verified sample sizes", html)
+                self.assertIn("No verified sample sizes" if slug == "schoolmind-global" else "Interpretation remains exploratory", html)
+                if slug != "schoolmind-global":
+                    self.assertIn('class="case-figures"', html)
+                    for figure in p["figures"]:
+                        self.assertTrue((ROOT / figure["src"].lstrip("/")).is_file())
 
     def test_sources_protocols_and_analysis_are_present(self) -> None:
         root = ROOT / "research" / "r-statistical-projects"
@@ -62,7 +66,7 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 for child in ("README.md", "docs/protocol.md", "R/analysis.R"):
                     self.assertTrue((p / child).is_file(), str(p / child))
                 self.assertIn(
-                    "NOT EXECUTED",
+                    "NOT EXECUTED" if slug == "schoolmind-global" else "PARTIALLY EXECUTED",
                     (p / "README.md").read_text("utf-8").upper(),
                 )
 

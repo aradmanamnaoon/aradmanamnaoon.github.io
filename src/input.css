@@ -974,3 +974,12 @@ bottom:16px;
     display: none !important;
   }
 }
+
+
+/* Evidence-led case-study figures; preserves the existing palette and dot-grid. */
+.case-figures { margin: clamp(2rem, 5vw, 4rem) 0; }
+.case-figures h2 { font-family: var(--serif, Georgia, serif); margin-block: .35rem 1.5rem; }
+.case-figure-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); }
+.case-figure { margin: 0; padding: clamp(.7rem, 2vw, 1.3rem); background: var(--surface-raised, #191e27); border: 1px solid var(--line, rgb(237 237 237 / .13)); border-radius: 1.15rem; overflow: hidden; }
+.case-figure img { display: block; width: 100%; height: auto; border-radius: .65rem; }
+.case-figure figcaption { color: var(--muted, #b1bfd0); font-size: .9rem; line-height: 1.6; padding-block-start: 1rem; }
