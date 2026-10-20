@@ -128,13 +128,13 @@
   {
     "title": "MindHealth Observatory",
     "url": "/projects/mindhealth-observatory/",
-    "summary": "Depression screening, population inequality and survey-weighted inference. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "summary": "Depression screening, population inequality and survey-weighted inference. Review the planned estimands, R methods, source data and scientific limits. Partial real-data R execution is documented; independent validation remains pending.",
     "terms": "R Survey statistics PHQ-9 Epidemiology"
   },
   {
     "title": "Psychemetrics Atlas",
     "url": "/projects/psychemetrics-atlas/",
-    "summary": "Latent dimensions, item coverage and the limits of personality measurement. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "summary": "Latent dimensions, item coverage and the limits of personality measurement. Review the planned estimands, R methods, source data and scientific limits. Partial real-data R execution is documented; independent validation remains pending.",
     "terms": "R Psychometrics Factor analysis Personality"
   },
   {
@@ -146,13 +146,13 @@
   {
     "title": "ReplicationScope",
     "url": "/projects/replicationscope/",
-    "summary": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "summary": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. Review the planned estimands, R methods, source data and scientific limits. Partial real-data R execution is documented; independent validation remains pending.",
     "terms": "R Meta-analysis Replication Open science"
   },
   {
     "title": "Neurobehavior Inference Lab",
     "url": "/projects/neurobehavior-inference-lab/",
-    "summary": "Working-memory load, reaction time and trial-level behavioral statistics. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "summary": "Working-memory load, reaction time and trial-level behavioral statistics. Review the planned estimands, R methods, source data and scientific limits. Partial real-data R execution is documented; independent validation remains pending.",
     "terms": "R Cognitive neuroscience Mixed effects Reaction time"
   }
 ]
