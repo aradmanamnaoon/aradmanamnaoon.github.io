@@ -124,5 +124,35 @@
     "url": "/projects/#jspsych-fork",
     "summary": "A public fork of the jsPsych browser-based behavioral experiment framework. Listed separately as a fork, not an original project or an accepted upstream contribution.",
     "terms": "JavaScript Behavioral Experiments Open Source Fork"
+  },
+  {
+    "title": "MindHealth Observatory",
+    "url": "/projects/mindhealth-observatory/",
+    "summary": "Depression screening, population inequality and survey-weighted inference. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "terms": "R Survey statistics PHQ-9 Epidemiology"
+  },
+  {
+    "title": "Psychemetrics Atlas",
+    "url": "/projects/psychemetrics-atlas/",
+    "summary": "Latent dimensions, item coverage and the limits of personality measurement. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "terms": "R Psychometrics Factor analysis Personality"
+  },
+  {
+    "title": "SchoolMind Global",
+    "url": "/projects/schoolmind-global/",
+    "summary": "School belonging, bullying and uncertainty in international comparisons. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "terms": "R PISA Multilevel statistics Adolescence"
+  },
+  {
+    "title": "ReplicationScope",
+    "url": "/projects/replicationscope/",
+    "summary": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "terms": "R Meta-analysis Replication Open science"
+  },
+  {
+    "title": "Neurobehavior Inference Lab",
+    "url": "/projects/neurobehavior-inference-lab/",
+    "summary": "Working-memory load, reaction time and trial-level behavioral statistics. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+    "terms": "R Cognitive neuroscience Mixed effects Reaction time"
   }
 ]
