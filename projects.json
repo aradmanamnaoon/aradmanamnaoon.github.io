@@ -971,5 +971,67 @@
       "limitations": "No fMRI analysis, psychiatric diagnosis, reliability validation or causal claim is established. The trial exclusion window and task timing definitions need independent validation. Models and R tests have not been run. All current figures and estimates are withheld pending real-data execution and validation.",
       "sourceLabel": "Browse methods and R research files"
     }
+  },
+  {
+    "id": "multimodal-mindbench",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/multimodal-mindbench",
+    "title": "Multimodal MindBench — EEG + Behavior Research Benchmark",
+    "description": "Research-stage Python workbench for EEG/behavior ingestion, provenance-verified manifests, conservative event alignment, subject-held-out baselines and multimodal fusion. Includes a synthetic-data evaluation and accessible offline report; no empirical or clinical performance claim.",
+    "tags": [
+      "Python",
+      "EEG",
+      "Behavioral Science",
+      "Multimodal ML",
+      "Reproducibility",
+      "Scientific QA"
+    ],
+    "category": "software",
+    "type": "Research software · Neurobehavioral benchmarking",
+    "homepage_featured": false,
+    "metrics": [
+      {
+        "value": "71",
+        "label": "automated tests in hosted CI"
+      },
+      {
+        "value": "91.73%",
+        "label": "local measured line coverage"
+      }
+    ],
+    "note": "Only synthetic-cohort evaluation is implemented and tested; real subject recordings, hardware-clock verification and empirical generalization remain outside current evidence.",
+    "research": {
+      "context": "EEG and behavioral event timestamps can be compared scientifically only when acquisition clocks, source rights, identities and data leakage controls are explicit.",
+      "methods": [
+        "License declarations and SHA-256 dataset provenance",
+        "Lazy/chunked EEG ingestion and conservative one-to-one event alignment",
+        "Subject-held-out unimodal baselines with separate calibration subjects",
+        "Early/late fusion, missing-modality fallbacks and bootstrap uncertainty",
+        "Accessible offline HTML reporting with repeatable synthetic examples"
+      ],
+      "limitations": "Automated regression tests and CI success do not establish independent real-data rights, EEG timing calibration, artifact validity, generalization to real people or clinical usefulness."
+    },
+    "slug": "multimodal-mindbench",
+    "caseStudy": {
+      "title": "Multimodal MindBench: auditable EEG + behavior research benchmarking",
+      "seoTitle": "Multimodal MindBench: EEG and Behavioral Data Benchmarking | Arad",
+      "description": "An open-source Python research workbench for EEG/behavior synchronization assumptions, reproducible manifests, grouped baselines and multimodal fusion, with synthetic-only demonstration evidence.",
+      "lede": "Multimodal MindBench examines whether an EEG+behavior benchmark has defensible input rights, acquisition-time assumptions and subject separation before any model comparison is interpreted.",
+      "challenge": "EEG signals and stimulus/response logs may use incompatible clocks, incomplete events, or subject overlaps. A useful benchmark needs to expose these problems instead of silently generating accuracy numbers.",
+      "approach": [
+        "Versioned rights and clock contracts gate ingestion and document every source file with SHA-256 digests.",
+        "Bounded-memory EEG readers and deterministic event pairing generate warnings for absent or incompatible timestamps.",
+        "Synthetic cohorts exercise subject-held-out behavioral-only and EEG-only reference models with separate calibration subjects.",
+        "Compare early-feature fusion and late probability averaging with missing-modality fallbacks and quality-control exports.",
+        "Render accessible, keyboard-navigable HTML reports without uploading personal EEG data."
+      ],
+      "results": [
+        "Hosted GitHub Actions completed successfully on the reviewed source commit; jobs cover Python 3.11, Python 3.13, EDF integration and Chromium browser checks.",
+        "71 automated tests passed in the pre-push local run with 91.73% measured line coverage.",
+        "Synthetic-only outputs establish software behavior, not empirical EEG/behavior predictive validity."
+      ],
+      "limitations": "No independently rights-verified real EEG+behavior dataset has completed the scientific acceptance gate. Hardware clock synchronization and external clinical validity are unproven. Treat this as non-diagnostic research software, not a released empirical benchmark.",
+      "sourceLabel": "Inspect the repository and hosted CI evidence"
+    }
   }
 ]
