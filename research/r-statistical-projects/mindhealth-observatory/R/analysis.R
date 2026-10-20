@@ -34,7 +34,7 @@ if(sys.nframe()==0L) {
   result <- estimate(haven::read_xpt(cli[[1]]),haven::read_xpt(cli[[2]]))
   dir.create("results",showWarnings=FALSE)
   utils::write.csv(data.frame(n=result$n,prevalence=coef(result$weighted_prevalence),
-     se=SE(result$weighted_prevalence)), "results/summary.csv", row.names=FALSE)
+     se=survey::SE(result$weighted_prevalence)), "results/summary.csv", row.names=FALSE)
   utils::write.csv(as.data.frame(result$by_sex), "results/by_sex.csv", row.names=FALSE)
   utils::write.csv(summary(result$model)$coefficients,"results/model.csv")
   message("Outputs created for REVIEW; inspect survey design and analytic exclusions.")

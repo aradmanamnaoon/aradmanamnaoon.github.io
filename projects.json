@@ -665,7 +665,7 @@
   {
     "id": "mindhealth-observatory",
     "source": "github",
-    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/feat/psychneuro-statistical-atlas-20261020/research/r-statistical-projects/mindhealth-observatory/",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/mindhealth-observatory",
     "slug": "mindhealth-observatory",
     "title": "MindHealth Observatory",
     "description": "Depression screening, population inequality and survey-weighted inference. An R research implementation in progress using CDC NHANES 2017–2018; authentic results have not been computed or validated.",
@@ -727,7 +727,7 @@
   {
     "id": "psychemetrics-atlas",
     "source": "github",
-    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/feat/psychneuro-statistical-atlas-20261020/research/r-statistical-projects/psychemetrics-atlas/",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/psychemetrics-atlas",
     "slug": "psychemetrics-atlas",
     "title": "Psychemetrics Atlas",
     "description": "Latent dimensions, item coverage and the limits of personality measurement. An R research implementation in progress using SAPA public personality questionnaires; authentic results have not been computed or validated.",
@@ -789,7 +789,7 @@
   {
     "id": "schoolmind-global",
     "source": "github",
-    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/feat/psychneuro-statistical-atlas-20261020/research/r-statistical-projects/schoolmind-global/",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/schoolmind-global",
     "slug": "schoolmind-global",
     "title": "SchoolMind Global",
     "description": "School belonging, bullying and uncertainty in international comparisons. An R research implementation in progress using OECD PISA 2022 student file; authentic results have not been computed or validated.",
@@ -851,7 +851,7 @@
   {
     "id": "replicationscope",
     "source": "github",
-    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/feat/psychneuro-statistical-atlas-20261020/research/r-statistical-projects/replicationscope/",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/replicationscope",
     "slug": "replicationscope",
     "title": "ReplicationScope",
     "description": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. An R research implementation in progress using Many Labs 2 publicly released effect tables; authentic results have not been computed or validated.",
@@ -913,7 +913,7 @@
   {
     "id": "neurobehavior-inference-lab",
     "source": "github",
-    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/feat/psychneuro-statistical-atlas-20261020/research/r-statistical-projects/neurobehavior-inference-lab/",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/neurobehavior-inference-lab",
     "slug": "neurobehavior-inference-lab",
     "title": "Neurobehavior Inference Lab",
     "description": "Working-memory load, reaction time and trial-level behavioral statistics. An R research implementation in progress using OpenNeuro ds000030 (UCLA CNP); authentic results have not been computed or validated.",

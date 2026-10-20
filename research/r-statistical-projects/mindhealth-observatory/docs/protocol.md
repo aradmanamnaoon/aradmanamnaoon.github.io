@@ -12,7 +12,7 @@ CDC NHANES 2017–2018 (https://wwwn.cdc.gov/nchs/nhanes/)
 Survey-weighted PHQ-9 screening prevalence among eligible US adults (18+) with complete item responses
 
 ## Protocol
-Population: civilian noninstitutionalized US adults aged 18+ participating in the 2017–18 MEC examination. Primary estimand: proportion with PHQ-9 ≥ 10 among complete PHQ respondents, estimated with WT M EC2YR weights, SDMVSTRA and SDMVPSU. Item nonresponse is not scored as zero. Report raw n, weighted prevalence and design-based confidence intervals. Fit age/sex/PIR adjusted survey-weighted quasibinomial logit; nonlinear income and interaction sensitivity. Audit singleton strata. Never interpret screening thresholds as a diagnosis or cross-sectional regression as causal.
+Population: civilian noninstitutionalized US adults aged 18+ participating in the 2017–18 MEC examination. Primary estimand: proportion with PHQ-9 ≥ 10 among complete PHQ respondents, estimated with WTMEC2YR weights, SDMVSTRA and SDMVPSU. Item nonresponse is not scored as zero. Report raw n, weighted prevalence and design-based confidence intervals. Fit age/sex/PIR adjusted survey-weighted quasibinomial logit; nonlinear income and interaction sensitivity. Audit singleton strata. Never interpret screening thresholds as a diagnosis or cross-sectional regression as causal.
 
 ## Required release gates
 - Verify specific dataset license, data version and raw input SHA-256 checksums.
