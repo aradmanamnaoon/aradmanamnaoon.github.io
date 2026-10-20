@@ -63,7 +63,7 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                     self.assertTrue((p / child).is_file(), str(p / child))
                 self.assertIn(
                     "NOT EXECUTED",
-                    (p / "R" / "analysis.R").read_text("utf-8").upper(),
+                    (p / "README.md").read_text("utf-8").upper(),
                 )
 
 
