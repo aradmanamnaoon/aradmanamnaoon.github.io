@@ -718,7 +718,8 @@
       "results": [
         "An R 4.5.0 execution on CDC NHANES 2017–2018 analyzed 5,068 eligible complete PHQ-9 respondents. Design-weighted PHQ-9 ≥10 prevalence was 8.53% (95% CI 7.52%–9.55%; SE 0.52 percentage points). This is a screening threshold, not a clinical diagnosis.",
         "The observed execution artifacts, input hashes, package versions and restrictions are documented in the research evidence ledger. Full reproducibility and sensitivity gates are still outstanding.",
-        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted."
+        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted.",
+        "Fresh design-based sensitivity on the same 5,068 respondents found PHQ-9 screen-positive percentages of 24.72% (cutoff 5), 8.53% (cutoff 10), and 2.81% (cutoff 15). These are descriptive screening cutoffs, not diagnoses."
       ],
       "limitations": "The reported estimate and SE were obtained from an observed R run, but have not been independently replicated; NHANES nonresponse, single-cycle design and complete-item exclusion constrain generalization.",
       "sourceLabel": "Browse methods and R research files"
@@ -737,7 +738,7 @@
     "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/psychemetrics-atlas",
     "slug": "psychemetrics-atlas",
     "title": "Psychemetrics Atlas",
-    "description": "Latent dimensions, item coverage and the limits of personality measurement. An R research implementation in progress using SAPA public personality questionnaires; initial real-data R results are exploratory and independently unvalidated.",
+    "description": "Original SAPA keyed IPIP-50 item audit with 23,679 respondent rows, authentic signed item definitions, pairwise item correlations and explicit planned-missingness safeguards.",
     "tags": [
       "R",
       "Psychometrics",
@@ -749,19 +750,19 @@
     "category": "analysis",
     "metrics": [
       {
-        "value": "23,678",
-        "label": "SAPA respondents"
+        "value": "23,679",
+        "label": "original SAPA rows"
       },
       {
-        "value": "12 items",
-        "label": "exploratory EFA"
+        "value": "0 / 5",
+        "label": "fully answered 10-item scales"
       },
       {
-        "value": "Exploratory",
-        "label": "R result status"
+        "value": "5",
+        "label": "signed-key scale audits"
       }
     ],
-    "note": "Exploratory real-data R outputs exist with documented input checksums; full analysis, independent replication, Quarto report and release diagnostics remain incomplete.",
+    "note": "Original SAPA signed-item audit completed in R; sparse matrix sampling prevents conventional complete-case scale reliability claims.",
     "research": {
       "context": "How stable are exploratory personality item dimensions when respondents encounter only subsets of a large questionnaire?",
       "methods": [
@@ -782,14 +783,15 @@
         "Audit item codebooks, scales, reverse-coding and response coverage.",
         "Assess sparse pairwise overlap before estimating polychoric correlations.",
         "Explore oblique factor solutions, eigenstructure and item-level sensitivity.",
-        "Separate unkeyed descriptive scale consistency from validated trait reliability."
+        "Separate unkeyed descriptive scale consistency from validated trait reliability.",
+        "Audit all five 10-item IPIP-50 signed keys, original item-text mappings, reverse coding, completeness thresholds, and pairwise coadministration before trait-scale inference."
       ],
       "results": [
-        "An R analysis of the public IRW transformation of SAPA item responses processed 2,039,803 records from 23,678 respondents and 696 item identifiers. A three-factor exploratory model was fitted to 12 frequently administered items; minimum pairwise overlap was 1,300. No psychological trait labels or validated factor scores are claimed.",
-        "The observed execution artifacts, input hashes, package versions and restrictions are documented in the research evidence ledger. Full reproducibility and sensitivity gates are still outstanding.",
-        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted."
+        "Original Harvard Dataverse SAPA RData contained 23,679 respondent rows. Five ten-item signed IPIP-50 keys were checked against original item descriptions and response categories. In every scale, ZERO respondents supplied all ten responses, making conventional complete-case full-scale reliability inappropriate.",
+        "With at least five of ten items answered, counts ranged from 307 to 535 per selected scale. Minimum pairwise item overlap per scale ranged from 289 to 523. Positive keyed pair correlations are exploratory association evidence—not a substitute for full-scale reliability, measurement invariance, or validity.",
+        "The earlier IRW item-table transformation contains 23,678 respondent IDs and 2,039,803 observed item responses, with exploratory three-factor EFA of 12 high-coverage items. Source representations and their one-record count discrepancy have not been reconciled respondent by respondent."
       ],
-      "limitations": "The matrix-sampled volunteer data, item selection by coverage, missing-by-design mechanism, scaling and factor rotation require sensitivity and substantive item-codebook review. This is not a validated personality instrument.",
+      "limitations": "Nonprobability volunteer sampling and extreme planned item missingness: no complete 10-item records in the selected IPIP-50 scales. Pairwise correlations are descriptive; no ordinary complete-case alpha, validated factor scores, invariance, or clinical conclusions. One-row discrepancy remains between original RData and the separate IRW transformation. Independent publication-level reproducibility is pending.",
       "sourceLabel": "Browse methods and R research files"
     },
     "figures": [
@@ -797,6 +799,11 @@
         "src": "/projects/psychemetrics-atlas/assets/figures/psychemetrics-loadings.svg",
         "alt": "Exploratory three-factor oblimin loading heatmap for twelve SAPA item identifiers",
         "caption": "Exploratory factor loadings from 2,039,803 SAPA responses via IRW v71; factor axes are not named traits."
+      },
+      {
+        "src": "/projects/psychemetrics-atlas/assets/figures/psychemetrics-original-coverage.svg",
+        "alt": "Original SAPA R keyed-scale missingness visualization: respondents with at least five of ten items, 307 to 535 depending on scale",
+        "caption": "Signed-key audit on original SAPA RData. No respondent had complete ten-item data for any of the five selected IPIP-50 scales."
       }
     ]
   },
@@ -856,7 +863,8 @@
       "results": [
         "From 613,744 OECD PISA 2022 student rows in 80 economies, the current complete-case design-weight analysis retained 561,339 BELONG observations across 78 economies; ISR and KSV had too few complete observations for a published estimate.",
         "Preliminary design-weighted BELONG means (95% Fay-BRR intervals): Germany 0.270 [0.240, 0.300], Finland 0.101 [0.077, 0.125], Sweden 0.088 [0.059, 0.117]. These five-country displays are illustrative, not multiplicity-adjusted rankings.",
-        "All 78 country-level estimates, standard errors, exclusions, exact data SHA-256 and R scripts are documented in the research source directory. Interpretation remains exploratory pending measurement-equivalence and response-rate review."
+        "All 78 country-level estimates, standard errors, exclusions, exact data SHA-256 and R scripts are documented in the research source directory. Interpretation remains exploratory pending measurement-equivalence and response-rate review.",
+        "An independent Fay-BRR design calculation reproduced the archived PISA BELONG means and standard errors from 80 replicate-weight columns for Germany (n=5,278), Finland (n=9,736) and Sweden (n=5,820) to 1e-10 precision. Measurement equivalence remains untested."
       ],
       "limitations": "OECD PISA 2022 observational student-level data. 78/80 economies were estimable under current complete-case rules; results are descriptive, not causal or measurement-invariance-validated. Low-response systems must be evaluated individually before ranking or generalization.",
       "sourceLabel": "Browse methods and R research files"
@@ -925,7 +933,8 @@
       "results": [
         "An R 4.5.0 execution loaded 1,593 rows from the Many Labs 2 processed effect-summary table, with 1,474 non-missing r/variance pairs, and fitted preliminary REML meta-analyses for 26 eligible laboratory contrasts.",
         "The observed execution artifacts, input hashes, package versions and restrictions are documented in the research evidence ledger. Full reproducibility and sensitivity gates are still outstanding.",
-        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted."
+        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted.",
+        "Five highest-I² contrasts were refitted after ten selected laboratory deletions each (50 sensitivity refits total). The check is limited to these chosen exclusions and does not replace a full effect-coding and influence audit."
       ],
       "limitations": "Effect-definition alignment, source-specific dependence and transformed variance semantics have not been independently verified. Estimates derive from upstream processed summaries rather than reproducing every raw experiment.",
       "sourceLabel": "Browse methods and R research files"
@@ -994,7 +1003,8 @@
       "results": [
         "R mixed-effects models were fitted to 80 OpenNeuro ds000030 participants' public SCAP event files (3,840 event rows; 3,740 trials with coded accuracy; 3,241 correct trials). Both model fits were nonsingular, with no reported optimizer convergence messages. Coefficient interpretation remains exploratory.",
         "The observed execution artifacts, input hashes, package versions and restrictions are documented in the research evidence ledger. Full reproducibility and sensitivity gates are still outstanding.",
-        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted."
+        "Interpretation remains exploratory and no causal, diagnostic or peer-reviewed conclusion is asserted.",
+        "Re-fitting the 80-participant SCAP task model under three correct-trial RT windows gave log-RT Load coefficients +0.04270 (0.15–3.0 s), +0.04138 (0.2–2.5 s), and +0.03919 (0.3–2.0 s). Exploratory within-task associations are not clinical or imaging effects."
       ],
       "limitations": "An 80-participant convenience subset of 268 available task-event files was analyzed; the full cohort, RT thresholds, nuisance effects, hierarchical dependence and group representativeness need additional review. No fMRI or diagnostic conclusions are supported.",
       "sourceLabel": "Browse methods and R research files"
