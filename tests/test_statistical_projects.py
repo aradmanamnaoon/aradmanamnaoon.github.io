@@ -52,8 +52,8 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 self.assertIn("/assets/css/interaction-hub.css", html)
                 self.assertIn('class="case-grid"', html)
                 self.assertIn(f"/projects/{slug}/", html)
-                self.assertIn("No verified sample sizes" if slug == "schoolmind-global" else "Interpretation remains exploratory", html)
-                if slug != "schoolmind-global":
+                self.assertIn("Interpretation remains exploratory", html)
+                if slug in PROJECT_SLUGS:
                     self.assertIn('class="case-figures"', html)
                     for figure in p["figures"]:
                         self.assertTrue((ROOT / figure["src"].lstrip("/")).is_file())
@@ -66,7 +66,7 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 for child in ("README.md", "docs/protocol.md", "R/analysis.R"):
                     self.assertTrue((p / child).is_file(), str(p / child))
                 self.assertIn(
-                    "NOT EXECUTED" if slug == "schoolmind-global" else "PARTIALLY EXECUTED",
+                    "PARTIALLY EXECUTED",
                     (p / "README.md").read_text("utf-8").upper(),
                 )
 

@@ -1,4 +1,4 @@
-# Four observed R executions — 20 October 2026
+# Five observed R executions — 20 October 2026
 
 **Scope: exploratory, independently unvalidated.** These results were computed in a temporary Debian-based R 4.5.0 environment on authentic public data. The research archive has not been fully re-executed, and these outputs do not constitute finished, peer-reviewed studies.
 
@@ -10,6 +10,7 @@
 | MindHealth DPQ_J | [CDC 2017–18 DPQ_J](https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/DPQ_J.htm) | 489,280 | `1c075f332e79736bd2360b41b0c10ed526883417e0b5996c407b1c564b01ca24` |
 | ReplicationScope | [Many Labs 2 processed effects](https://github.com/ManyLabsOpenScience/ManyLabs2/blob/acef63fc397b8dce7f0b00f863bcea78d324bea8/OSFdata/!!RawData/Data_Figure_NOweird.csv) | 4,492,596 | `1d01187bcb50a67ba43d9651c122002a9f2036a4c8c23e7107763aceb9225820` |
 | Psychemetrics Atlas | [IRW SAPA personality v71.0 CSV](https://itemresponsewarehouse.org/tables/sapa_personality/) | 32,788,744 | `d09b2956d28c0f99222330fdedbb8169256b15fc06195c5a6fce40295c06f292` |
+| PISA 2022 student SPSS ZIP | [OECD student microdata](https://webfs.oecd.org/pisa2022/index.html) | 682,364,259 | `24ee020cd6315d8aca52e07fd9aaef21cbf4f9e5b21601734b4ee6d0928a0905` |
 | Neurobehavior | [OpenNeuro ds000030 participants.tsv](https://github.com/OpenNeuroDatasets/ds000030/blob/4070b6eea231517bfeff42527a46d9d166ac4e13/participants.tsv) | 16,387 | `d39a9697085f209ca7d72ad05792ec4689d99d28d62d3f2c1344bed3627ac4df` |
 
 Neurobehavior source cohort: **80 SCAP event TSV files** from the first 80 lexically ordered event-file paths in GitHub tree `OpenNeuroDatasets/ds000030` at commit `4070b6eea231517bfeff42527a46d9d166ac4e13`; individual filenames and checksums were not deposited, so exact cohort provenance is incomplete. No MRI volumes downloaded.
@@ -47,9 +48,14 @@ Neurobehavior source cohort: **80 SCAP event TSV files** from the first 80 lexic
 - Neither model was singular and neither emitted an lme4 convergence message.
 - **Limitations:** subsample of the published dataset; model-selection and exclusion choices not preregistered; these are exploratory task associations, not MRI findings or clinical diagnosis.
 
-### 5. SchoolMind Global — BLOCKED
+### 5. SchoolMind Global — memory-bounded country-level R run
 
-The official OECD PISA 2022 student-questionnaire SPSS ZIP was identified at `https://webfs.oecd.org/pisa2022/STU_QQQ_SPSS.zip` (682,364,259 bytes). Download timed out in the controlled execution environment. No genuine student records, coefficients or figures were generated. The existing R script is **not** an observed empirical run.
+The official 2022 PISA student file (682,364,259-byte ZIP, SHA-256 `24ee020cd6315d8aca52e07fd9aaef21cbf4f9e5b21601734b4ee6d0928a0905`) was downloaded in validated HTTP ranges. The 2,096,666,903-byte SPSS student file contained 613,744 observations across 80 systems. Pyreadstat performed **ETL only**, separating per-country `CNT`, `BELONG`, final student weight and 80 replicate weights; R `survey` performed all survey-weighted analyses.
+
+- 78 economies generated valid BELONG estimates and Fay-BRR SEs from 561,339 complete observations.
+- ISR and KSV did not meet the >=50 complete observations threshold and were excluded from estimates.
+- Example published-index means: DEU 0.269873 (95% CI 0.239771–0.299974, n 5,278); FIN 0.101158 (0.077217–0.125098, n 9,736); SWE 0.088343 (0.059415–0.117271, n 5,820).
+- The full 78-system table, exclusions and visual figure are versioned. **Descriptive only:** measurement invariance, low response coverage and multiplicity audits are outstanding.
 
 ## Actual run environment
 
@@ -60,4 +66,4 @@ The official OECD PISA 2022 student-questionnaire SPSS ZIP was identified at `ht
 
 ## R-generated figures and aggregate outputs
 
-Four exploratory visualizations are linked from the standard case-study renderer under `projects/<slug>/assets/figures/`. Ten aggregate CSV files are versioned under the corresponding `research/r-statistical-projects/<slug>/results/` directories. They contain no respondent-level records. These figures and summaries are reproducible from the documented public data and initial scripts, subject to the stated limitations.
+Five exploratory visualizations are linked from the standard case-study renderer under `projects/<slug>/assets/figures/`. Thirteen aggregate CSV files are versioned under the corresponding `research/r-statistical-projects/<slug>/results/` directories. They contain no respondent-level records. These figures and summaries are reproducible from the documented public data and initial scripts, subject to the stated limitations.

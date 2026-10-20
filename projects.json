@@ -806,7 +806,7 @@
     "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/schoolmind-global",
     "slug": "schoolmind-global",
     "title": "SchoolMind Global",
-    "description": "School belonging, bullying and uncertainty in international comparisons. An R research implementation in progress using OECD PISA 2022 student file; authentic results have not been computed or validated.",
+    "description": "PISA 2022 country-level school-belonging analysis with OECD final student weights and 80 Fay-BRR replicate weights; genuine preliminary results are available but independent validation remains outstanding.",
     "tags": [
       "R",
       "PISA",
@@ -818,19 +818,19 @@
     "category": "analysis",
     "metrics": [
       {
-        "value": "2022",
-        "label": "PISA survey"
+        "value": "78",
+        "label": "economies analyzed"
       },
       {
-        "value": "80",
-        "label": "Fay replicate weights"
+        "value": "561,339",
+        "label": "BELONG responses"
       },
       {
-        "value": "Not run",
-        "label": "empirical analysis"
+        "value": "Exploratory",
+        "label": "R result status"
       }
     ],
-    "note": "The official 2022 OECD student-level archive is available, but the 682 MB download was incomplete in the execution environment; no PISA observations were analyzed.",
+    "note": "R analyzed valid BELONG observations for 78 of 80 available economies using student and replicate weights. ISR and KSV had too few complete observations; measurement comparability and replicate variance remain release gates.",
     "research": {
       "context": "Do apparent national differences in school belonging survive measurement and complex-sampling uncertainty?",
       "methods": [
@@ -839,13 +839,13 @@
         "Distinguish country-level descriptions from individual-level socioeconomic associations.",
         "Evaluate scaling comparability, response quality and exclusions before interpreting rankings."
       ],
-      "limitations": "PISA is observational. International measurement comparability and nonresponse restrictions require careful review. Conventional lme4 random intercepts are exploratory, not equivalent to complex-design inference; cognitive plausible-value rules should not be transferred to BELONG."
+      "limitations": "OECD PISA 2022 observational student-level data. 78/80 economies were estimable under current complete-case rules; results are descriptive, not causal or measurement-invariance-validated. Low-response systems must be evaluated individually before ranking or generalization."
     },
     "caseStudy": {
       "title": "SchoolMind Global: School belonging, bullying and uncertainty in international comparisons",
       "seoTitle": "SchoolMind Global | R Statistical Research | Arad",
-      "description": "School belonging, bullying and uncertainty in international comparisons. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
-      "lede": "An open, statistics-first investigation of OECD PISA 2022 student file. Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "description": "PISA 2022 survey-weighted analysis of the published BELONG index for 78 economies, using Fay-BRR variance and explicit data exclusions. Preliminary findings only.",
+      "lede": "A statistical investigation of PISA 2022 school belonging. The actual 2.1 GB student file was processed in memory-bounded batches, and valid survey-weighted estimates and confidence intervals were obtained for 78 economies.",
       "challenge": "Do apparent national differences in school belonging survive measurement and complex-sampling uncertainty?",
       "approach": [
         "Validate the BELONG, bullying and ESCS indicators against the PISA codebook.",
@@ -854,13 +854,20 @@
         "Evaluate scaling comparability, response quality and exclusions before interpreting rankings."
       ],
       "results": [
-        "The 2022 OECD student-level SPSS file was identified (682,364,259 bytes), but download attempts did not complete within the environment limit.",
-        "No participant sample, country contrast, estimated school-belonging mean or confidence interval has been computed.",
-        "No verified sample sizes or results are available for SchoolMind Global. Its scientific status is BLOCKED, not completed."
+        "From 613,744 OECD PISA 2022 student rows in 80 economies, the current complete-case design-weight analysis retained 561,339 BELONG observations across 78 economies; ISR and KSV had too few complete observations for a published estimate.",
+        "Preliminary design-weighted BELONG means (95% Fay-BRR intervals): Germany 0.270 [0.240, 0.300], Finland 0.101 [0.077, 0.125], Sweden 0.088 [0.059, 0.117]. These five-country displays are illustrative, not multiplicity-adjusted rankings.",
+        "All 78 country-level estimates, standard errors, exclusions, exact data SHA-256 and R scripts are documented in the research source directory. Interpretation remains exploratory pending measurement-equivalence and response-rate review."
       ],
-      "limitations": "PISA is observational. International measurement comparability and nonresponse restrictions require careful review. Conventional lme4 random intercepts are exploratory, not equivalent to complex-design inference; cognitive plausible-value rules should not be transferred to BELONG. All current figures and estimates are withheld pending real-data execution and validation.",
+      "limitations": "OECD PISA 2022 observational student-level data. 78/80 economies were estimable under current complete-case rules; results are descriptive, not causal or measurement-invariance-validated. Low-response systems must be evaluated individually before ranking or generalization.",
       "sourceLabel": "Browse methods and R research files"
-    }
+    },
+    "figures": [
+      {
+        "src": "/projects/schoolmind-global/assets/figures/schoolmind-belonging-comparison.svg",
+        "alt": "Dot-and-whisker chart of 2022 PISA student-weighted school-belonging scores with confidence intervals for five selected economies",
+        "caption": "R-generated descriptive illustration of five economies from the 78-economy Fay-BRR analysis. Not a causal comparison or independently verified ranking."
+      }
+    ]
   },
   {
     "id": "replicationscope",
