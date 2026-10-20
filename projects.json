@@ -661,5 +661,315 @@
     "type": "Open-source exploration · Fork",
     "homepage_featured": false,
     "note": "Fork of third-party project. No original authorship or merged contribution is implied."
+  },
+  {
+    "id": "mindhealth-observatory",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/mindhealth-observatory",
+    "slug": "mindhealth-observatory",
+    "title": "MindHealth Observatory",
+    "description": "Depression screening, population inequality and survey-weighted inference. An R research implementation in progress using CDC NHANES 2017–2018; authentic results have not been computed or validated.",
+    "tags": [
+      "R",
+      "Survey statistics",
+      "PHQ-9",
+      "Epidemiology"
+    ],
+    "homepage_featured": false,
+    "type": "Statistics · Psychology & Neuroscience · Research in progress",
+    "category": "analysis",
+    "metrics": [
+      {
+        "value": "2017–18",
+        "label": "NHANES cycle"
+      },
+      {
+        "value": "Survey",
+        "label": "design-based inference"
+      },
+      {
+        "value": "Not run",
+        "label": "empirical analysis"
+      }
+    ],
+    "note": "Research implementation only. R analyses, package installation, model diagnostics and Quarto report generation have not been executed.",
+    "research": {
+      "context": "How does the prevalence of elevated depressive symptoms differ across socioeconomic and demographic strata once the NHANES sample design is respected?",
+      "methods": [
+        "Validate all nine PHQ-9 symptoms and survey eligibility before scoring.",
+        "Use 2-year MEC weights, masked strata and PSU identifiers for design-based estimates.",
+        "Estimate weighted prevalence, survey-weighted GLMs, design-aware confidence intervals and nonlinear income sensitivity.",
+        "Audit complete-case selection and report all weights, denominators and exclusion rules."
+      ],
+      "limitations": "Cross-sectional survey estimates are associations, not evidence of causality. PHQ-9 screening is not clinical diagnosis. Multiple imputation and cross-cycle comparisons are not implemented in the staged source."
+    },
+    "caseStudy": {
+      "title": "MindHealth Observatory: Depression screening, population inequality and survey-weighted inference",
+      "seoTitle": "MindHealth Observatory | R Statistical Research | Arad",
+      "description": "Depression screening, population inequality and survey-weighted inference. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+      "lede": "An open, statistics-first investigation of CDC NHANES 2017–2018. Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "challenge": "How does the prevalence of elevated depressive symptoms differ across socioeconomic and demographic strata once the NHANES sample design is respected?",
+      "approach": [
+        "Validate all nine PHQ-9 symptoms and survey eligibility before scoring.",
+        "Use 2-year MEC weights, masked strata and PSU identifiers for design-based estimates.",
+        "Estimate weighted prevalence, survey-weighted GLMs, design-aware confidence intervals and nonlinear income sensitivity.",
+        "Audit complete-case selection and report all weights, denominators and exclusion rules."
+      ],
+      "results": [
+        "Current release is a research implementation draft, not a completed empirical study.",
+        "No verified sample sizes, model coefficients, effect sizes, statistical figures or p-values are available.",
+        "R execution, data licensing/codebook validation, diagnostics and independent numerical checks must pass before substantive findings are added."
+      ],
+      "limitations": "Cross-sectional survey estimates are associations, not evidence of causality. PHQ-9 screening is not clinical diagnosis. Multiple imputation and cross-cycle comparisons are not implemented in the staged source. All current figures and estimates are withheld pending real-data execution and validation.",
+      "sourceLabel": "Browse methods and R research files"
+    }
+  },
+  {
+    "id": "psychemetrics-atlas",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/psychemetrics-atlas",
+    "slug": "psychemetrics-atlas",
+    "title": "Psychemetrics Atlas",
+    "description": "Latent dimensions, item coverage and the limits of personality measurement. An R research implementation in progress using SAPA public personality questionnaires; authentic results have not been computed or validated.",
+    "tags": [
+      "R",
+      "Psychometrics",
+      "Factor analysis",
+      "Personality"
+    ],
+    "homepage_featured": false,
+    "type": "Statistics · Psychology & Neuroscience · Research in progress",
+    "category": "analysis",
+    "metrics": [
+      {
+        "value": "SAPA",
+        "label": "source dataset"
+      },
+      {
+        "value": "EFA",
+        "label": "planned inference"
+      },
+      {
+        "value": "Not run",
+        "label": "empirical analysis"
+      }
+    ],
+    "note": "Research implementation only. R analyses, package installation, model diagnostics and Quarto report generation have not been executed.",
+    "research": {
+      "context": "How stable are exploratory personality item dimensions when respondents encounter only subsets of a large questionnaire?",
+      "methods": [
+        "Audit item codebooks, scales, reverse-coding and response coverage.",
+        "Assess sparse pairwise overlap before estimating polychoric correlations.",
+        "Explore oblique factor solutions, eigenstructure and item-level sensitivity.",
+        "Separate unkeyed descriptive scale consistency from validated trait reliability."
+      ],
+      "limitations": "SAPA is a volunteer, nonprobability sample with matrix-sampled items. The scoring key and cross-group invariance are not yet verified; no validated trait scale, confirmatory factor analysis or item-response-theory result is claimed."
+    },
+    "caseStudy": {
+      "title": "Psychemetrics Atlas: Latent dimensions, item coverage and the limits of personality measurement",
+      "seoTitle": "Psychemetrics Atlas | R Statistical Research | Arad",
+      "description": "Latent dimensions, item coverage and the limits of personality measurement. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+      "lede": "An open, statistics-first investigation of SAPA public personality questionnaires. Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "challenge": "How stable are exploratory personality item dimensions when respondents encounter only subsets of a large questionnaire?",
+      "approach": [
+        "Audit item codebooks, scales, reverse-coding and response coverage.",
+        "Assess sparse pairwise overlap before estimating polychoric correlations.",
+        "Explore oblique factor solutions, eigenstructure and item-level sensitivity.",
+        "Separate unkeyed descriptive scale consistency from validated trait reliability."
+      ],
+      "results": [
+        "Current release is a research implementation draft, not a completed empirical study.",
+        "No verified sample sizes, model coefficients, effect sizes, statistical figures or p-values are available.",
+        "R execution, data licensing/codebook validation, diagnostics and independent numerical checks must pass before substantive findings are added."
+      ],
+      "limitations": "SAPA is a volunteer, nonprobability sample with matrix-sampled items. The scoring key and cross-group invariance are not yet verified; no validated trait scale, confirmatory factor analysis or item-response-theory result is claimed. All current figures and estimates are withheld pending real-data execution and validation.",
+      "sourceLabel": "Browse methods and R research files"
+    }
+  },
+  {
+    "id": "schoolmind-global",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/schoolmind-global",
+    "slug": "schoolmind-global",
+    "title": "SchoolMind Global",
+    "description": "School belonging, bullying and uncertainty in international comparisons. An R research implementation in progress using OECD PISA 2022 student file; authentic results have not been computed or validated.",
+    "tags": [
+      "R",
+      "PISA",
+      "Multilevel statistics",
+      "Adolescence"
+    ],
+    "homepage_featured": false,
+    "type": "Statistics · Psychology & Neuroscience · Research in progress",
+    "category": "analysis",
+    "metrics": [
+      {
+        "value": "2022",
+        "label": "PISA survey"
+      },
+      {
+        "value": "80",
+        "label": "Fay replicate weights"
+      },
+      {
+        "value": "Not run",
+        "label": "empirical analysis"
+      }
+    ],
+    "note": "Research implementation only. R analyses, package installation, model diagnostics and Quarto report generation have not been executed.",
+    "research": {
+      "context": "Do apparent national differences in school belonging survive measurement and complex-sampling uncertainty?",
+      "methods": [
+        "Validate the BELONG, bullying and ESCS indicators against the PISA codebook.",
+        "Use the final student weight and 80 Fay-BRR replicates for uncertainty.",
+        "Distinguish country-level descriptions from individual-level socioeconomic associations.",
+        "Evaluate scaling comparability, response quality and exclusions before interpreting rankings."
+      ],
+      "limitations": "PISA is observational. International measurement comparability and nonresponse restrictions require careful review. Conventional lme4 random intercepts are exploratory, not equivalent to complex-design inference; cognitive plausible-value rules should not be transferred to BELONG."
+    },
+    "caseStudy": {
+      "title": "SchoolMind Global: School belonging, bullying and uncertainty in international comparisons",
+      "seoTitle": "SchoolMind Global | R Statistical Research | Arad",
+      "description": "School belonging, bullying and uncertainty in international comparisons. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+      "lede": "An open, statistics-first investigation of OECD PISA 2022 student file. Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "challenge": "Do apparent national differences in school belonging survive measurement and complex-sampling uncertainty?",
+      "approach": [
+        "Validate the BELONG, bullying and ESCS indicators against the PISA codebook.",
+        "Use the final student weight and 80 Fay-BRR replicates for uncertainty.",
+        "Distinguish country-level descriptions from individual-level socioeconomic associations.",
+        "Evaluate scaling comparability, response quality and exclusions before interpreting rankings."
+      ],
+      "results": [
+        "Current release is a research implementation draft, not a completed empirical study.",
+        "No verified sample sizes, model coefficients, effect sizes, statistical figures or p-values are available.",
+        "R execution, data licensing/codebook validation, diagnostics and independent numerical checks must pass before substantive findings are added."
+      ],
+      "limitations": "PISA is observational. International measurement comparability and nonresponse restrictions require careful review. Conventional lme4 random intercepts are exploratory, not equivalent to complex-design inference; cognitive plausible-value rules should not be transferred to BELONG. All current figures and estimates are withheld pending real-data execution and validation.",
+      "sourceLabel": "Browse methods and R research files"
+    }
+  },
+  {
+    "id": "replicationscope",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/replicationscope",
+    "slug": "replicationscope",
+    "title": "ReplicationScope",
+    "description": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. An R research implementation in progress using Many Labs 2 publicly released effect tables; authentic results have not been computed or validated.",
+    "tags": [
+      "R",
+      "Meta-analysis",
+      "Replication",
+      "Open science"
+    ],
+    "homepage_featured": false,
+    "type": "Statistics · Psychology & Neuroscience · Research in progress",
+    "category": "analysis",
+    "metrics": [
+      {
+        "value": "Many Labs 2",
+        "label": "open replication data"
+      },
+      {
+        "value": "REML",
+        "label": "planned estimator"
+      },
+      {
+        "value": "Not run",
+        "label": "empirical analysis"
+      }
+    ],
+    "note": "Research implementation only. R analyses, package installation, model diagnostics and Quarto report generation have not been executed.",
+    "research": {
+      "context": "How much variation in each replicated psychological effect is attributable to laboratory differences rather than sampling error?",
+      "methods": [
+        "Audit effect direction, estimates, variance semantics and laboratory labels.",
+        "Keep independent psychological contrasts separate instead of pooling them indiscriminately.",
+        "Use Fisher-z transforms and restricted maximum-likelihood random-effects models.",
+        "Inspect tau², I², prediction intervals, influence and leave-one-laboratory-out stability."
+      ],
+      "limitations": "This uses upstream processed effect summaries, not independently reconstructed raw experiments. Study-level dependence and filter selections require verification. A non-significant replication is not evidence that a true effect is zero."
+    },
+    "caseStudy": {
+      "title": "ReplicationScope: Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty",
+      "seoTitle": "ReplicationScope | R Statistical Research | Arad",
+      "description": "Experimental replicability, effect-size heterogeneity and meta-analytic uncertainty. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+      "lede": "An open, statistics-first investigation of Many Labs 2 publicly released effect tables. Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "challenge": "How much variation in each replicated psychological effect is attributable to laboratory differences rather than sampling error?",
+      "approach": [
+        "Audit effect direction, estimates, variance semantics and laboratory labels.",
+        "Keep independent psychological contrasts separate instead of pooling them indiscriminately.",
+        "Use Fisher-z transforms and restricted maximum-likelihood random-effects models.",
+        "Inspect tau², I², prediction intervals, influence and leave-one-laboratory-out stability."
+      ],
+      "results": [
+        "Current release is a research implementation draft, not a completed empirical study.",
+        "No verified sample sizes, model coefficients, effect sizes, statistical figures or p-values are available.",
+        "R execution, data licensing/codebook validation, diagnostics and independent numerical checks must pass before substantive findings are added."
+      ],
+      "limitations": "This uses upstream processed effect summaries, not independently reconstructed raw experiments. Study-level dependence and filter selections require verification. A non-significant replication is not evidence that a true effect is zero. All current figures and estimates are withheld pending real-data execution and validation.",
+      "sourceLabel": "Browse methods and R research files"
+    }
+  },
+  {
+    "id": "neurobehavior-inference-lab",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/aradmanamnaoon.github.io/tree/main/research/r-statistical-projects/neurobehavior-inference-lab",
+    "slug": "neurobehavior-inference-lab",
+    "title": "Neurobehavior Inference Lab",
+    "description": "Working-memory load, reaction time and trial-level behavioral statistics. An R research implementation in progress using OpenNeuro ds000030 (UCLA CNP); authentic results have not been computed or validated.",
+    "tags": [
+      "R",
+      "Cognitive neuroscience",
+      "Mixed effects",
+      "Reaction time"
+    ],
+    "homepage_featured": false,
+    "type": "Statistics · Psychology & Neuroscience · Research in progress",
+    "category": "analysis",
+    "metrics": [
+      {
+        "value": "ds000030",
+        "label": "OpenNeuro dataset"
+      },
+      {
+        "value": "SCAP",
+        "label": "working-memory task"
+      },
+      {
+        "value": "Not run",
+        "label": "empirical analysis"
+      }
+    ],
+    "note": "Research implementation only. R analyses, package installation, model diagnostics and Quarto report generation have not been executed.",
+    "research": {
+      "context": "How do working-memory load and delay relate to speed and accuracy within repeated behavioral task trials?",
+      "methods": [
+        "Read BIDS behavioral events and phenotype metadata, not MRI volumes.",
+        "Validate response correctness and prespecified reaction-time windows.",
+        "Fit participant-intercept Gaussian/log-RT and binomial mixed-effects models.",
+        "Quantify participant heterogeneity and rerun with alternative outlier cutoffs."
+      ],
+      "limitations": "No fMRI analysis, psychiatric diagnosis, reliability validation or causal claim is established. The trial exclusion window and task timing definitions need independent validation. Models and R tests have not been run."
+    },
+    "caseStudy": {
+      "title": "Neurobehavior Inference Lab: Working-memory load, reaction time and trial-level behavioral statistics",
+      "seoTitle": "Neurobehavior Inference Lab | R Statistical Research | Arad",
+      "description": "Working-memory load, reaction time and trial-level behavioral statistics. Review the planned estimands, R methods, source data and scientific limits. This research pipeline is unexecuted.",
+      "lede": "An open, statistics-first investigation of OpenNeuro ds000030 (UCLA CNP). Explore the question, planned analysis, sample-design requirements and limitations, while numerical results remain pending.",
+      "challenge": "How do working-memory load and delay relate to speed and accuracy within repeated behavioral task trials?",
+      "approach": [
+        "Read BIDS behavioral events and phenotype metadata, not MRI volumes.",
+        "Validate response correctness and prespecified reaction-time windows.",
+        "Fit participant-intercept Gaussian/log-RT and binomial mixed-effects models.",
+        "Quantify participant heterogeneity and rerun with alternative outlier cutoffs."
+      ],
+      "results": [
+        "Current release is a research implementation draft, not a completed empirical study.",
+        "No verified sample sizes, model coefficients, effect sizes, statistical figures or p-values are available.",
+        "R execution, data licensing/codebook validation, diagnostics and independent numerical checks must pass before substantive findings are added."
+      ],
+      "limitations": "No fMRI analysis, psychiatric diagnosis, reliability validation or causal claim is established. The trial exclusion window and task timing definitions need independent validation. Models and R tests have not been run. All current figures and estimates are withheld pending real-data execution and validation.",
+      "sourceLabel": "Browse methods and R research files"
+    }
   }
 ]
