@@ -52,7 +52,7 @@ class StatisticalProjectIntegrationTests(unittest.TestCase):
                 self.assertIn("/assets/css/interaction-hub.css", html)
                 self.assertIn('class="case-grid"', html)
                 self.assertIn(f"/projects/{slug}/", html)
-                self.assertIn("Interpretation remains exploratory", html)
+                self.assertIn('id="limitations-heading"', html)
                 if slug in PROJECT_SLUGS:
                     self.assertIn('class="case-figures"', html)
                     for figure in p["figures"]:
