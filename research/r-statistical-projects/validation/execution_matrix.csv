@@ -1,0 +1,5 @@
+"project","observed_check"
+"MindHealth","NHANES XPT: 5068 respondents, survey design, three thresholds checked"
+"SchoolMind","Three PISA countries rechecked directly from 80 Fay-BRR replicate columns"
+"ReplicationScope","Five highest-I2 contrasts checked with ten laboratory-deletion fits each"
+"Neurobehavior","80-participant SCAP mixed models, three RT windows, singularity indicators"
