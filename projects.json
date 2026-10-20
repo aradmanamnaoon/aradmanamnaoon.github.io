@@ -755,11 +755,11 @@
       },
       {
         "value": "0 / 5",
-        "label": "fully answered 10-item scales"
+        "label": "complete 10-item scales"
       },
       {
-        "value": "5",
-        "label": "signed-key scale audits"
+        "value": "Exploratory",
+        "label": "R result status"
       }
     ],
     "note": "Original SAPA signed-item audit completed in R; sparse matrix sampling prevents conventional complete-case scale reliability claims.",
