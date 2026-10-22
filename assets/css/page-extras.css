@@ -49,3 +49,10 @@
 /* Deep-link targets remain below sticky navigation after filters reset. */
 #skills-directory .inventory-card[id],
 #projects-paginated .project[id] { scroll-margin-top: clamp(6rem, 10vh, 8rem); }
+
+
+/* ResearchOS source-preview hero on the portfolio homepage */
+.researchos-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(1.2rem,3vw,2.5rem);padding:clamp(1.2rem,3vw,2.25rem);margin:1.65rem 0 2.2rem;border:1px solid rgba(145,198,240,.29);border-radius:1.35rem;background:linear-gradient(130deg,rgba(102,178,240,.16),transparent 65%),#192531}
+.researchos-feature-copy{min-width:0}.researchos-feature h3{font-size:clamp(1.7rem,3vw,2.6rem);line-height:1.16;letter-spacing:-.04em;margin:.45rem 0 .8rem;color:#f3f8ff}.researchos-feature h3 span{color:#accfec;font-weight:450}.researchos-feature-copy>p:not(.section-kicker){color:#c8dae9;line-height:1.7}.researchos-feature .project-tags,.researchos-feature .project-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+.researchos-feature-visual{display:block;min-width:0;overflow:hidden;border:1px solid rgba(151,199,247,.35);border-radius:1rem}.researchos-feature-visual img{display:block;width:100%;height:auto;aspect-ratio:1200/630;object-fit:cover}.researchos-feature-visual:focus-visible{outline:3px solid #a3d8ff;outline-offset:4px}
+@media(max-width:780px){.researchos-feature{grid-template-columns:1fr}.researchos-feature-visual{order:-1}}

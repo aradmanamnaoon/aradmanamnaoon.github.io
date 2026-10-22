@@ -108,3 +108,18 @@ test('progressive enhancements are additive and honor accessibility', () => {
   assert.match(css, /prefers-reduced-motion/);
   assert.doesNotMatch(page, /messy2json-qwen-0\.5b-lora/);
 });
+
+test('ResearchOS source-only prerelease appears in the archive and has an honest case study', () => {
+  const project = projectRegistry.find(p => p.id === 'researchos');
+  assert.ok(project);
+  assert.equal(project.category, 'software');
+  assert.equal(project.slug, 'researchos');
+  assert.match(project.description, /experimental/i);
+  assert.equal(project.homepage, 'https://github.com/aradmanamnaoon/researchOS/releases/tag/v0.1.0a1');
+  const { api, element } = archiveHarness();
+  assert.equal(api.setFilters({ query: 'ResearchOS', source: 'github', topic: 'all' }), 1);
+  assert.match(element('projects-paginated').innerHTML, /Alpha 1 source release/);
+  const caseStudy = fs.readFileSync(path.join(ROOT, 'projects', 'researchos', 'index.html'), 'utf8');
+  assert.match(caseStudy, /experimental source-code prerelease/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'), /id="researchos-feature"/);
+});

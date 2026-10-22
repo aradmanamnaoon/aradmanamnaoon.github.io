@@ -199,6 +199,84 @@
     "homepage_order": 3
   },
   {
+    "id": "researchos",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/researchOS",
+    "homepage": "https://github.com/aradmanamnaoon/researchOS/releases/tag/v0.1.0a1",
+    "homepageLabel": "Alpha 1 source release ↗",
+    "title": "ResearchOS — Provenance-Aware Research Workbench",
+    "description": "An experimental local-first Python and PySide6 research workbench connecting local project artifacts, selected data-analysis methods, literature and evidence records, and portable archives. Alpha 1 is a source-only experimental preview; full integrated tests and native desktop acceptance remain pending.",
+    "tags": [
+      "Python",
+      "PySide6",
+      "SQLite",
+      "Research Software",
+      "Provenance",
+      "Reproducibility"
+    ],
+    "type": "Research software · Offline-first · Provenance",
+    "metrics": [
+      {
+        "value": "Alpha 1",
+        "label": "published source prerelease"
+      },
+      {
+        "value": "6",
+        "label": "integrated workstreams"
+      },
+      {
+        "value": "SHA-256",
+        "label": "content integrity"
+      }
+    ],
+    "note": "The experimental source release is not a verified installer. No complete combined QA, native desktop certification, or explicit root redistribution LICENSE is established.",
+    "research": {
+      "context": "ResearchOS investigates a local-first research workflow in which sources, methods, decisions and outputs retain reviewable connections.",
+      "methods": [
+        "SQLite-backed project metadata and imported artifacts",
+        "Content-addressed evidence and operation references",
+        "Explicit reviewed worker operations and synthetic examples",
+        "Selected literature, statistics, survey and migration modules",
+        "Portable project archive implementation and local QA runner"
+      ],
+      "limitations": "Full integrated, native Qt, adversarial security and scientific validation have not been completed; the public source is an experimental preview."
+    },
+    "slug": "researchos",
+    "caseStudy": {
+      "title": "ResearchOS: local-first research workflows with traceable evidence",
+      "seoTitle": "ResearchOS — Research Workbench, Provenance and Offline Archives | Arad",
+      "description": "ResearchOS Alpha 1 is an experimental local-first Python/PySide6 research workbench connecting artifacts, evidence, selected methods and portable archives. Source preview, not verified production software.",
+      "lede": "A developing research-software workbench designed to make the path from source files and decisions to analysis outputs inspectable and recoverable.",
+      "challenge": "Researchers often maintain references, datasets, analysis results and decisions in separate tools and loose files. ResearchOS explores a single local project model with explicit artifact identity and operation provenance, so it becomes easier to revisit how a result was produced.",
+      "approach": [
+        "Implemented local project and artifact APIs backed by SQLite, with stored SHA-256 content digests and provenance relationships.",
+        "Connected reviewed research methods, literature/evidence workflows and migration-related source modules through explicit operation interfaces.",
+        "Built optional PySide6 guided desktop source and synthetic first-run examples while preserving offline-first workflows.",
+        "Added source-level archive export and restore functionality, integrity checks and a fail-closed local test runner.",
+        "Reconciled six worker code contributions into a public experimental Alpha 1 source snapshot."
+      ],
+      "results": [
+        "GitHub prerelease v0.1.0a1 was published on October 22, 2026, pointing to exact source revision 66ac400c301749462767da4b078e5f602eded8df.",
+        "Six worker branches were structurally reconciled with no overlapping file changes in the integration step.",
+        "A synthetic demonstration fixture and QA evidence report were published; an end-to-end combined application acceptance result is not claimed.",
+        "No Windows, Linux or macOS installation package was attached as verified binary output."
+      ],
+      "limitations": "Alpha 1 is an experimental source-code prerelease, not a production-ready or independently validated application. Combined pytest and native desktop tests, real installation, and adversarial archive/security acceptance remain unverified. Checksums establish byte integrity, not scientific validity. The repository lacks an explicit root LICENSE, so public source access does not automatically grant redistribution rights. Do not use for sensitive or clinical records.",
+      "sourceLabel": "Explore the GitHub repository"
+    },
+    "figures": [
+      {
+        "src": "/projects/researchos/assets/researchos-workflow.svg",
+        "alt": "Conceptual ResearchOS graph connecting source files, reviewed methods, evidence and portable archives",
+        "caption": "Conceptual workflow; not a screenshot or a verified run."
+      }
+    ],
+    "homepage_description": "Local-first research workbench for traceable project artifacts, reviewed methods and portable archives. Experimental Alpha 1 source code is publicly available.",
+    "homepage_note": "Alpha 1 is source-only and full integrated desktop QA is not complete.",
+    "homepage_featured": false,
+    "category": "software"
+  },
+  {
     "id": "psylex-studio",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/PsyLex-Studio",
