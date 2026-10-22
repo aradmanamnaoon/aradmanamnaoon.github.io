@@ -36,6 +36,12 @@
     "terms": "LangGraph LangChain LangSmith ChromaDB FastAPI Docker"
   },
   {
+    "title": "ResearchOS — Provenance-Aware Research Workbench",
+    "url": "/projects/researchos/",
+    "summary": "ResearchOS Alpha 1 is an experimental local-first Python/PySide6 research workbench connecting artifacts, evidence, selected methods and portable archives. Source preview, not verified production software.",
+    "terms": "Python PySide6 SQLite Research Software Provenance Reproducibility"
+  },
+  {
     "title": "PsyLex Studio — English–Persian Psychology Translator",
     "url": "/projects/psylex-studio/",
     "summary": "PsyLex Studio is a PySide6 Windows application combining English-to-Persian psychology terminology search, optional local/cloud LLM translation, OCR, editable document workflows, and a downloadable installer.",
