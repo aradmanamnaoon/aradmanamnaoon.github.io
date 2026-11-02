@@ -125,7 +125,7 @@ test('ResearchOS source-only prerelease appears in the archive and has an honest
 });
 
 
-test('ResearchWeave and Constellation appear with accurate release and access status', () => {
+test('ResearchWeave and public Constellation have accurate release status', () => {
   const researchweave = projectRegistry.find(p => p.id === 'researchweave');
   const constellation = projectRegistry.find(p => p.id === 'constellation');
   assert.ok(researchweave && constellation);
@@ -133,15 +133,21 @@ test('ResearchWeave and Constellation appear with accurate release and access st
   assert.equal(constellation.homepage_featured, true);
   assert.match(researchweave.homepage, /preview-v0\.3\.0$/);
   assert.match(researchweave.note, /early.access/i);
-  assert.equal(constellation.private_repository, true);
-  assert.match(constellation.note, /private source/i);
+  assert.equal(constellation.private_repository, undefined);
+  assert.equal(constellation.url, 'https://github.com/aradmanamnaoon/constellation');
+  assert.match(constellation.homepage, /v0\.1\.2-local-desktop-preview-20261101$/);
+  assert.match(constellation.note, /public open.source/i);
   const { api, element } = archiveHarness();
   assert.equal(api.setFilters({ query: 'Constellation', source: 'github', topic: 'all' }), 1);
-  assert.match(element('projects-paginated').innerHTML, /Private repo \(access required\)/);
+  assert.match(element('projects-paginated').innerHTML, /View source/);
+  assert.match(element('projects-paginated').innerHTML, /Experimental Windows/);
   assert.equal(api.setFilters({ query: 'ResearchWeave', source: 'github', topic: 'all' }), 1);
   assert.match(element('projects-paginated').innerHTML, /early.access/i);
   for (const slug of ['researchweave', 'constellation']) {
     const detail = fs.readFileSync(path.join(ROOT, 'projects', slug, 'index.html'), 'utf8');
     assert.match(detail, /<h1>/);
   }
+  const constellationPage = fs.readFileSync(path.join(ROOT, 'projects', 'constellation', 'index.html'), 'utf8');
+  assert.match(constellationPage, /Explore public source code/);
+  assert.match(constellationPage, /v0\.1\.2-local-desktop-preview-20261101/);
 });

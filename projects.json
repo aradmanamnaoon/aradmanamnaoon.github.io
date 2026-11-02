@@ -1168,9 +1168,8 @@
     "id": "constellation",
     "source": "github",
     "url": "https://github.com/aradmanamnaoon/constellation",
-    "private_repository": true,
     "title": "Constellation — Local-First Multi-Agent AI Workspace",
-    "description": "An experimental Tauri 2/Svelte 5/Rust desktop workspace for multiple attributed AI agents, rooms, model-provider selection, task workflows and explicit user-controlled local actions. The GitHub repository is private and there is no verified public production installer.",
+    "description": "An experimental, publicly available Rust/Tauri 2/Svelte 5 desktop workspace for attributed AI-agent conversations, model-provider selection, small task workflows and explicit, reviewed local actions. Source code is public; unsigned v0.1.2 Windows and Linux preview packages are available, but there is no production-certified release.",
     "tags": [
       "Rust",
       "Tauri",
@@ -1198,7 +1197,7 @@
         "label": "provider protocol families"
       }
     ],
-    "note": "Private source repository (access required). Functional prototype; no public production installer, comprehensive security certification or complete multi-platform release is established.",
+    "note": "Public open-source repository with an unsigned, experimental v0.1.2 Windows/Linux prerelease; no macOS or Android packages, production security certification or complete multi-platform acceptance.",
     "research": {
       "context": "Constellation explores user-directed collaboration among multiple AI-agent roles in a local desktop application with explicit identity, persistence and approval controls.",
       "methods": [
@@ -1207,29 +1206,31 @@
         "Role-template library and short dependency-ordered text workflows",
         "Permission-scoped experimental file proposals with separate native confirmation"
       ],
-      "limitations": "The repository is currently private. Role templates are prompts rather than 200 autonomous integrations. Public production installers, a hardened coding sandbox, cloud sync, Android builds and complete cross-platform acceptance have not been established."
+      "limitations": "The source repository is public, but the app remains experimental. Role templates are prompts, not 200 autonomous integrations. The v0.1.2 prerelease includes Windows and Linux packages, not macOS or Android; a hardened autonomous coding sandbox, cloud sync and complete production acceptance are not established."
     },
     "caseStudy": {
       "title": "Constellation: a local-first multi-agent desktop workspace",
       "seoTitle": "Constellation — Local-First Multi-Agent AI Workspace | Arad",
-      "description": "Constellation is an experimental local-first multi-agent AI desktop workspace built with Rust, Tauri and Svelte. Its source repository is private and public production installers are not yet available.",
+      "description": "Constellation is a publicly available experimental multi-agent AI desktop workspace built with Rust, Tauri and Svelte. The source is public and an unsigned Windows/Linux v0.1.2 desktop preview is available.",
       "lede": "Constellation is a developing desktop workspace for organizing multi-agent rooms, choosing model providers and running explicitly requested text tasks with attributed results.",
       "challenge": "Multi-agent systems can obscure who produced a response, when a provider was contacted and whether a suggested action has user approval. This prototype explores a local-first interface that keeps those boundaries visible.",
       "approach": [
         "Built a Tauri 2/Svelte 5 frontend backed by Rust and local SQLite state for rooms, agents, messages and tasks.",
         "Added 200 prompt-only role templates, per-agent model preferences and explicitly selected multi-agent replies.",
         "Implemented bounded text-task workflows, provider-specific reply status, explicit user-triggered requests and local evidence retrieval experiments.",
-        "Prototyped tightly scoped file read/create proposals that require independent native user confirmation; this is not unrestricted autonomous coding."
+        "Prototyped tightly scoped file read/create proposals that require independent native user confirmation; published an unsigned experimental v0.1.2 Windows/Linux desktop preview without claiming production readiness."
       ],
       "results": [
         "The local role library contains 200 prompt templates; these are not independently validated integrations or autonomous agents.",
         "Rooms support selection of up to eight agents and multiple configured text-provider protocol families.",
-        "Local Windows development GUI and deterministic provider-fixture checks are documented internally; these do not establish production readiness."
+        "The public v0.1.2 GitHub prerelease contains unsigned Windows x64 portable/setup packages and Linux x86_64 AppImage/DEB packages, with checksum and verification notes. macOS and Android binaries are not included."
       ],
-      "limitations": "The source code repository is private, so visitors without access cannot inspect it. The app is a functional prototype: no publicly verified production installer, full cross-platform GUI acceptance, hardened autonomous coding sandbox, finished cloud synchronization or Android release is established. Remote provider requests can send explicitly selected text outside the device and may incur charges.",
-      "sourceLabel": "Private GitHub repository (access required)"
+      "limitations": "The GitHub source repository is public and experimental Windows/Linux binaries are downloadable. These are unsigned preview artifacts, not independently production-certified installers. Full cross-platform GUI acceptance, hardened autonomous coding, finished cloud sync and Android or macOS release binaries are not established. Remote provider requests can send explicitly selected text outside the device and may incur charges.",
+      "sourceLabel": "Explore public source code"
     },
     "homepage_description": "Rust/Tauri desktop prototype for attributed AI-agent rooms, provider selection, role templates and user-controlled workflows.",
-    "homepage_note": "Private source; experimental prototype with no verified public installer or production security acceptance."
+    "homepage_note": "Public Rust/Tauri source and unsigned experimental v0.1.2 Windows/Linux preview; not production-certified, no macOS/Android binaries.",
+    "homepage": "https://github.com/aradmanamnaoon/constellation/releases/tag/v0.1.2-local-desktop-preview-20261101",
+    "homepageLabel": "Experimental Windows + Linux preview ↗"
   }
 ]
