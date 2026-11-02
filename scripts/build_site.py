@@ -52,7 +52,7 @@ HERO_IMAGE_ALT = (
 HERO_IMAGE_TITLE = "Seyyed Arad Hosseini Moghaddam headshot"
 HERO_IMAGE_WIDTH = 853
 HERO_IMAGE_HEIGHT = 1280
-MAX_PROJECTS_HOMEPAGE = 3
+MAX_PROJECTS_HOMEPAGE = 5
 PROJECTS_PER_PAGE = 6
 FAVICON_LINKS = """    <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -1905,7 +1905,7 @@ def project_actions(project: dict[str, Any]) -> list[dict[str, Any]]:
     actions.append(
         {
             "url": project["url"],
-            "label": "View source ↗" if actions else "View project ↗",
+            "label": ("Private repo (access required) ↗" if project.get("private_repository") else ("View source ↗" if actions else "View project ↗")),
             "primary": not actions,
             "external": True,
         }

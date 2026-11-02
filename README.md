@@ -34,6 +34,8 @@ Face](https://huggingface.co/aradmanamnaoon) ·
 4. **Messy2JSON** · QLoRA structured extraction with 99.82% token accuracy and validation loss 0.0045. [Model details](https://huggingface.co/aradmanamnaoon/messy2json-qwen-0.5b)
 5. **NLLB English → Persian Psychology Translation** · Domain adaptation of NLLB-200 distilled 600M. [Model details](https://huggingface.co/aradmanamnaoon/nllb-en-fa-psych-translation)
 6. **Jibay2 Medical** · Research-oriented clinical-note summarization with QLoRA; best validation loss 1.4403. [Model details](https://huggingface.co/aradmanamnaoon/jibay2-medical-v2)
+7. **ResearchWeave** · Local-first Rust/Slint research workbench with evidence, analysis and manuscript workflows; owner-approved v0.3.0 early-access installers for Windows, macOS and Linux. [Case study](https://aradmanamnaoon.github.io/projects/researchweave/) · [Release](https://github.com/aradmanamnaoon/researchweave/releases/tag/preview-v0.3.0)
+8. **Constellation** · Experimental Rust/Tauri multi-agent desktop workspace with attributed conversations, provider choice and reviewed task actions. The source repository is private; no verified public production installer. [Case study](https://aradmanamnaoon.github.io/projects/constellation/)
 
 ## Public models & data
 

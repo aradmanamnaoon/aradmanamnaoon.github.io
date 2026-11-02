@@ -1094,5 +1094,142 @@
         "caption": "80-participant subsample from OpenNeuro ds000030; density curves describe selected valid reaction-time trials."
       }
     ]
+  },
+  {
+    "id": "researchweave",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/researchweave",
+    "homepage": "https://github.com/aradmanamnaoon/researchweave/releases/tag/preview-v0.3.0",
+    "homepageLabel": "Early-access downloads (Windows, macOS, Linux) ↗",
+    "title": "ResearchWeave — Local-First Research Workbench",
+    "description": "A Rust/Slint desktop research workbench connecting literature and evidence, native PDF reading, dataset analysis, qualitative coding, manuscripts, provenance, and optional approval-gated AI. The published v0.3.0 early-access installers are not an independently certified stable release.",
+    "tags": [
+      "Rust",
+      "Slint",
+      "Research Software",
+      "Statistics",
+      "Evidence Provenance",
+      "Desktop AI"
+    ],
+    "category": "software",
+    "type": "Research software · Native desktop · Local-first",
+    "homepage_featured": true,
+    "homepage_order": 4,
+    "slug": "researchweave",
+    "metrics": [
+      {
+        "value": "6",
+        "label": "main workspaces"
+      },
+      {
+        "value": "5",
+        "label": "OS-specific packages"
+      },
+      {
+        "value": "v0.3.0",
+        "label": "early-access release"
+      }
+    ],
+    "note": "Owner-approved early-access v0.3.0 is publicly downloadable, but complete independent native GUI, security and scientific acceptance is not established. Live Liara cloud sync is not part of this release.",
+    "research": {
+      "context": "ResearchWeave investigates how research artifacts can remain connected to their sources, assumptions, analyses and manuscript outputs in a native, local-first workspace.",
+      "methods": [
+        "Rust desktop and Slint UI with a typed project command boundary",
+        "Versioned evidence, literature and PDF workflows linked to source identities",
+        "Dataset imports and provenance-bearing quantitative and qualitative analyses",
+        "Notebook/manuscript revisions, export paths and approval-gated optional AI"
+      ],
+      "limitations": "This is an early-access software release rather than a fully validated research instrument. Method-specific assumptions, feature readiness and the quality of AI output require independent review; no live cloud synchronization guarantee is made."
+    },
+    "caseStudy": {
+      "title": "ResearchWeave: a native research workbench with traceable evidence",
+      "seoTitle": "ResearchWeave — Rust Research Workbench and Early-Access Download | Arad",
+      "description": "ResearchWeave is a Rust/Slint local-first research desktop application for literature, evidence provenance, analysis, writing and optional AI. Early-access packages exist for Windows, macOS and Linux.",
+      "lede": "ResearchWeave brings project records, PDF evidence, datasets, analyses, notebooks and manuscript exports into one native Rust workspace, with local-first defaults and explicit boundaries for optional AI.",
+      "challenge": "Research sources, datasets, decisions, analysis results and drafts are often distributed across unrelated tools. The design goal is a reviewable workflow where research objects retain provenance and users can reconstruct the origin of an output.",
+      "approach": [
+        "Implemented a Rust/Slint desktop workbench organized into Home, Sources, Analyze, Synthesize, Automate and Manage.",
+        "Connected project revisioning and evidence/source identities with a native PDF reader, reference workflows, dataset imports and statistical analysis paths.",
+        "Added provenance-aware analysis and manuscript workflows with optional provider-configured AI and explicit approval boundaries.",
+        "Packaged an owner-approved v0.3.0 early-access release for Windows x64, macOS arm64/x64 and Linux x86_64, with a published SHA-256 manifest."
+      ],
+      "results": [
+        "The GitHub preview-v0.3.0 release provides five OS-specific packages: Windows installer, two macOS DMGs, Linux AppImage and Debian package.",
+        "Versioned project workflows cover source records, evidence, quantitative and qualitative analysis, writing and local archives; individual feature readiness varies.",
+        "Release notes explicitly distinguish owner approval and packaging from independent installed-GUI, scientific and full security acceptance."
+      ],
+      "limitations": "The v0.3.0 release is owner-approved early access with known incompleteness. Independent full-platform installed-GUI acceptance, scientific validation and all advertised advanced workflows are not established. Live Iranian Liara S3 synchronization and two-device restore are not included or verified. Do not treat this as clinical or safety-critical research software.",
+      "sourceLabel": "Inspect public Rust source and documentation"
+    },
+    "homepage_description": "Native Rust/Slint research workbench integrating literature, PDF evidence, analysis, manuscripts and controlled AI, with early-access cross-platform installers.",
+    "homepage_note": "Owner-approved v0.3.0 preview, not an independently certified stable release; no verified live Liara sync."
+  },
+  {
+    "id": "constellation",
+    "source": "github",
+    "url": "https://github.com/aradmanamnaoon/constellation",
+    "private_repository": true,
+    "title": "Constellation — Local-First Multi-Agent AI Workspace",
+    "description": "An experimental Tauri 2/Svelte 5/Rust desktop workspace for multiple attributed AI agents, rooms, model-provider selection, task workflows and explicit user-controlled local actions. The GitHub repository is private and there is no verified public production installer.",
+    "tags": [
+      "Rust",
+      "Tauri",
+      "Svelte",
+      "Multi-Agent AI",
+      "SQLite",
+      "Local-first"
+    ],
+    "category": "software",
+    "type": "Agentic AI · Desktop application · Experimental",
+    "homepage_featured": true,
+    "homepage_order": 5,
+    "slug": "constellation",
+    "metrics": [
+      {
+        "value": "200",
+        "label": "prompt-only role templates"
+      },
+      {
+        "value": "8",
+        "label": "agents selectable per room"
+      },
+      {
+        "value": "6",
+        "label": "provider protocol families"
+      }
+    ],
+    "note": "Private source repository (access required). Functional prototype; no public production installer, comprehensive security certification or complete multi-platform release is established.",
+    "research": {
+      "context": "Constellation explores user-directed collaboration among multiple AI-agent roles in a local desktop application with explicit identity, persistence and approval controls.",
+      "methods": [
+        "Tauri 2 and Svelte 5 desktop UI with Rust-owned local persistence",
+        "Attributed multi-agent room messages and explicit provider choice",
+        "Role-template library and short dependency-ordered text workflows",
+        "Permission-scoped experimental file proposals with separate native confirmation"
+      ],
+      "limitations": "The repository is currently private. Role templates are prompts rather than 200 autonomous integrations. Public production installers, a hardened coding sandbox, cloud sync, Android builds and complete cross-platform acceptance have not been established."
+    },
+    "caseStudy": {
+      "title": "Constellation: a local-first multi-agent desktop workspace",
+      "seoTitle": "Constellation — Local-First Multi-Agent AI Workspace | Arad",
+      "description": "Constellation is an experimental local-first multi-agent AI desktop workspace built with Rust, Tauri and Svelte. Its source repository is private and public production installers are not yet available.",
+      "lede": "Constellation is a developing desktop workspace for organizing multi-agent rooms, choosing model providers and running explicitly requested text tasks with attributed results.",
+      "challenge": "Multi-agent systems can obscure who produced a response, when a provider was contacted and whether a suggested action has user approval. This prototype explores a local-first interface that keeps those boundaries visible.",
+      "approach": [
+        "Built a Tauri 2/Svelte 5 frontend backed by Rust and local SQLite state for rooms, agents, messages and tasks.",
+        "Added 200 prompt-only role templates, per-agent model preferences and explicitly selected multi-agent replies.",
+        "Implemented bounded text-task workflows, provider-specific reply status, explicit user-triggered requests and local evidence retrieval experiments.",
+        "Prototyped tightly scoped file read/create proposals that require independent native user confirmation; this is not unrestricted autonomous coding."
+      ],
+      "results": [
+        "The local role library contains 200 prompt templates; these are not independently validated integrations or autonomous agents.",
+        "Rooms support selection of up to eight agents and multiple configured text-provider protocol families.",
+        "Local Windows development GUI and deterministic provider-fixture checks are documented internally; these do not establish production readiness."
+      ],
+      "limitations": "The source code repository is private, so visitors without access cannot inspect it. The app is a functional prototype: no publicly verified production installer, full cross-platform GUI acceptance, hardened autonomous coding sandbox, finished cloud synchronization or Android release is established. Remote provider requests can send explicitly selected text outside the device and may incur charges.",
+      "sourceLabel": "Private GitHub repository (access required)"
+    },
+    "homepage_description": "Rust/Tauri desktop prototype for attributed AI-agent rooms, provider selection, role templates and user-controlled workflows.",
+    "homepage_note": "Private source; experimental prototype with no verified public installer or production security acceptance."
   }
 ]
