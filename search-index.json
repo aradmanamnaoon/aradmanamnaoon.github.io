@@ -36,6 +36,18 @@
     "terms": "LangGraph LangChain LangSmith ChromaDB FastAPI Docker"
   },
   {
+    "title": "ResearchWeave — Local-First Research Workbench",
+    "url": "/projects/researchweave/",
+    "summary": "ResearchWeave is a Rust/Slint local-first research desktop application for literature, evidence provenance, analysis, writing and optional AI. Early-access packages exist for Windows, macOS and Linux.",
+    "terms": "Rust Slint Research Software Statistics Evidence Provenance Desktop AI"
+  },
+  {
+    "title": "Constellation — Local-First Multi-Agent AI Workspace",
+    "url": "/projects/constellation/",
+    "summary": "Constellation is an experimental local-first multi-agent AI desktop workspace built with Rust, Tauri and Svelte. Its source repository is private and public production installers are not yet available.",
+    "terms": "Rust Tauri Svelte Multi-Agent AI SQLite Local-first"
+  },
+  {
     "title": "ResearchOS — Provenance-Aware Research Workbench",
     "url": "/projects/researchos/",
     "summary": "ResearchOS Alpha 1 is an experimental local-first Python/PySide6 research workbench connecting artifacts, evidence, selected methods and portable archives. Source preview, not verified production software.",
