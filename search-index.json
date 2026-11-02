@@ -44,7 +44,7 @@
   {
     "title": "Constellation — Local-First Multi-Agent AI Workspace",
     "url": "/projects/constellation/",
-    "summary": "Constellation is an experimental local-first multi-agent AI desktop workspace built with Rust, Tauri and Svelte. Its source repository is private and public production installers are not yet available.",
+    "summary": "Constellation is a publicly available experimental multi-agent AI desktop workspace built with Rust, Tauri and Svelte. The source is public and an unsigned Windows/Linux v0.1.2 desktop preview is available.",
     "terms": "Rust Tauri Svelte Multi-Agent AI SQLite Local-first"
   },
   {
