@@ -131,13 +131,13 @@ test('ResearchWeave and Constellation appear with accurate release and access st
   assert.ok(researchweave && constellation);
   assert.equal(researchweave.homepage_featured, true);
   assert.equal(constellation.homepage_featured, true);
-  assert.match(researchweave.homepage, /preview-v0\\.3\\.0$/);
+  assert.match(researchweave.homepage, /preview-v0\.3\.0$/);
   assert.match(researchweave.note, /early.access/i);
   assert.equal(constellation.private_repository, true);
   assert.match(constellation.note, /private source/i);
   const { api, element } = archiveHarness();
   assert.equal(api.setFilters({ query: 'Constellation', source: 'github', topic: 'all' }), 1);
-  assert.match(element('projects-paginated').innerHTML, /Private repo \\(access required\\)/);
+  assert.match(element('projects-paginated').innerHTML, /Private repo \(access required\)/);
   assert.equal(api.setFilters({ query: 'ResearchWeave', source: 'github', topic: 'all' }), 1);
   assert.match(element('projects-paginated').innerHTML, /early.access/i);
   for (const slug of ['researchweave', 'constellation']) {
