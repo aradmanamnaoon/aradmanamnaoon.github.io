@@ -157,6 +157,11 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   </header>
   <main id="main" class="shell">
     <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a>{download_link}<a class="action" href="/projects/#research-directions">Research directions</a></div></header>
+    <aside class="research-continuum-note" aria-label="Current interdisciplinary research direction">
+      <strong>AI engineering → neuroscience</strong>
+      <p>This project documents my engineering experience. I am independently studying advanced neuroscience and applying those methods to questions in brain genomics, neuroinformatics, neuroimaging and neuropharmacology. These new directions do not imply clinical or drug-discovery outcomes.</p>
+      <a href="/projects/#research-directions">Explore the neuroscience research direction ↗</a>
+    </aside>
     <section aria-label="Reported project metrics" class="metrics">{metric_html}</section>
     <div class="case-grid">
       <section class="case-section" data-reveal="true" aria-labelledby="challenge-heading"><p class="eyebrow">01 · Context</p><h2 id="challenge-heading">Research question</h2><p>{esc(study.get('challenge', ''))}</p></section>
@@ -167,7 +172,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     {figure_gallery}
     <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
-  <footer class="shell">Seyyed Arad Hosseini Moghaddam · Medical AI, machine learning, and data science portfolio.</footer>
+  <footer class="shell">Seyyed Arad Hosseini Moghaddam · AI engineering and independent advanced neuroscience study.</footer>
   <script src="/animations.js?v=20261011-motion-exp-v8" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
   <script src="/assets/js/site-ui.js" defer></script>
