@@ -1,5 +1,5 @@
 {
-  "knowledgeVersion": "2026-10-11.1",
+  "knowledgeVersion": "2026-11-09.1",
   "profile": {
     "name": "Seyyed Arad Hosseini Moghaddam",
     "titles": [
@@ -8,8 +8,8 @@
       "Machine Learning Engineer"
     ],
     "location": "Iran",
-    "professional_identity": "AI engineer focused on deep learning and machine learning for medical applications, with a second research direction in statistics and data science for humanities-related datasets. Public work also spans Persian language modeling, NLP, RAG, agentic AI, software engineering, and cross-platform mobile development.",
-    "about": "Arad builds reproducible AI and machine-learning projects, with primary interests in medical imaging and quantitative analysis of humanities data. His public work includes a 3D cardiac MRI segmentation pipeline, Persian language-model training from scratch, research-oriented NLP and RAG systems, and software projects. He documents methods, evaluation, and limitations for academic review and research collaboration.",
+    "professional_identity": "AI engineer and data scientist with documented work in medical imaging, deep learning, language models, NLP, RAG, agentic AI and reproducible evaluation. Independently self-studying advanced neuroscience and exploring AI applications to brain genomics, neuroinformatics, neuroimaging and neuropharmacology, alongside quantitative humanities data analysis.",
+    "about": "Arad first developed a technical foundation in AI engineering, including 3D cardiac MRI segmentation, Persian language models and research-software systems. He is now independently studying advanced neuroscience: neuroanatomy and circuits, cellular and molecular mechanisms, brain genomics, neural data, neuroimaging and neuropharmacology. He is applying engineering methods to these areas as developing directions, not claiming completed clinical trials, genomics discoveries or pharmaceutical results. Public projects document evidence and limitations.",
     "main_specializations": [
       "Deep Learning",
       "Machine Learning",
@@ -34,8 +34,8 @@
     }
   },
   "professional_summary": {
-    "short": "AI Engineer focused on deep learning and machine learning for medical applications, with complementary experience in statistics and data science for humanities-related datasets.",
-    "long": "Arad builds reproducible machine-learning systems with a primary focus on medical imaging and deep learning, including 3D cardiac MRI segmentation. He also applies statistical and data-science methods to humanities-related data. His broader public work includes Persian language models trained from scratch, NLP and translation, LLM fine-tuning, RAG, agentic AI, MLOps, and cross-platform software development.",
+    "short": "AI engineer and data scientist studying advanced neuroscience and exploring the application of ML to brain genomics, neuroinformatics, neuroimaging and neuropharmacology.",
+    "long": "Arad builds reproducible machine-learning systems with documented projects in medical imaging, language modeling, NLP, RAG and agentic AI. Building on 3D cardiac MRI segmentation and rigorous model evaluation, he now independently self-studies advanced neuroscience and explores computational applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology. His research interests also include statistical methods for humanities and psychology datasets. He distinguishes completed engineering projects from areas of ongoing study, and does not claim unverified clinical validation or biomedical discoveries.",
     "engineering_approach": [
       "Problem definition",
       "Dataset preparation",
@@ -1113,6 +1113,20 @@
     {
       "question": "What are Arad’s research interests in humanities data?",
       "answer": "Arad is interested in applying statistics and data-science methods to humanities-related datasets. The portfolio identifies this as a research direction and does not claim an unpublished empirical project as completed work."
+    },
+    {
+      "id": "neuroscience-transition",
+      "question": "How is Arad applying AI engineering to neuroscience, and what is he currently studying?",
+      "answer": "Arad is an AI engineer who is independently studying advanced neuroscience and exploring AI applications in brain genomics (genetic variation and expression), neuroinformatics (neural data integration and quality control), neuroimaging (brain imaging methods), and neuropharmacology (drug mechanisms and computational psychiatric research). His 3D cardiac MRI and other AI projects are documented, but these neuroscience directions are not presented as completed clinical, genomics or drug-discovery studies.",
+      "related_tags": [
+        "neuroscience",
+        "brain genomics",
+        "neuroinformatics",
+        "neuroimaging",
+        "neuropharmacology",
+        "self-study",
+        "research direction"
+      ]
     }
   ],
   "boundaries": {
@@ -1132,7 +1146,8 @@
       "Do not claim clinical validation for medical AI projects.",
       "Do not claim medical deployment unless explicitly documented.",
       "Do not present research projects as production healthcare systems.",
-      "When information is unavailable, explain that it is not available in Arad's provided CV and portfolio context."
+      "When information is unavailable, explain that it is not available in Arad's provided CV and portfolio context.",
+      "Neuroscience interests and advanced independent study must be identified as ongoing directions, not completed or clinically validated research."
     ]
   }
 }
