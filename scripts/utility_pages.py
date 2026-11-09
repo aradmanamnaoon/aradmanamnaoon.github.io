@@ -17,9 +17,9 @@ def esc(value: Any) -> str:
 
 def search_entries(projects: list[dict[str, Any]]) -> list[dict[str, str]]:
     entries = [
-        {"title": "Home — Seyyed Arad Hosseini Moghaddam", "url": "/", "summary": "AI engineer and data scientist working in medical imaging, machine learning, Persian NLP, and quantitative humanities research.", "terms": "portfolio contact CV graduate research"},
-        {"title": "Projects and research directions", "url": "/projects/", "summary": "Medical imaging, language models, humanities data science, research evidence, and broader software projects.", "terms": "projects research graduate machine learning AI RAG Flutter statistics humanities"},
-        {"title": "Skills and tools", "url": "/skills/", "summary": "Full inventory of AI, medical imaging, statistics, data science, NLP, RAG, and software skills.", "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"},
+        {"title": "Home — Seyyed Arad Hosseini Moghaddam", "url": "/", "summary": "AI engineer with documented medical imaging, NLP and reproducible ML work; now independently studying advanced neuroscience and applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology.", "terms": "portfolio contact CV graduate research neuroscience brain genomics neuroinformatics neuroimaging neuropharmacology"},
+        {"title": "Projects and research directions", "url": "/projects/", "summary": "Evidence-led AI engineering projects, a neuroscience application roadmap, independent advanced neuroscience study and quantitative humanities interests.", "terms": "projects research neuroscience genomics neuroinformatics neuroimaging neuropharmacology machine learning AI RAG Flutter statistics humanities"},
+        {"title": "Skills and tools", "url": "/skills/", "summary": "Full, unchanged inventory of AI and engineering skills supporting an emerging neuroscience research direction.", "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"},
     ]
     for project in projects:
         study = project.get("caseStudy") or {}
@@ -48,7 +48,7 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
         extra = ""
     elif kind == "search":
         title, eyebrow, heading = "Search the portfolio | Arad", "Portfolio search", "Find a project or skill."
-        intro = "Search medical AI, Persian NLP, agentic systems, data science, and the complete skills inventory. Results stay on this site."
+        intro = "Search existing AI projects, deep learning, neuroimaging, brain genomics, neuroinformatics, neuropharmacology and the complete skills inventory. Results stay on this site."
         action = ""
         extra = '<section class="utility-results" aria-labelledby="results-title"><h2 id="results-title">Results</h2><p id="search-status" role="status" aria-live="polite">Enter a term to search the portfolio.</p><div id="search-results"></div></section>'
     else:
@@ -94,13 +94,13 @@ def render(kind: str, projects: list[dict[str, Any]]) -> str:
     <p class="utility-intro">{esc(intro)}</p>
     <form class="utility-search" action="/search/" method="get" role="search">
       <label for="site-search">Search the portfolio</label>
-      <div class="utility-search-row"><input id="site-search" type="search" name="q" maxlength="120" autocomplete="off" placeholder="Try cardiac MRI or Persian NLP" /><button type="submit">Search</button></div>
+      <div class="utility-search-row"><input id="site-search" type="search" name="q" maxlength="120" autocomplete="off" placeholder="Try MRI, Persian NLP or neuroscience" /><button type="submit">Search</button></div>
     </form>
     <div class="utility-actions">{action}<a class="utility-action" href="/projects/#research-directions">Research directions</a><a class="utility-action" href="/skills/">All skills</a></div>
     {extra}
     <section class="utility-directory" aria-labelledby="directory-title"><h2 id="directory-title">Explore the portfolio</h2><div>{links}</div></section>
   </main>
-  <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and data science</footer>
+  <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and independent advanced neuroscience study</footer>
   <script src="/assets/js/site-ui.js" defer></script>
   <script src="/animations.js?v=20261011-motion-exp-v8" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
