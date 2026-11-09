@@ -2729,7 +2729,16 @@ def generate_llms_txt(
             work.append(f"- [{title}]({project['url']}): {description}")
     content = f"""# Seyyed Arad Hosseini Moghaddam
 
-AI Engineer and Data Scientist focused on deep learning and machine learning for medical applications, especially medical imaging. A second research direction applies statistics and data science to humanities-related datasets. This portfolio supports academic review and prospective graduate study with verifiable project evidence, methods, and limitations.
+AI engineer and data scientist with documented projects in medical imaging, deep learning, NLP, language models, agentic AI and reproducible evaluation. Independently self-studying advanced neuroscience and exploring AI applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology. Ongoing quantitative humanities interests remain part of the portfolio. Public engineering projects are distinct from emerging neuroscience application directions; no undocumented experimental or clinical results, publications or institutional affiliations are claimed.
+
+## Current neuroscience study and applications
+
+- Brain genomics: genetic variation, gene expression, neural pathways and computational omics.
+- Neuroinformatics: neural data integration, quality checks, provenance and machine learning.
+- Neuroimaging: brain MRI and functional neuroimaging methods, building on existing 3D cardiac MRI segmentation work.
+- Neuropharmacology: drug mechanisms, psychopharmacology and computational psychiatry applications.
+- Independent advanced neuroscience self-study: neural circuits, anatomy, cellular and molecular biology, and pharmacology.
+- Status: active study and developing applications, not completed or clinically validated discoveries.
 
 ## Primary pages
 - [Projects and research directions]({SITE_URL}/projects/): Public projects, research interests, documented methods, metrics, and limitations across medical AI, Persian language modeling, NLP, RAG, agentic AI, humanities data, and software.
