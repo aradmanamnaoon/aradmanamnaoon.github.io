@@ -242,3 +242,17 @@
   }
   .hub-back-top {bottom:78px;right:12px;}
 }
+
+/* Tablet hero ornaments are larger than their grid column at 768px. Prevent
+   decorative rings/labels from enlarging the mobile layout viewport. */
+@media (min-width:768px) and (max-width:900px) {
+  html {overflow-x:clip;}
+  .hero-grid .hero-media {overflow:clip;isolation:isolate;}
+  .hero-grid .hero-media::before,
+  .hero-grid .hero-media::after {
+    width:min(100%,300px);
+    max-width:100%;
+  }
+  .hero-grid .hero-lab-marker {max-width:100%;right:0;bottom:.2rem;white-space:normal;}
+  .hero-grid {min-width:0;}
+}
