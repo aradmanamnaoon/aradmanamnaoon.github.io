@@ -1,0 +1,33 @@
+name: Mobile Browser Audit
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate mobile test and browser availability
+        run: |
+          node --check tests/mobile-smoke.cjs
+          google-chrome --version
+      - name: Test phone/tablet overflow, navigation, touch and filters
+        run: node tests/mobile-smoke.cjs
+      - name: Capture failure screenshot
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-failure
+          path: test-artifacts/mobile-failure.png
+          if-no-files-found: ignore
