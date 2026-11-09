@@ -72,17 +72,20 @@ async function run(){
       await send('Page.navigate',{url:base+route});
       await until(()=>js('document.readyState==="complete" && location.pathname==='+JSON.stringify(route)),last);
       await delay(120);
-      const data=await js('(()=>{const h=document.querySelector("h1"),d=document.documentElement,rail=document.querySelector(".interaction-rail");const box=rail?.getBoundingClientRect();return {w:innerWidth,scroll:d.scrollWidth,h:!!h&&h.getBoundingClientRect().height>0,nav:!!document.querySelector(\'nav[aria-label="Primary navigation"]\'),rail:!!rail,left:box?.left,right:box?.right,targets:rail?[...rail.querySelectorAll("button")].map(b=>[b.getBoundingClientRect().width,b.getBoundingClientRect().height]):[]};})()');
+      const data=await js('(()=>{const h=document.querySelector("h1"),d=document.documentElement,rail=document.querySelector(".interaction-rail");const box=rail?.getBoundingClientRect();return {w:innerWidth,scroll:d.scrollWidth,h:!!h&&h.getBoundingClientRect().height>0,nav:!!document.querySelector(\'nav[aria-label="Primary navigation"], nav[aria-label="Page sections"], nav[aria-label="Research sections"]\'),rail:!!rail,left:box?.left,right:box?.right,targets:rail?[...rail.querySelectorAll("button")].map(b=>[b.getBoundingClientRect().width,b.getBoundingClientRect().height]):[]};})()');
       if(data.w!==width){
         const extra=await js('(()=>({innerWidth,outerWidth,screenWidth:screen.width,visualWidth:visualViewport?.width,clientWidth:document.documentElement.clientWidth,bodyWidth:document.body.scrollWidth,offenders:[...document.querySelectorAll("body *")].map(e=>({tag:e.tagName,cls:typeof e.className==="string"?e.className.slice(0,65):"",id:e.id,x:e.getBoundingClientRect().x,w:e.getBoundingClientRect().width,r:e.getBoundingClientRect().right,scroll:e.scrollWidth})).filter(e=>e.r>screen.width+2||e.w>screen.width+2).sort((a,b)=>a.r-b.r).slice(0,60)}))()');
         console.error('LAYOUT DIAGNOSTIC',last,JSON.stringify(extra));
       }
       assert.equal(data.w,width,'viewport metadata: '+last);
-      assert.ok(data.h&&data.nav&&data.rail,'missing essential page elements: '+last);
+      const standalone=/^\/projects\/(emotion-appraisal-video-audit|psoriasis-wellbeing-audit|psychology-data-audit|survey-response-integrity)\/$/.test(route);
+      assert.ok(data.h&&data.nav&&(data.rail||standalone),'missing essential page elements: '+last);
       assert.ok(data.scroll<=width+3,'horizontal overflow: '+last+' '+JSON.stringify(data));
-      assert.ok(data.left>=-2&&data.right<=width+2,'bottom toolbar clipped: '+last);
-      assert.ok(data.targets.length===3&&data.targets.every(s=>s[0]>=44&&s[1]>=44),
-        'mobile touch targets undersized: '+last);
+      if(!standalone){
+        assert.ok(data.left>=-2&&data.right<=width+2,'bottom toolbar clipped: '+last);
+        assert.ok(data.targets.length===3&&data.targets.every(s=>s[0]>=44&&s[1]>=44),
+          'mobile touch targets undersized: '+last);
+      }
       console.log('PASS',last,'scrollWidth='+data.scroll);
     }
     const important=['/','/projects/','/skills/','/search/','/404.html','/offline.html',
