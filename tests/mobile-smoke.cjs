@@ -73,6 +73,10 @@ async function run(){
       await until(()=>js('document.readyState==="complete" && location.pathname==='+JSON.stringify(route)),last);
       await delay(120);
       const data=await js('(()=>{const h=document.querySelector("h1"),d=document.documentElement,rail=document.querySelector(".interaction-rail");const box=rail?.getBoundingClientRect();return {w:innerWidth,scroll:d.scrollWidth,h:!!h&&h.getBoundingClientRect().height>0,nav:!!document.querySelector(\'nav[aria-label="Primary navigation"]\'),rail:!!rail,left:box?.left,right:box?.right,targets:rail?[...rail.querySelectorAll("button")].map(b=>[b.getBoundingClientRect().width,b.getBoundingClientRect().height]):[]};})()');
+      if(data.w!==width){
+        const extra=await js('(()=>({innerWidth,outerWidth,screenWidth:screen.width,visualWidth:visualViewport?.width,clientWidth:document.documentElement.clientWidth,bodyWidth:document.body.scrollWidth,offenders:[...document.querySelectorAll("body *")].map(e=>({tag:e.tagName,cls:typeof e.className==="string"?e.className.slice(0,65):"",id:e.id,x:e.getBoundingClientRect().x,w:e.getBoundingClientRect().width,r:e.getBoundingClientRect().right,scroll:e.scrollWidth})).filter(e=>e.r>screen.width+2||e.w>screen.width+2).sort((a,b)=>b.r-a.r).slice(0,25)}))()');
+        console.error('LAYOUT DIAGNOSTIC',last,JSON.stringify(extra));
+      }
       assert.equal(data.w,width,'viewport metadata: '+last);
       assert.ok(data.h&&data.nav&&data.rail,'missing essential page elements: '+last);
       assert.ok(data.scroll<=width+3,'horizontal overflow: '+last+' '+JSON.stringify(data));
@@ -114,7 +118,8 @@ async function run(){
     }catch(_){}
   }finally{
     socket?.close();browser.kill('SIGTERM');server.close();
-    fs.rmSync(dir,{recursive:true,force:true});
+    await delay(300);
+    try{fs.rmSync(dir,{recursive:true,force:true,maxRetries:6,retryDelay:150});}catch(e){console.warn('Temporary Chrome profile could not be fully removed:',e.code);}
   }
 }
 run().catch(e=>{console.error(e);process.exitCode=1;server.close();});
