@@ -217,3 +217,28 @@
 @media (max-width:767px) and (prefers-reduced-motion:reduce) {
   :is(.mobile-nav-ready .site-nav-links,.mobile-nav-ready .nav-links) {transition:none;}
 }
+
+/* Coarse-pointer tablets still have the desktop navigation, but should not
+   inherit a phone-width fixed dock: Chrome can include scrollbar width in 100%. */
+@media (min-width:768px) and (max-width:1024px) and (pointer:coarse) {
+  body {padding-bottom:5rem !important;}
+  .interaction-rail {
+    inset:auto max(12px,env(safe-area-inset-right,0px)) 12px auto;
+    inline-size:min(340px,calc(100% - 24px));
+    max-inline-size:calc(100% - 24px);
+    display:flex;
+    flex-wrap:nowrap;
+    gap:4px;
+    border:1px solid rgba(149,193,239,.3);
+    border-radius:15px;
+    padding:5px;
+  }
+  .interaction-rail button,.interaction-rail #hub-shortcuts {
+    flex:1 1 0;
+    min-inline-size:44px;
+    min-block-size:50px;
+    inline-size:auto;
+    padding:.4rem;
+  }
+  .hub-back-top {bottom:78px;right:12px;}
+}
