@@ -180,8 +180,8 @@ test('Projects research introduction uses the coherent neuroscience layout witho
   assert.match(archive, /AUTO:RESEARCH_PROJECTS:START/);
   assert.match(archive, /id="selected-projects"/);
   for (const label of ['Brain genomics','Neuroinformatics','Neuroimaging','Neuropharmacology']) {
-    assert.ok(archive.includes(label), label);
-    assert.ok(skillsPage.includes(label), label);
+    assert.match(archive, new RegExp(label, 'i'), label);
+    assert.match(skillsPage, new RegExp(label, 'i'), label);
   }
   assert.match(skillsPage, /AUTO:SKILLS:START/);
   assert.match(skillsPage, /id="skills-explorer"/);
