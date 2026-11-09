@@ -2,16 +2,38 @@
 
 **AI Engineer & Data Scientist** · `ARADMANAMNAOON`
 
-I focus on **deep learning and machine learning for medical applications**, especially
-medical imaging, and on **statistics and data science for humanities-related data**.
-My broader public work includes Persian language models, NLP, fine-tuning, RAG,
-agentic AI, software engineering, and reproducible model evaluation.
+My established foundation is **AI engineering and data science**: medical imaging,
+deep learning, Persian language models, NLP, fine-tuning, RAG, agentic AI,
+software engineering, and reproducible evaluation. I am now **independently
+self-studying advanced neuroscience** and connecting those methods to **brain
+genomics, neuroinformatics, neuroimaging, and neuropharmacology**.
+
+These are active learning and application directions. My publicly documented AI
+projects are distinguished from neuroscience research results that have not
+yet been independently established.
 
 [Portfolio](https://aradmanamnaoon.github.io/) ·
 [Research profile](https://aradmanamnaoon.github.io/research/) · [Full skills](https://aradmanamnaoon.github.io/skills/) · [Projects](https://aradmanamnaoon.github.io/projects/) · [Technical
 Writing](https://aradmanamnaoon.github.io/blog/) · [Hugging
 Face](https://huggingface.co/aradmanamnaoon) ·
 [LinkedIn](https://www.linkedin.com/in/seyyed-arad-hosseini-moghaddam)
+
+## AI × neuroscience: current direction
+
+- **Brain genomics:** learning neural genetics, gene expression, biological
+  pathways, and how ML can analyze high-dimensional omics data.
+- **Neuroinformatics:** reproducible pipelines and multi-modal neural data
+  integration, quality control, statistics and data provenance.
+- **Neuroimaging:** translating existing 3D medical-imaging engineering skills
+  toward brain MRI and computational neuroimaging.
+- **Neuropharmacology:** studying neurochemical signaling, psychopharmacology,
+  drug mechanisms and computational approaches to psychiatric therapeutics.
+- **Advanced neuroscience self-study:** integrating neuroanatomy, cellular
+  and molecular neuroscience, neural circuits and scientific methodology.
+
+**Evidence boundary:** These are current study and developing application
+areas; no completed genomics or drug-discovery study, biomedical publication,
+clinical efficacy or institutional affiliation is implied.
 
 ## What I work on
 

@@ -219,7 +219,13 @@
         trigger: story, pin: true, start: 'top top', end: () => '+=' + Math.max(900, distance()),
         scrub: .65, snap: { snapTo: 1 / (panels.length - 1), duration: { min: .18, max: .42 }, delay: .08 },
         invalidateOnRefresh: true, anticipatePin: 1,
-        onUpdate: self => panels.forEach((panel, i) => panel.classList.toggle('is-current', Math.round(self.progress * (panels.length - 1)) === i))
+        onUpdate: self => {
+          const activeIndex = Math.round(self.progress * (panels.length - 1));
+          panels.forEach((panel, i) => panel.classList.toggle('is-current', activeIndex === i));
+          story.style.setProperty('--story-progress', String(self.progress));
+          const counter = story.querySelector('[data-story-current]');
+          if (counter) counter.textContent = String(activeIndex + 1).padStart(2, '0');
+        }
       } });
       story.querySelectorAll('.story-visual path').forEach(path => {
         const length = path.getTotalLength();
@@ -234,10 +240,39 @@
   function story() {
     const section = document.querySelector('.story-section'); if (!section) return;
     const viewport = section.querySelector('.story-viewport');
+    const panels = [...section.querySelectorAll('.story-panel')];
+    if (!viewport || !panels.length) return;
+    const counter = section.querySelector('[data-story-current]');
+    let frameQueued = false;
+
+    // Mobile and reduced-motion fallback: the native, swipeable track remains
+    // fully functional without GSAP, network access, or pinned scrolling.
+    const updateNativeProgress = () => {
+      frameQueued = false;
+      if (section.classList.contains('story-pinned')) return;
+      const center = viewport.scrollLeft + viewport.clientWidth / 2;
+      const activeIndex = panels.reduce((best, panel, i) =>
+        Math.abs(panel.offsetLeft + panel.offsetWidth / 2 - center) <
+        Math.abs(panels[best].offsetLeft + panels[best].offsetWidth / 2 - center) ? i : best, 0);
+      const maxScroll = Math.max(1, viewport.scrollWidth - viewport.clientWidth);
+      section.style.setProperty('--story-progress', String(Math.min(1, Math.max(0, viewport.scrollLeft / maxScroll))));
+      if (counter) counter.textContent = String(activeIndex + 1).padStart(2, '0');
+      panels.forEach((panel, i) => panel.classList.toggle('is-current', activeIndex === i));
+    };
+    viewport.addEventListener('scroll', () => {
+      if (!frameQueued) {
+        frameQueued = true;
+        requestAnimationFrame(updateNativeProgress);
+      }
+    }, { passive: true });
     section.querySelectorAll('.story-controls button').forEach(button => button.addEventListener('click', () => {
       viewport.scrollBy({ left: viewport.clientWidth * (button.dataset.direction === 'next' ? .85 : -.85), behavior: enabled() ? 'smooth' : 'auto' });
     }));
-    desktop.addEventListener?.('change', () => { if (desktop.matches) watchStory(); });
+    desktop.addEventListener?.('change', () => {
+      if (desktop.matches) watchStory();
+      else updateNativeProgress();
+    });
+    updateNativeProgress();
     watchStory();
   }
   function watchStory() {

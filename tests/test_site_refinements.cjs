@@ -138,19 +138,33 @@ test('Skills page progressively enhances searchable, mobile-safe content', () =>
 });
 
 test('Homepage SEO scope, descriptions, and structured data remain accurate', () => {
-  assert.match(home,/AI Engineering for Psychology &amp; Neuroscience/);
-  assert.match(home,/AI for Human Behavior/);
-  assert.match(home,/psychology/);
+  assert.match(home,/AI Engineering &amp; Neuroscience/);
+  assert.match(home,/AI engineering\./);
+  assert.match(home,/advanced neuroscience/i);
   const match = home.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
   assert.ok(match);
   const graph = JSON.parse(match[1])['@graph'];
   const person = graph.find(e=>e['@type']==='Person');
   const featured = graph.find(e=>e['@type']==='ItemList');
   assert.match(person.description,/AI engineer/i);
-  assert.match(person.description,/psychology and neuroscience/i);
+  assert.match(person.description,/brain genomics/i);
   assert.equal(featured.numberOfItems,featured.itemListElement.length);
   assert.equal(featured.numberOfItems,3);
   assert.ok(featured.itemListElement.every(item=>item.url.startsWith('https://aradmanamnaoon.github.io/projects/')));
   assert.ok(!home.includes('https://github.com/AradMn'));
   assert.match(home,/rel="canonical"/);
+});
+
+test('Neuroscience homepage preserves the branded dot backdrop and all prior project/skill sections', () => {
+  const neuroCss = read('assets/css/neuro-focus.css');
+  const motionCss = read('assets/css/motion.css');
+  assert.match(home,/href="\/assets\/css\/neuro-focus\.css\?v=/);
+  for (const id of ['neuro-genomics','neuro-informatics','neuro-imaging','neuro-pharmacology'])
+    assert.ok(home.includes('id="' + id + '"'), 'missing research focus ' + id);
+  assert.equal((home.match(/class="story-panel"/g)||[]).length,6);
+  assert.ok(home.includes('id="skills"') && home.includes('id="projects"'));
+  assert.doesNotMatch(home,/<img src="\/assets\/images\/ai-psychology-neuroscience-map\.svg"/);
+  assert.match(neuroCss,/\.neuro-focus-layout/);
+  assert.match(motionCss,/body\.dots-active:not\(\.motion-disabled\)::after/);
+  assert.match(read('animations.js'),/updateNativeProgress/);
 });
