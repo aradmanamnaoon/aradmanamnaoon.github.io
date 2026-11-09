@@ -136,6 +136,10 @@ class PortfolioGeneratorTests(unittest.TestCase):
         self.assertEqual(home.count('class="story-panel"'), 6)
         self.assertIn("og-image.jpg", home)
         self.assertNotIn("https://github.com/AradMn", home)
+        discovery = (ROOT / "llms.txt").read_text(encoding="utf-8")
+        self.assertIn("## Current neuroscience study and applications", discovery)
+        for topic in ("Brain genomics", "Neuroinformatics", "Neuroimaging", "Neuropharmacology"):
+            self.assertIn(topic, discovery)
 
     def test_cv_knowledge_base_copies_remain_in_sync(self) -> None:
         self.assertEqual(
