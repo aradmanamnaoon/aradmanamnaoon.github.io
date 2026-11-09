@@ -157,7 +157,7 @@ test('all patched local scripts parse and offline cache contains theme initializ
     assert.doesNotThrow(()=>new Function(read(file)), file);
   }
   const worker=read('service-worker.js');
-  assert.match(worker,/arad-portfolio-v16/);
+  assert.match(worker,/arad-portfolio-v17/);
   assert.match(worker,/\/assets\/js\/theme-init\.js/);
 });
 
