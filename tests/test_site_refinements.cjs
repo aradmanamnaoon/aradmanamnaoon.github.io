@@ -168,3 +168,25 @@ test('Neuroscience homepage preserves the branded dot backdrop and all prior pro
   assert.match(motionCss,/body\.dots-active:not\(\.motion-disabled\)::after/);
   assert.match(read('animations.js'),/updateNativeProgress/);
 });
+
+test('Projects research introduction uses the coherent neuroscience layout without removing archive evidence', () => {
+  const archive = read('projects/index.html');
+  const skillsPage = read('skills/index.html');
+  const sharedCss = read('assets/css/ux.css');
+  const siteUi = read('assets/js/site-ui.js');
+  assert.doesNotMatch(archive, /<h3>Deep learning for medical applications<\/h3>/);
+  assert.match(archive, /class="neuro-arc-layout"/);
+  assert.equal((archive.match(/class="neuro-arc-field"/g) || []).length, 4);
+  assert.match(archive, /AUTO:RESEARCH_PROJECTS:START/);
+  assert.match(archive, /id="selected-projects"/);
+  for (const label of ['Brain genomics','Neuroinformatics','Neuroimaging','Neuropharmacology']) {
+    assert.ok(archive.includes(label), label);
+    assert.ok(skillsPage.includes(label), label);
+  }
+  assert.match(skillsPage, /AUTO:SKILLS:START/);
+  assert.match(skillsPage, /id="skills-explorer"/);
+  assert.match(sharedCss, /\.neuro-arc-layout/);
+  assert.match(sharedCss, /\.research-continuum-note/);
+  assert.match(siteUi, /independently studying advanced neuroscience/);
+  assert.doesNotThrow(() => new Function(siteUi));
+});

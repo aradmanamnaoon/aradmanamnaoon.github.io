@@ -79,3 +79,51 @@ button, a { touch-action: manipulation; }
 .utility-result strong { display: block; color: var(--ux-accent); }
 .utility-result span { display: block; color: var(--ux-muted); font-size: .92rem; }
 .utility-footer { padding: 2rem 0; border-top: 1px solid var(--ux-line); color: var(--ux-muted); font-size: .85rem; }
+
+/* Research-direction narrative shared across archive, skills and case studies.
+   Uses the established blue/charcoal palette; leaves the pointer-lit dot grid alone. */
+.neuro-arc { margin-top: clamp(2rem, 5vw, 3.8rem); }
+.neuro-arc-heading { margin: 0 0 1.4rem; }
+.neuro-arc-heading h3 { max-width: 23ch; font: 500 clamp(1.8rem, 3.5vw, 3rem)/1.13 "Playfair Display", Georgia, serif; letter-spacing:-.035em; }
+.neuro-arc-layout { display: grid; grid-template-columns: minmax(270px, .92fr) minmax(0, 1.65fr); gap: clamp(.8rem, 1.7vw, 1.25rem); }
+.neuro-arc-foundation, .neuro-arc-field { min-width: 0; border: 1px solid rgb(125 180 240 / .26); background: linear-gradient(145deg, #202c3b, #161d26); border-radius: 1.2rem; }
+.neuro-arc-foundation { position: relative; overflow: hidden; padding: clamp(1.4rem, 3vw, 2.2rem); display: flex; flex-direction: column; justify-content: space-between; min-height: 380px; }
+.neuro-arc-foundation::before { content:""; position:absolute; top:-116px; right:-95px; width:335px; aspect-ratio:1; border-radius:50%; border:1px solid rgb(125 180 240 / .24); box-shadow:0 0 0 38px rgb(125 180 240 / .04), 0 0 0 77px rgb(125 180 240 / .025); pointer-events:none; }
+.neuro-arc-foundation > * { position: relative; z-index:1; }
+.neuro-arc-eyebrow, .neuro-arc-field-no { color:#9ccaff; font:700 .69rem/1.45 Inter,system-ui,sans-serif; letter-spacing:.13em; text-transform:uppercase; }
+.neuro-arc-foundation h3 { max-width:14ch; margin:2rem 0 .8rem; color:#f4f7fd; font:500 clamp(1.8rem, 3vw, 2.65rem)/1.1 "Playfair Display",Georgia,serif; letter-spacing:-.035em; }
+.neuro-arc-foundation p:not(.neuro-arc-eyebrow) { color:#c6d2df; line-height:1.65; }
+.neuro-arc-foundation a { color:#c6e2ff; display:inline-flex; align-items:center; min-height:44px; font-weight:700; text-underline-offset:.27em; }
+.neuro-arc-fields { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(.8rem,1.7vw,1.25rem); }
+.neuro-arc-field { padding:clamp(1.15rem,2.1vw,1.7rem); display:flex; flex-direction:column; gap:.75rem; transition:border-color .2s ease,transform .2s ease; }
+.neuro-arc-field:hover { border-color:#7db4f0; transform:translateY(-3px); }
+.neuro-arc-field-no { display:block; }
+.neuro-arc-symbol { display:grid; place-items:center; flex:none; width:42px; height:42px; border:1px solid rgb(125 180 240 / .3); border-radius:13px; color:#a9cfff; font:700 1rem/1 Inter,system-ui,sans-serif; }
+.neuro-arc-field h4 { margin:0; color:#eef5fd; font:600 clamp(1.05rem,1.65vw,1.3rem)/1.3 Inter,system-ui,sans-serif; }
+.neuro-arc-field p { margin:0; color:#bfccd9; font-size:.86rem; line-height:1.65; }
+.neuro-arc-field a { color:#b9dfff; min-height:34px; align-self:flex-start; margin-top:auto; font-size:.83rem; font-weight:700; text-underline-offset:.3em; }
+.neuro-arc-bottom { margin-top:1rem; display:flex; align-items:baseline; justify-content:space-between; gap:1rem; flex-wrap:wrap; padding:1rem 1.25rem; border-left:2px solid #7db4f0; background:rgb(125 180 240 / .045); }
+.neuro-arc-bottom p { max-width:850px; margin:0; color:#b7c5d6; font-size:.86rem; line-height:1.7; }
+.neuro-arc-bottom a { color:#b9dfff; font-weight:700; white-space:normal; }
+.neuro-study-note, .research-continuum-note { margin:1.2rem 0 1.8rem; border:1px solid rgb(125 180 240 / .24); border-left:3px solid #7db4f0; border-radius:.85rem; padding:1rem 1.25rem; background:linear-gradient(105deg,rgb(125 180 240 / .09),rgb(125 180 240 / .025)); color:#c6d2df; }
+.neuro-study-note strong,.research-continuum-note strong { color:#e8f3ff; }
+.neuro-study-note p,.research-continuum-note p { margin:.4rem 0 .65rem; line-height:1.65; }
+.neuro-study-note a,.research-continuum-note a { color:#bee0ff; font-weight:700; text-underline-offset:.3em; }
+.neuro-study-note--skills { margin:1.35rem 0 1rem; }
+.neuro-study-note--skills p { max-width:75ch; }
+@media (max-width:900px) {
+  .neuro-arc-layout { grid-template-columns:1fr; }
+  .neuro-arc-foundation { min-height:240px; }
+  .neuro-arc-foundation h3 { max-width:22ch; }
+}
+@media (max-width:570px) {
+  .neuro-arc-fields { grid-template-columns:1fr; }
+  .neuro-arc-foundation { min-height:225px; }
+  .neuro-arc-field { gap:.65rem; }
+  .neuro-arc-bottom { display:block; }
+}
+@media (prefers-reduced-motion:reduce) { .neuro-arc-field { transition:none; } .neuro-arc-field:hover { transform:none; } }
+html[data-theme="light"] .neuro-arc-foundation,html[data-theme="light"] .neuro-arc-field { background:linear-gradient(145deg,#eaf2fa,#dce8f5); }
+html[data-theme="light"] :is(.neuro-arc-foundation h3,.neuro-arc-field h4,.neuro-study-note strong,.research-continuum-note strong) { color:#19314b; }
+html[data-theme="light"] :is(.neuro-arc-foundation p:not(.neuro-arc-eyebrow),.neuro-arc-field p,.neuro-arc-bottom p,.neuro-study-note,.research-continuum-note) { color:#36536c; }
+html[data-theme="light"] :is(.neuro-arc-field a,.neuro-arc-foundation a,.neuro-arc-bottom a,.neuro-study-note a,.research-continuum-note a) { color:#155487; }

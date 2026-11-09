@@ -46,6 +46,30 @@
     });
   }
 
+  // Contextual portfolio identity for bespoke project reports. Keep each
+  // report's research question, methods and claims unchanged.
+  const currentPath = window.location.pathname;
+  if (currentPath.startsWith('/projects/') && currentPath !== '/projects/' &&
+      currentPath.split('/').filter(Boolean).length === 2) {
+    const projectMain = document.querySelector('main#main');
+    if (projectMain && !projectMain.querySelector('.research-continuum-note')) {
+      const context = document.createElement('aside');
+      context.className = 'research-continuum-note';
+      context.setAttribute('aria-label', 'Current interdisciplinary research direction');
+      context.innerHTML =
+        '<strong>AI engineering → neuroscience</strong>' +
+        '<p>This case study is part of my documented engineering work. ' +
+        'I am independently studying advanced neuroscience and extending these ' +
+        'methods toward brain genomics, neuroinformatics, neuroimaging and ' +
+        'neuropharmacology. These are developing research directions, not ' +
+        'claims of completed clinical or drug-discovery results.</p>' +
+        '<a href="/projects/#research-directions">Explore the neuroscience research direction ↗</a>';
+      const heading = projectMain.querySelector('header');
+      if (heading) heading.insertAdjacentElement('afterend', context);
+      else projectMain.prepend(context);
+    }
+  }
+
   const retry = document.querySelector('[data-retry]');
   retry?.addEventListener('click', function () { window.location.reload(); });
 
