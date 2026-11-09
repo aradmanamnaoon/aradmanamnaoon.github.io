@@ -2,19 +2,19 @@
   {
     "title": "Home — Seyyed Arad Hosseini Moghaddam",
     "url": "/",
-    "summary": "AI engineer and data scientist working in medical imaging, machine learning, Persian NLP, and quantitative humanities research.",
-    "terms": "portfolio contact CV graduate research"
+    "summary": "AI engineer with documented medical imaging, NLP and reproducible ML work; now independently studying advanced neuroscience and applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology.",
+    "terms": "portfolio contact CV graduate research neuroscience brain genomics neuroinformatics neuroimaging neuropharmacology"
   },
   {
     "title": "Projects and research directions",
     "url": "/projects/",
-    "summary": "Medical imaging, language models, humanities data science, research evidence, and broader software projects.",
-    "terms": "projects research graduate machine learning AI RAG Flutter statistics humanities"
+    "summary": "Evidence-led AI engineering projects, a neuroscience application roadmap, independent advanced neuroscience study and quantitative humanities interests.",
+    "terms": "projects research neuroscience genomics neuroinformatics neuroimaging neuropharmacology machine learning AI RAG Flutter statistics humanities"
   },
   {
     "title": "Skills and tools",
     "url": "/skills/",
-    "summary": "Full inventory of AI, medical imaging, statistics, data science, NLP, RAG, and software skills.",
+    "summary": "Full, unchanged inventory of AI and engineering skills supporting an emerging neuroscience research direction.",
     "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"
   },
   {
