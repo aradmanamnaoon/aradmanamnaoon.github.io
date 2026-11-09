@@ -256,3 +256,10 @@
   .hero-grid .hero-lab-marker {max-width:100%;right:0;bottom:.2rem;white-space:normal;}
   .hero-grid {min-width:0;}
 }
+
+/* Intermediate-width archive artwork must not escape its hero column. */
+@media (min-width:768px) and (max-width:900px) {
+  .archive-hero {overflow:clip;}
+  .archive-orbit {right:0;width:min(34vw,260px);max-width:100%;}
+  .archive-orbit svg {overflow:hidden;}
+}
