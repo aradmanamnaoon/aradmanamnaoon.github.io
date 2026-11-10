@@ -287,3 +287,30 @@
     max-block-size:calc(100dvh - 76px - env(safe-area-inset-bottom,0px));
   }
 }
+
+/* The mobile utility dock must never obscure page content while scrolling.
+   Keep all three actions in the document flow after the page footer. */
+@media (max-width:767px) {
+  body { padding-bottom:0 !important; }
+  .interaction-rail {
+    position:relative;
+    inset:auto;
+    inline-size:100%;
+    max-inline-size:100%;
+    margin:0;
+    border-radius:0;
+    border-inline:0;
+    border-bottom:0;
+    box-shadow:none;
+    transform:none;
+    z-index:1;
+  }
+  .interaction-rail button,
+  .interaction-rail #hub-shortcuts { min-block-size:48px; }
+  .hub-back-top { bottom:calc(1rem + env(safe-area-inset-bottom,0px)); }
+  #site-toasts { bottom:calc(4.5rem + env(safe-area-inset-bottom,0px)); }
+  body:has(:is(input,textarea,select):focus) .interaction-rail {
+    transform:none;
+    pointer-events:auto;
+  }
+}
