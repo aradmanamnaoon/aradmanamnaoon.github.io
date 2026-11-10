@@ -101,6 +101,13 @@ async function run(){
     await visit('/',375);
     assert.ok(await js('(()=>{const n=document.querySelector(".site-nav.mobile-nav-ready"),b=n?.querySelector(".nav-toggle"),l=n?.querySelector(".site-nav-links");if(!b||!l)return false;b.click();const r=l.getBoundingClientRect();const open=b.getAttribute("aria-expanded")==="true"&&getComputedStyle(l).visibility==="visible"&&r.left>=-2&&r.right<=innerWidth+2;document.dispatchEvent(new KeyboardEvent("keydown",{key:"Escape",bubbles:true}));return open&&b.getAttribute("aria-expanded")==="false";})()'),
       'mobile navigation must open in viewport and close on Escape');
+    assert.ok(await js('(()=>{const n=document.querySelector(".site-nav.mobile-nav-ready"),b=n?.querySelector(".nav-toggle"),l=n?.querySelector(".site-nav-links");if(!b||!l)return false;const initiallyInert=l.inert;b.click();const open=!l.inert&&b.getAttribute("aria-expanded")==="true";document.body.click();const closed=l.inert&&b.getAttribute("aria-expanded")==="false";return initiallyInert&&open&&closed;})()'),
+      'mobile menu links must be inert while closed, keyboard accessible when open, and close on outside click');
+    await send('Emulation.setDeviceMetricsOverride',{width:1024,height:812,screenWidth:1024,screenHeight:812,deviceScaleFactor:2,mobile:true});
+    await delay(100);
+    assert.ok(await js('(()=>{const n=document.querySelector(".site-nav.mobile-nav-ready"),b=n?.querySelector(".nav-toggle"),l=n?.querySelector(".site-nav-links");return !!b&&!!l&&!l.inert&&b.getAttribute("aria-expanded")==="false";})()'),
+      'desktop breakpoint must restore keyboard access to navigation');
+    await visit('/',375);
     assert.ok(await js('(()=>{const e=document.querySelector(".story-viewport");if(!e)return false;e.scrollLeft=180;return e.scrollLeft>0&&e.scrollWidth>e.clientWidth&&!document.querySelector(".story-section.story-pinned");})()'),
       'story should swipe natively and not pin on phones');
     await visit('/skills/',375);
