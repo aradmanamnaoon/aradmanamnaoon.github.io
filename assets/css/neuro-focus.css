@@ -124,3 +124,14 @@ html[data-theme="light"] .neuro-focus-intro,html[data-theme="light"] .neuro-focu
   .hero-grid .hero-media::before {width:calc(55vw + 24px);}
   .hero-grid .hero-media::after {width:calc(55vw + 44px);}
 }
+
+/* Mobile cards use a clean readable surface; oversized ornamental circles
+   were intersecting headings, paragraphs and links on small screens. */
+@media (max-width:767px) {
+  .neuro-focus-core::before,
+  .neuro-focus-core::after,
+  .neuro-focus-card::after { content:none; display:none; }
+  .neuro-focus-core { min-height:0; padding:1.5rem; }
+  .neuro-focus-core h3 { max-width:100%; }
+  .neuro-focus-card { min-height:0; }
+}
