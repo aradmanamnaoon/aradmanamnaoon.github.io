@@ -62,3 +62,65 @@
 @media(prefers-reduced-motion:reduce) { .hero-focus-list a,.neuro-focus-card,.story-progress-fill { transition:none; } }
 html[data-theme="light"] .hero-focus-list a { color:#24527a; }
 html[data-theme="light"] .neuro-focus-intro,html[data-theme="light"] .neuro-focus-meta p { color:#58677b; }
+
+
+/* Phone portrait: concentric ornaments track the actual image dimensions.
+   Keep the research marker below the image instead of over the face. */
+@media (max-width:767px) {
+  .hero-grid .hero-media {
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    gap:1.1rem;
+    overflow:visible;
+    isolation:isolate;
+  }
+  .hero-grid .hero-portrait-frame {
+    position:relative;
+    z-index:1;
+    display:block;
+    flex:none;
+    margin:0 auto;
+  }
+  .hero-grid .hero-media::before,
+  .hero-grid .hero-media::after {
+    box-sizing:border-box;
+    position:absolute;
+    left:50%;
+    right:auto;
+    max-width:none;
+    height:auto;
+    aspect-ratio:1;
+    pointer-events:none;
+    border-radius:50%;
+  }
+  .hero-grid .hero-media::before {
+    top:-12px;
+    width:min(calc(58vw + 24px),252px);
+    transform:translateX(-50%) rotate(-17deg);
+  }
+  .hero-grid .hero-media::after {
+    top:-22px;
+    width:min(calc(58vw + 44px),272px);
+    transform:translateX(-50%);
+  }
+  .hero-grid .hero-lab-marker {
+    position:relative;
+    z-index:2;
+    inset:auto;
+    display:block;
+    box-sizing:border-box;
+    width:min(100%,280px);
+    max-width:100%;
+    margin:0 auto;
+    text-align:center;
+    white-space:normal;
+    box-shadow:0 8px 24px rgb(0 0 0 / .12);
+  }
+}
+@media (max-width:380px) {
+  .hero-grid .hero-media::before {width:calc(55vw + 24px);}
+  .hero-grid .hero-media::after {width:calc(55vw + 44px);}
+}
