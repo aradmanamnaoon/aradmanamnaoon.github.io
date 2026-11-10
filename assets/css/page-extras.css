@@ -287,3 +287,39 @@
     max-block-size:calc(100dvh - 76px - env(safe-area-inset-bottom,0px));
   }
 }
+
+
+/* Mobile reading mode: decoration stays behind content, and the utility bar
+   appears after page content rather than covering the viewport. */
+@media (max-width:767px), (pointer:coarse) and (max-width:1024px) {
+  body {padding-bottom:0 !important;}
+  .interaction-rail {
+    position:relative;
+    inset:auto;
+    display:grid;
+    inline-size:calc(100% - 2rem);
+    max-inline-size:480px;
+    margin:2rem auto calc(1.25rem + env(safe-area-inset-bottom,0px));
+    border:1px solid rgba(149,193,239,.3);
+    border-radius:15px;
+    padding:6px;
+    transform:none;
+    box-shadow:0 7px 30px rgb(0 0 0 / .13);
+  }
+  .interaction-rail :is(button,#hub-shortcuts) {min-block-size:48px;}
+  .hub-back-top {display:none !important;}
+  #site-toasts {bottom:calc(1rem + env(safe-area-inset-bottom,0px));}
+  body:has(:is(input,textarea,select):focus) .interaction-rail {
+    transform:none;pointer-events:auto;
+  }
+}
+@media (max-width:767px) {
+  .neuro-focus-core::before,
+  .neuro-focus-core::after,
+  .neuro-focus-card::after,
+  .neuro-arc-foundation::before {
+    content:none !important;display:none !important;
+  }
+  .neuro-focus-core,.neuro-focus-card,.neuro-arc-foundation,.neuro-arc-field {isolation:isolate;}
+  .neuro-focus-core > *,.neuro-focus-card > *,.neuro-arc-foundation > * {position:relative;z-index:1;}
+}
