@@ -12,6 +12,9 @@
     button.setAttribute('aria-label', 'Open navigation');
     button.innerHTML = '<span class="nav-toggle-icon" aria-hidden="true">☰</span><span>Menu</span>';
     links.id = 'primary-nav-links';
+    const desktop = window.matchMedia('(min-width: 768px)');
+    // Hidden mobile links must not remain reachable by keyboard or assistive tech.
+    links.inert = !desktop.matches;
     navigation.insertBefore(button, links);
     navigation.classList.add('mobile-nav-ready');
 
@@ -19,6 +22,7 @@
       button.setAttribute('aria-expanded', 'false');
       button.setAttribute('aria-label', 'Open navigation');
       links.removeAttribute('data-open');
+      links.inert = !desktop.matches;
       if (returnFocus) button.focus();
     }
 
@@ -26,8 +30,13 @@
       const open = button.getAttribute('aria-expanded') !== 'true';
       button.setAttribute('aria-expanded', String(open));
       button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
-      if (open) links.setAttribute('data-open', 'true');
-      else links.removeAttribute('data-open');
+      if (open) {
+        links.inert = false;
+        links.setAttribute('data-open', 'true');
+      } else {
+        links.removeAttribute('data-open');
+        links.inert = !desktop.matches;
+      }
     });
     links.addEventListener('click', function (event) {
       if (event.target.closest('a')) closeMenu(false);
@@ -40,9 +49,8 @@
     document.addEventListener('click', function (event) {
       if (!navigation.contains(event.target)) closeMenu(false);
     });
-    const desktop = window.matchMedia('(min-width: 768px)');
-    desktop.addEventListener?.('change', function (event) {
-      if (event.matches) closeMenu(false);
+    desktop.addEventListener?.('change', function () {
+      closeMenu(false);
     });
   }
 
