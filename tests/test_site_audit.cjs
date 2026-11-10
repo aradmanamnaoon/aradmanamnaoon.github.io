@@ -35,7 +35,7 @@ test('every route has one H1, unique IDs, and shared accessible controls', () =>
     assert.match(html, /class="skip-link"/, file);
     assert.match(html, /assets\/js\/interaction-hub\.js\?v=/, file);
     assert.match(html, /assets\/js\/page-extras\.js\?v=(?:20261011-audit-v[23]|20261012-layout-v1)/, file);
-    assert.match(html, /assets\/css\/page-extras\.css\?v=(?:20261011-audit-v[23]|20261012-layout-v1)/, file);
+    assert.match(html, /assets\/css\/page-extras\.css\?v=(?:20261011-audit-v[23]|20261012-layout-v1|20261110-unobstructed-mobile-v2)/, file);
   }
 });
 
