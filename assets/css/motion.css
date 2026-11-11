@@ -73,7 +73,7 @@ html.motion-off body::after { opacity: 0 !important; }
 .story-section.story-pinned .story-controls { visibility: hidden; }
 /* Narrow desktop browser windows still use scroll-driven chapters. Touch
    devices, which have no fine hover pointer, retain the swipeable cards. */
-@media (min-width: 560px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 560px) {
   .story-section.story-pinned {
     box-sizing: border-box;
     height: 100svh;
@@ -97,7 +97,7 @@ html.motion-off body::after { opacity: 0 !important; }
     border-radius: 0;
   }
 }
-@media (min-width: 560px) and (max-width: 767px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 560px) and (max-width: 767px) {
   .story-section.story-pinned .story-head h2 { font-size: clamp(1.65rem, 4vw, 2.1rem); }
   .story-section.story-pinned .story-panel { padding: .9rem 1.25rem; gap: .45rem; }
   .story-section.story-pinned .story-panel h3 { font-size: clamp(1.55rem, 4.2vw, 2rem); }

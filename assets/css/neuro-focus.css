@@ -160,7 +160,7 @@ html[data-theme="light"] .neuro-focus-intro,html[data-theme="light"] .neuro-focu
 }
 /* The pinned desktop chapter must fit its heading, image, body, and link
    even when the desktop browser window is only about 560px wide. */
-@media (min-width: 560px) and (max-width: 767px) and (hover: hover) and (pointer: fine) {
+@media (min-width: 560px) and (max-width: 767px) {
   .story-section.story-pinned .story-visual {
     width: min(17svh, 140px);
     max-height: min(17svh, 140px);

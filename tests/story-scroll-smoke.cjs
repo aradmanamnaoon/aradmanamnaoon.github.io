@@ -79,7 +79,7 @@ async function run() {
     const target = process.env.STORY_TARGET || '.story-section';
     await js('window.scrollTo({top: window.scrollY + document.querySelector(' + JSON.stringify(target) + ').getBoundingClientRect().top - 120, behavior:"instant"})');
     await delay(2500);
-    const measure = '(() => {const section=document.querySelector(".story-section"),track=section.querySelector(".story-track"),view=section.querySelector(".story-viewport"),panel=section.querySelector(".story-panel"),link=panel.querySelector("a");return {pinned:section.classList.contains("story-pinned"),gsap:!!window.gsap,ScrollTrigger:!!window.ScrollTrigger,scrollY:window.scrollY,progress:getComputedStyle(section).getPropertyValue("--story-progress"),transform:getComputedStyle(track).transform,trackWidth:track.scrollWidth,viewportWidth:view.clientWidth,sectionLeft:section.getBoundingClientRect().left,documentWidth:document.documentElement.scrollWidth,firstLinkBottom:link.getBoundingClientRect().bottom,viewportBottom:view.getBoundingClientRect().bottom,media:matchMedia("(min-width:900px)").matches,fine:matchMedia("(hover:hover) and (pointer:fine)").matches,saveData:navigator.connection?.saveData||false}})()';
+    const measure = '(() => {const section=document.querySelector(".story-section"),track=section.querySelector(".story-track"),view=section.querySelector(".story-viewport"),panel=section.querySelector(".story-panel"),link=panel.querySelector("a");return {pinned:section.classList.contains("story-pinned"),gsap:!!window.gsap,ScrollTrigger:!!window.ScrollTrigger,scrollY:window.scrollY,progress:getComputedStyle(section).getPropertyValue("--story-progress"),transform:getComputedStyle(track).transform,trackWidth:track.scrollWidth,viewportWidth:view.clientWidth,sectionLeft:section.getBoundingClientRect().left,documentWidth:document.documentElement.scrollWidth,firstLinkBottom:link.getBoundingClientRect().bottom,viewportBottom:view.getBoundingClientRect().bottom,media:matchMedia("(min-width:900px)").matches,fine:matchMedia("(hover:hover) and (pointer:fine)").matches,touchPoints:navigator.maxTouchPoints,saveData:navigator.connection?.saveData||false}})()';
     const initial = await js(measure);
     console.log('[story] initial:', JSON.stringify(initial));
     if (process.env.STORY_CAPTURE) {
@@ -99,6 +99,7 @@ async function run() {
       return;
     }
     if (mobile) {
+      assert.ok(initial.touchPoints > 0, 'Mobile test must emulate touch hardware');
       assert.ok(!initial.pinned, 'Touch phone must stay unpinned');
       assert.ok(initial.trackWidth > initial.viewportWidth, 'Touch phone must support horizontal swipe');
       console.log('[story] PASS: touch devices retain swipe-based chapters');

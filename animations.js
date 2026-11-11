@@ -4,9 +4,11 @@
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
-  // Match actual mouse-driven desktop windows, not an arbitrary 900px cut-off.
-  // Phones/tablets with coarse pointers keep their accessible native swipe.
-  const desktop = matchMedia('(min-width: 560px) and (hover: hover) and (pointer: fine)');
+  // Use viewport size plus input capability: some desktop browsers and
+  // headless environments report pointer:none despite supporting wheel scroll.
+  // Touchscreen tablets (maxTouchPoints > 0) without a mouse keep native swipes.
+  const desktop = matchMedia('(min-width: 560px)');
+  const desktopStoryInput = () => desktop.matches && (fine.matches || navigator.maxTouchPoints === 0);
   // Respect the operating system's reduced-motion preference.
   // Ignore the retired user-controlled pause setting from older releases.
   const enabled = () => !reduced.matches;
@@ -206,7 +208,7 @@
   }
   function pinStory() {
     const story = document.querySelector('.story-section');
-    if (!story || !storyLoaded || !enabled() || !desktop.matches || storyMedia) return;
+    if (!story || !storyLoaded || !enabled() || !desktopStoryInput() || storyMedia) return;
     const track = story.querySelector('.story-track'), viewport = story.querySelector('.story-viewport');
     const panels = [...story.querySelectorAll('.story-panel')];
     if (!track || !viewport || panels.length < 2) return;
@@ -214,7 +216,7 @@
     if (!gsap || !ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
     storyMedia = gsap.matchMedia();
-    storyMedia.add('(min-width: 560px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
+    storyMedia.add('(min-width: 560px) and (prefers-reduced-motion: no-preference)', () => {
       viewport.scrollLeft = 0; story.classList.add('story-pinned');
       const distance = () => Math.max(1, track.scrollWidth - viewport.clientWidth);
       // Viewport-wide panels keep every pinned chapter within the visible screen.
@@ -280,7 +282,7 @@
   }
   function watchStory() {
     const section = document.querySelector('.story-section');
-    if (!section || storyLoaded || storyObserver || navigator.connection?.saveData || !desktop.matches || !enabled() || !('IntersectionObserver' in window)) return;
+    if (!section || storyLoaded || storyObserver || navigator.connection?.saveData || !desktopStoryInput() || !enabled() || !('IntersectionObserver' in window)) return;
     storyObserver = new IntersectionObserver(entries => {
       if (!entries.some(entry => entry.isIntersecting)) return;
       if (!enabled()) return;

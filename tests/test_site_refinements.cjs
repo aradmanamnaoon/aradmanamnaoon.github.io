@@ -205,5 +205,5 @@ test('Desktop hero caption is centered below the image without altering mobile s
   assert.match(desktop, /max-width:\s*100%/);
   // Existing mobile rules remain present and take precedence at narrow widths.
   assert.match(css, /@media \(max-width:767px\)\s*\{[\s\S]*?\.hero-grid \.hero-lab-marker\s*\{\s*position:relative/);
-  assert.match(home, /neuro-focus\.css\?v=20261111-lenses-v3/);
+  assert.match(home, /neuro-focus\.css\?v=20261111-lenses-v4/);
 });
