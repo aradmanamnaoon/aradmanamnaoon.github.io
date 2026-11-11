@@ -71,6 +71,39 @@ html.motion-off body::after { opacity: 0 !important; }
 .story-section.story-pinned .story-track { padding: 0; }
 .story-section.story-pinned .story-panel { min-height: 100%; }
 .story-section.story-pinned .story-controls { visibility: hidden; }
+/* Narrow desktop browser windows still use scroll-driven chapters. Touch
+   devices, which have no fine hover pointer, retain the swipeable cards. */
+@media (min-width: 560px) and (hover: hover) and (pointer: fine) {
+  .story-section.story-pinned {
+    box-sizing: border-box;
+    height: 100svh;
+    min-height: 0;
+    max-height: 100svh;
+    width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    margin-block: 0;
+    padding-top: calc(var(--nav-height, 76px) + .5rem);
+  }
+  .story-section.story-pinned .story-viewport { min-height: 0; flex: 1 1 0; }
+  .story-section.story-pinned .story-track { height: 100%; gap: 0; padding: 0; }
+  .story-section.story-pinned .story-panel {
+    box-sizing: border-box;
+    flex: 0 0 100vw;
+    width: 100vw;
+    max-width: 100vw;
+    height: 100%;
+    min-height: 0;
+    border: 0;
+    border-radius: 0;
+  }
+}
+@media (min-width: 560px) and (max-width: 767px) and (hover: hover) and (pointer: fine) {
+  .story-section.story-pinned .story-head h2 { font-size: clamp(1.65rem, 4vw, 2.1rem); }
+  .story-section.story-pinned .story-panel { padding: .9rem 1.25rem; gap: .45rem; }
+  .story-section.story-pinned .story-panel h3 { font-size: clamp(1.55rem, 4.2vw, 2rem); }
+  .story-section.story-pinned .story-panel p { font-size: .88rem; line-height: 1.5; }
+  .story-section.story-pinned .story-visual { width: min(17svh, 150px); }
+}
 /* A pinned story must fit within the available viewport height, rather
    than letting min-height on the slide hide its text below the fold. */
 @media (min-width: 900px) {

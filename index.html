@@ -92,7 +92,10 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet" /></noscript>
     <link href="./dist/output.css" rel="stylesheet" />
 
     <script type="application/ld+json">
@@ -1664,7 +1667,7 @@
       }
           </style>
     <link rel="stylesheet" href="/assets/css/ux.css" />
-  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261111-story-scroll-v2" />
     <style id="homepage-refinement-layout">
       .hero-title { text-wrap: balance; }
       .hero-title-line { overflow-wrap: normal; hyphens: none; }
@@ -1691,7 +1694,7 @@
     </style>
   <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261110-unobstructed-mobile-v2" />
-  <link rel="stylesheet" href="/assets/css/neuro-focus.css?v=20261111-desktop-marker-v1" />
+  <link rel="stylesheet" href="/assets/css/neuro-focus.css?v=20261111-lenses-v3" />
 </head>
 
   <body>
@@ -2465,7 +2468,7 @@
     </footer>
 
     <!-- Portfolio note: project metrics are sourced from the linked public repositories and model cards. -->
-    <script src="./animations.js?v=20261011-motion-exp-v8" defer></script>
+    <script src="./animations.js?v=20261111-story-scroll-v2" defer></script>
   <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
     <script src="/assets/js/project-symbols.js?v=20261011-glyph-v8" defer></script>
 
@@ -2509,6 +2512,7 @@
           node.textContent = typeof value === "number" ? compact.format(value) : value;
         };
 
+        const fetchMetrics = () => {
         const github = fetch("https://api.github.com/users/aradmanamnaoon", {
           headers: { Accept: "application/vnd.github+json" }
         })
@@ -2521,7 +2525,7 @@
           });
 
         const hfModels = fetch(
-          "https://huggingface.co/api/models?author=aradmanamnaoon&limit=100&full=true"
+          "https://huggingface.co/api/models?author=aradmanamnaoon&limit=100"
         )
           .then((response) => {
             if (!response.ok) throw new Error("Hugging Face models API unavailable");
@@ -2537,7 +2541,7 @@
           });
 
         const hfDatasets = fetch(
-          "https://huggingface.co/api/datasets?author=aradmanamnaoon&limit=100&full=true"
+          "https://huggingface.co/api/datasets?author=aradmanamnaoon&limit=100"
         )
           .then((response) => {
             if (!response.ok) throw new Error("Hugging Face datasets API unavailable");
@@ -2548,6 +2552,13 @@
           });
 
         Promise.allSettled([github, hfModels, hfDatasets]);
+        };
+        // Public metrics are supplemental; they should never delay the hero.
+        window.addEventListener('load', () => {
+          if ('requestIdleCallback' in window)
+            window.requestIdleCallback(fetchMetrics, { timeout: 2500 });
+          else setTimeout(fetchMetrics, 500);
+        }, { once: true });
       })();
     </script>
 

@@ -53,3 +53,6 @@ dist/*.map
 # Python build and test artifacts
 __pycache__/
 *.py[cod]
+
+# Screenshots and temporary Chrome outputs from browser smoke tests.
+test-artifacts/

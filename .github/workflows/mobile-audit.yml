@@ -24,6 +24,11 @@ jobs:
           google-chrome --version
       - name: Test phone/tablet overflow, navigation, touch and filters
         run: node tests/mobile-smoke.cjs
+      - name: Test touch chapter navigation and science lens cards
+        run: |
+          STORY_MOBILE=1 STORY_WIDTH=375 node tests/story-scroll-smoke.cjs
+          STORY_MOBILE=1 STORY_WIDTH=375 STORY_TARGET=.neuro-focus-section node tests/story-scroll-smoke.cjs
+          STORY_MOBILE=1 STORY_WIDTH=768 STORY_TARGET=.neuro-focus-section node tests/story-scroll-smoke.cjs
       - name: Capture failure screenshot
         if: failure()
         uses: actions/upload-artifact@v4

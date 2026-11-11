@@ -4,7 +4,9 @@
   const root = document.documentElement;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
-  const desktop = matchMedia('(min-width: 900px)');
+  // Match actual mouse-driven desktop windows, not an arbitrary 900px cut-off.
+  // Phones/tablets with coarse pointers keep their accessible native swipe.
+  const desktop = matchMedia('(min-width: 560px) and (hover: hover) and (pointer: fine)');
   // Respect the operating system's reduced-motion preference.
   // Ignore the retired user-controlled pause setting from older releases.
   const enabled = () => !reduced.matches;
@@ -44,11 +46,11 @@
     overlay.querySelector('span').animate([
       { opacity: 0, transform: 'translateY(35px) scale(.94)' },
       { opacity: 1, transform: 'translateY(0) scale(1)' }
-    ], { duration: 560, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+    ], { duration: 280, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
     overlay.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-102%)' }], {
-      delay: arriving ? 450 : 650, duration: 620, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards'
+      delay: arriving ? 150 : 240, duration: 390, easing: 'cubic-bezier(.76,0,.24,1)', fill: 'forwards'
     }).finished.then(() => overlay.remove()).catch(() => overlay.remove());
-    setTimeout(() => overlay.remove(), 1900);
+    setTimeout(() => overlay.remove(), 900);
   }
   function reveals() {
     if (!enabled() || !('IntersectionObserver' in window)) return;
@@ -209,9 +211,10 @@
     const panels = [...story.querySelectorAll('.story-panel')];
     if (!track || !viewport || panels.length < 2) return;
     const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
+    if (!gsap || !ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
     storyMedia = gsap.matchMedia();
-    storyMedia.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+    storyMedia.add('(min-width: 560px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)', () => {
       viewport.scrollLeft = 0; story.classList.add('story-pinned');
       const distance = () => Math.max(1, track.scrollWidth - viewport.clientWidth);
       // Viewport-wide panels keep every pinned chapter within the visible screen.

@@ -56,7 +56,7 @@
 .story-section.story-pinned .story-panel { padding-block:1rem; }
 .story-section.story-pinned .story-visual { width:min(34svh,330px); }
 .story-section.story-pinned .story-panel h3 { font-size:clamp(2rem,4vw,3.25rem); }
-@media(max-width:1000px) { .neuro-focus-layout { grid-template-columns:1fr; } .neuro-focus-core { min-height:270px; } }
+@media(max-width:1199px) { .neuro-focus-layout { grid-template-columns:minmax(0,1fr); } .neuro-focus-core { min-height:0; padding:clamp(1.5rem,3vw,2rem); } .neuro-focus-core h3 { max-width:24ch; } }
 @media(max-width:899px) { .story-chapter-guide { padding-right:1rem; } .story-panel { min-height:430px; } .story-visual { width:min(90%,270px); } .story-section.story-pinned { padding-top:1.5rem; } }
 @media(max-width:767px) { .hero-media::before { width:min(106%,340px); } .hero-media::after { width:min(115%,365px); } .hero-lab-marker { bottom:-1rem; right:-.2rem; font-size:.56rem; } .neuro-focus-grid { grid-template-columns:1fr; } .neuro-focus-card { min-height:180px; } .story-visual { width:min(48vw,190px); } .story-panel { min-height:440px; } .story-progress-track { width:min(135px,24vw); } .story-chapter-guide { font-size:.63rem; gap:.65rem; } }
 @media(prefers-reduced-motion:reduce) { .hero-focus-list a,.neuro-focus-card,.story-progress-fill { transition:none; } }
@@ -134,6 +134,37 @@ html[data-theme="light"] .neuro-focus-intro,html[data-theme="light"] .neuro-focu
   .neuro-focus-core { min-height:0; padding:1.5rem; }
   .neuro-focus-core h3 { max-width:100%; }
   .neuro-focus-card { min-height:0; }
+}
+
+/* Four lenses: avoid decorative geometry behind labels or scientific copy,
+   at both desktop and mobile sizes. Keep icons visible and text unobstructed. */
+.neuro-focus-core::before,
+.neuro-focus-core::after,
+.neuro-focus-card::after { content:none; display:none; }
+.neuro-focus-core,
+.neuro-focus-card { isolation:isolate; }
+.neuro-focus-card-top { min-width:0; align-items:flex-start; }
+.neuro-focus-card-top > span:first-child { min-width:0; overflow-wrap:anywhere; }
+.neuro-focus-icon { flex:0 0 46px; }
+.neuro-focus-grid { min-width:0; }
+@media (max-width: 900px) {
+  .neuro-focus-core h3 { max-width:100%; }
+  .neuro-focus-meta { align-items:flex-start; }
+}
+@media (max-width: 767px) {
+  .neuro-focus-layout { gap:.85rem; }
+  .neuro-focus-grid { grid-template-columns:minmax(0,1fr); gap:.85rem; }
+  .neuro-focus-core,.neuro-focus-card { padding:clamp(1.1rem,4.5vw,1.5rem); }
+  .neuro-focus-card { min-height:0; }
+  .neuro-focus-card-top { gap:.5rem; }
+}
+/* The pinned desktop chapter must fit its heading, image, body, and link
+   even when the desktop browser window is only about 560px wide. */
+@media (min-width: 560px) and (max-width: 767px) and (hover: hover) and (pointer: fine) {
+  .story-section.story-pinned .story-visual {
+    width: min(17svh, 140px);
+    max-height: min(17svh, 140px);
+  }
 }
 
 /* Desktop-only portrait caption: center the badge below the photograph,

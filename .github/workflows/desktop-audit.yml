@@ -20,6 +20,11 @@ jobs:
         run: google-chrome --version
       - name: Desktop layout and interaction checks
         run: node tests/desktop-smoke.cjs
+      - name: Desktop scroll-driven research chapters and lens layout
+        run: |
+          node tests/story-scroll-smoke.cjs
+          STORY_WIDTH=800 node tests/story-scroll-smoke.cjs
+          STORY_WIDTH=1024 STORY_TARGET=.neuro-focus-section node tests/story-scroll-smoke.cjs
       - name: Upload audit screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
