@@ -1,9 +1,14 @@
 /* Network-first pages; a small cached fallback for offline navigation. */
-const CACHE = 'arad-portfolio-v17';
+const CACHE = 'arad-cinematic-v18';
 const CORE = [
   '/', '/projects/', '/skills/', '/search/',
   '/offline.html', '/dist/output.css', '/assets/css/ux.css', '/assets/css/motion.css',
   '/animations.js', '/assets/js/site-ui.js', '/assets/js/theme-init.js', '/assets/js/search.js', '/search-index.json',
+  '/assets/css/cinematic.css', '/assets/css/cinematic-case.css', '/assets/css/cinematic-states.css',
+  '/assets/js/cinematic.js', '/assets/js/site-config.js',
+  '/assets/vendor/gsap.min.js', '/assets/vendor/ScrollTrigger.min.js',
+  '/assets/cinematic/hero-poster.jpg', '/assets/cinematic/architecture.webp',
+  '/favicon.ico', '/favicon.svg', '/apple-touch-icon.png',
   '/assets/js/projects-experience.js', '/assets/css/projects-experience.css',
   '/assets/js/project-symbols.js', '/assets/js/brand-icons.js', '/assets/js/skills-experience.js', '/assets/css/skills-experience.css',
   '/assets/js/interaction-hub.js', '/assets/css/interaction-hub.css',

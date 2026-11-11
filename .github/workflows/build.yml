@@ -42,6 +42,8 @@ jobs:
 
       - name: Run generator and site tests
         run: npm test
+      - name: Headless cinematic browser acceptance
+        run: npm run test:browser
 
       - name: Commit and Push Changes
         run: |

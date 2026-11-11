@@ -26,6 +26,19 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     lede = str(study.get("lede") or project.get("description") or "")
     source_url = str(project.get("url") or "")
     source_label = str(study.get("sourceLabel") or "View the source project")
+    cinematic_images = {
+        "constellation": "constellation",
+        "medical-image-segmentation": "cardiac",
+        "ai-research-assistant-platform": "research",
+        "holdout-ledger": "holdout",
+        "eu-loneliness-social-support-analysis": "loneliness",
+    }
+    cinematic_cover = cinematic_images.get(str(project.get("id") or ""))
+    cinematic_art = (
+        f'<div class="cinematic-case-art" aria-hidden="true"><img '
+        f'src="/assets/cinematic/{cinematic_cover}.webp" alt="" loading="eager"></div>'
+        if cinematic_cover else ""
+    )
     # Some software case studies include a versioned downloadable release.
     # Keep this link explicit rather than describing an installer as a live demo.
     download_link = (
@@ -148,6 +161,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
   {schema}
   <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
   <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-audit-v2" />
+  <link rel="stylesheet" href="/assets/css/cinematic-case.css?v=20261111-1" />
 </head>
 <body class="project-case-study">
   <a class="skip-link" href="#main">Skip to content</a>
@@ -156,7 +170,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
     <nav class="breadcrumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/projects/">Projects</a><span aria-hidden="true">/</span><span aria-current="page">{esc(project.get('title') or title)}</span></nav>
   </header>
   <main id="main" class="shell">
-    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a>{download_link}<a class="action" href="/projects/#research-directions">Research directions</a></div></header>
+    <header class="hero"><p class="eyebrow">Project case study · {esc(project.get('type', 'Research project'))}</p><h1>{esc(title)}</h1><p class="lede">{esc(lede)}</p><div class="hero-actions"><a class="action primary" href="{esc(source_url)}" target="_blank" rel="noopener noreferrer">{esc(source_label)} ↗</a>{download_link}<a class="action" href="/projects/#research-directions">Research directions</a></div>{cinematic_art}</header>
     <aside class="research-continuum-note" aria-label="Current interdisciplinary research direction">
       <strong>AI engineering → neuroscience</strong>
       <p>This project documents my engineering experience. I am independently studying advanced neuroscience and applying those methods to questions in brain genomics, neuroinformatics, neuroimaging and neuropharmacology. These new directions do not imply clinical or drug-discovery outcomes.</p>
@@ -169,7 +183,7 @@ def render(project: dict[str, Any], site_url: str) -> str | None:
       <section class="case-section" data-reveal="true" aria-labelledby="results-heading"><p class="eyebrow">03 · Evaluation</p><h2 id="results-heading">Reported results</h2><ul>{list_items('results')}</ul></section>
       <section class="case-section limitations" data-reveal="true" aria-labelledby="limitations-heading"><p class="eyebrow">04 · Scope</p><h2 id="limitations-heading">Limitations</h2><p>{esc(study.get('limitations', ''))}</p></section>
     </div>
-    {figure_gallery}
+{figure_gallery}
     <nav class="related" aria-label="Related pages"><strong>Explore more:</strong> <a href="/projects/">All projects</a><a href="/projects/#research-directions">Research directions</a><a href="/skills/">Skills and tools</a></nav>
   </main>
   <footer class="shell">Seyyed Arad Hosseini Moghaddam · AI engineering and independent advanced neuroscience study.</footer>

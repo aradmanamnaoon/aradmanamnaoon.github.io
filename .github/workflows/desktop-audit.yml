@@ -17,13 +17,15 @@ jobs:
         with:
           node-version: '22'
       - name: Check Chrome availability
-        run: google-chrome --version
-      - name: Desktop layout and interaction checks
-        run: node tests/desktop-smoke.cjs
+        run: |
+          google-chrome --version
+          npm ci
+      - name: Desktop layout, motion and case-study checks
+        run: npm run test:browser
       - name: Upload audit screenshots on failure
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: desktop-audit-screenshots
-          path: test-artifacts/
+          path: docs/qa/cinematic-headless-desktop.png
           if-no-files-found: ignore

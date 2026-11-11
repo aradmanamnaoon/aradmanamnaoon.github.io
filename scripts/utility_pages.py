@@ -17,7 +17,7 @@ def esc(value: Any) -> str:
 
 def search_entries(projects: list[dict[str, Any]]) -> list[dict[str, str]]:
     entries = [
-        {"title": "Home — Seyyed Arad Hosseini Moghaddam", "url": "/", "summary": "AI engineer with documented medical imaging, NLP and reproducible ML work; now independently studying advanced neuroscience and applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology.", "terms": "portfolio contact CV graduate research neuroscience brain genomics neuroinformatics neuroimaging neuropharmacology"},
+        {"title": "Home — Seyyed Arad Hosseini Moghaddam", "url": "/", "summary": "AI engineer with documented medical imaging, NLP and reproducible ML work; now independently studying advanced neuroscience and applications in brain genomics, neuroinformatics, neuroimaging and neuropharmacology.", "terms": "portfolio contact graduate research neuroscience brain genomics neuroinformatics neuroimaging neuropharmacology"},
         {"title": "Projects and research directions", "url": "/projects/", "summary": "Evidence-led AI engineering projects, a neuroscience application roadmap, independent advanced neuroscience study and quantitative humanities interests.", "terms": "projects research neuroscience genomics neuroinformatics neuroimaging neuropharmacology machine learning AI RAG Flutter statistics humanities"},
         {"title": "Skills and tools", "url": "/skills/", "summary": "Full, unchanged inventory of AI and engineering skills supporting an emerging neuroscience research direction.", "terms": "skills PyTorch MONAI Python SQL Flutter Hugging Face"},
     ]
@@ -36,6 +36,44 @@ def search_entries(projects: list[dict[str, Any]]) -> list[dict[str, str]]:
 
 
 def render(kind: str, projects: list[dict[str, Any]]) -> str:
+    if kind in {"404", "offline"}:
+        missing = kind == "404"
+        number = "404" if missing else "OFFLINE"
+        heading = "LOST IN THE\nUNEXPECTED." if missing else "CONNECTION\nINTERRUPTED."
+        summary = (
+            "The page you're looking for isn't here. The research continues elsewhere."
+            if missing
+            else "The network is unavailable right now. Your next discovery can resume when you're connected."
+        )
+        return f'''<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#10151a">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'">
+  <title>{'404 · Page Not Found' if missing else 'Offline'} | Arad Hosseini Moghaddam</title>
+  <meta name="description" content="{esc(summary)}">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="/assets/css/cinematic.css?v=20261111-1">
+  <link rel="stylesheet" href="/assets/css/cinematic-states.css?v=20261111-1">
+</head>
+<body class="cinematic-site system-state">
+  <a href="#main" class="skip-link">Skip to content</a>
+  <header class="header"><a class="brand" href="/"><span class="brand-mark">A<span>✳</span></span><span class="brand-name">ARADMANAMNAOON<small>AI ENGINEERING × NEUROSCIENCE</small></span></a><a class="header-reach" href="/">BACK HOME ↗</a></header>
+  <main id="main" class="system-frame">
+    <div class="system-image" aria-hidden="true"></div>
+    <p class="system-kicker">SYSTEM / {'PAGE NOT FOUND' if missing else 'NETWORK UNAVAILABLE'}</p>
+    <div class="system-number" aria-hidden="true">{number}</div>
+    <h1>{esc(heading).replace(chr(10), '<br>')}</h1>
+    <p>{esc(summary)}</p>
+    <nav aria-label="Recovery navigation" class="system-actions"><a href="/">RETURN TO THE BEGINNING <span aria-hidden="true">↗</span></a><a href="/projects/">EXPLORE THE PROJECTS ↗</a><a href="/search/">SEARCH THE ARCHIVE ↗</a></nav>
+    <div class="system-coordinate"><span>ARAD HOSSEINI MOGHADDAM</span><span>{'ERROR 404 / END OF ROUTE' if missing else 'LOCAL NETWORK UNAVAILABLE'}</span></div>
+  </main>
+</body>
+</html>'''
     if kind == "404":
         title, eyebrow, heading = "Page not found | Arad", "404 · Page not found", "This route does not exist."
         intro = "The link may have changed, or the address may contain a typo. Search the portfolio or go directly to the projects and research directions."

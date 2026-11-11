@@ -12,7 +12,7 @@
       "BPE",
       "Persian NLP"
     ],
-    "homepage_featured": true,
+    "homepage_featured": false,
     "type": "Flagship model · Persian NLP · From-scratch training",
     "metrics": [
       {
@@ -425,7 +425,8 @@
       "Hugging Face",
       "Medical Imaging"
     ],
-    "category": "software"
+    "category": "software",
+    "homepage_featured": false
   },
   {
     "id": "holdout-ledger",
@@ -493,7 +494,8 @@
     },
     "homepage_description": "Local Python research software for text and declared-group evaluation split auditing, with transparent witness evidence, a synthetic demo, and reviewed repairs.",
     "homepage_note": "Evidence and synthetic checks are documented; no universal detection recall, independent adoption, or clinical validation is claimed.",
-    "homepage_featured": false
+    "homepage_featured": true,
+    "homepage_order": 4
   },
   {
     "id": "agent-guardrails",
@@ -511,7 +513,8 @@
       "Open Source",
       "Guardrails"
     ],
-    "category": "software"
+    "category": "software",
+    "homepage_featured": false
   },
   {
     "id": "jibay2-medical-v2",
@@ -526,7 +529,8 @@
       "PEFT",
       "Clinical NLP"
     ],
-    "category": "models"
+    "category": "models",
+    "homepage_featured": false
   },
   {
     "id": "messy2json-qwen-0.5b",
@@ -541,7 +545,8 @@
       "4-bit NF4",
       "Structured Output"
     ],
-    "category": "models"
+    "category": "models",
+    "homepage_featured": false
   },
   {
     "id": "persian-wikipedia-cleaned-for-persian-NLP",
@@ -557,7 +562,8 @@
       "library:pandas",
       "library:polars"
     ],
-    "category": "datasets"
+    "category": "datasets",
+    "homepage_featured": false
   },
   {
     "id": "nllb-en-fa-psych-translation",
@@ -572,7 +578,8 @@
       "Persian",
       "Psychology"
     ],
-    "category": "models"
+    "category": "models",
+    "homepage_featured": false
   },
   {
     "id": "emotion-appraisal-video-audit",
@@ -700,9 +707,58 @@
       "Reproducibility"
     ],
     "category": "analysis",
-    "type": "Behavioral science · Survey analysis",
-    "homepage_featured": false,
-    "note": "Observational survey associations; no causal interpretation. See repository for population and weighting details."
+    "type": "Behavioral data science · EU survey · Observational analysis",
+    "homepage_featured": true,
+    "note": "Observational survey associations; no causal interpretation. See repository for population and weighting details.",
+    "homepage_order": 5,
+    "slug": "eu-loneliness-social-support-analysis",
+    "homepage_description": "Exploratory analysis of European survey data on loneliness, perceived emotional support and face-to-face contact. Observational associations, not causal findings.",
+    "homepage_note": "Python analysis results are author-reported; the accompanying R replication script has not been executed or validated.",
+    "metrics": [
+      {
+        "value": "23,307",
+        "label": "EU27 complete cases (reported)"
+      },
+      {
+        "value": "0.610",
+        "label": "EU27 perceived-support odds ratio (reported)"
+      },
+      {
+        "value": "2022",
+        "label": "survey reference year"
+      }
+    ],
+    "research": {
+      "context": "A secondary, exploratory analysis of the European Commission Joint Research Centre's 2022 EU Loneliness Survey, examining associations between perceived emotional support, contact and loneliness.",
+      "methods": [
+        "Two public JRC survey archives covering EU4 and EU27 populations",
+        "Python weighted quasibinomial logistic regression with HC3 robust covariance",
+        "Matched four-country sensitivity comparison and full EU27 sample",
+        "An R replication script was prepared but has not been run or independently validated"
+      ],
+      "limitations": "Cross-sectional associations cannot establish causal effects. Complex survey design inference, independent replication and manuscript publication have not been established."
+    },
+    "caseStudy": {
+      "title": "Social support and loneliness across the European Union",
+      "seoTitle": "EU Loneliness Survey: Social Support Analysis | Arad",
+      "description": "Exploratory Python analysis of the 2022 EU Loneliness Survey examining weighted associations between emotional support and loneliness in EU4 and EU27 respondents.",
+      "lede": "How does perceived emotional support relate to loneliness across European survey samples? This independent exploratory analysis compares EU4, four matched countries in EU27 and all EU27 countries.",
+      "challenge": "Estimate interpretable observational associations while respecting source coding, missing responses, sample differences and the limits of cross-sectional survey evidence.",
+      "approach": [
+        "Used the 2022 EU Loneliness Survey published by the European Commission Joint Research Centre; the original response data remain with the publisher.",
+        "Prepared Python analyses for EU4, EU27 in France, Italy, Poland and Sweden, and the full EU27 sample.",
+        "Estimated weighted quasibinomial models with HC3 confidence intervals as documented in the public repository.",
+        "Prepared a separate R replication script; as of the documented repository revision, it had not been executed or independently validated."
+      ],
+      "results": [
+        "Author-reported Python EU4 estimate: n=3,756 complete cases, perceived-support odds ratio 0.565 (HC3 95% CI 0.516–0.618).",
+        "Author-reported Python matched-country EU27 estimate: n=3,679, odds ratio 0.598 (HC3 95% CI 0.555–0.645).",
+        "Author-reported Python full-EU27 estimate: n=23,307, odds ratio 0.610 (HC3 95% CI 0.591–0.631).",
+        "These are reference values from the Python analysis, not replicated R results or causal estimates."
+      ],
+      "limitations": "The study is exploratory and cross-sectional. Weighting with HC3 robust errors does not itself establish full complex-survey inference. No causal finding, direct measure of enjoyable solitude, independently validated R replication, accepted paper or published journal article is claimed.",
+      "sourceLabel": "Read the public analysis and reproduction notes"
+    }
   },
   {
     "id": "study-sentinel",
@@ -1113,7 +1169,7 @@
     ],
     "category": "software",
     "type": "Research software · Native desktop · Local-first",
-    "homepage_featured": true,
+    "homepage_featured": false,
     "homepage_order": 4,
     "slug": "researchweave",
     "metrics": [
@@ -1181,7 +1237,7 @@
     "category": "software",
     "type": "Agentic AI · Desktop application · Experimental",
     "homepage_featured": true,
-    "homepage_order": 5,
+    "homepage_order": 1,
     "slug": "constellation",
     "metrics": [
       {

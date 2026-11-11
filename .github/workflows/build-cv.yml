@@ -1,12 +1,6 @@
 name: Build evidence-based CV PDF
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - 'cv/generate_cv.py'
-      - 'cv/.cv_generator_bootstrap.txt'
-      - '.github/workflows/build-cv.yml'
   workflow_dispatch:
 
 permissions:

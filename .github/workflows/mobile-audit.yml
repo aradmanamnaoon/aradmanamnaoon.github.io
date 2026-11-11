@@ -18,16 +18,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Validate mobile test and browser availability
+      - name: Install test dependencies and verify browser availability
         run: |
-          node --check tests/mobile-smoke.cjs
+          npm ci
           google-chrome --version
-      - name: Test phone/tablet overflow, navigation, touch and filters
-        run: node tests/mobile-smoke.cjs
+      - name: Test cinematic layouts, navigation and motion at phone/tablet widths
+        run: npm run test:browser
       - name: Capture failure screenshot
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: mobile-failure
-          path: test-artifacts/mobile-failure.png
+          path: docs/qa/cinematic-headless-mobile.png
           if-no-files-found: ignore

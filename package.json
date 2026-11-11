@@ -6,10 +6,12 @@
   "scripts": {
     "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
     "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
-    "test": "python3 -m unittest discover -s tests -v && node --test tests/test_service_worker.cjs tests/test_motion.cjs tests/test_projects_experience.cjs tests/test_site_refinements.cjs tests/test_brand_skill_icons.cjs tests/test_interactions.cjs tests/test_theme_controls.cjs tests/test_site_audit.cjs",
-    "build:site": "python3 scripts/build_site.py",
-    "build": "npm run build:css && python3 scripts/build_site.py",
-    "validate": "python3 scripts/build_site.py --validate"
+    "test": "node scripts/python.cjs -m unittest discover -s tests -p test_cinematic_site.py -v && node scripts/python.cjs -m unittest discover -s tests -p test_empirical_atlas.py -v && node scripts/python.cjs -m unittest discover -s tests -p test_statistical_projects.py -v && node --test tests/test_service_worker.cjs",
+    "test:browser": "node tests/cinematic-e2e.cjs",
+    "test:legacy": "node scripts/python.cjs -m unittest discover -s tests -v && node --test tests/test_motion.cjs tests/test_projects_experience.cjs tests/test_site_refinements.cjs tests/test_brand_skill_icons.cjs tests/test_interactions.cjs tests/test_theme_controls.cjs tests/test_site_audit.cjs",
+    "build:site": "node scripts/python.cjs scripts/render_cinematic_home.py && node scripts/python.cjs scripts/build_site.py",
+    "build": "npm run build:css && npm run build:site",
+    "validate": "node scripts/python.cjs scripts/build_site.py --validate"
   },
   "keywords": [
     "medical AI",
@@ -26,6 +28,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@tailwindcss/cli": "^4.3.3",
+    "gsap": "^3.15.1",
+    "playwright-core": "^1.65.0",
     "tailwindcss": "^4.3.3"
   }
 }

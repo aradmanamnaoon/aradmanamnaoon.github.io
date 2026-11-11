@@ -390,6 +390,21 @@ def validate_homepage_contract(
     """Validate the visual and SEO hooks used by the current homepage."""
     if relpath(path, root) != "index.html":
         return
+    if 'class="cinematic-site"' in source:
+        # The earlier contract is specific to the retired circular-portrait
+        # hero. The cinematic home places the same real portrait once, in its
+        # identity chapter, and keeps all rendering rules in a CSS file.
+        portraits = [
+            attrs for attrs, _ in parser.images
+            if (attrs.get("src") or "").split("/")[-1] == "photo_2026-10-06_09-42-56.jpg"
+        ]
+        if len(portraits) != 1:
+            check_finding(
+                findings, "High", "Homepage / image SEO", path, root, 1,
+                "portrait-count", f"Expected one real portrait; found {len(portraits)}.",
+                "Use the repository headshot exactly once in the identity scene.",
+            )
+        return
 
     def report(
         severity: str,
@@ -1964,6 +1979,34 @@ def render_project_metrics(
 
 
 def render_home_projects(projects: list[dict[str, Any]]) -> str:
+    home_images = {
+        "constellation": "constellation",
+        "medical-image-segmentation": "cardiac",
+        "ai-research-assistant-platform": "research",
+        "holdout-ledger": "holdout",
+        "eu-loneliness-social-support-analysis": "loneliness",
+    }
+    cinematic_home = (Path(__file__).resolve().parents[1] / "index.html").read_text(encoding="utf-8")
+    if 'class="project-gallery"' in cinematic_home:
+        cards = []
+        for index, project in enumerate(projects[:MAX_PROJECTS_HOMEPAGE], start=1):
+            image = home_images.get(project["id"], "systems")
+            actions = project_actions(project)
+            case_link = next((a for a in actions if not a.get("external")), actions[0])
+            tags = " / ".join(str(tag) for tag in project.get("tags", [])[:3])
+            cards.append(
+                '<article id="' + escape_html(project["id"]) + '" class="project-plane" data-plane="' + str(index) + '">'
+                '<div class="project-plane-image"><img src="/assets/cinematic/' + image + '.webp" alt="" loading="lazy" decoding="async">'
+                '<span class="plane-number">' + f"{index:02}" + ' / 05</span></div>'
+                '<div class="project-plane-body"><p class="plane-category">' + escape_html(project.get("type", "PROJECT")) + '</p>'
+                '<h3>' + escape_html(project["title"]) + '</h3>'
+                '<p class="plane-description">' + escape_html(project.get("homepage_description") or project.get("description", "")) + '</p>'
+                '<p class="plane-tags">' + escape_html(tags) + '</p>'
+                '<p class="plane-qualification">' + escape_html(project.get("homepage_note") or project.get("note", "")) + '</p>'
+                '<a class="plane-action" href="' + escape_html(case_link["url"]) + '">EXPLORE CASE STUDY <span aria-hidden="true">↗</span></a>'
+                '</div></article>'
+            )
+        return "\n".join(cards)
     cards = []
     source_names = {
         "github": "GitHub",
