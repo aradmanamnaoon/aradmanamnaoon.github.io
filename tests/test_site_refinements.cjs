@@ -190,3 +190,20 @@ test('Projects research introduction uses the coherent neuroscience layout witho
   assert.match(siteUi, /independently studying advanced neuroscience/);
   assert.doesNotThrow(() => new Function(siteUi));
 });
+
+
+test('Desktop hero caption is centered below the image without altering mobile styling', () => {
+  const css = read('assets/css/neuro-focus.css');
+  const desktop = css.split('/* Desktop-only portrait caption:')[1];
+  assert.ok(desktop, 'Desktop-only caption override missing');
+  assert.match(desktop, /@media \(min-width: 768px\) and \(hover: hover\) and \(pointer: fine\)/);
+  assert.match(desktop, /\.hero-grid \.hero-media\s*\{[^}]*margin-bottom:\s*7rem/s);
+  assert.match(desktop, /\.hero-grid \.hero-lab-marker\s*\{[^}]*top:\s*calc\(100% \+ 1\.5rem\)/s);
+  assert.match(desktop, /left:\s*50%/);
+  assert.match(desktop, /right:\s*auto/);
+  assert.match(desktop, /transform:\s*translateX\(-50%\)/);
+  assert.match(desktop, /max-width:\s*100%/);
+  // Existing mobile rules remain present and take precedence at narrow widths.
+  assert.match(css, /@media \(max-width:767px\)\s*\{[\s\S]*?\.hero-grid \.hero-lab-marker\s*\{\s*position:relative/);
+  assert.match(home, /neuro-focus\.css\?v=20261111-desktop-marker-v1/);
+});

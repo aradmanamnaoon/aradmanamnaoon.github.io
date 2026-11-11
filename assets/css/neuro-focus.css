@@ -135,3 +135,25 @@ html[data-theme="light"] .neuro-focus-intro,html[data-theme="light"] .neuro-focu
   .neuro-focus-core h3 { max-width:100%; }
   .neuro-focus-card { min-height:0; }
 }
+
+/* Desktop-only portrait caption: center the badge below the photograph,
+   reserving vertical space without changing phone or touch-device styling. */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .hero-grid .hero-media {
+    overflow: visible;
+    margin-bottom: 7rem;
+  }
+
+  .hero-grid .hero-lab-marker {
+    top: calc(100% + 1.5rem);
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    width: max-content;
+    max-width: 100%;
+    white-space: normal;
+    text-align: center;
+  }
+}
