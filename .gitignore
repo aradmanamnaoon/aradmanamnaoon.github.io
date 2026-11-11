@@ -53,10 +53,3 @@ dist/*.map
 # Python build and test artifacts
 __pycache__/
 *.py[cod]
-
-# Local prompts, browser evidence and external reference assets
-/prompt.txt
-/.playwright-cli/
-/docs/qa/*.png
-/docs/qa/*.log
-/docs/qa/asset-audit/

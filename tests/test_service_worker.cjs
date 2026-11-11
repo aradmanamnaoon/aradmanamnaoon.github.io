@@ -63,19 +63,14 @@ test('cross-origin requests are not intercepted', () => {
   assert.equal(dispatch(fetchEvent, 'https://formspree.io/f/example', 'POST', 'cors'), undefined);
 });
 
-test('offline shell includes old archive routes and the cinematic core without full videos', async () => {
+test('offline shell includes core motion and excludes the optional desktop scene', async () => {
   const worker = workerWith(async () => new Response('ok'), undefined);
   let installation;
   worker.installEvent({ waitUntil(promise) { installation = promise; } });
   await installation;
   assert.ok(worker.precached().includes('/animations.js'));
   assert.ok(worker.precached().includes('/assets/css/motion.css'));
-  assert.ok(worker.precached().includes('/assets/vendor/gsap.min.js'));
-  assert.ok(worker.precached().includes('/assets/vendor/ScrollTrigger.min.js'));
-  assert.ok(worker.precached().includes('/assets/css/cinematic.css'));
-  assert.ok(worker.precached().includes('/assets/js/cinematic.js'));
-  assert.ok(worker.precached().includes('/assets/cinematic/hero-poster.jpg'));
-  assert.ok(!worker.precached().includes('/assets/cinematic/hero-desktop.mp4'));
+  assert.ok(!worker.precached().includes('/assets/vendor/gsap.min.js'));
   assert.ok(!worker.precached().includes('/research/'));
   assert.ok(worker.precached().includes('/assets/js/projects-experience.js'));
   assert.ok(worker.precached().includes('/assets/css/projects-experience.css'));
@@ -90,10 +85,10 @@ test('offline shell includes old archive routes and the cinematic core without f
   assert.ok(worker.precached().includes('/assets/css/page-extras.css'));
 });
 
-test('updated worker cache supports cinematic motion assets offline', () => {
-  assert.match(source, /arad-cinematic-v18/);
+test('updated worker cache supports versioned motion assets offline', () => {
+  assert.match(source, /arad-portfolio-v17/);
   assert.ok(source.includes('caches.match(url.pathname)'));
   const home = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
-  assert.ok(home.includes('/assets/js/cinematic.js?v='));
-  assert.ok(home.includes('/assets/css/cinematic.css?v='));
+  assert.ok(home.includes('animations.js?v=20261011-motion-exp-v8'));
+  assert.ok(home.includes('motion.css?v=20261011-motion-exp-v9'));
 });

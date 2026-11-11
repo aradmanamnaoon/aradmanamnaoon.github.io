@@ -1,29 +1,49 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="robots" content="noindex,follow">
-  <meta name="theme-color" content="#10151a">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; media-src 'self'">
-  <title>Offline | Arad Hosseini Moghaddam</title>
-  <meta name="description" content="The network is unavailable right now. Your next discovery can resume when you&#x27;re connected.">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" href="/favicon.ico" sizes="any">
-  <link rel="stylesheet" href="/assets/css/cinematic.css?v=20261111-1">
-  <link rel="stylesheet" href="/assets/css/cinematic-states.css?v=20261111-1">
+  <script src="/assets/js/theme-init.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Offline | Arad</title>
+  <meta name="description" content="The page could not be loaded right now. Pages you previously viewed may still open from this device&#x27;s cache. Try again when your connection returns." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#14181f" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'none'; object-src 'none'; form-action 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self'" />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="stylesheet" href="/dist/output.css" />
+  <link rel="stylesheet" href="/assets/css/ux.css" />
+  <link rel="stylesheet" href="/assets/css/motion.css?v=20261011-motion-exp-v9" />
+  <link rel="stylesheet" href="/assets/css/interaction-hub.css?v=20261011-dotlight-v6" />
+  <link rel="stylesheet" href="/assets/css/page-extras.css?v=20261011-audit-v2" />
 </head>
-<body class="cinematic-site system-state">
-  <a href="#main" class="skip-link">Skip to content</a>
-  <header class="header"><a class="brand" href="/"><span class="brand-mark">A<span>✳</span></span><span class="brand-name">ARADMANAMNAOON<small>AI ENGINEERING × NEUROSCIENCE</small></span></a><a class="header-reach" href="/">BACK HOME ↗</a></header>
-  <main id="main" class="system-frame">
-    <div class="system-image" aria-hidden="true"></div>
-    <p class="system-kicker">SYSTEM / NETWORK UNAVAILABLE</p>
-    <div class="system-number" aria-hidden="true">OFFLINE</div>
-    <h1>CONNECTION<br>INTERRUPTED.</h1>
-    <p>The network is unavailable right now. Your next discovery can resume when you&#x27;re connected.</p>
-    <nav aria-label="Recovery navigation" class="system-actions"><a href="/">RETURN TO THE BEGINNING <span aria-hidden="true">↗</span></a><a href="/projects/">EXPLORE THE PROJECTS ↗</a><a href="/search/">SEARCH THE ARCHIVE ↗</a></nav>
-    <div class="system-coordinate"><span>ARAD HOSSEINI MOGHADDAM</span><span>LOCAL NETWORK UNAVAILABLE</span></div>
+<body class="utility-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="utility-header">
+    <a class="utility-brand" href="/">ARADMANAMNAOON</a>
+    <nav aria-label="Primary navigation">
+      <a href="/">Home</a><a href="/skills/">Skills</a><a href="/projects/">Projects</a>
+      <a href="/search/">Search</a><a href="/#contact">Contact</a>
+    </nav>
+  </header>
+  <main id="main" class="utility-main">
+    <p class="utility-eyebrow">Connection unavailable</p>
+    <h1>You are offline.</h1>
+    <p class="utility-intro">The page could not be loaded right now. Pages you previously viewed may still open from this device&#x27;s cache. Try again when your connection returns.</p>
+    <form class="utility-search" action="/search/" method="get" role="search">
+      <label for="site-search">Search the portfolio</label>
+      <div class="utility-search-row"><input id="site-search" type="search" name="q" maxlength="120" autocomplete="off" placeholder="Try MRI, Persian NLP or neuroscience" /><button type="submit">Search</button></div>
+    </form>
+    <div class="utility-actions"><button class="utility-action primary" type="button" data-retry>Try again</button><a class="utility-action" href="/projects/#research-directions">Research directions</a><a class="utility-action" href="/skills/">All skills</a></div>
+
+    <section class="utility-directory" aria-labelledby="directory-title"><h2 id="directory-title">Explore the portfolio</h2><div><a href="/projects/">Projects and research directions</a><a href="/skills/">Skills and tools</a><a href="/projects/persian-gpt-from-scratch/">Persian GPT — Transformer From Scratch</a><a href="/projects/3d-cardiac-mri-segmentation/">3D Cardiac MRI Segmentation</a><a href="/projects/multi-agent-ai-research-assistant/">AI Research Assistant Platform</a><a href="/projects/researchweave/">ResearchWeave — Local-First Research Workbench</a><a href="/projects/constellation/">Constellation — Local-First Multi-Agent AI Workspace</a><a href="/projects/researchos/">ResearchOS — Provenance-Aware Research Workbench</a><a href="/projects/psylex-studio/">PsyLex Studio — English–Persian Psychology Translator</a><a href="/projects/psychology-data-audit/">From Messy Data to Meaningful Insight — Psychology Research Atlas</a><a href="/projects/holdout-ledger/">Holdout Ledger: Dataset Leakage Audit Workbench</a><a href="/projects/emotion-appraisal-video-audit/">Emotion &amp; Appraisal Repeated-Measures Analysis</a><a href="/projects/survey-response-integrity/">Digital Survey Response Quality Analysis</a><a href="/projects/psoriasis-wellbeing-audit/">Psoriasis &amp; Wellbeing Survey Analysis</a><a href="/projects/mindhealth-observatory/">MindHealth Observatory</a><a href="/projects/psychemetrics-atlas/">Psychemetrics Atlas</a><a href="/projects/schoolmind-global/">SchoolMind Global</a><a href="/projects/replicationscope/">ReplicationScope</a><a href="/projects/neurobehavior-inference-lab/">Neurobehavior Inference Lab</a></div></section>
   </main>
+  <footer class="utility-footer">Seyyed Arad Hosseini Moghaddam · AI engineering and independent advanced neuroscience study</footer>
+  <script src="/assets/js/site-ui.js" defer></script>
+  <script src="/animations.js?v=20261011-motion-exp-v8" defer></script>
+  <script src="/assets/js/brand-icons.js?v=20261011-brands-v7" defer></script>
+
+  <script src="/assets/js/interaction-hub.js?v=20261011-theme-v6" defer></script>
+  <script src="/assets/js/page-extras.js?v=20261011-audit-v2" defer></script>
 </body>
 </html>
