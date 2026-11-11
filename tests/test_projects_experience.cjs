@@ -121,7 +121,10 @@ test('ResearchOS source-only prerelease appears in the archive and has an honest
   assert.match(element('projects-paginated').innerHTML, /Alpha 1 source release/);
   const caseStudy = fs.readFileSync(path.join(ROOT, 'projects', 'researchos', 'index.html'), 'utf8');
   assert.match(caseStudy, /experimental source-code prerelease/);
-  assert.match(fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8'), /id="researchos-feature"/);
+  const homepage = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  assert.match(homepage, /id="researchos"\s+class="surface-card project-card"/);
+  assert.doesNotMatch(homepage, /id="researchos-feature"/);
+  assert.match(homepage, /Alpha 1 is source-only/);
 });
 
 
